@@ -14,27 +14,20 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fUoService.proto\x12\tuoservice\"\x1c\n\x0cHelloRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1d\n\nHelloReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"\x1c\n\x0cImageRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1d\n\rImageResponse\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x0c\x32\x82\x01\n\tUoService\x12:\n\x05Reset\x12\x17.uoservice.ImageRequest\x1a\x18.uoservice.ImageResponse\x12\x39\n\x04Step\x12\x17.uoservice.ImageRequest\x1a\x18.uoservice.ImageResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fUoService.proto\x12\tuoservice\"\x07\n\x05\x45mpty\"\x1c\n\x0cImageRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1d\n\rImageResponse\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x0c\"\x19\n\x07\x41\x63tions\x12\x0e\n\x06\x61\x63tion\x18\x01 \x01(\r2\xaf\x01\n\tUoService\x12:\n\x05reset\x12\x17.uoservice.ImageRequest\x1a\x18.uoservice.ImageResponse\x12\x39\n\x04step\x12\x17.uoservice.ImageRequest\x1a\x18.uoservice.ImageResponse\x12+\n\x03\x61\x63t\x12\x12.uoservice.Actions\x1a\x10.uoservice.Emptyb\x06proto3')
 
 
 
-_HELLOREQUEST = DESCRIPTOR.message_types_by_name['HelloRequest']
-_HELLOREPLY = DESCRIPTOR.message_types_by_name['HelloReply']
+_EMPTY = DESCRIPTOR.message_types_by_name['Empty']
 _IMAGEREQUEST = DESCRIPTOR.message_types_by_name['ImageRequest']
 _IMAGERESPONSE = DESCRIPTOR.message_types_by_name['ImageResponse']
-HelloRequest = _reflection.GeneratedProtocolMessageType('HelloRequest', (_message.Message,), {
-  'DESCRIPTOR' : _HELLOREQUEST,
+_ACTIONS = DESCRIPTOR.message_types_by_name['Actions']
+Empty = _reflection.GeneratedProtocolMessageType('Empty', (_message.Message,), {
+  'DESCRIPTOR' : _EMPTY,
   '__module__' : 'UoService_pb2'
-  # @@protoc_insertion_point(class_scope:uoservice.HelloRequest)
+  # @@protoc_insertion_point(class_scope:uoservice.Empty)
   })
-_sym_db.RegisterMessage(HelloRequest)
-
-HelloReply = _reflection.GeneratedProtocolMessageType('HelloReply', (_message.Message,), {
-  'DESCRIPTOR' : _HELLOREPLY,
-  '__module__' : 'UoService_pb2'
-  # @@protoc_insertion_point(class_scope:uoservice.HelloReply)
-  })
-_sym_db.RegisterMessage(HelloReply)
+_sym_db.RegisterMessage(Empty)
 
 ImageRequest = _reflection.GeneratedProtocolMessageType('ImageRequest', (_message.Message,), {
   'DESCRIPTOR' : _IMAGEREQUEST,
@@ -50,18 +43,25 @@ ImageResponse = _reflection.GeneratedProtocolMessageType('ImageResponse', (_mess
   })
 _sym_db.RegisterMessage(ImageResponse)
 
+Actions = _reflection.GeneratedProtocolMessageType('Actions', (_message.Message,), {
+  'DESCRIPTOR' : _ACTIONS,
+  '__module__' : 'UoService_pb2'
+  # @@protoc_insertion_point(class_scope:uoservice.Actions)
+  })
+_sym_db.RegisterMessage(Actions)
+
 _UOSERVICE = DESCRIPTOR.services_by_name['UoService']
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _HELLOREQUEST._serialized_start=30
-  _HELLOREQUEST._serialized_end=58
-  _HELLOREPLY._serialized_start=60
-  _HELLOREPLY._serialized_end=89
-  _IMAGEREQUEST._serialized_start=91
-  _IMAGEREQUEST._serialized_end=119
-  _IMAGERESPONSE._serialized_start=121
-  _IMAGERESPONSE._serialized_end=150
-  _UOSERVICE._serialized_start=153
-  _UOSERVICE._serialized_end=283
+  _EMPTY._serialized_start=30
+  _EMPTY._serialized_end=37
+  _IMAGEREQUEST._serialized_start=39
+  _IMAGEREQUEST._serialized_end=67
+  _IMAGERESPONSE._serialized_start=69
+  _IMAGERESPONSE._serialized_end=98
+  _ACTIONS._serialized_start=100
+  _ACTIONS._serialized_end=125
+  _UOSERVICE._serialized_start=128
+  _UOSERVICE._serialized_end=303
 # @@protoc_insertion_point(module_scope)

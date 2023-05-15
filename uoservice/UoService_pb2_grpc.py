@@ -14,28 +14,39 @@ class UoServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.Reset = channel.unary_unary(
-                '/uoservice.UoService/Reset',
+        self.reset = channel.unary_unary(
+                '/uoservice.UoService/reset',
                 request_serializer=UoService__pb2.ImageRequest.SerializeToString,
                 response_deserializer=UoService__pb2.ImageResponse.FromString,
                 )
-        self.Step = channel.unary_unary(
-                '/uoservice.UoService/Step',
+        self.step = channel.unary_unary(
+                '/uoservice.UoService/step',
                 request_serializer=UoService__pb2.ImageRequest.SerializeToString,
                 response_deserializer=UoService__pb2.ImageResponse.FromString,
+                )
+        self.act = channel.unary_unary(
+                '/uoservice.UoService/act',
+                request_serializer=UoService__pb2.Actions.SerializeToString,
+                response_deserializer=UoService__pb2.Empty.FromString,
                 )
 
 
 class UoServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def Reset(self, request, context):
+    def reset(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def Step(self, request, context):
+    def step(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def act(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -44,15 +55,20 @@ class UoServiceServicer(object):
 
 def add_UoServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'Reset': grpc.unary_unary_rpc_method_handler(
-                    servicer.Reset,
+            'reset': grpc.unary_unary_rpc_method_handler(
+                    servicer.reset,
                     request_deserializer=UoService__pb2.ImageRequest.FromString,
                     response_serializer=UoService__pb2.ImageResponse.SerializeToString,
             ),
-            'Step': grpc.unary_unary_rpc_method_handler(
-                    servicer.Step,
+            'step': grpc.unary_unary_rpc_method_handler(
+                    servicer.step,
                     request_deserializer=UoService__pb2.ImageRequest.FromString,
                     response_serializer=UoService__pb2.ImageResponse.SerializeToString,
+            ),
+            'act': grpc.unary_unary_rpc_method_handler(
+                    servicer.act,
+                    request_deserializer=UoService__pb2.Actions.FromString,
+                    response_serializer=UoService__pb2.Empty.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -65,7 +81,7 @@ class UoService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def Reset(request,
+    def reset(request,
             target,
             options=(),
             channel_credentials=None,
@@ -75,14 +91,14 @@ class UoService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/uoservice.UoService/Reset',
+        return grpc.experimental.unary_unary(request, target, '/uoservice.UoService/reset',
             UoService__pb2.ImageRequest.SerializeToString,
             UoService__pb2.ImageResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def Step(request,
+    def step(request,
             target,
             options=(),
             channel_credentials=None,
@@ -92,8 +108,25 @@ class UoService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/uoservice.UoService/Step',
+        return grpc.experimental.unary_unary(request, target, '/uoservice.UoService/step',
             UoService__pb2.ImageRequest.SerializeToString,
             UoService__pb2.ImageResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def act(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/uoservice.UoService/act',
+            UoService__pb2.Actions.SerializeToString,
+            UoService__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

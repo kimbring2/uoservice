@@ -2,15 +2,7 @@ syntax = "proto3";
 
 package uoservice;
 
-// The request message containing the user's name
-message HelloRequest {
-  string name = 1;
-}
-
-// The response message containing the greetings
-message HelloReply {
-  string message = 1;
-}
+message Empty {}
 
 message ImageRequest {
   string name = 1;
@@ -20,7 +12,12 @@ message ImageResponse {
   bytes data = 1;
 }
 
+message Actions {
+  uint32 action = 1;
+}
+
 service UoService {
-  rpc Reset (ImageRequest) returns (ImageResponse);
-  rpc Step (ImageRequest) returns (ImageResponse);
+  rpc reset (ImageRequest) returns (ImageResponse);
+  rpc step (ImageRequest) returns (ImageResponse);
+  rpc act (Actions) returns (Empty);
 }
