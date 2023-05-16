@@ -14,13 +14,16 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fUoService.proto\x12\tuoservice\"\x07\n\x05\x45mpty\"\x1c\n\x0cImageRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1d\n\rImageResponse\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x0c\"\x19\n\x07\x41\x63tions\x12\x0e\n\x06\x61\x63tion\x18\x01 \x01(\r2\xaf\x01\n\tUoService\x12:\n\x05reset\x12\x17.uoservice.ImageRequest\x1a\x18.uoservice.ImageResponse\x12\x39\n\x04step\x12\x17.uoservice.ImageRequest\x1a\x18.uoservice.ImageResponse\x12+\n\x03\x61\x63t\x12\x12.uoservice.Actions\x1a\x10.uoservice.Emptyb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fUoService.proto\x12\tuoservice\"\x07\n\x05\x45mpty\"4\n\x0eGrpcMobileData\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\t\n\x01x\x18\x02 \x01(\r\x12\t\n\x01y\x18\x03 \x01(\r\"<\n\x0eGrpcMobileList\x12*\n\x07mobiles\x18\x01 \x03(\x0b\x32\x19.uoservice.GrpcMobileData\"\x1c\n\x0cImageRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1c\n\x0bScreenImage\x12\r\n\x05image\x18\x01 \x01(\x0c\"d\n\x06States\x12+\n\x0bscreenImage\x18\x01 \x01(\x0b\x32\x16.uoservice.ScreenImage\x12-\n\nmobileList\x18\x02 \x01(\x0b\x32\x19.uoservice.GrpcMobileList\"\x19\n\x07\x41\x63tions\x12\x0e\n\x06\x61\x63tion\x18\x01 \x01(\r2\xa1\x01\n\tUoService\x12\x33\n\x05reset\x12\x17.uoservice.ImageRequest\x1a\x11.uoservice.States\x12\x32\n\x04step\x12\x17.uoservice.ImageRequest\x1a\x11.uoservice.States\x12+\n\x03\x61\x63t\x12\x12.uoservice.Actions\x1a\x10.uoservice.Emptyb\x06proto3')
 
 
 
 _EMPTY = DESCRIPTOR.message_types_by_name['Empty']
+_GRPCMOBILEDATA = DESCRIPTOR.message_types_by_name['GrpcMobileData']
+_GRPCMOBILELIST = DESCRIPTOR.message_types_by_name['GrpcMobileList']
 _IMAGEREQUEST = DESCRIPTOR.message_types_by_name['ImageRequest']
-_IMAGERESPONSE = DESCRIPTOR.message_types_by_name['ImageResponse']
+_SCREENIMAGE = DESCRIPTOR.message_types_by_name['ScreenImage']
+_STATES = DESCRIPTOR.message_types_by_name['States']
 _ACTIONS = DESCRIPTOR.message_types_by_name['Actions']
 Empty = _reflection.GeneratedProtocolMessageType('Empty', (_message.Message,), {
   'DESCRIPTOR' : _EMPTY,
@@ -29,6 +32,20 @@ Empty = _reflection.GeneratedProtocolMessageType('Empty', (_message.Message,), {
   })
 _sym_db.RegisterMessage(Empty)
 
+GrpcMobileData = _reflection.GeneratedProtocolMessageType('GrpcMobileData', (_message.Message,), {
+  'DESCRIPTOR' : _GRPCMOBILEDATA,
+  '__module__' : 'UoService_pb2'
+  # @@protoc_insertion_point(class_scope:uoservice.GrpcMobileData)
+  })
+_sym_db.RegisterMessage(GrpcMobileData)
+
+GrpcMobileList = _reflection.GeneratedProtocolMessageType('GrpcMobileList', (_message.Message,), {
+  'DESCRIPTOR' : _GRPCMOBILELIST,
+  '__module__' : 'UoService_pb2'
+  # @@protoc_insertion_point(class_scope:uoservice.GrpcMobileList)
+  })
+_sym_db.RegisterMessage(GrpcMobileList)
+
 ImageRequest = _reflection.GeneratedProtocolMessageType('ImageRequest', (_message.Message,), {
   'DESCRIPTOR' : _IMAGEREQUEST,
   '__module__' : 'UoService_pb2'
@@ -36,12 +53,19 @@ ImageRequest = _reflection.GeneratedProtocolMessageType('ImageRequest', (_messag
   })
 _sym_db.RegisterMessage(ImageRequest)
 
-ImageResponse = _reflection.GeneratedProtocolMessageType('ImageResponse', (_message.Message,), {
-  'DESCRIPTOR' : _IMAGERESPONSE,
+ScreenImage = _reflection.GeneratedProtocolMessageType('ScreenImage', (_message.Message,), {
+  'DESCRIPTOR' : _SCREENIMAGE,
   '__module__' : 'UoService_pb2'
-  # @@protoc_insertion_point(class_scope:uoservice.ImageResponse)
+  # @@protoc_insertion_point(class_scope:uoservice.ScreenImage)
   })
-_sym_db.RegisterMessage(ImageResponse)
+_sym_db.RegisterMessage(ScreenImage)
+
+States = _reflection.GeneratedProtocolMessageType('States', (_message.Message,), {
+  'DESCRIPTOR' : _STATES,
+  '__module__' : 'UoService_pb2'
+  # @@protoc_insertion_point(class_scope:uoservice.States)
+  })
+_sym_db.RegisterMessage(States)
 
 Actions = _reflection.GeneratedProtocolMessageType('Actions', (_message.Message,), {
   'DESCRIPTOR' : _ACTIONS,
@@ -56,12 +80,18 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   _EMPTY._serialized_start=30
   _EMPTY._serialized_end=37
-  _IMAGEREQUEST._serialized_start=39
-  _IMAGEREQUEST._serialized_end=67
-  _IMAGERESPONSE._serialized_start=69
-  _IMAGERESPONSE._serialized_end=98
-  _ACTIONS._serialized_start=100
-  _ACTIONS._serialized_end=125
-  _UOSERVICE._serialized_start=128
-  _UOSERVICE._serialized_end=303
+  _GRPCMOBILEDATA._serialized_start=39
+  _GRPCMOBILEDATA._serialized_end=91
+  _GRPCMOBILELIST._serialized_start=93
+  _GRPCMOBILELIST._serialized_end=153
+  _IMAGEREQUEST._serialized_start=155
+  _IMAGEREQUEST._serialized_end=183
+  _SCREENIMAGE._serialized_start=185
+  _SCREENIMAGE._serialized_end=213
+  _STATES._serialized_start=215
+  _STATES._serialized_end=315
+  _ACTIONS._serialized_start=317
+  _ACTIONS._serialized_end=342
+  _UOSERVICE._serialized_start=345
+  _UOSERVICE._serialized_end=506
 # @@protoc_insertion_point(module_scope)

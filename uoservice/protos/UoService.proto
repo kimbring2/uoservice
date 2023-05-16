@@ -4,12 +4,27 @@ package uoservice;
 
 message Empty {}
 
+message GrpcMobileData {
+  string name = 1;
+  uint32 x = 2;
+  uint32 y = 3;
+}
+
+message GrpcMobileList {
+  repeated GrpcMobileData mobiles = 1;
+}
+
 message ImageRequest {
   string name = 1;
 }
 
-message ImageResponse {
-  bytes data = 1;
+message ScreenImage {
+  bytes image = 1;
+}
+
+message States {
+  ScreenImage screenImage = 1;
+  GrpcMobileList mobileList = 2;
 }
 
 message Actions {
@@ -17,7 +32,7 @@ message Actions {
 }
 
 service UoService {
-  rpc reset (ImageRequest) returns (ImageResponse);
-  rpc step (ImageRequest) returns (ImageResponse);
+  rpc reset (ImageRequest) returns (States);
+  rpc step (ImageRequest) returns (States);
   rpc act (Actions) returns (Empty);
 }
