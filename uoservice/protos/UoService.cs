@@ -26,22 +26,22 @@ namespace Uoservice {
           string.Concat(
             "Cg9Vb1NlcnZpY2UucHJvdG8SCXVvc2VydmljZSIHCgVFbXB0eSI0Cg5HcnBj",
             "TW9iaWxlRGF0YRIMCgRuYW1lGAEgASgJEgkKAXgYAiABKA0SCQoBeRgDIAEo",
-            "DSI8Cg5HcnBjTW9iaWxlTGlzdBIqCgdtb2JpbGVzGAEgAygLMhkudW9zZXJ2",
-            "aWNlLkdycGNNb2JpbGVEYXRhIhwKDEltYWdlUmVxdWVzdBIMCgRuYW1lGAEg",
-            "ASgJIhwKC1NjcmVlbkltYWdlEg0KBWltYWdlGAEgASgMImQKBlN0YXRlcxIr",
-            "CgtzY3JlZW5JbWFnZRgBIAEoCzIWLnVvc2VydmljZS5TY3JlZW5JbWFnZRIt",
-            "Cgptb2JpbGVMaXN0GAIgASgLMhkudW9zZXJ2aWNlLkdycGNNb2JpbGVMaXN0",
-            "IhkKB0FjdGlvbnMSDgoGYWN0aW9uGAEgASgNMqEBCglVb1NlcnZpY2USMwoF",
-            "cmVzZXQSFy51b3NlcnZpY2UuSW1hZ2VSZXF1ZXN0GhEudW9zZXJ2aWNlLlN0",
-            "YXRlcxIyCgRzdGVwEhcudW9zZXJ2aWNlLkltYWdlUmVxdWVzdBoRLnVvc2Vy",
-            "dmljZS5TdGF0ZXMSKwoDYWN0EhIudW9zZXJ2aWNlLkFjdGlvbnMaEC51b3Nl",
-            "cnZpY2UuRW1wdHliBnByb3RvMw=="));
+            "DSI7Cg5HcnBjTW9iaWxlTGlzdBIpCgZtb2JpbGUYASADKAsyGS51b3NlcnZp",
+            "Y2UuR3JwY01vYmlsZURhdGEiHAoMSW1hZ2VSZXF1ZXN0EgwKBG5hbWUYASAB",
+            "KAkiHAoLU2NyZWVuSW1hZ2USDQoFaW1hZ2UYASABKAwiZAoGU3RhdGVzEisK",
+            "C3NjcmVlbkltYWdlGAEgASgLMhYudW9zZXJ2aWNlLlNjcmVlbkltYWdlEi0K",
+            "Cm1vYmlsZUxpc3QYAiABKAsyGS51b3NlcnZpY2UuR3JwY01vYmlsZUxpc3Qi",
+            "GQoHQWN0aW9ucxIOCgZhY3Rpb24YASABKA0yoQEKCVVvU2VydmljZRIzCgVy",
+            "ZXNldBIXLnVvc2VydmljZS5JbWFnZVJlcXVlc3QaES51b3NlcnZpY2UuU3Rh",
+            "dGVzEjIKBHN0ZXASFy51b3NlcnZpY2UuSW1hZ2VSZXF1ZXN0GhEudW9zZXJ2",
+            "aWNlLlN0YXRlcxIrCgNhY3QSEi51b3NlcnZpY2UuQWN0aW9ucxoQLnVvc2Vy",
+            "dmljZS5FbXB0eWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Empty), global::Uoservice.Empty.Parser, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcMobileData), global::Uoservice.GrpcMobileData.Parser, new[]{ "Name", "X", "Y" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcMobileList), global::Uoservice.GrpcMobileList.Parser, new[]{ "Mobiles" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcMobileList), global::Uoservice.GrpcMobileList.Parser, new[]{ "Mobile" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.ImageRequest), global::Uoservice.ImageRequest.Parser, new[]{ "Name" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.ScreenImage), global::Uoservice.ScreenImage.Parser, new[]{ "Image" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.States), global::Uoservice.States.Parser, new[]{ "ScreenImage", "MobileList" }, null, null, null),
@@ -363,7 +363,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public GrpcMobileList(GrpcMobileList other) : this() {
-      mobiles_ = other.mobiles_.Clone();
+      mobile_ = other.mobile_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -372,14 +372,14 @@ namespace Uoservice {
       return new GrpcMobileList(this);
     }
 
-    /// <summary>Field number for the "mobiles" field.</summary>
-    public const int MobilesFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::Uoservice.GrpcMobileData> _repeated_mobiles_codec
+    /// <summary>Field number for the "mobile" field.</summary>
+    public const int MobileFieldNumber = 1;
+    private static readonly pb::FieldCodec<global::Uoservice.GrpcMobileData> _repeated_mobile_codec
         = pb::FieldCodec.ForMessage(10, global::Uoservice.GrpcMobileData.Parser);
-    private readonly pbc::RepeatedField<global::Uoservice.GrpcMobileData> mobiles_ = new pbc::RepeatedField<global::Uoservice.GrpcMobileData>();
+    private readonly pbc::RepeatedField<global::Uoservice.GrpcMobileData> mobile_ = new pbc::RepeatedField<global::Uoservice.GrpcMobileData>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::Uoservice.GrpcMobileData> Mobiles {
-      get { return mobiles_; }
+    public pbc::RepeatedField<global::Uoservice.GrpcMobileData> Mobile {
+      get { return mobile_; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -395,14 +395,14 @@ namespace Uoservice {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if(!mobiles_.Equals(other.mobiles_)) return false;
+      if(!mobile_.Equals(other.mobile_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      hash ^= mobiles_.GetHashCode();
+      hash ^= mobile_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -416,7 +416,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      mobiles_.WriteTo(output, _repeated_mobiles_codec);
+      mobile_.WriteTo(output, _repeated_mobile_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -425,7 +425,7 @@ namespace Uoservice {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      size += mobiles_.CalculateSize(_repeated_mobiles_codec);
+      size += mobile_.CalculateSize(_repeated_mobile_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -437,7 +437,7 @@ namespace Uoservice {
       if (other == null) {
         return;
       }
-      mobiles_.Add(other.mobiles_);
+      mobile_.Add(other.mobile_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -450,7 +450,7 @@ namespace Uoservice {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
-            mobiles_.AddEntriesFrom(input, _repeated_mobiles_codec);
+            mobile_.AddEntriesFrom(input, _repeated_mobile_codec);
             break;
           }
         }

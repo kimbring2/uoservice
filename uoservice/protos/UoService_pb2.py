@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fUoService.proto\x12\tuoservice\"\x07\n\x05\x45mpty\"4\n\x0eGrpcMobileData\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\t\n\x01x\x18\x02 \x01(\r\x12\t\n\x01y\x18\x03 \x01(\r\"<\n\x0eGrpcMobileList\x12*\n\x07mobiles\x18\x01 \x03(\x0b\x32\x19.uoservice.GrpcMobileData\"\x1c\n\x0cImageRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1c\n\x0bScreenImage\x12\r\n\x05image\x18\x01 \x01(\x0c\"d\n\x06States\x12+\n\x0bscreenImage\x18\x01 \x01(\x0b\x32\x16.uoservice.ScreenImage\x12-\n\nmobileList\x18\x02 \x01(\x0b\x32\x19.uoservice.GrpcMobileList\"\x19\n\x07\x41\x63tions\x12\x0e\n\x06\x61\x63tion\x18\x01 \x01(\r2\xa1\x01\n\tUoService\x12\x33\n\x05reset\x12\x17.uoservice.ImageRequest\x1a\x11.uoservice.States\x12\x32\n\x04step\x12\x17.uoservice.ImageRequest\x1a\x11.uoservice.States\x12+\n\x03\x61\x63t\x12\x12.uoservice.Actions\x1a\x10.uoservice.Emptyb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fUoService.proto\x12\tuoservice\"\x07\n\x05\x45mpty\"4\n\x0eGrpcMobileData\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\t\n\x01x\x18\x02 \x01(\r\x12\t\n\x01y\x18\x03 \x01(\r\";\n\x0eGrpcMobileList\x12)\n\x06mobile\x18\x01 \x03(\x0b\x32\x19.uoservice.GrpcMobileData\"\x1c\n\x0cImageRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1c\n\x0bScreenImage\x12\r\n\x05image\x18\x01 \x01(\x0c\"d\n\x06States\x12+\n\x0bscreenImage\x18\x01 \x01(\x0b\x32\x16.uoservice.ScreenImage\x12-\n\nmobileList\x18\x02 \x01(\x0b\x32\x19.uoservice.GrpcMobileList\"\x19\n\x07\x41\x63tions\x12\x0e\n\x06\x61\x63tion\x18\x01 \x01(\r2\xa1\x01\n\tUoService\x12\x33\n\x05reset\x12\x17.uoservice.ImageRequest\x1a\x11.uoservice.States\x12\x32\n\x04step\x12\x17.uoservice.ImageRequest\x1a\x11.uoservice.States\x12+\n\x03\x61\x63t\x12\x12.uoservice.Actions\x1a\x10.uoservice.Emptyb\x06proto3')
 
 
 
@@ -83,15 +83,15 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _GRPCMOBILEDATA._serialized_start=39
   _GRPCMOBILEDATA._serialized_end=91
   _GRPCMOBILELIST._serialized_start=93
-  _GRPCMOBILELIST._serialized_end=153
-  _IMAGEREQUEST._serialized_start=155
-  _IMAGEREQUEST._serialized_end=183
-  _SCREENIMAGE._serialized_start=185
-  _SCREENIMAGE._serialized_end=213
-  _STATES._serialized_start=215
-  _STATES._serialized_end=315
-  _ACTIONS._serialized_start=317
-  _ACTIONS._serialized_end=342
-  _UOSERVICE._serialized_start=345
-  _UOSERVICE._serialized_end=506
+  _GRPCMOBILELIST._serialized_end=152
+  _IMAGEREQUEST._serialized_start=154
+  _IMAGEREQUEST._serialized_end=182
+  _SCREENIMAGE._serialized_start=184
+  _SCREENIMAGE._serialized_end=212
+  _STATES._serialized_start=214
+  _STATES._serialized_end=314
+  _ACTIONS._serialized_start=316
+  _ACTIONS._serialized_end=341
+  _UOSERVICE._serialized_start=344
+  _UOSERVICE._serialized_end=505
 # @@protoc_insertion_point(module_scope)

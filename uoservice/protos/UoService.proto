@@ -11,7 +11,7 @@ message GrpcMobileData {
 }
 
 message GrpcMobileList {
-  repeated GrpcMobileData mobiles = 1;
+  repeated GrpcMobileData mobile = 1;
 }
 
 message ImageRequest {
