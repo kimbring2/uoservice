@@ -24,28 +24,31 @@ namespace Uoservice {
     static UoServiceReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Cg9Vb1NlcnZpY2UucHJvdG8SCXVvc2VydmljZSIHCgVFbXB0eSI0Cg5HcnBj",
+            "Cg9Vb1NlcnZpY2UucHJvdG8SCXVvc2VydmljZSIHCgVFbXB0eSJCCg5HcnBj",
             "TW9iaWxlRGF0YRIMCgRuYW1lGAEgASgJEgkKAXgYAiABKA0SCQoBeRgDIAEo",
-            "DSI7Cg5HcnBjTW9iaWxlTGlzdBIpCgZtb2JpbGUYASADKAsyGS51b3NlcnZp",
-            "Y2UuR3JwY01vYmlsZURhdGEiHAoMSW1hZ2VSZXF1ZXN0EgwKBG5hbWUYASAB",
-            "KAkiHAoLU2NyZWVuSW1hZ2USDQoFaW1hZ2UYASABKAwiZAoGU3RhdGVzEisK",
-            "C3NjcmVlbkltYWdlGAEgASgLMhYudW9zZXJ2aWNlLlNjcmVlbkltYWdlEi0K",
-            "Cm1vYmlsZUxpc3QYAiABKAsyGS51b3NlcnZpY2UuR3JwY01vYmlsZUxpc3Qi",
-            "GQoHQWN0aW9ucxIOCgZhY3Rpb24YASABKA0yoQEKCVVvU2VydmljZRIzCgVy",
-            "ZXNldBIXLnVvc2VydmljZS5JbWFnZVJlcXVlc3QaES51b3NlcnZpY2UuU3Rh",
-            "dGVzEjIKBHN0ZXASFy51b3NlcnZpY2UuSW1hZ2VSZXF1ZXN0GhEudW9zZXJ2",
-            "aWNlLlN0YXRlcxIrCgNhY3QSEi51b3NlcnZpY2UuQWN0aW9ucxoQLnVvc2Vy",
-            "dmljZS5FbXB0eWIGcHJvdG8z"));
+            "DRIMCgRyYWNlGAQgASgNIjsKDkdycGNNb2JpbGVMaXN0EikKBm1vYmlsZRgB",
+            "IAMoCzIZLnVvc2VydmljZS5HcnBjTW9iaWxlRGF0YSIcCgxJbWFnZVJlcXVl",
+            "c3QSDAoEbmFtZRgBIAEoCSIcCgtTY3JlZW5JbWFnZRINCgVpbWFnZRgBIAEo",
+            "DCJkCgZTdGF0ZXMSKwoLc2NyZWVuSW1hZ2UYASABKAsyFi51b3NlcnZpY2Uu",
+            "U2NyZWVuSW1hZ2USLQoKbW9iaWxlTGlzdBgCIAEoCzIZLnVvc2VydmljZS5H",
+            "cnBjTW9iaWxlTGlzdCIiCgpNb3VzZVBvaW50EgkKAXgYASABKA0SCQoBeRgC",
+            "IAEoDSJECgdBY3Rpb25zEg4KBmFjdGlvbhgBIAEoDRIpCgptb3VzZVBvaW50",
+            "GAIgASgLMhUudW9zZXJ2aWNlLk1vdXNlUG9pbnQyoQEKCVVvU2VydmljZRIz",
+            "CgVyZXNldBIXLnVvc2VydmljZS5JbWFnZVJlcXVlc3QaES51b3NlcnZpY2Uu",
+            "U3RhdGVzEjIKBHN0ZXASFy51b3NlcnZpY2UuSW1hZ2VSZXF1ZXN0GhEudW9z",
+            "ZXJ2aWNlLlN0YXRlcxIrCgNhY3QSEi51b3NlcnZpY2UuQWN0aW9ucxoQLnVv",
+            "c2VydmljZS5FbXB0eWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Empty), global::Uoservice.Empty.Parser, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcMobileData), global::Uoservice.GrpcMobileData.Parser, new[]{ "Name", "X", "Y" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcMobileData), global::Uoservice.GrpcMobileData.Parser, new[]{ "Name", "X", "Y", "Race" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcMobileList), global::Uoservice.GrpcMobileList.Parser, new[]{ "Mobile" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.ImageRequest), global::Uoservice.ImageRequest.Parser, new[]{ "Name" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.ScreenImage), global::Uoservice.ScreenImage.Parser, new[]{ "Image" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.States), global::Uoservice.States.Parser, new[]{ "ScreenImage", "MobileList" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Actions), global::Uoservice.Actions.Parser, new[]{ "Action" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.MousePoint), global::Uoservice.MousePoint.Parser, new[]{ "X", "Y" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Actions), global::Uoservice.Actions.Parser, new[]{ "Action", "MousePoint" }, null, null, null)
           }));
     }
     #endregion
@@ -181,6 +184,7 @@ namespace Uoservice {
       name_ = other.name_;
       x_ = other.x_;
       y_ = other.y_;
+      race_ = other.race_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -222,6 +226,17 @@ namespace Uoservice {
       }
     }
 
+    /// <summary>Field number for the "race" field.</summary>
+    public const int RaceFieldNumber = 4;
+    private uint race_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Race {
+      get { return race_; }
+      set {
+        race_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as GrpcMobileData);
@@ -238,6 +253,7 @@ namespace Uoservice {
       if (Name != other.Name) return false;
       if (X != other.X) return false;
       if (Y != other.Y) return false;
+      if (Race != other.Race) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -247,6 +263,7 @@ namespace Uoservice {
       if (Name.Length != 0) hash ^= Name.GetHashCode();
       if (X != 0) hash ^= X.GetHashCode();
       if (Y != 0) hash ^= Y.GetHashCode();
+      if (Race != 0) hash ^= Race.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -272,6 +289,10 @@ namespace Uoservice {
         output.WriteRawTag(24);
         output.WriteUInt32(Y);
       }
+      if (Race != 0) {
+        output.WriteRawTag(32);
+        output.WriteUInt32(Race);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -288,6 +309,9 @@ namespace Uoservice {
       }
       if (Y != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Y);
+      }
+      if (Race != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Race);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -308,6 +332,9 @@ namespace Uoservice {
       }
       if (other.Y != 0) {
         Y = other.Y;
+      }
+      if (other.Race != 0) {
+        Race = other.Race;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -330,6 +357,10 @@ namespace Uoservice {
           }
           case 24: {
             Y = input.ReadUInt32();
+            break;
+          }
+          case 32: {
+            Race = input.ReadUInt32();
             break;
           }
         }
@@ -886,6 +917,163 @@ namespace Uoservice {
 
   }
 
+  public sealed partial class MousePoint : pb::IMessage<MousePoint> {
+    private static readonly pb::MessageParser<MousePoint> _parser = new pb::MessageParser<MousePoint>(() => new MousePoint());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<MousePoint> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[6]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MousePoint() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MousePoint(MousePoint other) : this() {
+      x_ = other.x_;
+      y_ = other.y_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MousePoint Clone() {
+      return new MousePoint(this);
+    }
+
+    /// <summary>Field number for the "x" field.</summary>
+    public const int XFieldNumber = 1;
+    private uint x_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint X {
+      get { return x_; }
+      set {
+        x_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "y" field.</summary>
+    public const int YFieldNumber = 2;
+    private uint y_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Y {
+      get { return y_; }
+      set {
+        y_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as MousePoint);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(MousePoint other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (X != other.X) return false;
+      if (Y != other.Y) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (X != 0) hash ^= X.GetHashCode();
+      if (Y != 0) hash ^= Y.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (X != 0) {
+        output.WriteRawTag(8);
+        output.WriteUInt32(X);
+      }
+      if (Y != 0) {
+        output.WriteRawTag(16);
+        output.WriteUInt32(Y);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (X != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(X);
+      }
+      if (Y != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Y);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(MousePoint other) {
+      if (other == null) {
+        return;
+      }
+      if (other.X != 0) {
+        X = other.X;
+      }
+      if (other.Y != 0) {
+        Y = other.Y;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            X = input.ReadUInt32();
+            break;
+          }
+          case 16: {
+            Y = input.ReadUInt32();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
   public sealed partial class Actions : pb::IMessage<Actions> {
     private static readonly pb::MessageParser<Actions> _parser = new pb::MessageParser<Actions>(() => new Actions());
     private pb::UnknownFieldSet _unknownFields;
@@ -894,7 +1082,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[6]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[7]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -912,6 +1100,7 @@ namespace Uoservice {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Actions(Actions other) : this() {
       action_ = other.action_;
+      mousePoint_ = other.mousePoint_ != null ? other.mousePoint_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -931,6 +1120,17 @@ namespace Uoservice {
       }
     }
 
+    /// <summary>Field number for the "mousePoint" field.</summary>
+    public const int MousePointFieldNumber = 2;
+    private global::Uoservice.MousePoint mousePoint_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Uoservice.MousePoint MousePoint {
+      get { return mousePoint_; }
+      set {
+        mousePoint_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as Actions);
@@ -945,6 +1145,7 @@ namespace Uoservice {
         return true;
       }
       if (Action != other.Action) return false;
+      if (!object.Equals(MousePoint, other.MousePoint)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -952,6 +1153,7 @@ namespace Uoservice {
     public override int GetHashCode() {
       int hash = 1;
       if (Action != 0) hash ^= Action.GetHashCode();
+      if (mousePoint_ != null) hash ^= MousePoint.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -969,6 +1171,10 @@ namespace Uoservice {
         output.WriteRawTag(8);
         output.WriteUInt32(Action);
       }
+      if (mousePoint_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(MousePoint);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -979,6 +1185,9 @@ namespace Uoservice {
       int size = 0;
       if (Action != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Action);
+      }
+      if (mousePoint_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(MousePoint);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -994,6 +1203,12 @@ namespace Uoservice {
       if (other.Action != 0) {
         Action = other.Action;
       }
+      if (other.mousePoint_ != null) {
+        if (mousePoint_ == null) {
+          mousePoint_ = new global::Uoservice.MousePoint();
+        }
+        MousePoint.MergeFrom(other.MousePoint);
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -1007,6 +1222,13 @@ namespace Uoservice {
             break;
           case 8: {
             Action = input.ReadUInt32();
+            break;
+          }
+          case 18: {
+            if (mousePoint_ == null) {
+              mousePoint_ = new global::Uoservice.MousePoint();
+            }
+            input.ReadMessage(mousePoint_);
             break;
           }
         }

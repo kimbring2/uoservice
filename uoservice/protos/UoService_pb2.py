@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fUoService.proto\x12\tuoservice\"\x07\n\x05\x45mpty\"4\n\x0eGrpcMobileData\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\t\n\x01x\x18\x02 \x01(\r\x12\t\n\x01y\x18\x03 \x01(\r\";\n\x0eGrpcMobileList\x12)\n\x06mobile\x18\x01 \x03(\x0b\x32\x19.uoservice.GrpcMobileData\"\x1c\n\x0cImageRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1c\n\x0bScreenImage\x12\r\n\x05image\x18\x01 \x01(\x0c\"d\n\x06States\x12+\n\x0bscreenImage\x18\x01 \x01(\x0b\x32\x16.uoservice.ScreenImage\x12-\n\nmobileList\x18\x02 \x01(\x0b\x32\x19.uoservice.GrpcMobileList\"\x19\n\x07\x41\x63tions\x12\x0e\n\x06\x61\x63tion\x18\x01 \x01(\r2\xa1\x01\n\tUoService\x12\x33\n\x05reset\x12\x17.uoservice.ImageRequest\x1a\x11.uoservice.States\x12\x32\n\x04step\x12\x17.uoservice.ImageRequest\x1a\x11.uoservice.States\x12+\n\x03\x61\x63t\x12\x12.uoservice.Actions\x1a\x10.uoservice.Emptyb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fUoService.proto\x12\tuoservice\"\x07\n\x05\x45mpty\"B\n\x0eGrpcMobileData\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\t\n\x01x\x18\x02 \x01(\r\x12\t\n\x01y\x18\x03 \x01(\r\x12\x0c\n\x04race\x18\x04 \x01(\r\";\n\x0eGrpcMobileList\x12)\n\x06mobile\x18\x01 \x03(\x0b\x32\x19.uoservice.GrpcMobileData\"\x1c\n\x0cImageRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1c\n\x0bScreenImage\x12\r\n\x05image\x18\x01 \x01(\x0c\"d\n\x06States\x12+\n\x0bscreenImage\x18\x01 \x01(\x0b\x32\x16.uoservice.ScreenImage\x12-\n\nmobileList\x18\x02 \x01(\x0b\x32\x19.uoservice.GrpcMobileList\"\"\n\nMousePoint\x12\t\n\x01x\x18\x01 \x01(\r\x12\t\n\x01y\x18\x02 \x01(\r\"D\n\x07\x41\x63tions\x12\x0e\n\x06\x61\x63tion\x18\x01 \x01(\r\x12)\n\nmousePoint\x18\x02 \x01(\x0b\x32\x15.uoservice.MousePoint2\xa1\x01\n\tUoService\x12\x33\n\x05reset\x12\x17.uoservice.ImageRequest\x1a\x11.uoservice.States\x12\x32\n\x04step\x12\x17.uoservice.ImageRequest\x1a\x11.uoservice.States\x12+\n\x03\x61\x63t\x12\x12.uoservice.Actions\x1a\x10.uoservice.Emptyb\x06proto3')
 
 
 
@@ -24,6 +24,7 @@ _GRPCMOBILELIST = DESCRIPTOR.message_types_by_name['GrpcMobileList']
 _IMAGEREQUEST = DESCRIPTOR.message_types_by_name['ImageRequest']
 _SCREENIMAGE = DESCRIPTOR.message_types_by_name['ScreenImage']
 _STATES = DESCRIPTOR.message_types_by_name['States']
+_MOUSEPOINT = DESCRIPTOR.message_types_by_name['MousePoint']
 _ACTIONS = DESCRIPTOR.message_types_by_name['Actions']
 Empty = _reflection.GeneratedProtocolMessageType('Empty', (_message.Message,), {
   'DESCRIPTOR' : _EMPTY,
@@ -67,6 +68,13 @@ States = _reflection.GeneratedProtocolMessageType('States', (_message.Message,),
   })
 _sym_db.RegisterMessage(States)
 
+MousePoint = _reflection.GeneratedProtocolMessageType('MousePoint', (_message.Message,), {
+  'DESCRIPTOR' : _MOUSEPOINT,
+  '__module__' : 'UoService_pb2'
+  # @@protoc_insertion_point(class_scope:uoservice.MousePoint)
+  })
+_sym_db.RegisterMessage(MousePoint)
+
 Actions = _reflection.GeneratedProtocolMessageType('Actions', (_message.Message,), {
   'DESCRIPTOR' : _ACTIONS,
   '__module__' : 'UoService_pb2'
@@ -81,17 +89,19 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _EMPTY._serialized_start=30
   _EMPTY._serialized_end=37
   _GRPCMOBILEDATA._serialized_start=39
-  _GRPCMOBILEDATA._serialized_end=91
-  _GRPCMOBILELIST._serialized_start=93
-  _GRPCMOBILELIST._serialized_end=152
-  _IMAGEREQUEST._serialized_start=154
-  _IMAGEREQUEST._serialized_end=182
-  _SCREENIMAGE._serialized_start=184
-  _SCREENIMAGE._serialized_end=212
-  _STATES._serialized_start=214
-  _STATES._serialized_end=314
-  _ACTIONS._serialized_start=316
-  _ACTIONS._serialized_end=341
-  _UOSERVICE._serialized_start=344
-  _UOSERVICE._serialized_end=505
+  _GRPCMOBILEDATA._serialized_end=105
+  _GRPCMOBILELIST._serialized_start=107
+  _GRPCMOBILELIST._serialized_end=166
+  _IMAGEREQUEST._serialized_start=168
+  _IMAGEREQUEST._serialized_end=196
+  _SCREENIMAGE._serialized_start=198
+  _SCREENIMAGE._serialized_end=226
+  _STATES._serialized_start=228
+  _STATES._serialized_end=328
+  _MOUSEPOINT._serialized_start=330
+  _MOUSEPOINT._serialized_end=364
+  _ACTIONS._serialized_start=366
+  _ACTIONS._serialized_end=434
+  _UOSERVICE._serialized_start=437
+  _UOSERVICE._serialized_end=598
 # @@protoc_insertion_point(module_scope)

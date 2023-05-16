@@ -15,17 +15,16 @@ import numpy as np
 import cv2
 
 
-grpc_port = 50051
+grpc_port = 50052
 channel = grpc.insecure_channel('localhost:' + str(grpc_port))
 stub = UoService_pb2_grpc.UoServiceStub(channel)
-
 
 def parse_response(response):
   #print("response: ", response)
   
   mobile_data = response.mobileList.mobile
   player = mobile_data[0]
-  print('name: {0}, x: {1}, y: {2}'.format(player.name, player.x, player.y))
+  #print('name: {0}, x: {1}, y: {2}'.format(player.name, player.x, player.y))
 
   screen_data = response.screenImage.image
   screen_data = io.BytesIO(screen_data).read()
@@ -35,26 +34,39 @@ def parse_response(response):
   dim = (1600, 1280)
   screen_image = cv2.resize(screen_image, dim, interpolation = cv2.INTER_AREA)
 
-  center_coordinates = (player.x, player.y)
-  start_point = (player.x - 40, player.y - 40)
-  end_point = (player.x + 40, player.y + 40)
-  color = (255, 0, 0)
-  thickness = 2
-  radius = 20
-  screen_image = cv2.rectangle(screen_image, start_point, end_point, color, thickness)
-  screen_image = cv2.circle(screen_image, center_coordinates, radius, color, thickness)
+  for mobile in mobile_data:
+    #print('name: {0}, x: {1}, y: {2}, race: {3}\n'.format(mobile.name, mobile.x, mobile.y, mobile.race))
 
-  cv2.putText(screen_image,
-              text=player.name,
-              org=center_coordinates,
-              fontFace=cv2.FONT_HERSHEY_SIMPLEX,
-              fontScale=1.0,
-              color=(0, 255, 0),
-              thickness=2,
-              lineType=cv2.LINE_4)
+    if mobile.x >= 1600 or mobile.y >= 1280:
+      continue
 
-  cv2.imshow('screen_image', screen_image)
-  cv2.waitKey(1)
+    center_coordinates = (mobile.x, mobile.y)
+    start_point = (mobile.x - 40, mobile.y - 40)
+    end_point = (mobile.x + 40, mobile.y + 40)
+    #screen_image = cv2.rectangle(screen_image, start_point, end_point, color, 2)
+    #screen_image = cv2.circle(screen_image, center_coordinates, 20, color, thickness)
+
+    if mobile.race == 1:
+      color = (0, 255, 0)
+    elif mobile.race == 0:
+      color = (0, 0, 255)
+    else:
+      color = (0, 255, 0)
+
+
+
+    screen_image = cv2.rectangle(screen_image, start_point, end_point, color, 2)
+    cv2.putText(screen_image,
+                text=mobile.name,
+                org=center_coordinates,
+                fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                fontScale=1.0,
+                color=color,
+                thickness=2,
+                lineType=cv2.LINE_4)
+
+  #cv2.imshow('screen_image', screen_image)
+  #cv2.waitKey(1)
   #cv2.destroyAllWindows()
   
   screen_image = None
@@ -74,7 +86,7 @@ def main():
       res_next = stub.step(UoService_pb2.ImageRequest(name='you'))
       obs_next = parse_response(res_next)
 
-      stub.act(UoService_pb2.Actions(action=1))
+      stub.act(UoService_pb2.Actions(action=1, mousePoint=UoService_pb2.MousePoint(x=500, y=500)))
 
       time.sleep(0.5)
 

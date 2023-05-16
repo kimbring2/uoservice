@@ -8,6 +8,7 @@ message GrpcMobileData {
   string name = 1;
   uint32 x = 2;
   uint32 y = 3;
+  uint32 race = 4;
 }
 
 message GrpcMobileList {
@@ -27,8 +28,14 @@ message States {
   GrpcMobileList mobileList = 2;
 }
 
+message MousePoint {
+  uint32 x = 1;
+  uint32 y = 2;
+}
+
 message Actions {
   uint32 action = 1;
+  MousePoint mousePoint = 2;
 }
 
 service UoService {
