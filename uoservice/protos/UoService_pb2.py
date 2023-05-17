@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fUoService.proto\x12\tuoservice\"\x07\n\x05\x45mpty\"R\n\x0eGrpcMobileData\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\t\n\x01x\x18\x02 \x01(\r\x12\t\n\x01y\x18\x03 \x01(\r\x12\x0c\n\x04race\x18\x04 \x01(\r\x12\x0e\n\x06serial\x18\x05 \x01(\r\"\x1f\n\x0fSemaphoreAction\x12\x0c\n\x04mode\x18\x01 \x01(\t\";\n\x0eGrpcMobileList\x12)\n\x06mobile\x18\x01 \x03(\x0b\x32\x19.uoservice.GrpcMobileData\"\x1c\n\x0cImageRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1c\n\x0bScreenImage\x12\r\n\x05image\x18\x01 \x01(\x0c\"d\n\x06States\x12+\n\x0bscreenImage\x18\x01 \x01(\x0b\x32\x16.uoservice.ScreenImage\x12-\n\nmobileList\x18\x02 \x01(\x0b\x32\x19.uoservice.GrpcMobileList\"\"\n\nMousePoint\x12\t\n\x01x\x18\x01 \x01(\r\x12\t\n\x01y\x18\x02 \x01(\r\"D\n\x07\x41\x63tions\x12\x0e\n\x06\x61\x63tion\x18\x01 \x01(\r\x12)\n\nmousePoint\x18\x02 \x01(\x0b\x32\x15.uoservice.MousePoint2\xb3\x02\n\tUoService\x12\x33\n\x05Reset\x12\x17.uoservice.ImageRequest\x1a\x11.uoservice.States\x12\x35\n\x07ReadObs\x12\x17.uoservice.ImageRequest\x1a\x11.uoservice.States\x12\x30\n\x08WriteAct\x12\x12.uoservice.Actions\x1a\x10.uoservice.Empty\x12\x43\n\x13\x41\x63tSemaphoreControl\x12\x1a.uoservice.SemaphoreAction\x1a\x10.uoservice.Empty\x12\x43\n\x13ObsSemaphoreControl\x12\x1a.uoservice.SemaphoreAction\x1a\x10.uoservice.Emptyb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fUoService.proto\x12\tuoservice\"\x07\n\x05\x45mpty\"R\n\x0eGrpcMobileData\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\t\n\x01x\x18\x02 \x01(\x02\x12\t\n\x01y\x18\x03 \x01(\x02\x12\x0c\n\x04race\x18\x04 \x01(\r\x12\x0e\n\x06serial\x18\x05 \x01(\r\"\x1f\n\x0fSemaphoreAction\x12\x0c\n\x04mode\x18\x01 \x01(\t\";\n\x0eGrpcMobileList\x12)\n\x06mobile\x18\x01 \x03(\x0b\x32\x19.uoservice.GrpcMobileData\"\x1c\n\x0cImageRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1c\n\x0bScreenImage\x12\r\n\x05image\x18\x01 \x01(\x0c\"d\n\x06States\x12+\n\x0bscreenImage\x18\x01 \x01(\x0b\x32\x16.uoservice.ScreenImage\x12-\n\nmobileList\x18\x02 \x01(\x0b\x32\x19.uoservice.GrpcMobileList\"\"\n\nMousePoint\x12\t\n\x01x\x18\x01 \x01(\r\x12\t\n\x01y\x18\x02 \x01(\r\"T\n\x07\x41\x63tions\x12\x0e\n\x06\x61\x63tion\x18\x01 \x01(\r\x12)\n\nmousePoint\x18\x02 \x01(\x0b\x32\x15.uoservice.MousePoint\x12\x0e\n\x06serial\x18\x03 \x01(\r2\xb3\x02\n\tUoService\x12\x33\n\x05Reset\x12\x17.uoservice.ImageRequest\x1a\x11.uoservice.States\x12\x35\n\x07ReadObs\x12\x17.uoservice.ImageRequest\x1a\x11.uoservice.States\x12\x30\n\x08WriteAct\x12\x12.uoservice.Actions\x1a\x10.uoservice.Empty\x12\x43\n\x13\x41\x63tSemaphoreControl\x12\x1a.uoservice.SemaphoreAction\x1a\x10.uoservice.Empty\x12\x43\n\x13ObsSemaphoreControl\x12\x1a.uoservice.SemaphoreAction\x1a\x10.uoservice.Emptyb\x06proto3')
 
 
 
@@ -111,7 +111,7 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _MOUSEPOINT._serialized_start=379
   _MOUSEPOINT._serialized_end=413
   _ACTIONS._serialized_start=415
-  _ACTIONS._serialized_end=483
-  _UOSERVICE._serialized_start=486
-  _UOSERVICE._serialized_end=793
+  _ACTIONS._serialized_end=499
+  _UOSERVICE._serialized_start=502
+  _UOSERVICE._serialized_end=809
 # @@protoc_insertion_point(module_scope)

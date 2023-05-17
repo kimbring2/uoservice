@@ -25,23 +25,24 @@ namespace Uoservice {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "Cg9Vb1NlcnZpY2UucHJvdG8SCXVvc2VydmljZSIHCgVFbXB0eSJSCg5HcnBj",
-            "TW9iaWxlRGF0YRIMCgRuYW1lGAEgASgJEgkKAXgYAiABKA0SCQoBeRgDIAEo",
-            "DRIMCgRyYWNlGAQgASgNEg4KBnNlcmlhbBgFIAEoDSIfCg9TZW1hcGhvcmVB",
+            "TW9iaWxlRGF0YRIMCgRuYW1lGAEgASgJEgkKAXgYAiABKAISCQoBeRgDIAEo",
+            "AhIMCgRyYWNlGAQgASgNEg4KBnNlcmlhbBgFIAEoDSIfCg9TZW1hcGhvcmVB",
             "Y3Rpb24SDAoEbW9kZRgBIAEoCSI7Cg5HcnBjTW9iaWxlTGlzdBIpCgZtb2Jp",
             "bGUYASADKAsyGS51b3NlcnZpY2UuR3JwY01vYmlsZURhdGEiHAoMSW1hZ2VS",
             "ZXF1ZXN0EgwKBG5hbWUYASABKAkiHAoLU2NyZWVuSW1hZ2USDQoFaW1hZ2UY",
             "ASABKAwiZAoGU3RhdGVzEisKC3NjcmVlbkltYWdlGAEgASgLMhYudW9zZXJ2",
             "aWNlLlNjcmVlbkltYWdlEi0KCm1vYmlsZUxpc3QYAiABKAsyGS51b3NlcnZp",
             "Y2UuR3JwY01vYmlsZUxpc3QiIgoKTW91c2VQb2ludBIJCgF4GAEgASgNEgkK",
-            "AXkYAiABKA0iRAoHQWN0aW9ucxIOCgZhY3Rpb24YASABKA0SKQoKbW91c2VQ",
-            "b2ludBgCIAEoCzIVLnVvc2VydmljZS5Nb3VzZVBvaW50MrMCCglVb1NlcnZp",
-            "Y2USMwoFUmVzZXQSFy51b3NlcnZpY2UuSW1hZ2VSZXF1ZXN0GhEudW9zZXJ2",
-            "aWNlLlN0YXRlcxI1CgdSZWFkT2JzEhcudW9zZXJ2aWNlLkltYWdlUmVxdWVz",
-            "dBoRLnVvc2VydmljZS5TdGF0ZXMSMAoIV3JpdGVBY3QSEi51b3NlcnZpY2Uu",
-            "QWN0aW9ucxoQLnVvc2VydmljZS5FbXB0eRJDChNBY3RTZW1hcGhvcmVDb250",
-            "cm9sEhoudW9zZXJ2aWNlLlNlbWFwaG9yZUFjdGlvbhoQLnVvc2VydmljZS5F",
-            "bXB0eRJDChNPYnNTZW1hcGhvcmVDb250cm9sEhoudW9zZXJ2aWNlLlNlbWFw",
-            "aG9yZUFjdGlvbhoQLnVvc2VydmljZS5FbXB0eWIGcHJvdG8z"));
+            "AXkYAiABKA0iVAoHQWN0aW9ucxIOCgZhY3Rpb24YASABKA0SKQoKbW91c2VQ",
+            "b2ludBgCIAEoCzIVLnVvc2VydmljZS5Nb3VzZVBvaW50Eg4KBnNlcmlhbBgD",
+            "IAEoDTKzAgoJVW9TZXJ2aWNlEjMKBVJlc2V0EhcudW9zZXJ2aWNlLkltYWdl",
+            "UmVxdWVzdBoRLnVvc2VydmljZS5TdGF0ZXMSNQoHUmVhZE9icxIXLnVvc2Vy",
+            "dmljZS5JbWFnZVJlcXVlc3QaES51b3NlcnZpY2UuU3RhdGVzEjAKCFdyaXRl",
+            "QWN0EhIudW9zZXJ2aWNlLkFjdGlvbnMaEC51b3NlcnZpY2UuRW1wdHkSQwoT",
+            "QWN0U2VtYXBob3JlQ29udHJvbBIaLnVvc2VydmljZS5TZW1hcGhvcmVBY3Rp",
+            "b24aEC51b3NlcnZpY2UuRW1wdHkSQwoTT2JzU2VtYXBob3JlQ29udHJvbBIa",
+            "LnVvc2VydmljZS5TZW1hcGhvcmVBY3Rpb24aEC51b3NlcnZpY2UuRW1wdHli",
+            "BnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -53,7 +54,7 @@ namespace Uoservice {
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.ScreenImage), global::Uoservice.ScreenImage.Parser, new[]{ "Image" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.States), global::Uoservice.States.Parser, new[]{ "ScreenImage", "MobileList" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.MousePoint), global::Uoservice.MousePoint.Parser, new[]{ "X", "Y" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Actions), global::Uoservice.Actions.Parser, new[]{ "Action", "MousePoint" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Actions), global::Uoservice.Actions.Parser, new[]{ "Action", "MousePoint", "Serial" }, null, null, null)
           }));
     }
     #endregion
@@ -212,9 +213,9 @@ namespace Uoservice {
 
     /// <summary>Field number for the "x" field.</summary>
     public const int XFieldNumber = 2;
-    private uint x_;
+    private float x_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint X {
+    public float X {
       get { return x_; }
       set {
         x_ = value;
@@ -223,9 +224,9 @@ namespace Uoservice {
 
     /// <summary>Field number for the "y" field.</summary>
     public const int YFieldNumber = 3;
-    private uint y_;
+    private float y_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Y {
+    public float Y {
       get { return y_; }
       set {
         y_ = value;
@@ -268,8 +269,8 @@ namespace Uoservice {
         return true;
       }
       if (Name != other.Name) return false;
-      if (X != other.X) return false;
-      if (Y != other.Y) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(X, other.X)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Y, other.Y)) return false;
       if (Race != other.Race) return false;
       if (Serial != other.Serial) return false;
       return Equals(_unknownFields, other._unknownFields);
@@ -279,8 +280,8 @@ namespace Uoservice {
     public override int GetHashCode() {
       int hash = 1;
       if (Name.Length != 0) hash ^= Name.GetHashCode();
-      if (X != 0) hash ^= X.GetHashCode();
-      if (Y != 0) hash ^= Y.GetHashCode();
+      if (X != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(X);
+      if (Y != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Y);
       if (Race != 0) hash ^= Race.GetHashCode();
       if (Serial != 0) hash ^= Serial.GetHashCode();
       if (_unknownFields != null) {
@@ -300,13 +301,13 @@ namespace Uoservice {
         output.WriteRawTag(10);
         output.WriteString(Name);
       }
-      if (X != 0) {
-        output.WriteRawTag(16);
-        output.WriteUInt32(X);
+      if (X != 0F) {
+        output.WriteRawTag(21);
+        output.WriteFloat(X);
       }
-      if (Y != 0) {
-        output.WriteRawTag(24);
-        output.WriteUInt32(Y);
+      if (Y != 0F) {
+        output.WriteRawTag(29);
+        output.WriteFloat(Y);
       }
       if (Race != 0) {
         output.WriteRawTag(32);
@@ -327,11 +328,11 @@ namespace Uoservice {
       if (Name.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
       }
-      if (X != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(X);
+      if (X != 0F) {
+        size += 1 + 4;
       }
-      if (Y != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Y);
+      if (Y != 0F) {
+        size += 1 + 4;
       }
       if (Race != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Race);
@@ -353,10 +354,10 @@ namespace Uoservice {
       if (other.Name.Length != 0) {
         Name = other.Name;
       }
-      if (other.X != 0) {
+      if (other.X != 0F) {
         X = other.X;
       }
-      if (other.Y != 0) {
+      if (other.Y != 0F) {
         Y = other.Y;
       }
       if (other.Race != 0) {
@@ -380,12 +381,12 @@ namespace Uoservice {
             Name = input.ReadString();
             break;
           }
-          case 16: {
-            X = input.ReadUInt32();
+          case 21: {
+            X = input.ReadFloat();
             break;
           }
-          case 24: {
-            Y = input.ReadUInt32();
+          case 29: {
+            Y = input.ReadFloat();
             break;
           }
           case 32: {
@@ -1263,6 +1264,7 @@ namespace Uoservice {
     public Actions(Actions other) : this() {
       action_ = other.action_;
       mousePoint_ = other.mousePoint_ != null ? other.mousePoint_.Clone() : null;
+      serial_ = other.serial_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -1293,6 +1295,17 @@ namespace Uoservice {
       }
     }
 
+    /// <summary>Field number for the "serial" field.</summary>
+    public const int SerialFieldNumber = 3;
+    private uint serial_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Serial {
+      get { return serial_; }
+      set {
+        serial_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as Actions);
@@ -1308,6 +1321,7 @@ namespace Uoservice {
       }
       if (Action != other.Action) return false;
       if (!object.Equals(MousePoint, other.MousePoint)) return false;
+      if (Serial != other.Serial) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -1316,6 +1330,7 @@ namespace Uoservice {
       int hash = 1;
       if (Action != 0) hash ^= Action.GetHashCode();
       if (mousePoint_ != null) hash ^= MousePoint.GetHashCode();
+      if (Serial != 0) hash ^= Serial.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -1337,6 +1352,10 @@ namespace Uoservice {
         output.WriteRawTag(18);
         output.WriteMessage(MousePoint);
       }
+      if (Serial != 0) {
+        output.WriteRawTag(24);
+        output.WriteUInt32(Serial);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -1350,6 +1369,9 @@ namespace Uoservice {
       }
       if (mousePoint_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(MousePoint);
+      }
+      if (Serial != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Serial);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -1371,6 +1393,9 @@ namespace Uoservice {
         }
         MousePoint.MergeFrom(other.MousePoint);
       }
+      if (other.Serial != 0) {
+        Serial = other.Serial;
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -1391,6 +1416,10 @@ namespace Uoservice {
               mousePoint_ = new global::Uoservice.MousePoint();
             }
             input.ReadMessage(mousePoint_);
+            break;
+          }
+          case 24: {
+            Serial = input.ReadUInt32();
             break;
           }
         }

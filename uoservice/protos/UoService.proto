@@ -6,8 +6,8 @@ message Empty {}
 
 message GrpcMobileData {
   string name = 1;
-  uint32 x = 2;
-  uint32 y = 3;
+  float x = 2;
+  float y = 3;
   uint32 race = 4;
   uint32 serial = 5;
 }
@@ -41,6 +41,7 @@ message MousePoint {
 message Actions {
   uint32 action = 1;
   MousePoint mousePoint = 2;
+  uint32 serial = 3;
 }
 
 service UoService {
