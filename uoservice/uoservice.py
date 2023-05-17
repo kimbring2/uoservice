@@ -23,6 +23,11 @@ def parse_response(response):
   #print("response: ", response)
   
   mobile_data = response.mobileList.mobile
+  #print("mobile_data: ", mobile_data)
+
+  if len(mobile_data) == 0:
+    return None
+
   player = mobile_data[0]
   #print('name: {0}, x: {1}, y: {2}'.format(player.name, player.x, player.y))
 
@@ -35,7 +40,10 @@ def parse_response(response):
   screen_image = cv2.resize(screen_image, dim, interpolation = cv2.INTER_AREA)
 
   for mobile in mobile_data:
-    #print('name: {0}, x: {1}, y: {2}, race: {3}\n'.format(mobile.name, mobile.x, mobile.y, mobile.race))
+    print('name: {0}, x: {1}, y: {2}, race: {3}, serial: {4}\n'.format(mobile.name, 
+                                                          mobile.x, mobile.y, 
+                                                          mobile.race,
+                                                          mobile.serial))
 
     if mobile.x >= 1600 or mobile.y >= 1280:
       continue
@@ -53,8 +61,6 @@ def parse_response(response):
     else:
       color = (0, 255, 0)
 
-
-
     screen_image = cv2.rectangle(screen_image, start_point, end_point, color, 2)
     cv2.putText(screen_image,
                 text=mobile.name,
@@ -65,8 +71,8 @@ def parse_response(response):
                 thickness=2,
                 lineType=cv2.LINE_4)
 
-  #cv2.imshow('screen_image', screen_image)
-  #cv2.waitKey(1)
+  cv2.imshow('screen_image', screen_image)
+  cv2.waitKey(1)
   #cv2.destroyAllWindows()
   
   screen_image = None
@@ -77,16 +83,27 @@ def parse_response(response):
 def main():
   for ep in range(0, 10000):
     print("ep: ", ep)
-    res = stub.reset(UoService_pb2.ImageRequest(name='you'))
+
+    stub.WriteAct(UoService_pb2.Actions(action=1, mousePoint=UoService_pb2.MousePoint(x=500, y=500)))
+    stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
+
+    stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
+    res = stub.ReadObs(UoService_pb2.ImageRequest(name='you'))
+
     obs = parse_response(res)
 
     for step in range(0, 100000):
       print("step: ", step)
 
-      res_next = stub.step(UoService_pb2.ImageRequest(name='you'))
+      stub.WriteAct(UoService_pb2.Actions(action=1, mousePoint=UoService_pb2.MousePoint(x=500, y=500)))
+      stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
+      
+      stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
+      res_next = stub.ReadObs(UoService_pb2.ImageRequest(name='you'))
+
       obs_next = parse_response(res_next)
 
-      stub.act(UoService_pb2.Actions(action=1, mousePoint=UoService_pb2.MousePoint(x=500, y=500)))
+      stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
 
       time.sleep(0.5)
 

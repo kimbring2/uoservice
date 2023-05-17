@@ -16,26 +16,41 @@ namespace Uoservice {
     static readonly grpc::Marshaller<global::Uoservice.States> __Marshaller_uoservice_States = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Uoservice.States.Parser.ParseFrom);
     static readonly grpc::Marshaller<global::Uoservice.Actions> __Marshaller_uoservice_Actions = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Uoservice.Actions.Parser.ParseFrom);
     static readonly grpc::Marshaller<global::Uoservice.Empty> __Marshaller_uoservice_Empty = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Uoservice.Empty.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Uoservice.SemaphoreAction> __Marshaller_uoservice_SemaphoreAction = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Uoservice.SemaphoreAction.Parser.ParseFrom);
 
-    static readonly grpc::Method<global::Uoservice.ImageRequest, global::Uoservice.States> __Method_reset = new grpc::Method<global::Uoservice.ImageRequest, global::Uoservice.States>(
+    static readonly grpc::Method<global::Uoservice.ImageRequest, global::Uoservice.States> __Method_Reset = new grpc::Method<global::Uoservice.ImageRequest, global::Uoservice.States>(
         grpc::MethodType.Unary,
         __ServiceName,
-        "reset",
+        "Reset",
         __Marshaller_uoservice_ImageRequest,
         __Marshaller_uoservice_States);
 
-    static readonly grpc::Method<global::Uoservice.ImageRequest, global::Uoservice.States> __Method_step = new grpc::Method<global::Uoservice.ImageRequest, global::Uoservice.States>(
+    static readonly grpc::Method<global::Uoservice.ImageRequest, global::Uoservice.States> __Method_ReadObs = new grpc::Method<global::Uoservice.ImageRequest, global::Uoservice.States>(
         grpc::MethodType.Unary,
         __ServiceName,
-        "step",
+        "ReadObs",
         __Marshaller_uoservice_ImageRequest,
         __Marshaller_uoservice_States);
 
-    static readonly grpc::Method<global::Uoservice.Actions, global::Uoservice.Empty> __Method_act = new grpc::Method<global::Uoservice.Actions, global::Uoservice.Empty>(
+    static readonly grpc::Method<global::Uoservice.Actions, global::Uoservice.Empty> __Method_WriteAct = new grpc::Method<global::Uoservice.Actions, global::Uoservice.Empty>(
         grpc::MethodType.Unary,
         __ServiceName,
-        "act",
+        "WriteAct",
         __Marshaller_uoservice_Actions,
+        __Marshaller_uoservice_Empty);
+
+    static readonly grpc::Method<global::Uoservice.SemaphoreAction, global::Uoservice.Empty> __Method_ActSemaphoreControl = new grpc::Method<global::Uoservice.SemaphoreAction, global::Uoservice.Empty>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "ActSemaphoreControl",
+        __Marshaller_uoservice_SemaphoreAction,
+        __Marshaller_uoservice_Empty);
+
+    static readonly grpc::Method<global::Uoservice.SemaphoreAction, global::Uoservice.Empty> __Method_ObsSemaphoreControl = new grpc::Method<global::Uoservice.SemaphoreAction, global::Uoservice.Empty>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "ObsSemaphoreControl",
+        __Marshaller_uoservice_SemaphoreAction,
         __Marshaller_uoservice_Empty);
 
     /// <summary>Service descriptor</summary>
@@ -47,17 +62,27 @@ namespace Uoservice {
     /// <summary>Base class for server-side implementations of UoService</summary>
     public abstract partial class UoServiceBase
     {
-      public virtual global::System.Threading.Tasks.Task<global::Uoservice.States> reset(global::Uoservice.ImageRequest request, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task<global::Uoservice.States> Reset(global::Uoservice.ImageRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
-      public virtual global::System.Threading.Tasks.Task<global::Uoservice.States> step(global::Uoservice.ImageRequest request, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task<global::Uoservice.States> ReadObs(global::Uoservice.ImageRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
-      public virtual global::System.Threading.Tasks.Task<global::Uoservice.Empty> act(global::Uoservice.Actions request, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task<global::Uoservice.Empty> WriteAct(global::Uoservice.Actions request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      public virtual global::System.Threading.Tasks.Task<global::Uoservice.Empty> ActSemaphoreControl(global::Uoservice.SemaphoreAction request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      public virtual global::System.Threading.Tasks.Task<global::Uoservice.Empty> ObsSemaphoreControl(global::Uoservice.SemaphoreAction request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -87,53 +112,85 @@ namespace Uoservice {
       {
       }
 
-      public virtual global::Uoservice.States reset(global::Uoservice.ImageRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual global::Uoservice.States Reset(global::Uoservice.ImageRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return reset(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return Reset(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual global::Uoservice.States reset(global::Uoservice.ImageRequest request, grpc::CallOptions options)
+      public virtual global::Uoservice.States Reset(global::Uoservice.ImageRequest request, grpc::CallOptions options)
       {
-        return CallInvoker.BlockingUnaryCall(__Method_reset, null, options, request);
+        return CallInvoker.BlockingUnaryCall(__Method_Reset, null, options, request);
       }
-      public virtual grpc::AsyncUnaryCall<global::Uoservice.States> resetAsync(global::Uoservice.ImageRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncUnaryCall<global::Uoservice.States> ResetAsync(global::Uoservice.ImageRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return resetAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return ResetAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual grpc::AsyncUnaryCall<global::Uoservice.States> resetAsync(global::Uoservice.ImageRequest request, grpc::CallOptions options)
+      public virtual grpc::AsyncUnaryCall<global::Uoservice.States> ResetAsync(global::Uoservice.ImageRequest request, grpc::CallOptions options)
       {
-        return CallInvoker.AsyncUnaryCall(__Method_reset, null, options, request);
+        return CallInvoker.AsyncUnaryCall(__Method_Reset, null, options, request);
       }
-      public virtual global::Uoservice.States step(global::Uoservice.ImageRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual global::Uoservice.States ReadObs(global::Uoservice.ImageRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return step(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return ReadObs(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual global::Uoservice.States step(global::Uoservice.ImageRequest request, grpc::CallOptions options)
+      public virtual global::Uoservice.States ReadObs(global::Uoservice.ImageRequest request, grpc::CallOptions options)
       {
-        return CallInvoker.BlockingUnaryCall(__Method_step, null, options, request);
+        return CallInvoker.BlockingUnaryCall(__Method_ReadObs, null, options, request);
       }
-      public virtual grpc::AsyncUnaryCall<global::Uoservice.States> stepAsync(global::Uoservice.ImageRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncUnaryCall<global::Uoservice.States> ReadObsAsync(global::Uoservice.ImageRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return stepAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return ReadObsAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual grpc::AsyncUnaryCall<global::Uoservice.States> stepAsync(global::Uoservice.ImageRequest request, grpc::CallOptions options)
+      public virtual grpc::AsyncUnaryCall<global::Uoservice.States> ReadObsAsync(global::Uoservice.ImageRequest request, grpc::CallOptions options)
       {
-        return CallInvoker.AsyncUnaryCall(__Method_step, null, options, request);
+        return CallInvoker.AsyncUnaryCall(__Method_ReadObs, null, options, request);
       }
-      public virtual global::Uoservice.Empty act(global::Uoservice.Actions request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual global::Uoservice.Empty WriteAct(global::Uoservice.Actions request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return act(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return WriteAct(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual global::Uoservice.Empty act(global::Uoservice.Actions request, grpc::CallOptions options)
+      public virtual global::Uoservice.Empty WriteAct(global::Uoservice.Actions request, grpc::CallOptions options)
       {
-        return CallInvoker.BlockingUnaryCall(__Method_act, null, options, request);
+        return CallInvoker.BlockingUnaryCall(__Method_WriteAct, null, options, request);
       }
-      public virtual grpc::AsyncUnaryCall<global::Uoservice.Empty> actAsync(global::Uoservice.Actions request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncUnaryCall<global::Uoservice.Empty> WriteActAsync(global::Uoservice.Actions request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return actAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return WriteActAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual grpc::AsyncUnaryCall<global::Uoservice.Empty> actAsync(global::Uoservice.Actions request, grpc::CallOptions options)
+      public virtual grpc::AsyncUnaryCall<global::Uoservice.Empty> WriteActAsync(global::Uoservice.Actions request, grpc::CallOptions options)
       {
-        return CallInvoker.AsyncUnaryCall(__Method_act, null, options, request);
+        return CallInvoker.AsyncUnaryCall(__Method_WriteAct, null, options, request);
+      }
+      public virtual global::Uoservice.Empty ActSemaphoreControl(global::Uoservice.SemaphoreAction request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return ActSemaphoreControl(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual global::Uoservice.Empty ActSemaphoreControl(global::Uoservice.SemaphoreAction request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_ActSemaphoreControl, null, options, request);
+      }
+      public virtual grpc::AsyncUnaryCall<global::Uoservice.Empty> ActSemaphoreControlAsync(global::Uoservice.SemaphoreAction request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return ActSemaphoreControlAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual grpc::AsyncUnaryCall<global::Uoservice.Empty> ActSemaphoreControlAsync(global::Uoservice.SemaphoreAction request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_ActSemaphoreControl, null, options, request);
+      }
+      public virtual global::Uoservice.Empty ObsSemaphoreControl(global::Uoservice.SemaphoreAction request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return ObsSemaphoreControl(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual global::Uoservice.Empty ObsSemaphoreControl(global::Uoservice.SemaphoreAction request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_ObsSemaphoreControl, null, options, request);
+      }
+      public virtual grpc::AsyncUnaryCall<global::Uoservice.Empty> ObsSemaphoreControlAsync(global::Uoservice.SemaphoreAction request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return ObsSemaphoreControlAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual grpc::AsyncUnaryCall<global::Uoservice.Empty> ObsSemaphoreControlAsync(global::Uoservice.SemaphoreAction request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_ObsSemaphoreControl, null, options, request);
       }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       protected override UoServiceClient NewInstance(ClientBaseConfiguration configuration)
@@ -147,9 +204,11 @@ namespace Uoservice {
     public static grpc::ServerServiceDefinition BindService(UoServiceBase serviceImpl)
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
-          .AddMethod(__Method_reset, serviceImpl.reset)
-          .AddMethod(__Method_step, serviceImpl.step)
-          .AddMethod(__Method_act, serviceImpl.act).Build();
+          .AddMethod(__Method_Reset, serviceImpl.Reset)
+          .AddMethod(__Method_ReadObs, serviceImpl.ReadObs)
+          .AddMethod(__Method_WriteAct, serviceImpl.WriteAct)
+          .AddMethod(__Method_ActSemaphoreControl, serviceImpl.ActSemaphoreControl)
+          .AddMethod(__Method_ObsSemaphoreControl, serviceImpl.ObsSemaphoreControl).Build();
     }
 
   }

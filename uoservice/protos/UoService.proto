@@ -9,6 +9,11 @@ message GrpcMobileData {
   uint32 x = 2;
   uint32 y = 3;
   uint32 race = 4;
+  uint32 serial = 5;
+}
+
+message SemaphoreAction {
+  string mode = 1;
 }
 
 message GrpcMobileList {
@@ -39,7 +44,9 @@ message Actions {
 }
 
 service UoService {
-  rpc reset (ImageRequest) returns (States);
-  rpc step (ImageRequest) returns (States);
-  rpc act (Actions) returns (Empty);
+  rpc Reset (ImageRequest) returns (States);
+  rpc ReadObs (ImageRequest) returns (States);
+  rpc WriteAct (Actions) returns (Empty);
+  rpc ActSemaphoreControl (SemaphoreAction) returns (Empty);
+  rpc ObsSemaphoreControl (SemaphoreAction) returns (Empty);
 }

@@ -14,19 +14,29 @@ class UoServiceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.reset = channel.unary_unary(
-                '/uoservice.UoService/reset',
+        self.Reset = channel.unary_unary(
+                '/uoservice.UoService/Reset',
                 request_serializer=UoService__pb2.ImageRequest.SerializeToString,
                 response_deserializer=UoService__pb2.States.FromString,
                 )
-        self.step = channel.unary_unary(
-                '/uoservice.UoService/step',
+        self.ReadObs = channel.unary_unary(
+                '/uoservice.UoService/ReadObs',
                 request_serializer=UoService__pb2.ImageRequest.SerializeToString,
                 response_deserializer=UoService__pb2.States.FromString,
                 )
-        self.act = channel.unary_unary(
-                '/uoservice.UoService/act',
+        self.WriteAct = channel.unary_unary(
+                '/uoservice.UoService/WriteAct',
                 request_serializer=UoService__pb2.Actions.SerializeToString,
+                response_deserializer=UoService__pb2.Empty.FromString,
+                )
+        self.ActSemaphoreControl = channel.unary_unary(
+                '/uoservice.UoService/ActSemaphoreControl',
+                request_serializer=UoService__pb2.SemaphoreAction.SerializeToString,
+                response_deserializer=UoService__pb2.Empty.FromString,
+                )
+        self.ObsSemaphoreControl = channel.unary_unary(
+                '/uoservice.UoService/ObsSemaphoreControl',
+                request_serializer=UoService__pb2.SemaphoreAction.SerializeToString,
                 response_deserializer=UoService__pb2.Empty.FromString,
                 )
 
@@ -34,19 +44,31 @@ class UoServiceStub(object):
 class UoServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def reset(self, request, context):
+    def Reset(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def step(self, request, context):
+    def ReadObs(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def act(self, request, context):
+    def WriteAct(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ActSemaphoreControl(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ObsSemaphoreControl(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -55,19 +77,29 @@ class UoServiceServicer(object):
 
 def add_UoServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'reset': grpc.unary_unary_rpc_method_handler(
-                    servicer.reset,
+            'Reset': grpc.unary_unary_rpc_method_handler(
+                    servicer.Reset,
                     request_deserializer=UoService__pb2.ImageRequest.FromString,
                     response_serializer=UoService__pb2.States.SerializeToString,
             ),
-            'step': grpc.unary_unary_rpc_method_handler(
-                    servicer.step,
+            'ReadObs': grpc.unary_unary_rpc_method_handler(
+                    servicer.ReadObs,
                     request_deserializer=UoService__pb2.ImageRequest.FromString,
                     response_serializer=UoService__pb2.States.SerializeToString,
             ),
-            'act': grpc.unary_unary_rpc_method_handler(
-                    servicer.act,
+            'WriteAct': grpc.unary_unary_rpc_method_handler(
+                    servicer.WriteAct,
                     request_deserializer=UoService__pb2.Actions.FromString,
+                    response_serializer=UoService__pb2.Empty.SerializeToString,
+            ),
+            'ActSemaphoreControl': grpc.unary_unary_rpc_method_handler(
+                    servicer.ActSemaphoreControl,
+                    request_deserializer=UoService__pb2.SemaphoreAction.FromString,
+                    response_serializer=UoService__pb2.Empty.SerializeToString,
+            ),
+            'ObsSemaphoreControl': grpc.unary_unary_rpc_method_handler(
+                    servicer.ObsSemaphoreControl,
+                    request_deserializer=UoService__pb2.SemaphoreAction.FromString,
                     response_serializer=UoService__pb2.Empty.SerializeToString,
             ),
     }
@@ -81,7 +113,7 @@ class UoService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def reset(request,
+    def Reset(request,
             target,
             options=(),
             channel_credentials=None,
@@ -91,14 +123,14 @@ class UoService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/uoservice.UoService/reset',
+        return grpc.experimental.unary_unary(request, target, '/uoservice.UoService/Reset',
             UoService__pb2.ImageRequest.SerializeToString,
             UoService__pb2.States.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def step(request,
+    def ReadObs(request,
             target,
             options=(),
             channel_credentials=None,
@@ -108,14 +140,14 @@ class UoService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/uoservice.UoService/step',
+        return grpc.experimental.unary_unary(request, target, '/uoservice.UoService/ReadObs',
             UoService__pb2.ImageRequest.SerializeToString,
             UoService__pb2.States.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def act(request,
+    def WriteAct(request,
             target,
             options=(),
             channel_credentials=None,
@@ -125,8 +157,42 @@ class UoService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/uoservice.UoService/act',
+        return grpc.experimental.unary_unary(request, target, '/uoservice.UoService/WriteAct',
             UoService__pb2.Actions.SerializeToString,
+            UoService__pb2.Empty.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ActSemaphoreControl(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/uoservice.UoService/ActSemaphoreControl',
+            UoService__pb2.SemaphoreAction.SerializeToString,
+            UoService__pb2.Empty.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ObsSemaphoreControl(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/uoservice.UoService/ObsSemaphoreControl',
+            UoService__pb2.SemaphoreAction.SerializeToString,
             UoService__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

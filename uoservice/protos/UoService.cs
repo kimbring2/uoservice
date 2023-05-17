@@ -24,25 +24,30 @@ namespace Uoservice {
     static UoServiceReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Cg9Vb1NlcnZpY2UucHJvdG8SCXVvc2VydmljZSIHCgVFbXB0eSJCCg5HcnBj",
+            "Cg9Vb1NlcnZpY2UucHJvdG8SCXVvc2VydmljZSIHCgVFbXB0eSJSCg5HcnBj",
             "TW9iaWxlRGF0YRIMCgRuYW1lGAEgASgJEgkKAXgYAiABKA0SCQoBeRgDIAEo",
-            "DRIMCgRyYWNlGAQgASgNIjsKDkdycGNNb2JpbGVMaXN0EikKBm1vYmlsZRgB",
-            "IAMoCzIZLnVvc2VydmljZS5HcnBjTW9iaWxlRGF0YSIcCgxJbWFnZVJlcXVl",
-            "c3QSDAoEbmFtZRgBIAEoCSIcCgtTY3JlZW5JbWFnZRINCgVpbWFnZRgBIAEo",
-            "DCJkCgZTdGF0ZXMSKwoLc2NyZWVuSW1hZ2UYASABKAsyFi51b3NlcnZpY2Uu",
-            "U2NyZWVuSW1hZ2USLQoKbW9iaWxlTGlzdBgCIAEoCzIZLnVvc2VydmljZS5H",
-            "cnBjTW9iaWxlTGlzdCIiCgpNb3VzZVBvaW50EgkKAXgYASABKA0SCQoBeRgC",
-            "IAEoDSJECgdBY3Rpb25zEg4KBmFjdGlvbhgBIAEoDRIpCgptb3VzZVBvaW50",
-            "GAIgASgLMhUudW9zZXJ2aWNlLk1vdXNlUG9pbnQyoQEKCVVvU2VydmljZRIz",
-            "CgVyZXNldBIXLnVvc2VydmljZS5JbWFnZVJlcXVlc3QaES51b3NlcnZpY2Uu",
-            "U3RhdGVzEjIKBHN0ZXASFy51b3NlcnZpY2UuSW1hZ2VSZXF1ZXN0GhEudW9z",
-            "ZXJ2aWNlLlN0YXRlcxIrCgNhY3QSEi51b3NlcnZpY2UuQWN0aW9ucxoQLnVv",
-            "c2VydmljZS5FbXB0eWIGcHJvdG8z"));
+            "DRIMCgRyYWNlGAQgASgNEg4KBnNlcmlhbBgFIAEoDSIfCg9TZW1hcGhvcmVB",
+            "Y3Rpb24SDAoEbW9kZRgBIAEoCSI7Cg5HcnBjTW9iaWxlTGlzdBIpCgZtb2Jp",
+            "bGUYASADKAsyGS51b3NlcnZpY2UuR3JwY01vYmlsZURhdGEiHAoMSW1hZ2VS",
+            "ZXF1ZXN0EgwKBG5hbWUYASABKAkiHAoLU2NyZWVuSW1hZ2USDQoFaW1hZ2UY",
+            "ASABKAwiZAoGU3RhdGVzEisKC3NjcmVlbkltYWdlGAEgASgLMhYudW9zZXJ2",
+            "aWNlLlNjcmVlbkltYWdlEi0KCm1vYmlsZUxpc3QYAiABKAsyGS51b3NlcnZp",
+            "Y2UuR3JwY01vYmlsZUxpc3QiIgoKTW91c2VQb2ludBIJCgF4GAEgASgNEgkK",
+            "AXkYAiABKA0iRAoHQWN0aW9ucxIOCgZhY3Rpb24YASABKA0SKQoKbW91c2VQ",
+            "b2ludBgCIAEoCzIVLnVvc2VydmljZS5Nb3VzZVBvaW50MrMCCglVb1NlcnZp",
+            "Y2USMwoFUmVzZXQSFy51b3NlcnZpY2UuSW1hZ2VSZXF1ZXN0GhEudW9zZXJ2",
+            "aWNlLlN0YXRlcxI1CgdSZWFkT2JzEhcudW9zZXJ2aWNlLkltYWdlUmVxdWVz",
+            "dBoRLnVvc2VydmljZS5TdGF0ZXMSMAoIV3JpdGVBY3QSEi51b3NlcnZpY2Uu",
+            "QWN0aW9ucxoQLnVvc2VydmljZS5FbXB0eRJDChNBY3RTZW1hcGhvcmVDb250",
+            "cm9sEhoudW9zZXJ2aWNlLlNlbWFwaG9yZUFjdGlvbhoQLnVvc2VydmljZS5F",
+            "bXB0eRJDChNPYnNTZW1hcGhvcmVDb250cm9sEhoudW9zZXJ2aWNlLlNlbWFw",
+            "aG9yZUFjdGlvbhoQLnVvc2VydmljZS5FbXB0eWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Empty), global::Uoservice.Empty.Parser, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcMobileData), global::Uoservice.GrpcMobileData.Parser, new[]{ "Name", "X", "Y", "Race" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcMobileData), global::Uoservice.GrpcMobileData.Parser, new[]{ "Name", "X", "Y", "Race", "Serial" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.SemaphoreAction), global::Uoservice.SemaphoreAction.Parser, new[]{ "Mode" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcMobileList), global::Uoservice.GrpcMobileList.Parser, new[]{ "Mobile" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.ImageRequest), global::Uoservice.ImageRequest.Parser, new[]{ "Name" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.ScreenImage), global::Uoservice.ScreenImage.Parser, new[]{ "Image" }, null, null, null),
@@ -185,6 +190,7 @@ namespace Uoservice {
       x_ = other.x_;
       y_ = other.y_;
       race_ = other.race_;
+      serial_ = other.serial_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -237,6 +243,17 @@ namespace Uoservice {
       }
     }
 
+    /// <summary>Field number for the "serial" field.</summary>
+    public const int SerialFieldNumber = 5;
+    private uint serial_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Serial {
+      get { return serial_; }
+      set {
+        serial_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as GrpcMobileData);
@@ -254,6 +271,7 @@ namespace Uoservice {
       if (X != other.X) return false;
       if (Y != other.Y) return false;
       if (Race != other.Race) return false;
+      if (Serial != other.Serial) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -264,6 +282,7 @@ namespace Uoservice {
       if (X != 0) hash ^= X.GetHashCode();
       if (Y != 0) hash ^= Y.GetHashCode();
       if (Race != 0) hash ^= Race.GetHashCode();
+      if (Serial != 0) hash ^= Serial.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -293,6 +312,10 @@ namespace Uoservice {
         output.WriteRawTag(32);
         output.WriteUInt32(Race);
       }
+      if (Serial != 0) {
+        output.WriteRawTag(40);
+        output.WriteUInt32(Serial);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -312,6 +335,9 @@ namespace Uoservice {
       }
       if (Race != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Race);
+      }
+      if (Serial != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Serial);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -335,6 +361,9 @@ namespace Uoservice {
       }
       if (other.Race != 0) {
         Race = other.Race;
+      }
+      if (other.Serial != 0) {
+        Serial = other.Serial;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -363,6 +392,139 @@ namespace Uoservice {
             Race = input.ReadUInt32();
             break;
           }
+          case 40: {
+            Serial = input.ReadUInt32();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class SemaphoreAction : pb::IMessage<SemaphoreAction> {
+    private static readonly pb::MessageParser<SemaphoreAction> _parser = new pb::MessageParser<SemaphoreAction>(() => new SemaphoreAction());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<SemaphoreAction> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[2]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SemaphoreAction() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SemaphoreAction(SemaphoreAction other) : this() {
+      mode_ = other.mode_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public SemaphoreAction Clone() {
+      return new SemaphoreAction(this);
+    }
+
+    /// <summary>Field number for the "mode" field.</summary>
+    public const int ModeFieldNumber = 1;
+    private string mode_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Mode {
+      get { return mode_; }
+      set {
+        mode_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as SemaphoreAction);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(SemaphoreAction other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Mode != other.Mode) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Mode.Length != 0) hash ^= Mode.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Mode.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Mode);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Mode.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Mode);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(SemaphoreAction other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Mode.Length != 0) {
+        Mode = other.Mode;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            Mode = input.ReadString();
+            break;
+          }
         }
       }
     }
@@ -377,7 +539,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[2]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -498,7 +660,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[3]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -627,7 +789,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[4]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -756,7 +918,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[5]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -925,7 +1087,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[6]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[7]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1082,7 +1244,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[7]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[8]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
