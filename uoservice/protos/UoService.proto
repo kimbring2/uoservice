@@ -28,9 +28,15 @@ message ScreenImage {
   bytes image = 1;
 }
 
+message Rewards {
+  float attackMonster = 1;
+  float killMonster = 2;
+}
+
 message States {
   ScreenImage screenImage = 1;
   GrpcMobileList mobileList = 2;
+  Rewards rewards = 3;
 }
 
 message MousePoint {
