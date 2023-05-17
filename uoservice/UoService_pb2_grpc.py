@@ -16,12 +16,12 @@ class UoServiceStub(object):
         """
         self.Reset = channel.unary_unary(
                 '/uoservice.UoService/Reset',
-                request_serializer=UoService__pb2.ImageRequest.SerializeToString,
+                request_serializer=UoService__pb2.Config.SerializeToString,
                 response_deserializer=UoService__pb2.States.FromString,
                 )
         self.ReadObs = channel.unary_unary(
                 '/uoservice.UoService/ReadObs',
-                request_serializer=UoService__pb2.ImageRequest.SerializeToString,
+                request_serializer=UoService__pb2.Config.SerializeToString,
                 response_deserializer=UoService__pb2.States.FromString,
                 )
         self.WriteAct = channel.unary_unary(
@@ -79,12 +79,12 @@ def add_UoServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'Reset': grpc.unary_unary_rpc_method_handler(
                     servicer.Reset,
-                    request_deserializer=UoService__pb2.ImageRequest.FromString,
+                    request_deserializer=UoService__pb2.Config.FromString,
                     response_serializer=UoService__pb2.States.SerializeToString,
             ),
             'ReadObs': grpc.unary_unary_rpc_method_handler(
                     servicer.ReadObs,
-                    request_deserializer=UoService__pb2.ImageRequest.FromString,
+                    request_deserializer=UoService__pb2.Config.FromString,
                     response_serializer=UoService__pb2.States.SerializeToString,
             ),
             'WriteAct': grpc.unary_unary_rpc_method_handler(
@@ -124,7 +124,7 @@ class UoService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/uoservice.UoService/Reset',
-            UoService__pb2.ImageRequest.SerializeToString,
+            UoService__pb2.Config.SerializeToString,
             UoService__pb2.States.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -141,7 +141,7 @@ class UoService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/uoservice.UoService/ReadObs',
-            UoService__pb2.ImageRequest.SerializeToString,
+            UoService__pb2.Config.SerializeToString,
             UoService__pb2.States.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fUoService.proto\x12\tuoservice\"\x07\n\x05\x45mpty\"R\n\x0eGrpcMobileData\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\t\n\x01x\x18\x02 \x01(\x02\x12\t\n\x01y\x18\x03 \x01(\x02\x12\x0c\n\x04race\x18\x04 \x01(\r\x12\x0e\n\x06serial\x18\x05 \x01(\r\"\x1f\n\x0fSemaphoreAction\x12\x0c\n\x04mode\x18\x01 \x01(\t\";\n\x0eGrpcMobileList\x12)\n\x06mobile\x18\x01 \x03(\x0b\x32\x19.uoservice.GrpcMobileData\"\x1c\n\x0cImageRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1c\n\x0bScreenImage\x12\r\n\x05image\x18\x01 \x01(\x0c\"5\n\x07Rewards\x12\x15\n\rattackMonster\x18\x01 \x01(\x02\x12\x13\n\x0bkillMonster\x18\x02 \x01(\x02\"\x89\x01\n\x06States\x12+\n\x0bscreenImage\x18\x01 \x01(\x0b\x32\x16.uoservice.ScreenImage\x12-\n\nmobileList\x18\x02 \x01(\x0b\x32\x19.uoservice.GrpcMobileList\x12#\n\x07rewards\x18\x03 \x01(\x0b\x32\x12.uoservice.Rewards\"\"\n\nMousePoint\x12\t\n\x01x\x18\x01 \x01(\r\x12\t\n\x01y\x18\x02 \x01(\r\"T\n\x07\x41\x63tions\x12\x0e\n\x06\x61\x63tion\x18\x01 \x01(\r\x12)\n\nmousePoint\x18\x02 \x01(\x0b\x32\x15.uoservice.MousePoint\x12\x0e\n\x06serial\x18\x03 \x01(\r2\xb3\x02\n\tUoService\x12\x33\n\x05Reset\x12\x17.uoservice.ImageRequest\x1a\x11.uoservice.States\x12\x35\n\x07ReadObs\x12\x17.uoservice.ImageRequest\x1a\x11.uoservice.States\x12\x30\n\x08WriteAct\x12\x12.uoservice.Actions\x1a\x10.uoservice.Empty\x12\x43\n\x13\x41\x63tSemaphoreControl\x12\x1a.uoservice.SemaphoreAction\x1a\x10.uoservice.Empty\x12\x43\n\x13ObsSemaphoreControl\x12\x1a.uoservice.SemaphoreAction\x1a\x10.uoservice.Emptyb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fUoService.proto\x12\tuoservice\"\x07\n\x05\x45mpty\"R\n\x0eGrpcMobileData\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\t\n\x01x\x18\x02 \x01(\x02\x12\t\n\x01y\x18\x03 \x01(\x02\x12\x0c\n\x04race\x18\x04 \x01(\r\x12\x0e\n\x06serial\x18\x05 \x01(\r\"\x1f\n\x0fSemaphoreAction\x12\x0c\n\x04mode\x18\x01 \x01(\t\";\n\x0eGrpcMobileList\x12)\n\x06mobile\x18\x01 \x03(\x0b\x32\x19.uoservice.GrpcMobileData\"\x16\n\x06\x43onfig\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1c\n\x0bScreenImage\x12\r\n\x05image\x18\x01 \x01(\x0c\"5\n\x07Rewards\x12\x15\n\rattackMonster\x18\x01 \x01(\x02\x12\x13\n\x0bkillMonster\x18\x02 \x01(\x02\"\x89\x01\n\x06States\x12+\n\x0bscreenImage\x18\x01 \x01(\x0b\x32\x16.uoservice.ScreenImage\x12-\n\nmobileList\x18\x02 \x01(\x0b\x32\x19.uoservice.GrpcMobileList\x12#\n\x07rewards\x18\x03 \x01(\x0b\x32\x12.uoservice.Rewards\"\"\n\rWalkDirection\x12\x11\n\tdirection\x18\x01 \x01(\r\"d\n\x07\x41\x63tions\x12\x12\n\nactionType\x18\x01 \x01(\r\x12\x14\n\x0cmobileSerial\x18\x02 \x01(\r\x12/\n\rwalkDirection\x18\x03 \x01(\x0b\x32\x18.uoservice.WalkDirection2\xa7\x02\n\tUoService\x12-\n\x05Reset\x12\x11.uoservice.Config\x1a\x11.uoservice.States\x12/\n\x07ReadObs\x12\x11.uoservice.Config\x1a\x11.uoservice.States\x12\x30\n\x08WriteAct\x12\x12.uoservice.Actions\x1a\x10.uoservice.Empty\x12\x43\n\x13\x41\x63tSemaphoreControl\x12\x1a.uoservice.SemaphoreAction\x1a\x10.uoservice.Empty\x12\x43\n\x13ObsSemaphoreControl\x12\x1a.uoservice.SemaphoreAction\x1a\x10.uoservice.Emptyb\x06proto3')
 
 
 
@@ -22,11 +22,11 @@ _EMPTY = DESCRIPTOR.message_types_by_name['Empty']
 _GRPCMOBILEDATA = DESCRIPTOR.message_types_by_name['GrpcMobileData']
 _SEMAPHOREACTION = DESCRIPTOR.message_types_by_name['SemaphoreAction']
 _GRPCMOBILELIST = DESCRIPTOR.message_types_by_name['GrpcMobileList']
-_IMAGEREQUEST = DESCRIPTOR.message_types_by_name['ImageRequest']
+_CONFIG = DESCRIPTOR.message_types_by_name['Config']
 _SCREENIMAGE = DESCRIPTOR.message_types_by_name['ScreenImage']
 _REWARDS = DESCRIPTOR.message_types_by_name['Rewards']
 _STATES = DESCRIPTOR.message_types_by_name['States']
-_MOUSEPOINT = DESCRIPTOR.message_types_by_name['MousePoint']
+_WALKDIRECTION = DESCRIPTOR.message_types_by_name['WalkDirection']
 _ACTIONS = DESCRIPTOR.message_types_by_name['Actions']
 Empty = _reflection.GeneratedProtocolMessageType('Empty', (_message.Message,), {
   'DESCRIPTOR' : _EMPTY,
@@ -56,12 +56,12 @@ GrpcMobileList = _reflection.GeneratedProtocolMessageType('GrpcMobileList', (_me
   })
 _sym_db.RegisterMessage(GrpcMobileList)
 
-ImageRequest = _reflection.GeneratedProtocolMessageType('ImageRequest', (_message.Message,), {
-  'DESCRIPTOR' : _IMAGEREQUEST,
+Config = _reflection.GeneratedProtocolMessageType('Config', (_message.Message,), {
+  'DESCRIPTOR' : _CONFIG,
   '__module__' : 'UoService_pb2'
-  # @@protoc_insertion_point(class_scope:uoservice.ImageRequest)
+  # @@protoc_insertion_point(class_scope:uoservice.Config)
   })
-_sym_db.RegisterMessage(ImageRequest)
+_sym_db.RegisterMessage(Config)
 
 ScreenImage = _reflection.GeneratedProtocolMessageType('ScreenImage', (_message.Message,), {
   'DESCRIPTOR' : _SCREENIMAGE,
@@ -84,12 +84,12 @@ States = _reflection.GeneratedProtocolMessageType('States', (_message.Message,),
   })
 _sym_db.RegisterMessage(States)
 
-MousePoint = _reflection.GeneratedProtocolMessageType('MousePoint', (_message.Message,), {
-  'DESCRIPTOR' : _MOUSEPOINT,
+WalkDirection = _reflection.GeneratedProtocolMessageType('WalkDirection', (_message.Message,), {
+  'DESCRIPTOR' : _WALKDIRECTION,
   '__module__' : 'UoService_pb2'
-  # @@protoc_insertion_point(class_scope:uoservice.MousePoint)
+  # @@protoc_insertion_point(class_scope:uoservice.WalkDirection)
   })
-_sym_db.RegisterMessage(MousePoint)
+_sym_db.RegisterMessage(WalkDirection)
 
 Actions = _reflection.GeneratedProtocolMessageType('Actions', (_message.Message,), {
   'DESCRIPTOR' : _ACTIONS,
@@ -110,18 +110,18 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _SEMAPHOREACTION._serialized_end=154
   _GRPCMOBILELIST._serialized_start=156
   _GRPCMOBILELIST._serialized_end=215
-  _IMAGEREQUEST._serialized_start=217
-  _IMAGEREQUEST._serialized_end=245
-  _SCREENIMAGE._serialized_start=247
-  _SCREENIMAGE._serialized_end=275
-  _REWARDS._serialized_start=277
-  _REWARDS._serialized_end=330
-  _STATES._serialized_start=333
-  _STATES._serialized_end=470
-  _MOUSEPOINT._serialized_start=472
-  _MOUSEPOINT._serialized_end=506
-  _ACTIONS._serialized_start=508
-  _ACTIONS._serialized_end=592
-  _UOSERVICE._serialized_start=595
-  _UOSERVICE._serialized_end=902
+  _CONFIG._serialized_start=217
+  _CONFIG._serialized_end=239
+  _SCREENIMAGE._serialized_start=241
+  _SCREENIMAGE._serialized_end=269
+  _REWARDS._serialized_start=271
+  _REWARDS._serialized_end=324
+  _STATES._serialized_start=327
+  _STATES._serialized_end=464
+  _WALKDIRECTION._serialized_start=466
+  _WALKDIRECTION._serialized_end=500
+  _ACTIONS._serialized_start=502
+  _ACTIONS._serialized_end=602
+  _UOSERVICE._serialized_start=605
+  _UOSERVICE._serialized_end=900
 # @@protoc_insertion_point(module_scope)

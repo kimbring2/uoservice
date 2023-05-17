@@ -20,7 +20,7 @@ message GrpcMobileList {
   repeated GrpcMobileData mobile = 1;
 }
 
-message ImageRequest {
+message Config {
   string name = 1;
 }
 
@@ -39,20 +39,19 @@ message States {
   Rewards rewards = 3;
 }
 
-message MousePoint {
-  uint32 x = 1;
-  uint32 y = 2;
+message WalkDirection {
+  uint32 direction = 1;
 }
 
 message Actions {
-  uint32 action = 1;
-  MousePoint mousePoint = 2;
-  uint32 serial = 3;
+  uint32 actionType = 1;
+  uint32 mobileSerial = 2;
+  WalkDirection walkDirection = 3;
 }
 
 service UoService {
-  rpc Reset (ImageRequest) returns (States);
-  rpc ReadObs (ImageRequest) returns (States);
+  rpc Reset (Config) returns (States);
+  rpc ReadObs (Config) returns (States);
   rpc WriteAct (Actions) returns (Empty);
   rpc ActSemaphoreControl (SemaphoreAction) returns (Empty);
   rpc ObsSemaphoreControl (SemaphoreAction) returns (Empty);

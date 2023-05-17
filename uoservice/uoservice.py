@@ -16,12 +16,13 @@ import cv2
 import random
 
 
-grpc_port = 50052
+grpc_port = 50051
 channel = grpc.insecure_channel('localhost:' + str(grpc_port))
 stub = UoService_pb2_grpc.UoServiceStub(channel)
 
 selected_target_serial = None
 player_serial = None
+
 
 def parse_response(response):
   global selected_target_serial
@@ -100,14 +101,14 @@ def main():
   for ep in range(0, 10000):
     print("ep: ", ep)
 
-    stub.WriteAct(UoService_pb2.Actions(action=1, 
-                                        mousePoint=UoService_pb2.MousePoint(x=500, y=500),
-                                        serial=123))
+    stub.WriteAct(UoService_pb2.Actions(actionType=0, 
+                                        mobileSerial=1,
+                                        walkDirection=UoService_pb2.WalkDirection(direction=1)))
     
     stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
     stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
 
-    res = stub.ReadObs(UoService_pb2.ImageRequest(name='you'))
+    res = stub.ReadObs(UoService_pb2.Config(name='you'))
 
     mobile_dict = parse_response(res)
 
@@ -129,15 +130,15 @@ def main():
         target_y = 500
         target_serial = 1
 
-      stub.WriteAct(UoService_pb2.Actions(action=2, 
-                                          mousePoint=UoService_pb2.MousePoint(x=target_x, y=target_y),
-                                          serial=target_serial))
+      stub.WriteAct(UoService_pb2.Actions(actionType=0, 
+                                          mobileSerial=target_serial,
+                                          walkDirection=UoService_pb2.WalkDirection(direction=2)))
       
       stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
 
       stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
 
-      res_next = stub.ReadObs(UoService_pb2.ImageRequest(name='you'))
+      res_next = stub.ReadObs(UoService_pb2.Config(name='you'))
 
       mobile_dict = parse_response(res_next)
 

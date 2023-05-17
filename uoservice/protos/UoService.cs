@@ -28,23 +28,23 @@ namespace Uoservice {
             "TW9iaWxlRGF0YRIMCgRuYW1lGAEgASgJEgkKAXgYAiABKAISCQoBeRgDIAEo",
             "AhIMCgRyYWNlGAQgASgNEg4KBnNlcmlhbBgFIAEoDSIfCg9TZW1hcGhvcmVB",
             "Y3Rpb24SDAoEbW9kZRgBIAEoCSI7Cg5HcnBjTW9iaWxlTGlzdBIpCgZtb2Jp",
-            "bGUYASADKAsyGS51b3NlcnZpY2UuR3JwY01vYmlsZURhdGEiHAoMSW1hZ2VS",
-            "ZXF1ZXN0EgwKBG5hbWUYASABKAkiHAoLU2NyZWVuSW1hZ2USDQoFaW1hZ2UY",
-            "ASABKAwiNQoHUmV3YXJkcxIVCg1hdHRhY2tNb25zdGVyGAEgASgCEhMKC2tp",
-            "bGxNb25zdGVyGAIgASgCIokBCgZTdGF0ZXMSKwoLc2NyZWVuSW1hZ2UYASAB",
-            "KAsyFi51b3NlcnZpY2UuU2NyZWVuSW1hZ2USLQoKbW9iaWxlTGlzdBgCIAEo",
-            "CzIZLnVvc2VydmljZS5HcnBjTW9iaWxlTGlzdBIjCgdyZXdhcmRzGAMgASgL",
-            "MhIudW9zZXJ2aWNlLlJld2FyZHMiIgoKTW91c2VQb2ludBIJCgF4GAEgASgN",
-            "EgkKAXkYAiABKA0iVAoHQWN0aW9ucxIOCgZhY3Rpb24YASABKA0SKQoKbW91",
-            "c2VQb2ludBgCIAEoCzIVLnVvc2VydmljZS5Nb3VzZVBvaW50Eg4KBnNlcmlh",
-            "bBgDIAEoDTKzAgoJVW9TZXJ2aWNlEjMKBVJlc2V0EhcudW9zZXJ2aWNlLklt",
-            "YWdlUmVxdWVzdBoRLnVvc2VydmljZS5TdGF0ZXMSNQoHUmVhZE9icxIXLnVv",
-            "c2VydmljZS5JbWFnZVJlcXVlc3QaES51b3NlcnZpY2UuU3RhdGVzEjAKCFdy",
-            "aXRlQWN0EhIudW9zZXJ2aWNlLkFjdGlvbnMaEC51b3NlcnZpY2UuRW1wdHkS",
-            "QwoTQWN0U2VtYXBob3JlQ29udHJvbBIaLnVvc2VydmljZS5TZW1hcGhvcmVB",
-            "Y3Rpb24aEC51b3NlcnZpY2UuRW1wdHkSQwoTT2JzU2VtYXBob3JlQ29udHJv",
-            "bBIaLnVvc2VydmljZS5TZW1hcGhvcmVBY3Rpb24aEC51b3NlcnZpY2UuRW1w",
-            "dHliBnByb3RvMw=="));
+            "bGUYASADKAsyGS51b3NlcnZpY2UuR3JwY01vYmlsZURhdGEiFgoGQ29uZmln",
+            "EgwKBG5hbWUYASABKAkiHAoLU2NyZWVuSW1hZ2USDQoFaW1hZ2UYASABKAwi",
+            "NQoHUmV3YXJkcxIVCg1hdHRhY2tNb25zdGVyGAEgASgCEhMKC2tpbGxNb25z",
+            "dGVyGAIgASgCIokBCgZTdGF0ZXMSKwoLc2NyZWVuSW1hZ2UYASABKAsyFi51",
+            "b3NlcnZpY2UuU2NyZWVuSW1hZ2USLQoKbW9iaWxlTGlzdBgCIAEoCzIZLnVv",
+            "c2VydmljZS5HcnBjTW9iaWxlTGlzdBIjCgdyZXdhcmRzGAMgASgLMhIudW9z",
+            "ZXJ2aWNlLlJld2FyZHMiIgoNV2Fsa0RpcmVjdGlvbhIRCglkaXJlY3Rpb24Y",
+            "ASABKA0iZAoHQWN0aW9ucxISCgphY3Rpb25UeXBlGAEgASgNEhQKDG1vYmls",
+            "ZVNlcmlhbBgCIAEoDRIvCg13YWxrRGlyZWN0aW9uGAMgASgLMhgudW9zZXJ2",
+            "aWNlLldhbGtEaXJlY3Rpb24ypwIKCVVvU2VydmljZRItCgVSZXNldBIRLnVv",
+            "c2VydmljZS5Db25maWcaES51b3NlcnZpY2UuU3RhdGVzEi8KB1JlYWRPYnMS",
+            "ES51b3NlcnZpY2UuQ29uZmlnGhEudW9zZXJ2aWNlLlN0YXRlcxIwCghXcml0",
+            "ZUFjdBISLnVvc2VydmljZS5BY3Rpb25zGhAudW9zZXJ2aWNlLkVtcHR5EkMK",
+            "E0FjdFNlbWFwaG9yZUNvbnRyb2wSGi51b3NlcnZpY2UuU2VtYXBob3JlQWN0",
+            "aW9uGhAudW9zZXJ2aWNlLkVtcHR5EkMKE09ic1NlbWFwaG9yZUNvbnRyb2wS",
+            "Gi51b3NlcnZpY2UuU2VtYXBob3JlQWN0aW9uGhAudW9zZXJ2aWNlLkVtcHR5",
+            "YgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -52,12 +52,12 @@ namespace Uoservice {
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcMobileData), global::Uoservice.GrpcMobileData.Parser, new[]{ "Name", "X", "Y", "Race", "Serial" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.SemaphoreAction), global::Uoservice.SemaphoreAction.Parser, new[]{ "Mode" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcMobileList), global::Uoservice.GrpcMobileList.Parser, new[]{ "Mobile" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.ImageRequest), global::Uoservice.ImageRequest.Parser, new[]{ "Name" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Config), global::Uoservice.Config.Parser, new[]{ "Name" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.ScreenImage), global::Uoservice.ScreenImage.Parser, new[]{ "Image" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Rewards), global::Uoservice.Rewards.Parser, new[]{ "AttackMonster", "KillMonster" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.States), global::Uoservice.States.Parser, new[]{ "ScreenImage", "MobileList", "Rewards" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.MousePoint), global::Uoservice.MousePoint.Parser, new[]{ "X", "Y" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Actions), global::Uoservice.Actions.Parser, new[]{ "Action", "MousePoint", "Serial" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.WalkDirection), global::Uoservice.WalkDirection.Parser, new[]{ "Direction" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Actions), global::Uoservice.Actions.Parser, new[]{ "ActionType", "MobileSerial", "WalkDirection" }, null, null, null)
           }));
     }
     #endregion
@@ -656,11 +656,11 @@ namespace Uoservice {
 
   }
 
-  public sealed partial class ImageRequest : pb::IMessage<ImageRequest> {
-    private static readonly pb::MessageParser<ImageRequest> _parser = new pb::MessageParser<ImageRequest>(() => new ImageRequest());
+  public sealed partial class Config : pb::IMessage<Config> {
+    private static readonly pb::MessageParser<Config> _parser = new pb::MessageParser<Config>(() => new Config());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<ImageRequest> Parser { get { return _parser; } }
+    public static pb::MessageParser<Config> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -673,21 +673,21 @@ namespace Uoservice {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ImageRequest() {
+    public Config() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ImageRequest(ImageRequest other) : this() {
+    public Config(Config other) : this() {
       name_ = other.name_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ImageRequest Clone() {
-      return new ImageRequest(this);
+    public Config Clone() {
+      return new Config(this);
     }
 
     /// <summary>Field number for the "name" field.</summary>
@@ -703,11 +703,11 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as ImageRequest);
+      return Equals(other as Config);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(ImageRequest other) {
+    public bool Equals(Config other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -757,7 +757,7 @@ namespace Uoservice {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(ImageRequest other) {
+    public void MergeFrom(Config other) {
       if (other == null) {
         return;
       }
@@ -1274,11 +1274,11 @@ namespace Uoservice {
 
   }
 
-  public sealed partial class MousePoint : pb::IMessage<MousePoint> {
-    private static readonly pb::MessageParser<MousePoint> _parser = new pb::MessageParser<MousePoint>(() => new MousePoint());
+  public sealed partial class WalkDirection : pb::IMessage<WalkDirection> {
+    private static readonly pb::MessageParser<WalkDirection> _parser = new pb::MessageParser<WalkDirection>(() => new WalkDirection());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<MousePoint> Parser { get { return _parser; } }
+    public static pb::MessageParser<WalkDirection> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -1291,69 +1291,55 @@ namespace Uoservice {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MousePoint() {
+    public WalkDirection() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MousePoint(MousePoint other) : this() {
-      x_ = other.x_;
-      y_ = other.y_;
+    public WalkDirection(WalkDirection other) : this() {
+      direction_ = other.direction_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MousePoint Clone() {
-      return new MousePoint(this);
+    public WalkDirection Clone() {
+      return new WalkDirection(this);
     }
 
-    /// <summary>Field number for the "x" field.</summary>
-    public const int XFieldNumber = 1;
-    private uint x_;
+    /// <summary>Field number for the "direction" field.</summary>
+    public const int DirectionFieldNumber = 1;
+    private uint direction_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint X {
-      get { return x_; }
+    public uint Direction {
+      get { return direction_; }
       set {
-        x_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "y" field.</summary>
-    public const int YFieldNumber = 2;
-    private uint y_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Y {
-      get { return y_; }
-      set {
-        y_ = value;
+        direction_ = value;
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as MousePoint);
+      return Equals(other as WalkDirection);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(MousePoint other) {
+    public bool Equals(WalkDirection other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (X != other.X) return false;
-      if (Y != other.Y) return false;
+      if (Direction != other.Direction) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (X != 0) hash ^= X.GetHashCode();
-      if (Y != 0) hash ^= Y.GetHashCode();
+      if (Direction != 0) hash ^= Direction.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -1367,13 +1353,9 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (X != 0) {
+      if (Direction != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(X);
-      }
-      if (Y != 0) {
-        output.WriteRawTag(16);
-        output.WriteUInt32(Y);
+        output.WriteUInt32(Direction);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -1383,11 +1365,8 @@ namespace Uoservice {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (X != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(X);
-      }
-      if (Y != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Y);
+      if (Direction != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Direction);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -1396,15 +1375,12 @@ namespace Uoservice {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(MousePoint other) {
+    public void MergeFrom(WalkDirection other) {
       if (other == null) {
         return;
       }
-      if (other.X != 0) {
-        X = other.X;
-      }
-      if (other.Y != 0) {
-        Y = other.Y;
+      if (other.Direction != 0) {
+        Direction = other.Direction;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -1418,11 +1394,7 @@ namespace Uoservice {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            X = input.ReadUInt32();
-            break;
-          }
-          case 16: {
-            Y = input.ReadUInt32();
+            Direction = input.ReadUInt32();
             break;
           }
         }
@@ -1456,9 +1428,9 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Actions(Actions other) : this() {
-      action_ = other.action_;
-      mousePoint_ = other.mousePoint_ != null ? other.mousePoint_.Clone() : null;
-      serial_ = other.serial_;
+      actionType_ = other.actionType_;
+      mobileSerial_ = other.mobileSerial_;
+      walkDirection_ = other.walkDirection_ != null ? other.walkDirection_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -1467,36 +1439,36 @@ namespace Uoservice {
       return new Actions(this);
     }
 
-    /// <summary>Field number for the "action" field.</summary>
-    public const int ActionFieldNumber = 1;
-    private uint action_;
+    /// <summary>Field number for the "actionType" field.</summary>
+    public const int ActionTypeFieldNumber = 1;
+    private uint actionType_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Action {
-      get { return action_; }
+    public uint ActionType {
+      get { return actionType_; }
       set {
-        action_ = value;
+        actionType_ = value;
       }
     }
 
-    /// <summary>Field number for the "mousePoint" field.</summary>
-    public const int MousePointFieldNumber = 2;
-    private global::Uoservice.MousePoint mousePoint_;
+    /// <summary>Field number for the "mobileSerial" field.</summary>
+    public const int MobileSerialFieldNumber = 2;
+    private uint mobileSerial_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Uoservice.MousePoint MousePoint {
-      get { return mousePoint_; }
+    public uint MobileSerial {
+      get { return mobileSerial_; }
       set {
-        mousePoint_ = value;
+        mobileSerial_ = value;
       }
     }
 
-    /// <summary>Field number for the "serial" field.</summary>
-    public const int SerialFieldNumber = 3;
-    private uint serial_;
+    /// <summary>Field number for the "walkDirection" field.</summary>
+    public const int WalkDirectionFieldNumber = 3;
+    private global::Uoservice.WalkDirection walkDirection_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Serial {
-      get { return serial_; }
+    public global::Uoservice.WalkDirection WalkDirection {
+      get { return walkDirection_; }
       set {
-        serial_ = value;
+        walkDirection_ = value;
       }
     }
 
@@ -1513,18 +1485,18 @@ namespace Uoservice {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Action != other.Action) return false;
-      if (!object.Equals(MousePoint, other.MousePoint)) return false;
-      if (Serial != other.Serial) return false;
+      if (ActionType != other.ActionType) return false;
+      if (MobileSerial != other.MobileSerial) return false;
+      if (!object.Equals(WalkDirection, other.WalkDirection)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (Action != 0) hash ^= Action.GetHashCode();
-      if (mousePoint_ != null) hash ^= MousePoint.GetHashCode();
-      if (Serial != 0) hash ^= Serial.GetHashCode();
+      if (ActionType != 0) hash ^= ActionType.GetHashCode();
+      if (MobileSerial != 0) hash ^= MobileSerial.GetHashCode();
+      if (walkDirection_ != null) hash ^= WalkDirection.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -1538,17 +1510,17 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (Action != 0) {
+      if (ActionType != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(Action);
+        output.WriteUInt32(ActionType);
       }
-      if (mousePoint_ != null) {
-        output.WriteRawTag(18);
-        output.WriteMessage(MousePoint);
+      if (MobileSerial != 0) {
+        output.WriteRawTag(16);
+        output.WriteUInt32(MobileSerial);
       }
-      if (Serial != 0) {
-        output.WriteRawTag(24);
-        output.WriteUInt32(Serial);
+      if (walkDirection_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(WalkDirection);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -1558,14 +1530,14 @@ namespace Uoservice {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (Action != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Action);
+      if (ActionType != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(ActionType);
       }
-      if (mousePoint_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(MousePoint);
+      if (MobileSerial != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(MobileSerial);
       }
-      if (Serial != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Serial);
+      if (walkDirection_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(WalkDirection);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -1578,17 +1550,17 @@ namespace Uoservice {
       if (other == null) {
         return;
       }
-      if (other.Action != 0) {
-        Action = other.Action;
+      if (other.ActionType != 0) {
+        ActionType = other.ActionType;
       }
-      if (other.mousePoint_ != null) {
-        if (mousePoint_ == null) {
-          mousePoint_ = new global::Uoservice.MousePoint();
+      if (other.MobileSerial != 0) {
+        MobileSerial = other.MobileSerial;
+      }
+      if (other.walkDirection_ != null) {
+        if (walkDirection_ == null) {
+          walkDirection_ = new global::Uoservice.WalkDirection();
         }
-        MousePoint.MergeFrom(other.MousePoint);
-      }
-      if (other.Serial != 0) {
-        Serial = other.Serial;
+        WalkDirection.MergeFrom(other.WalkDirection);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -1602,18 +1574,18 @@ namespace Uoservice {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            Action = input.ReadUInt32();
+            ActionType = input.ReadUInt32();
             break;
           }
-          case 18: {
-            if (mousePoint_ == null) {
-              mousePoint_ = new global::Uoservice.MousePoint();
+          case 16: {
+            MobileSerial = input.ReadUInt32();
+            break;
+          }
+          case 26: {
+            if (walkDirection_ == null) {
+              walkDirection_ = new global::Uoservice.WalkDirection();
             }
-            input.ReadMessage(mousePoint_);
-            break;
-          }
-          case 24: {
-            Serial = input.ReadUInt32();
+            input.ReadMessage(walkDirection_);
             break;
           }
         }

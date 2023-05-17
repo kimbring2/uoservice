@@ -12,24 +12,24 @@ namespace Uoservice {
   {
     static readonly string __ServiceName = "uoservice.UoService";
 
-    static readonly grpc::Marshaller<global::Uoservice.ImageRequest> __Marshaller_uoservice_ImageRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Uoservice.ImageRequest.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Uoservice.Config> __Marshaller_uoservice_Config = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Uoservice.Config.Parser.ParseFrom);
     static readonly grpc::Marshaller<global::Uoservice.States> __Marshaller_uoservice_States = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Uoservice.States.Parser.ParseFrom);
     static readonly grpc::Marshaller<global::Uoservice.Actions> __Marshaller_uoservice_Actions = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Uoservice.Actions.Parser.ParseFrom);
     static readonly grpc::Marshaller<global::Uoservice.Empty> __Marshaller_uoservice_Empty = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Uoservice.Empty.Parser.ParseFrom);
     static readonly grpc::Marshaller<global::Uoservice.SemaphoreAction> __Marshaller_uoservice_SemaphoreAction = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Uoservice.SemaphoreAction.Parser.ParseFrom);
 
-    static readonly grpc::Method<global::Uoservice.ImageRequest, global::Uoservice.States> __Method_Reset = new grpc::Method<global::Uoservice.ImageRequest, global::Uoservice.States>(
+    static readonly grpc::Method<global::Uoservice.Config, global::Uoservice.States> __Method_Reset = new grpc::Method<global::Uoservice.Config, global::Uoservice.States>(
         grpc::MethodType.Unary,
         __ServiceName,
         "Reset",
-        __Marshaller_uoservice_ImageRequest,
+        __Marshaller_uoservice_Config,
         __Marshaller_uoservice_States);
 
-    static readonly grpc::Method<global::Uoservice.ImageRequest, global::Uoservice.States> __Method_ReadObs = new grpc::Method<global::Uoservice.ImageRequest, global::Uoservice.States>(
+    static readonly grpc::Method<global::Uoservice.Config, global::Uoservice.States> __Method_ReadObs = new grpc::Method<global::Uoservice.Config, global::Uoservice.States>(
         grpc::MethodType.Unary,
         __ServiceName,
         "ReadObs",
-        __Marshaller_uoservice_ImageRequest,
+        __Marshaller_uoservice_Config,
         __Marshaller_uoservice_States);
 
     static readonly grpc::Method<global::Uoservice.Actions, global::Uoservice.Empty> __Method_WriteAct = new grpc::Method<global::Uoservice.Actions, global::Uoservice.Empty>(
@@ -62,12 +62,12 @@ namespace Uoservice {
     /// <summary>Base class for server-side implementations of UoService</summary>
     public abstract partial class UoServiceBase
     {
-      public virtual global::System.Threading.Tasks.Task<global::Uoservice.States> Reset(global::Uoservice.ImageRequest request, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task<global::Uoservice.States> Reset(global::Uoservice.Config request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
-      public virtual global::System.Threading.Tasks.Task<global::Uoservice.States> ReadObs(global::Uoservice.ImageRequest request, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task<global::Uoservice.States> ReadObs(global::Uoservice.Config request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -112,35 +112,35 @@ namespace Uoservice {
       {
       }
 
-      public virtual global::Uoservice.States Reset(global::Uoservice.ImageRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual global::Uoservice.States Reset(global::Uoservice.Config request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return Reset(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual global::Uoservice.States Reset(global::Uoservice.ImageRequest request, grpc::CallOptions options)
+      public virtual global::Uoservice.States Reset(global::Uoservice.Config request, grpc::CallOptions options)
       {
         return CallInvoker.BlockingUnaryCall(__Method_Reset, null, options, request);
       }
-      public virtual grpc::AsyncUnaryCall<global::Uoservice.States> ResetAsync(global::Uoservice.ImageRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncUnaryCall<global::Uoservice.States> ResetAsync(global::Uoservice.Config request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return ResetAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual grpc::AsyncUnaryCall<global::Uoservice.States> ResetAsync(global::Uoservice.ImageRequest request, grpc::CallOptions options)
+      public virtual grpc::AsyncUnaryCall<global::Uoservice.States> ResetAsync(global::Uoservice.Config request, grpc::CallOptions options)
       {
         return CallInvoker.AsyncUnaryCall(__Method_Reset, null, options, request);
       }
-      public virtual global::Uoservice.States ReadObs(global::Uoservice.ImageRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual global::Uoservice.States ReadObs(global::Uoservice.Config request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return ReadObs(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual global::Uoservice.States ReadObs(global::Uoservice.ImageRequest request, grpc::CallOptions options)
+      public virtual global::Uoservice.States ReadObs(global::Uoservice.Config request, grpc::CallOptions options)
       {
         return CallInvoker.BlockingUnaryCall(__Method_ReadObs, null, options, request);
       }
-      public virtual grpc::AsyncUnaryCall<global::Uoservice.States> ReadObsAsync(global::Uoservice.ImageRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncUnaryCall<global::Uoservice.States> ReadObsAsync(global::Uoservice.Config request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return ReadObsAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual grpc::AsyncUnaryCall<global::Uoservice.States> ReadObsAsync(global::Uoservice.ImageRequest request, grpc::CallOptions options)
+      public virtual grpc::AsyncUnaryCall<global::Uoservice.States> ReadObsAsync(global::Uoservice.Config request, grpc::CallOptions options)
       {
         return CallInvoker.AsyncUnaryCall(__Method_ReadObs, null, options, request);
       }
