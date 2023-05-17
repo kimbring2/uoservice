@@ -85,9 +85,13 @@ def main():
     print("ep: ", ep)
 
     stub.WriteAct(UoService_pb2.Actions(action=1, mousePoint=UoService_pb2.MousePoint(x=500, y=500)))
+    
+    # self.sem_act.post()
     stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
 
+    # self.sem_obs.wait()
     stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
+
     res = stub.ReadObs(UoService_pb2.ImageRequest(name='you'))
 
     obs = parse_response(res)
@@ -96,16 +100,22 @@ def main():
       print("step: ", step)
 
       stub.WriteAct(UoService_pb2.Actions(action=1, mousePoint=UoService_pb2.MousePoint(x=500, y=500)))
-      stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
       
+      # self.sem_act.post()
+      stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
+
+      # self.sem_obs.wait()
       stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
-      res_next = stub.ReadObs(UoService_pb2.ImageRequest(name='you'))
+
+      try:
+        res_next = stub.ReadObs(UoService_pb2.ImageRequest(name='you'))
+      except:
+        print("The 'try except' is finished")
+        continue
 
       obs_next = parse_response(res_next)
 
-      stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
-
-      time.sleep(0.5)
+      #time.sleep(0.5)
 
     cv2.destroyAllWindows()
 
