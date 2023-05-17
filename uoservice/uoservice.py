@@ -16,7 +16,7 @@ import cv2
 import random
 
 
-grpc_port = 50051
+grpc_port = 50052
 channel = grpc.insecure_channel('localhost:' + str(grpc_port))
 stub = UoService_pb2_grpc.UoServiceStub(channel)
 
@@ -172,7 +172,7 @@ def main():
       print("target_y: ", target_y)
       print("")
 
-      stub.WriteAct(UoService_pb2.Actions(action=1, 
+      stub.WriteAct(UoService_pb2.Actions(action=2, 
                                           mousePoint=UoService_pb2.MousePoint(x=target_x, y=target_y),
                                           serial=target_serial))
       
