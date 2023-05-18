@@ -32,24 +32,24 @@ namespace Uoservice {
             "GAEgASgJIjsKDkdycGNNb2JpbGVMaXN0EikKBm1vYmlsZRgBIAMoCzIZLnVv",
             "c2VydmljZS5HcnBjTW9iaWxlRGF0YSI1CgxHcnBjSXRlbUxpc3QSJQoEaXRl",
             "bRgBIAMoCzIXLnVvc2VydmljZS5HcnBjSXRlbURhdGEiFgoGQ29uZmlnEgwK",
-            "BG5hbWUYASABKAkiNQoHUmV3YXJkcxIVCg1hdHRhY2tNb25zdGVyGAEgASgC",
-            "EhMKC2tpbGxNb25zdGVyGAIgASgCIvIBCgZTdGF0ZXMSLQoKbW9iaWxlTGlz",
-            "dBgBIAEoCzIZLnVvc2VydmljZS5HcnBjTW9iaWxlTGlzdBIuCg13b3JsZEl0",
-            "ZW1MaXN0GAIgASgLMhcudW9zZXJ2aWNlLkdycGNJdGVtTGlzdBIxChBlcXVp",
-            "cHBlZEl0ZW1MaXN0GAMgASgLMhcudW9zZXJ2aWNlLkdycGNJdGVtTGlzdBIx",
-            "ChBiYWNrcGFja0l0ZW1MaXN0GAQgASgLMhcudW9zZXJ2aWNlLkdycGNJdGVt",
-            "TGlzdBIjCgdyZXdhcmRzGAUgASgLMhIudW9zZXJ2aWNlLlJld2FyZHMiIgoN",
-            "V2Fsa0RpcmVjdGlvbhIRCglkaXJlY3Rpb24YASABKA0ieAoHQWN0aW9ucxIS",
-            "CgphY3Rpb25UeXBlGAEgASgNEhQKDG1vYmlsZVNlcmlhbBgCIAEoDRISCgpp",
-            "dGVtU2VyaWFsGAMgASgNEi8KDXdhbGtEaXJlY3Rpb24YBCABKAsyGC51b3Nl",
-            "cnZpY2UuV2Fsa0RpcmVjdGlvbjKnAgoJVW9TZXJ2aWNlEi0KBVJlc2V0EhEu",
-            "dW9zZXJ2aWNlLkNvbmZpZxoRLnVvc2VydmljZS5TdGF0ZXMSLwoHUmVhZE9i",
-            "cxIRLnVvc2VydmljZS5Db25maWcaES51b3NlcnZpY2UuU3RhdGVzEjAKCFdy",
-            "aXRlQWN0EhIudW9zZXJ2aWNlLkFjdGlvbnMaEC51b3NlcnZpY2UuRW1wdHkS",
-            "QwoTQWN0U2VtYXBob3JlQ29udHJvbBIaLnVvc2VydmljZS5TZW1hcGhvcmVB",
-            "Y3Rpb24aEC51b3NlcnZpY2UuRW1wdHkSQwoTT2JzU2VtYXBob3JlQ29udHJv",
-            "bBIaLnVvc2VydmljZS5TZW1hcGhvcmVBY3Rpb24aEC51b3NlcnZpY2UuRW1w",
-            "dHliBnByb3RvMw=="));
+            "BG5hbWUYASABKAkiOAoMUGxheWVyU3RhdHVzEgsKA3N0chgBIAEoDRILCgNk",
+            "ZXgYAiABKA0SDgoGaW50ZWxsGAMgASgNIvwBCgZTdGF0ZXMSLQoKbW9iaWxl",
+            "TGlzdBgBIAEoCzIZLnVvc2VydmljZS5HcnBjTW9iaWxlTGlzdBIuCg13b3Js",
+            "ZEl0ZW1MaXN0GAIgASgLMhcudW9zZXJ2aWNlLkdycGNJdGVtTGlzdBIxChBl",
+            "cXVpcHBlZEl0ZW1MaXN0GAMgASgLMhcudW9zZXJ2aWNlLkdycGNJdGVtTGlz",
+            "dBIxChBiYWNrcGFja0l0ZW1MaXN0GAQgASgLMhcudW9zZXJ2aWNlLkdycGNJ",
+            "dGVtTGlzdBItCgxwbGF5ZXJTdGF0dXMYBSABKAsyFy51b3NlcnZpY2UuUGxh",
+            "eWVyU3RhdHVzIiIKDVdhbGtEaXJlY3Rpb24SEQoJZGlyZWN0aW9uGAEgASgN",
+            "IngKB0FjdGlvbnMSEgoKYWN0aW9uVHlwZRgBIAEoDRIUCgxtb2JpbGVTZXJp",
+            "YWwYAiABKA0SEgoKaXRlbVNlcmlhbBgDIAEoDRIvCg13YWxrRGlyZWN0aW9u",
+            "GAQgASgLMhgudW9zZXJ2aWNlLldhbGtEaXJlY3Rpb24ypwIKCVVvU2Vydmlj",
+            "ZRItCgVSZXNldBIRLnVvc2VydmljZS5Db25maWcaES51b3NlcnZpY2UuU3Rh",
+            "dGVzEi8KB1JlYWRPYnMSES51b3NlcnZpY2UuQ29uZmlnGhEudW9zZXJ2aWNl",
+            "LlN0YXRlcxIwCghXcml0ZUFjdBISLnVvc2VydmljZS5BY3Rpb25zGhAudW9z",
+            "ZXJ2aWNlLkVtcHR5EkMKE0FjdFNlbWFwaG9yZUNvbnRyb2wSGi51b3NlcnZp",
+            "Y2UuU2VtYXBob3JlQWN0aW9uGhAudW9zZXJ2aWNlLkVtcHR5EkMKE09ic1Nl",
+            "bWFwaG9yZUNvbnRyb2wSGi51b3NlcnZpY2UuU2VtYXBob3JlQWN0aW9uGhAu",
+            "dW9zZXJ2aWNlLkVtcHR5YgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -60,8 +60,8 @@ namespace Uoservice {
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcMobileList), global::Uoservice.GrpcMobileList.Parser, new[]{ "Mobile" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcItemList), global::Uoservice.GrpcItemList.Parser, new[]{ "Item" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Config), global::Uoservice.Config.Parser, new[]{ "Name" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Rewards), global::Uoservice.Rewards.Parser, new[]{ "AttackMonster", "KillMonster" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.States), global::Uoservice.States.Parser, new[]{ "MobileList", "WorldItemList", "EquippedItemList", "BackpackItemList", "Rewards" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.PlayerStatus), global::Uoservice.PlayerStatus.Parser, new[]{ "Str", "Dex", "Intell" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.States), global::Uoservice.States.Parser, new[]{ "MobileList", "WorldItemList", "EquippedItemList", "BackpackItemList", "PlayerStatus" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.WalkDirection), global::Uoservice.WalkDirection.Parser, new[]{ "Direction" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Actions), global::Uoservice.Actions.Parser, new[]{ "ActionType", "MobileSerial", "ItemSerial", "WalkDirection" }, null, null, null)
           }));
@@ -1125,11 +1125,11 @@ namespace Uoservice {
 
   }
 
-  public sealed partial class Rewards : pb::IMessage<Rewards> {
-    private static readonly pb::MessageParser<Rewards> _parser = new pb::MessageParser<Rewards>(() => new Rewards());
+  public sealed partial class PlayerStatus : pb::IMessage<PlayerStatus> {
+    private static readonly pb::MessageParser<PlayerStatus> _parser = new pb::MessageParser<PlayerStatus>(() => new PlayerStatus());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<Rewards> Parser { get { return _parser; } }
+    public static pb::MessageParser<PlayerStatus> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -1142,69 +1142,83 @@ namespace Uoservice {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Rewards() {
+    public PlayerStatus() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Rewards(Rewards other) : this() {
-      attackMonster_ = other.attackMonster_;
-      killMonster_ = other.killMonster_;
+    public PlayerStatus(PlayerStatus other) : this() {
+      str_ = other.str_;
+      dex_ = other.dex_;
+      intell_ = other.intell_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Rewards Clone() {
-      return new Rewards(this);
+    public PlayerStatus Clone() {
+      return new PlayerStatus(this);
     }
 
-    /// <summary>Field number for the "attackMonster" field.</summary>
-    public const int AttackMonsterFieldNumber = 1;
-    private float attackMonster_;
+    /// <summary>Field number for the "str" field.</summary>
+    public const int StrFieldNumber = 1;
+    private uint str_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public float AttackMonster {
-      get { return attackMonster_; }
+    public uint Str {
+      get { return str_; }
       set {
-        attackMonster_ = value;
+        str_ = value;
       }
     }
 
-    /// <summary>Field number for the "killMonster" field.</summary>
-    public const int KillMonsterFieldNumber = 2;
-    private float killMonster_;
+    /// <summary>Field number for the "dex" field.</summary>
+    public const int DexFieldNumber = 2;
+    private uint dex_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public float KillMonster {
-      get { return killMonster_; }
+    public uint Dex {
+      get { return dex_; }
       set {
-        killMonster_ = value;
+        dex_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "intell" field.</summary>
+    public const int IntellFieldNumber = 3;
+    private uint intell_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Intell {
+      get { return intell_; }
+      set {
+        intell_ = value;
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as Rewards);
+      return Equals(other as PlayerStatus);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(Rewards other) {
+    public bool Equals(PlayerStatus other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(AttackMonster, other.AttackMonster)) return false;
-      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(KillMonster, other.KillMonster)) return false;
+      if (Str != other.Str) return false;
+      if (Dex != other.Dex) return false;
+      if (Intell != other.Intell) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (AttackMonster != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(AttackMonster);
-      if (KillMonster != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(KillMonster);
+      if (Str != 0) hash ^= Str.GetHashCode();
+      if (Dex != 0) hash ^= Dex.GetHashCode();
+      if (Intell != 0) hash ^= Intell.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -1218,13 +1232,17 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (AttackMonster != 0F) {
-        output.WriteRawTag(13);
-        output.WriteFloat(AttackMonster);
+      if (Str != 0) {
+        output.WriteRawTag(8);
+        output.WriteUInt32(Str);
       }
-      if (KillMonster != 0F) {
-        output.WriteRawTag(21);
-        output.WriteFloat(KillMonster);
+      if (Dex != 0) {
+        output.WriteRawTag(16);
+        output.WriteUInt32(Dex);
+      }
+      if (Intell != 0) {
+        output.WriteRawTag(24);
+        output.WriteUInt32(Intell);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -1234,11 +1252,14 @@ namespace Uoservice {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (AttackMonster != 0F) {
-        size += 1 + 4;
+      if (Str != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Str);
       }
-      if (KillMonster != 0F) {
-        size += 1 + 4;
+      if (Dex != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Dex);
+      }
+      if (Intell != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Intell);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -1247,15 +1268,18 @@ namespace Uoservice {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(Rewards other) {
+    public void MergeFrom(PlayerStatus other) {
       if (other == null) {
         return;
       }
-      if (other.AttackMonster != 0F) {
-        AttackMonster = other.AttackMonster;
+      if (other.Str != 0) {
+        Str = other.Str;
       }
-      if (other.KillMonster != 0F) {
-        KillMonster = other.KillMonster;
+      if (other.Dex != 0) {
+        Dex = other.Dex;
+      }
+      if (other.Intell != 0) {
+        Intell = other.Intell;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -1268,12 +1292,16 @@ namespace Uoservice {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 13: {
-            AttackMonster = input.ReadFloat();
+          case 8: {
+            Str = input.ReadUInt32();
             break;
           }
-          case 21: {
-            KillMonster = input.ReadFloat();
+          case 16: {
+            Dex = input.ReadUInt32();
+            break;
+          }
+          case 24: {
+            Intell = input.ReadUInt32();
             break;
           }
         }
@@ -1311,7 +1339,7 @@ namespace Uoservice {
       worldItemList_ = other.worldItemList_ != null ? other.worldItemList_.Clone() : null;
       equippedItemList_ = other.equippedItemList_ != null ? other.equippedItemList_.Clone() : null;
       backpackItemList_ = other.backpackItemList_ != null ? other.backpackItemList_.Clone() : null;
-      rewards_ = other.rewards_ != null ? other.rewards_.Clone() : null;
+      playerStatus_ = other.playerStatus_ != null ? other.playerStatus_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -1364,14 +1392,14 @@ namespace Uoservice {
       }
     }
 
-    /// <summary>Field number for the "rewards" field.</summary>
-    public const int RewardsFieldNumber = 5;
-    private global::Uoservice.Rewards rewards_;
+    /// <summary>Field number for the "playerStatus" field.</summary>
+    public const int PlayerStatusFieldNumber = 5;
+    private global::Uoservice.PlayerStatus playerStatus_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Uoservice.Rewards Rewards {
-      get { return rewards_; }
+    public global::Uoservice.PlayerStatus PlayerStatus {
+      get { return playerStatus_; }
       set {
-        rewards_ = value;
+        playerStatus_ = value;
       }
     }
 
@@ -1392,7 +1420,7 @@ namespace Uoservice {
       if (!object.Equals(WorldItemList, other.WorldItemList)) return false;
       if (!object.Equals(EquippedItemList, other.EquippedItemList)) return false;
       if (!object.Equals(BackpackItemList, other.BackpackItemList)) return false;
-      if (!object.Equals(Rewards, other.Rewards)) return false;
+      if (!object.Equals(PlayerStatus, other.PlayerStatus)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -1403,7 +1431,7 @@ namespace Uoservice {
       if (worldItemList_ != null) hash ^= WorldItemList.GetHashCode();
       if (equippedItemList_ != null) hash ^= EquippedItemList.GetHashCode();
       if (backpackItemList_ != null) hash ^= BackpackItemList.GetHashCode();
-      if (rewards_ != null) hash ^= Rewards.GetHashCode();
+      if (playerStatus_ != null) hash ^= PlayerStatus.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -1433,9 +1461,9 @@ namespace Uoservice {
         output.WriteRawTag(34);
         output.WriteMessage(BackpackItemList);
       }
-      if (rewards_ != null) {
+      if (playerStatus_ != null) {
         output.WriteRawTag(42);
-        output.WriteMessage(Rewards);
+        output.WriteMessage(PlayerStatus);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -1457,8 +1485,8 @@ namespace Uoservice {
       if (backpackItemList_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(BackpackItemList);
       }
-      if (rewards_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Rewards);
+      if (playerStatus_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerStatus);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -1495,11 +1523,11 @@ namespace Uoservice {
         }
         BackpackItemList.MergeFrom(other.BackpackItemList);
       }
-      if (other.rewards_ != null) {
-        if (rewards_ == null) {
-          rewards_ = new global::Uoservice.Rewards();
+      if (other.playerStatus_ != null) {
+        if (playerStatus_ == null) {
+          playerStatus_ = new global::Uoservice.PlayerStatus();
         }
-        Rewards.MergeFrom(other.Rewards);
+        PlayerStatus.MergeFrom(other.PlayerStatus);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -1541,10 +1569,10 @@ namespace Uoservice {
             break;
           }
           case 42: {
-            if (rewards_ == null) {
-              rewards_ = new global::Uoservice.Rewards();
+            if (playerStatus_ == null) {
+              playerStatus_ = new global::Uoservice.PlayerStatus();
             }
-            input.ReadMessage(rewards_);
+            input.ReadMessage(playerStatus_);
             break;
           }
         }

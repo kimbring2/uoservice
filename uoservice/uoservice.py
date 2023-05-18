@@ -41,6 +41,8 @@ def parse_response(response):
   if len(mobile_data) == 0 or len(world_item_data) == 0 or len(equipped_item_data) == 0:
     return mobile_dict, equipped_item_dict, backpack_item_dict
 
+  print("response.playerStatus: ", response.playerStatus)
+
   #screen_data = response.screenImage.image
   #screen_data = io.BytesIO(screen_data).read()
 
@@ -139,9 +141,8 @@ def get_serial_by_name(item_dict, name):
   #print("")
 
 
-item_unequip_flag = True
+item_unequip_flag = False
 item_equip_flag = False
-
 
 def main():
   global item_unequip_flag
@@ -167,10 +168,10 @@ def main():
 
       if len(equipped_item_dict) != 0 and item_unequip_flag == True:
         target_weapon_serial = get_serial_by_name(equipped_item_dict, 'Valorite Longsword')
-        print("equipped target_weapon_serial: ", target_weapon_serial)
+        #print("equipped target_weapon_serial: ", target_weapon_serial)
       elif len(backpack_item_dict) != 0 and item_unequip_flag == True:
         target_weapon_serial = get_serial_by_name(backpack_item_dict, 'Valorite Longsword')
-        print("backpack target_weapon_serial: ", target_weapon_serial)
+        #print("backpack target_weapon_serial: ", target_weapon_serial)
 
       if selected_target_serial != None and selected_target_serial in mobile_dict:
         selected_target = mobile_dict[selected_target_serial]

@@ -35,9 +35,10 @@ message Config {
   string name = 1;
 }
 
-message Rewards {
-  float attackMonster = 1;
-  float killMonster = 2;
+message PlayerStatus {
+  uint32 str = 1;
+  uint32 dex = 2;
+  uint32 intell = 3;
 }
 
 message States {
@@ -45,7 +46,7 @@ message States {
   GrpcItemList worldItemList = 2;
   GrpcItemList equippedItemList = 3;
   GrpcItemList backpackItemList = 4;
-  Rewards rewards = 5;
+  PlayerStatus playerStatus = 5;
 }
 
 message WalkDirection {
