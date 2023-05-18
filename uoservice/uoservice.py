@@ -32,13 +32,18 @@ def parse_response(response):
   if len(mobile_data) == 0:
     return None
 
-  screen_data = response.screenImage.image
-  screen_data = io.BytesIO(screen_data).read()
+  item_data = response.itemList.item
+  print("item_data: ", item_data)
+  if len(item_data) == 0:
+    return None
 
-  screen_image = np.ndarray(shape=(80,100,4), dtype=np.uint8, buffer=screen_data)
-  screen_image = cv2.cvtColor(screen_image, cv2.COLOR_RGB2BGR)
-  dim = (1600, 1280)
-  screen_image = cv2.resize(screen_image, dim, interpolation = cv2.INTER_AREA)
+  #screen_data = response.screenImage.image
+  #screen_data = io.BytesIO(screen_data).read()
+
+  #screen_image = np.ndarray(shape=(80,100,4), dtype=np.uint8, buffer=screen_data)
+  #screen_image = cv2.cvtColor(screen_image, cv2.COLOR_RGB2BGR)
+  #dim = (1600, 1280)
+  #screen_image = cv2.resize(screen_image, dim, interpolation = cv2.INTER_AREA)
 
   mobile_dict = {}
   for mobile in mobile_data:
@@ -65,7 +70,7 @@ def parse_response(response):
       color = (0, 0, 255)
     else:
       color = (255, 0, 0)
-
+    '''
     screen_image = cv2.rectangle(screen_image, start_point, end_point, color, 2)
     cv2.putText(screen_image,
                 text=mobile.name,
@@ -75,7 +80,22 @@ def parse_response(response):
                 color=color,
                 thickness=2,
                 lineType=cv2.LINE_4)
-  
+    '''
+
+  item_dict = {}
+  for item in item_data:
+    '''
+    message GrpcItemData {
+      string name = 1;
+      uint32 layer = 2;
+      uint32 serial = 3;
+      uint32 amount = 4;
+    }
+    '''
+
+    print('name: {0}, layer: {1}, serial: {2}, amount: {3}\n'.format(item.name, item.layer, 
+                                                                     item.serial, item.amount))
+    
   if (selected_target_serial not in mobile_dict) and selected_target_serial != None:
     selected_target_serial = None
 
@@ -89,10 +109,10 @@ def parse_response(response):
     color = (255, 0, 0)
     start_point = (selected_target[1] - 40, selected_target[2] - 40)
     end_point = (selected_target[1] + 40, selected_target[2] + 40)
-    screen_image = cv2.rectangle(screen_image, start_point, end_point, color, 2)
+    #screen_image = cv2.rectangle(screen_image, start_point, end_point, color, 2)
 
-  cv2.imshow('screen_image', screen_image)
-  cv2.waitKey(1)
+  #cv2.imshow('screen_image', screen_image)
+  #cv2.waitKey(1)
 
   return mobile_dict
 

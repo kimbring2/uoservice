@@ -26,38 +26,41 @@ namespace Uoservice {
           string.Concat(
             "Cg9Vb1NlcnZpY2UucHJvdG8SCXVvc2VydmljZSIHCgVFbXB0eSJSCg5HcnBj",
             "TW9iaWxlRGF0YRIMCgRuYW1lGAEgASgJEgkKAXgYAiABKAISCQoBeRgDIAEo",
-            "AhIMCgRyYWNlGAQgASgNEg4KBnNlcmlhbBgFIAEoDSIfCg9TZW1hcGhvcmVB",
-            "Y3Rpb24SDAoEbW9kZRgBIAEoCSI7Cg5HcnBjTW9iaWxlTGlzdBIpCgZtb2Jp",
-            "bGUYASADKAsyGS51b3NlcnZpY2UuR3JwY01vYmlsZURhdGEiFgoGQ29uZmln",
-            "EgwKBG5hbWUYASABKAkiHAoLU2NyZWVuSW1hZ2USDQoFaW1hZ2UYASABKAwi",
-            "NQoHUmV3YXJkcxIVCg1hdHRhY2tNb25zdGVyGAEgASgCEhMKC2tpbGxNb25z",
-            "dGVyGAIgASgCIokBCgZTdGF0ZXMSKwoLc2NyZWVuSW1hZ2UYASABKAsyFi51",
-            "b3NlcnZpY2UuU2NyZWVuSW1hZ2USLQoKbW9iaWxlTGlzdBgCIAEoCzIZLnVv",
-            "c2VydmljZS5HcnBjTW9iaWxlTGlzdBIjCgdyZXdhcmRzGAMgASgLMhIudW9z",
-            "ZXJ2aWNlLlJld2FyZHMiIgoNV2Fsa0RpcmVjdGlvbhIRCglkaXJlY3Rpb24Y",
-            "ASABKA0iZAoHQWN0aW9ucxISCgphY3Rpb25UeXBlGAEgASgNEhQKDG1vYmls",
-            "ZVNlcmlhbBgCIAEoDRIvCg13YWxrRGlyZWN0aW9uGAMgASgLMhgudW9zZXJ2",
-            "aWNlLldhbGtEaXJlY3Rpb24ypwIKCVVvU2VydmljZRItCgVSZXNldBIRLnVv",
-            "c2VydmljZS5Db25maWcaES51b3NlcnZpY2UuU3RhdGVzEi8KB1JlYWRPYnMS",
-            "ES51b3NlcnZpY2UuQ29uZmlnGhEudW9zZXJ2aWNlLlN0YXRlcxIwCghXcml0",
-            "ZUFjdBISLnVvc2VydmljZS5BY3Rpb25zGhAudW9zZXJ2aWNlLkVtcHR5EkMK",
-            "E0FjdFNlbWFwaG9yZUNvbnRyb2wSGi51b3NlcnZpY2UuU2VtYXBob3JlQWN0",
-            "aW9uGhAudW9zZXJ2aWNlLkVtcHR5EkMKE09ic1NlbWFwaG9yZUNvbnRyb2wS",
-            "Gi51b3NlcnZpY2UuU2VtYXBob3JlQWN0aW9uGhAudW9zZXJ2aWNlLkVtcHR5",
-            "YgZwcm90bzM="));
+            "AhIMCgRyYWNlGAQgASgNEg4KBnNlcmlhbBgFIAEoDSJLCgxHcnBjSXRlbURh",
+            "dGESDAoEbmFtZRgBIAEoCRINCgVsYXllchgCIAEoDRIOCgZzZXJpYWwYAyAB",
+            "KA0SDgoGYW1vdW50GAQgASgNIh8KD1NlbWFwaG9yZUFjdGlvbhIMCgRtb2Rl",
+            "GAEgASgJIjsKDkdycGNNb2JpbGVMaXN0EikKBm1vYmlsZRgBIAMoCzIZLnVv",
+            "c2VydmljZS5HcnBjTW9iaWxlRGF0YSI1CgxHcnBjSXRlbUxpc3QSJQoEaXRl",
+            "bRgBIAMoCzIXLnVvc2VydmljZS5HcnBjSXRlbURhdGEiFgoGQ29uZmlnEgwK",
+            "BG5hbWUYASABKAkiNQoHUmV3YXJkcxIVCg1hdHRhY2tNb25zdGVyGAEgASgC",
+            "EhMKC2tpbGxNb25zdGVyGAIgASgCIocBCgZTdGF0ZXMSLQoKbW9iaWxlTGlz",
+            "dBgBIAEoCzIZLnVvc2VydmljZS5HcnBjTW9iaWxlTGlzdBIpCghpdGVtTGlz",
+            "dBgCIAEoCzIXLnVvc2VydmljZS5HcnBjSXRlbUxpc3QSIwoHcmV3YXJkcxgD",
+            "IAEoCzISLnVvc2VydmljZS5SZXdhcmRzIiIKDVdhbGtEaXJlY3Rpb24SEQoJ",
+            "ZGlyZWN0aW9uGAEgASgNIngKB0FjdGlvbnMSEgoKYWN0aW9uVHlwZRgBIAEo",
+            "DRIUCgxtb2JpbGVTZXJpYWwYAiABKA0SEgoKaXRlbVNlcmlhbBgDIAEoDRIv",
+            "Cg13YWxrRGlyZWN0aW9uGAQgASgLMhgudW9zZXJ2aWNlLldhbGtEaXJlY3Rp",
+            "b24ypwIKCVVvU2VydmljZRItCgVSZXNldBIRLnVvc2VydmljZS5Db25maWca",
+            "ES51b3NlcnZpY2UuU3RhdGVzEi8KB1JlYWRPYnMSES51b3NlcnZpY2UuQ29u",
+            "ZmlnGhEudW9zZXJ2aWNlLlN0YXRlcxIwCghXcml0ZUFjdBISLnVvc2Vydmlj",
+            "ZS5BY3Rpb25zGhAudW9zZXJ2aWNlLkVtcHR5EkMKE0FjdFNlbWFwaG9yZUNv",
+            "bnRyb2wSGi51b3NlcnZpY2UuU2VtYXBob3JlQWN0aW9uGhAudW9zZXJ2aWNl",
+            "LkVtcHR5EkMKE09ic1NlbWFwaG9yZUNvbnRyb2wSGi51b3NlcnZpY2UuU2Vt",
+            "YXBob3JlQWN0aW9uGhAudW9zZXJ2aWNlLkVtcHR5YgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Empty), global::Uoservice.Empty.Parser, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcMobileData), global::Uoservice.GrpcMobileData.Parser, new[]{ "Name", "X", "Y", "Race", "Serial" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcItemData), global::Uoservice.GrpcItemData.Parser, new[]{ "Name", "Layer", "Serial", "Amount" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.SemaphoreAction), global::Uoservice.SemaphoreAction.Parser, new[]{ "Mode" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcMobileList), global::Uoservice.GrpcMobileList.Parser, new[]{ "Mobile" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcItemList), global::Uoservice.GrpcItemList.Parser, new[]{ "Item" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Config), global::Uoservice.Config.Parser, new[]{ "Name" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.ScreenImage), global::Uoservice.ScreenImage.Parser, new[]{ "Image" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Rewards), global::Uoservice.Rewards.Parser, new[]{ "AttackMonster", "KillMonster" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.States), global::Uoservice.States.Parser, new[]{ "ScreenImage", "MobileList", "Rewards" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.States), global::Uoservice.States.Parser, new[]{ "MobileList", "ItemList", "Rewards" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.WalkDirection), global::Uoservice.WalkDirection.Parser, new[]{ "Direction" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Actions), global::Uoservice.Actions.Parser, new[]{ "ActionType", "MobileSerial", "WalkDirection" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Actions), global::Uoservice.Actions.Parser, new[]{ "ActionType", "MobileSerial", "ItemSerial", "WalkDirection" }, null, null, null)
           }));
     }
     #endregion
@@ -406,6 +409,219 @@ namespace Uoservice {
 
   }
 
+  public sealed partial class GrpcItemData : pb::IMessage<GrpcItemData> {
+    private static readonly pb::MessageParser<GrpcItemData> _parser = new pb::MessageParser<GrpcItemData>(() => new GrpcItemData());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<GrpcItemData> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[2]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GrpcItemData() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GrpcItemData(GrpcItemData other) : this() {
+      name_ = other.name_;
+      layer_ = other.layer_;
+      serial_ = other.serial_;
+      amount_ = other.amount_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GrpcItemData Clone() {
+      return new GrpcItemData(this);
+    }
+
+    /// <summary>Field number for the "name" field.</summary>
+    public const int NameFieldNumber = 1;
+    private string name_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Name {
+      get { return name_; }
+      set {
+        name_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "layer" field.</summary>
+    public const int LayerFieldNumber = 2;
+    private uint layer_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Layer {
+      get { return layer_; }
+      set {
+        layer_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "serial" field.</summary>
+    public const int SerialFieldNumber = 3;
+    private uint serial_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Serial {
+      get { return serial_; }
+      set {
+        serial_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "amount" field.</summary>
+    public const int AmountFieldNumber = 4;
+    private uint amount_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Amount {
+      get { return amount_; }
+      set {
+        amount_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as GrpcItemData);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(GrpcItemData other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Name != other.Name) return false;
+      if (Layer != other.Layer) return false;
+      if (Serial != other.Serial) return false;
+      if (Amount != other.Amount) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Name.Length != 0) hash ^= Name.GetHashCode();
+      if (Layer != 0) hash ^= Layer.GetHashCode();
+      if (Serial != 0) hash ^= Serial.GetHashCode();
+      if (Amount != 0) hash ^= Amount.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Name.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Name);
+      }
+      if (Layer != 0) {
+        output.WriteRawTag(16);
+        output.WriteUInt32(Layer);
+      }
+      if (Serial != 0) {
+        output.WriteRawTag(24);
+        output.WriteUInt32(Serial);
+      }
+      if (Amount != 0) {
+        output.WriteRawTag(32);
+        output.WriteUInt32(Amount);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Name.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
+      }
+      if (Layer != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Layer);
+      }
+      if (Serial != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Serial);
+      }
+      if (Amount != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Amount);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(GrpcItemData other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Name.Length != 0) {
+        Name = other.Name;
+      }
+      if (other.Layer != 0) {
+        Layer = other.Layer;
+      }
+      if (other.Serial != 0) {
+        Serial = other.Serial;
+      }
+      if (other.Amount != 0) {
+        Amount = other.Amount;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            Name = input.ReadString();
+            break;
+          }
+          case 16: {
+            Layer = input.ReadUInt32();
+            break;
+          }
+          case 24: {
+            Serial = input.ReadUInt32();
+            break;
+          }
+          case 32: {
+            Amount = input.ReadUInt32();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
   public sealed partial class SemaphoreAction : pb::IMessage<SemaphoreAction> {
     private static readonly pb::MessageParser<SemaphoreAction> _parser = new pb::MessageParser<SemaphoreAction>(() => new SemaphoreAction());
     private pb::UnknownFieldSet _unknownFields;
@@ -414,7 +630,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[2]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -543,7 +759,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[3]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -656,6 +872,127 @@ namespace Uoservice {
 
   }
 
+  public sealed partial class GrpcItemList : pb::IMessage<GrpcItemList> {
+    private static readonly pb::MessageParser<GrpcItemList> _parser = new pb::MessageParser<GrpcItemList>(() => new GrpcItemList());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<GrpcItemList> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[5]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GrpcItemList() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GrpcItemList(GrpcItemList other) : this() {
+      item_ = other.item_.Clone();
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GrpcItemList Clone() {
+      return new GrpcItemList(this);
+    }
+
+    /// <summary>Field number for the "item" field.</summary>
+    public const int ItemFieldNumber = 1;
+    private static readonly pb::FieldCodec<global::Uoservice.GrpcItemData> _repeated_item_codec
+        = pb::FieldCodec.ForMessage(10, global::Uoservice.GrpcItemData.Parser);
+    private readonly pbc::RepeatedField<global::Uoservice.GrpcItemData> item_ = new pbc::RepeatedField<global::Uoservice.GrpcItemData>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::Uoservice.GrpcItemData> Item {
+      get { return item_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as GrpcItemList);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(GrpcItemList other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!item_.Equals(other.item_)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= item_.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      item_.WriteTo(output, _repeated_item_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      size += item_.CalculateSize(_repeated_item_codec);
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(GrpcItemList other) {
+      if (other == null) {
+        return;
+      }
+      item_.Add(other.item_);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            item_.AddEntriesFrom(input, _repeated_item_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
   public sealed partial class Config : pb::IMessage<Config> {
     private static readonly pb::MessageParser<Config> _parser = new pb::MessageParser<Config>(() => new Config());
     private pb::UnknownFieldSet _unknownFields;
@@ -664,7 +1001,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[4]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -785,135 +1122,6 @@ namespace Uoservice {
 
   }
 
-  public sealed partial class ScreenImage : pb::IMessage<ScreenImage> {
-    private static readonly pb::MessageParser<ScreenImage> _parser = new pb::MessageParser<ScreenImage>(() => new ScreenImage());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<ScreenImage> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[5]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ScreenImage() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ScreenImage(ScreenImage other) : this() {
-      image_ = other.image_;
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ScreenImage Clone() {
-      return new ScreenImage(this);
-    }
-
-    /// <summary>Field number for the "image" field.</summary>
-    public const int ImageFieldNumber = 1;
-    private pb::ByteString image_ = pb::ByteString.Empty;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pb::ByteString Image {
-      get { return image_; }
-      set {
-        image_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as ScreenImage);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(ScreenImage other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Image != other.Image) return false;
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Image.Length != 0) hash ^= Image.GetHashCode();
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Image.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteBytes(Image);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Image.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeBytesSize(Image);
-      }
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(ScreenImage other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Image.Length != 0) {
-        Image = other.Image;
-      }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-          case 10: {
-            Image = input.ReadBytes();
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
   public sealed partial class Rewards : pb::IMessage<Rewards> {
     private static readonly pb::MessageParser<Rewards> _parser = new pb::MessageParser<Rewards>(() => new Rewards());
     private pb::UnknownFieldSet _unknownFields;
@@ -922,7 +1130,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[6]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[7]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1079,7 +1287,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[7]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[8]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1096,8 +1304,8 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public States(States other) : this() {
-      screenImage_ = other.screenImage_ != null ? other.screenImage_.Clone() : null;
       mobileList_ = other.mobileList_ != null ? other.mobileList_.Clone() : null;
+      itemList_ = other.itemList_ != null ? other.itemList_.Clone() : null;
       rewards_ = other.rewards_ != null ? other.rewards_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -1107,25 +1315,25 @@ namespace Uoservice {
       return new States(this);
     }
 
-    /// <summary>Field number for the "screenImage" field.</summary>
-    public const int ScreenImageFieldNumber = 1;
-    private global::Uoservice.ScreenImage screenImage_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Uoservice.ScreenImage ScreenImage {
-      get { return screenImage_; }
-      set {
-        screenImage_ = value;
-      }
-    }
-
     /// <summary>Field number for the "mobileList" field.</summary>
-    public const int MobileListFieldNumber = 2;
+    public const int MobileListFieldNumber = 1;
     private global::Uoservice.GrpcMobileList mobileList_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Uoservice.GrpcMobileList MobileList {
       get { return mobileList_; }
       set {
         mobileList_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "itemList" field.</summary>
+    public const int ItemListFieldNumber = 2;
+    private global::Uoservice.GrpcItemList itemList_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Uoservice.GrpcItemList ItemList {
+      get { return itemList_; }
+      set {
+        itemList_ = value;
       }
     }
 
@@ -1153,8 +1361,8 @@ namespace Uoservice {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (!object.Equals(ScreenImage, other.ScreenImage)) return false;
       if (!object.Equals(MobileList, other.MobileList)) return false;
+      if (!object.Equals(ItemList, other.ItemList)) return false;
       if (!object.Equals(Rewards, other.Rewards)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -1162,8 +1370,8 @@ namespace Uoservice {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (screenImage_ != null) hash ^= ScreenImage.GetHashCode();
       if (mobileList_ != null) hash ^= MobileList.GetHashCode();
+      if (itemList_ != null) hash ^= ItemList.GetHashCode();
       if (rewards_ != null) hash ^= Rewards.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -1178,13 +1386,13 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (screenImage_ != null) {
-        output.WriteRawTag(10);
-        output.WriteMessage(ScreenImage);
-      }
       if (mobileList_ != null) {
-        output.WriteRawTag(18);
+        output.WriteRawTag(10);
         output.WriteMessage(MobileList);
+      }
+      if (itemList_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(ItemList);
       }
       if (rewards_ != null) {
         output.WriteRawTag(26);
@@ -1198,11 +1406,11 @@ namespace Uoservice {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (screenImage_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ScreenImage);
-      }
       if (mobileList_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(MobileList);
+      }
+      if (itemList_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ItemList);
       }
       if (rewards_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Rewards);
@@ -1218,17 +1426,17 @@ namespace Uoservice {
       if (other == null) {
         return;
       }
-      if (other.screenImage_ != null) {
-        if (screenImage_ == null) {
-          screenImage_ = new global::Uoservice.ScreenImage();
-        }
-        ScreenImage.MergeFrom(other.ScreenImage);
-      }
       if (other.mobileList_ != null) {
         if (mobileList_ == null) {
           mobileList_ = new global::Uoservice.GrpcMobileList();
         }
         MobileList.MergeFrom(other.MobileList);
+      }
+      if (other.itemList_ != null) {
+        if (itemList_ == null) {
+          itemList_ = new global::Uoservice.GrpcItemList();
+        }
+        ItemList.MergeFrom(other.ItemList);
       }
       if (other.rewards_ != null) {
         if (rewards_ == null) {
@@ -1248,17 +1456,17 @@ namespace Uoservice {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
-            if (screenImage_ == null) {
-              screenImage_ = new global::Uoservice.ScreenImage();
-            }
-            input.ReadMessage(screenImage_);
-            break;
-          }
-          case 18: {
             if (mobileList_ == null) {
               mobileList_ = new global::Uoservice.GrpcMobileList();
             }
             input.ReadMessage(mobileList_);
+            break;
+          }
+          case 18: {
+            if (itemList_ == null) {
+              itemList_ = new global::Uoservice.GrpcItemList();
+            }
+            input.ReadMessage(itemList_);
             break;
           }
           case 26: {
@@ -1282,7 +1490,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[8]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[9]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1411,7 +1619,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[9]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[10]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1430,6 +1638,7 @@ namespace Uoservice {
     public Actions(Actions other) : this() {
       actionType_ = other.actionType_;
       mobileSerial_ = other.mobileSerial_;
+      itemSerial_ = other.itemSerial_;
       walkDirection_ = other.walkDirection_ != null ? other.walkDirection_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -1461,8 +1670,19 @@ namespace Uoservice {
       }
     }
 
+    /// <summary>Field number for the "itemSerial" field.</summary>
+    public const int ItemSerialFieldNumber = 3;
+    private uint itemSerial_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint ItemSerial {
+      get { return itemSerial_; }
+      set {
+        itemSerial_ = value;
+      }
+    }
+
     /// <summary>Field number for the "walkDirection" field.</summary>
-    public const int WalkDirectionFieldNumber = 3;
+    public const int WalkDirectionFieldNumber = 4;
     private global::Uoservice.WalkDirection walkDirection_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Uoservice.WalkDirection WalkDirection {
@@ -1487,6 +1707,7 @@ namespace Uoservice {
       }
       if (ActionType != other.ActionType) return false;
       if (MobileSerial != other.MobileSerial) return false;
+      if (ItemSerial != other.ItemSerial) return false;
       if (!object.Equals(WalkDirection, other.WalkDirection)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -1496,6 +1717,7 @@ namespace Uoservice {
       int hash = 1;
       if (ActionType != 0) hash ^= ActionType.GetHashCode();
       if (MobileSerial != 0) hash ^= MobileSerial.GetHashCode();
+      if (ItemSerial != 0) hash ^= ItemSerial.GetHashCode();
       if (walkDirection_ != null) hash ^= WalkDirection.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -1518,8 +1740,12 @@ namespace Uoservice {
         output.WriteRawTag(16);
         output.WriteUInt32(MobileSerial);
       }
+      if (ItemSerial != 0) {
+        output.WriteRawTag(24);
+        output.WriteUInt32(ItemSerial);
+      }
       if (walkDirection_ != null) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(34);
         output.WriteMessage(WalkDirection);
       }
       if (_unknownFields != null) {
@@ -1535,6 +1761,9 @@ namespace Uoservice {
       }
       if (MobileSerial != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(MobileSerial);
+      }
+      if (ItemSerial != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(ItemSerial);
       }
       if (walkDirection_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(WalkDirection);
@@ -1555,6 +1784,9 @@ namespace Uoservice {
       }
       if (other.MobileSerial != 0) {
         MobileSerial = other.MobileSerial;
+      }
+      if (other.ItemSerial != 0) {
+        ItemSerial = other.ItemSerial;
       }
       if (other.walkDirection_ != null) {
         if (walkDirection_ == null) {
@@ -1581,7 +1813,11 @@ namespace Uoservice {
             MobileSerial = input.ReadUInt32();
             break;
           }
-          case 26: {
+          case 24: {
+            ItemSerial = input.ReadUInt32();
+            break;
+          }
+          case 34: {
             if (walkDirection_ == null) {
               walkDirection_ = new global::Uoservice.WalkDirection();
             }

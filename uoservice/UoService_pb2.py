@@ -14,16 +14,17 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fUoService.proto\x12\tuoservice\"\x07\n\x05\x45mpty\"R\n\x0eGrpcMobileData\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\t\n\x01x\x18\x02 \x01(\x02\x12\t\n\x01y\x18\x03 \x01(\x02\x12\x0c\n\x04race\x18\x04 \x01(\r\x12\x0e\n\x06serial\x18\x05 \x01(\r\"\x1f\n\x0fSemaphoreAction\x12\x0c\n\x04mode\x18\x01 \x01(\t\";\n\x0eGrpcMobileList\x12)\n\x06mobile\x18\x01 \x03(\x0b\x32\x19.uoservice.GrpcMobileData\"\x16\n\x06\x43onfig\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1c\n\x0bScreenImage\x12\r\n\x05image\x18\x01 \x01(\x0c\"5\n\x07Rewards\x12\x15\n\rattackMonster\x18\x01 \x01(\x02\x12\x13\n\x0bkillMonster\x18\x02 \x01(\x02\"\x89\x01\n\x06States\x12+\n\x0bscreenImage\x18\x01 \x01(\x0b\x32\x16.uoservice.ScreenImage\x12-\n\nmobileList\x18\x02 \x01(\x0b\x32\x19.uoservice.GrpcMobileList\x12#\n\x07rewards\x18\x03 \x01(\x0b\x32\x12.uoservice.Rewards\"\"\n\rWalkDirection\x12\x11\n\tdirection\x18\x01 \x01(\r\"d\n\x07\x41\x63tions\x12\x12\n\nactionType\x18\x01 \x01(\r\x12\x14\n\x0cmobileSerial\x18\x02 \x01(\r\x12/\n\rwalkDirection\x18\x03 \x01(\x0b\x32\x18.uoservice.WalkDirection2\xa7\x02\n\tUoService\x12-\n\x05Reset\x12\x11.uoservice.Config\x1a\x11.uoservice.States\x12/\n\x07ReadObs\x12\x11.uoservice.Config\x1a\x11.uoservice.States\x12\x30\n\x08WriteAct\x12\x12.uoservice.Actions\x1a\x10.uoservice.Empty\x12\x43\n\x13\x41\x63tSemaphoreControl\x12\x1a.uoservice.SemaphoreAction\x1a\x10.uoservice.Empty\x12\x43\n\x13ObsSemaphoreControl\x12\x1a.uoservice.SemaphoreAction\x1a\x10.uoservice.Emptyb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fUoService.proto\x12\tuoservice\"\x07\n\x05\x45mpty\"R\n\x0eGrpcMobileData\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\t\n\x01x\x18\x02 \x01(\x02\x12\t\n\x01y\x18\x03 \x01(\x02\x12\x0c\n\x04race\x18\x04 \x01(\r\x12\x0e\n\x06serial\x18\x05 \x01(\r\"K\n\x0cGrpcItemData\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\r\n\x05layer\x18\x02 \x01(\r\x12\x0e\n\x06serial\x18\x03 \x01(\r\x12\x0e\n\x06\x61mount\x18\x04 \x01(\r\"\x1f\n\x0fSemaphoreAction\x12\x0c\n\x04mode\x18\x01 \x01(\t\";\n\x0eGrpcMobileList\x12)\n\x06mobile\x18\x01 \x03(\x0b\x32\x19.uoservice.GrpcMobileData\"5\n\x0cGrpcItemList\x12%\n\x04item\x18\x01 \x03(\x0b\x32\x17.uoservice.GrpcItemData\"\x16\n\x06\x43onfig\x12\x0c\n\x04name\x18\x01 \x01(\t\"5\n\x07Rewards\x12\x15\n\rattackMonster\x18\x01 \x01(\x02\x12\x13\n\x0bkillMonster\x18\x02 \x01(\x02\"\x87\x01\n\x06States\x12-\n\nmobileList\x18\x01 \x01(\x0b\x32\x19.uoservice.GrpcMobileList\x12)\n\x08itemList\x18\x02 \x01(\x0b\x32\x17.uoservice.GrpcItemList\x12#\n\x07rewards\x18\x03 \x01(\x0b\x32\x12.uoservice.Rewards\"\"\n\rWalkDirection\x12\x11\n\tdirection\x18\x01 \x01(\r\"x\n\x07\x41\x63tions\x12\x12\n\nactionType\x18\x01 \x01(\r\x12\x14\n\x0cmobileSerial\x18\x02 \x01(\r\x12\x12\n\nitemSerial\x18\x03 \x01(\r\x12/\n\rwalkDirection\x18\x04 \x01(\x0b\x32\x18.uoservice.WalkDirection2\xa7\x02\n\tUoService\x12-\n\x05Reset\x12\x11.uoservice.Config\x1a\x11.uoservice.States\x12/\n\x07ReadObs\x12\x11.uoservice.Config\x1a\x11.uoservice.States\x12\x30\n\x08WriteAct\x12\x12.uoservice.Actions\x1a\x10.uoservice.Empty\x12\x43\n\x13\x41\x63tSemaphoreControl\x12\x1a.uoservice.SemaphoreAction\x1a\x10.uoservice.Empty\x12\x43\n\x13ObsSemaphoreControl\x12\x1a.uoservice.SemaphoreAction\x1a\x10.uoservice.Emptyb\x06proto3')
 
 
 
 _EMPTY = DESCRIPTOR.message_types_by_name['Empty']
 _GRPCMOBILEDATA = DESCRIPTOR.message_types_by_name['GrpcMobileData']
+_GRPCITEMDATA = DESCRIPTOR.message_types_by_name['GrpcItemData']
 _SEMAPHOREACTION = DESCRIPTOR.message_types_by_name['SemaphoreAction']
 _GRPCMOBILELIST = DESCRIPTOR.message_types_by_name['GrpcMobileList']
+_GRPCITEMLIST = DESCRIPTOR.message_types_by_name['GrpcItemList']
 _CONFIG = DESCRIPTOR.message_types_by_name['Config']
-_SCREENIMAGE = DESCRIPTOR.message_types_by_name['ScreenImage']
 _REWARDS = DESCRIPTOR.message_types_by_name['Rewards']
 _STATES = DESCRIPTOR.message_types_by_name['States']
 _WALKDIRECTION = DESCRIPTOR.message_types_by_name['WalkDirection']
@@ -42,6 +43,13 @@ GrpcMobileData = _reflection.GeneratedProtocolMessageType('GrpcMobileData', (_me
   })
 _sym_db.RegisterMessage(GrpcMobileData)
 
+GrpcItemData = _reflection.GeneratedProtocolMessageType('GrpcItemData', (_message.Message,), {
+  'DESCRIPTOR' : _GRPCITEMDATA,
+  '__module__' : 'UoService_pb2'
+  # @@protoc_insertion_point(class_scope:uoservice.GrpcItemData)
+  })
+_sym_db.RegisterMessage(GrpcItemData)
+
 SemaphoreAction = _reflection.GeneratedProtocolMessageType('SemaphoreAction', (_message.Message,), {
   'DESCRIPTOR' : _SEMAPHOREACTION,
   '__module__' : 'UoService_pb2'
@@ -56,19 +64,19 @@ GrpcMobileList = _reflection.GeneratedProtocolMessageType('GrpcMobileList', (_me
   })
 _sym_db.RegisterMessage(GrpcMobileList)
 
+GrpcItemList = _reflection.GeneratedProtocolMessageType('GrpcItemList', (_message.Message,), {
+  'DESCRIPTOR' : _GRPCITEMLIST,
+  '__module__' : 'UoService_pb2'
+  # @@protoc_insertion_point(class_scope:uoservice.GrpcItemList)
+  })
+_sym_db.RegisterMessage(GrpcItemList)
+
 Config = _reflection.GeneratedProtocolMessageType('Config', (_message.Message,), {
   'DESCRIPTOR' : _CONFIG,
   '__module__' : 'UoService_pb2'
   # @@protoc_insertion_point(class_scope:uoservice.Config)
   })
 _sym_db.RegisterMessage(Config)
-
-ScreenImage = _reflection.GeneratedProtocolMessageType('ScreenImage', (_message.Message,), {
-  'DESCRIPTOR' : _SCREENIMAGE,
-  '__module__' : 'UoService_pb2'
-  # @@protoc_insertion_point(class_scope:uoservice.ScreenImage)
-  })
-_sym_db.RegisterMessage(ScreenImage)
 
 Rewards = _reflection.GeneratedProtocolMessageType('Rewards', (_message.Message,), {
   'DESCRIPTOR' : _REWARDS,
@@ -106,22 +114,24 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _EMPTY._serialized_end=37
   _GRPCMOBILEDATA._serialized_start=39
   _GRPCMOBILEDATA._serialized_end=121
-  _SEMAPHOREACTION._serialized_start=123
-  _SEMAPHOREACTION._serialized_end=154
-  _GRPCMOBILELIST._serialized_start=156
-  _GRPCMOBILELIST._serialized_end=215
-  _CONFIG._serialized_start=217
-  _CONFIG._serialized_end=239
-  _SCREENIMAGE._serialized_start=241
-  _SCREENIMAGE._serialized_end=269
-  _REWARDS._serialized_start=271
-  _REWARDS._serialized_end=324
-  _STATES._serialized_start=327
-  _STATES._serialized_end=464
-  _WALKDIRECTION._serialized_start=466
-  _WALKDIRECTION._serialized_end=500
-  _ACTIONS._serialized_start=502
-  _ACTIONS._serialized_end=602
-  _UOSERVICE._serialized_start=605
-  _UOSERVICE._serialized_end=900
+  _GRPCITEMDATA._serialized_start=123
+  _GRPCITEMDATA._serialized_end=198
+  _SEMAPHOREACTION._serialized_start=200
+  _SEMAPHOREACTION._serialized_end=231
+  _GRPCMOBILELIST._serialized_start=233
+  _GRPCMOBILELIST._serialized_end=292
+  _GRPCITEMLIST._serialized_start=294
+  _GRPCITEMLIST._serialized_end=347
+  _CONFIG._serialized_start=349
+  _CONFIG._serialized_end=371
+  _REWARDS._serialized_start=373
+  _REWARDS._serialized_end=426
+  _STATES._serialized_start=429
+  _STATES._serialized_end=564
+  _WALKDIRECTION._serialized_start=566
+  _WALKDIRECTION._serialized_end=600
+  _ACTIONS._serialized_start=602
+  _ACTIONS._serialized_end=722
+  _UOSERVICE._serialized_start=725
+  _UOSERVICE._serialized_end=1020
 # @@protoc_insertion_point(module_scope)

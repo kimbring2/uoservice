@@ -12,6 +12,13 @@ message GrpcMobileData {
   uint32 serial = 5;
 }
 
+message GrpcItemData {
+  string name = 1;
+  uint32 layer = 2;
+  uint32 serial = 3;
+  uint32 amount = 4;
+}
+
 message SemaphoreAction {
   string mode = 1;
 }
@@ -20,12 +27,12 @@ message GrpcMobileList {
   repeated GrpcMobileData mobile = 1;
 }
 
-message Config {
-  string name = 1;
+message GrpcItemList {
+  repeated GrpcItemData item = 1;
 }
 
-message ScreenImage {
-  bytes image = 1;
+message Config {
+  string name = 1;
 }
 
 message Rewards {
@@ -34,8 +41,8 @@ message Rewards {
 }
 
 message States {
-  ScreenImage screenImage = 1;
-  GrpcMobileList mobileList = 2;
+  GrpcMobileList mobileList = 1;
+  GrpcItemList itemList = 2;
   Rewards rewards = 3;
 }
 
@@ -46,7 +53,8 @@ message WalkDirection {
 message Actions {
   uint32 actionType = 1;
   uint32 mobileSerial = 2;
-  WalkDirection walkDirection = 3;
+  uint32 itemSerial = 3;
+  WalkDirection walkDirection = 4;
 }
 
 service UoService {
