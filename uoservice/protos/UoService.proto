@@ -42,8 +42,9 @@ message Rewards {
 
 message States {
   GrpcMobileList mobileList = 1;
-  GrpcItemList itemList = 2;
-  Rewards rewards = 3;
+  GrpcItemList worldItemList = 2;
+  GrpcItemList equippedItemList = 3;
+  Rewards rewards = 4;
 }
 
 message WalkDirection {

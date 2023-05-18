@@ -28,14 +28,16 @@ def parse_response(response):
   global selected_target_serial
   global player_serial
 
-  mobile_data = response.mobileList.mobile
-  if len(mobile_data) == 0:
-    return None
+  mobile_dict = {}
+  world_item_dict = {}
+  equipped_item_dict = {}
 
-  item_data = response.itemList.item
-  print("item_data: ", item_data)
-  if len(item_data) == 0:
-    return None
+  mobile_data = response.mobileList.mobile
+  world_item_data = response.worldItemList.item
+  equipped_item_data = response.equippedItemList.item
+
+  if len(mobile_data) == 0 or len(world_item_data) == 0 or len(equipped_item_data) == 0:
+    return mobile_dict, equipped_item_dict
 
   #screen_data = response.screenImage.image
   #screen_data = io.BytesIO(screen_data).read()
@@ -44,8 +46,6 @@ def parse_response(response):
   #screen_image = cv2.cvtColor(screen_image, cv2.COLOR_RGB2BGR)
   #dim = (1600, 1280)
   #screen_image = cv2.resize(screen_image, dim, interpolation = cv2.INTER_AREA)
-
-  mobile_dict = {}
   for mobile in mobile_data:
     #print('name: {0}, x: {1}, y: {2}, race: {3}, serial: {4}\n'.format(mobile.name, 
     #                                                                   mobile.x, mobile.y, 
@@ -82,20 +82,21 @@ def parse_response(response):
                 lineType=cv2.LINE_4)
     '''
 
-  item_dict = {}
-  for item in item_data:
-    '''
-    message GrpcItemData {
-      string name = 1;
-      uint32 layer = 2;
-      uint32 serial = 3;
-      uint32 amount = 4;
-    }
-    '''
+  #print("world_item_data: ")
+  for item in world_item_data:
+    #print('name: {0}, layer: {1}, serial: {2}, amount: {3}'.format(item.name, item.layer, 
+    #                                                               item.serial, item.amount))
+    pass
+  #print("")
 
-    print('name: {0}, layer: {1}, serial: {2}, amount: {3}\n'.format(item.name, item.layer, 
-                                                                     item.serial, item.amount))
-    
+  #print("equipped_item_data: ")
+  for item in equipped_item_data:
+    #print('name: {0}, layer: {1}, serial: {2}, amount: {3}'.format(item.name, item.layer, 
+    #                                                               item.serial, item.amount))
+    equipped_item_dict[item.layer] = [item.name, item.serial, item.amount]
+
+  #print("")  
+
   if (selected_target_serial not in mobile_dict) and selected_target_serial != None:
     selected_target_serial = None
 
@@ -114,10 +115,17 @@ def parse_response(response):
   #cv2.imshow('screen_image', screen_image)
   #cv2.waitKey(1)
 
-  return mobile_dict
+  #print("equipped_item_dict: ", equipped_item_dict)
 
+  return mobile_dict, equipped_item_dict
+
+
+item_pick_flag = False
 
 def main():
+  global item_pick_flag
+
+  weapon = None
   for ep in range(0, 10000):
     print("ep: ", ep)
 
@@ -130,10 +138,17 @@ def main():
 
     res = stub.ReadObs(UoService_pb2.Config(name='you'))
 
-    mobile_dict = parse_response(res)
+    mobile_dict, equipped_item_dict = parse_response(res)
 
     for step in range(0, 100000):
       print("step: ", step)
+
+      print("equipped_item_dict: ", equipped_item_dict)
+      if len(equipped_item_dict) != 0 and 1 in equipped_item_dict:
+      #if len(equipped_item_dict) != 0:
+        print("equipped_item_dict != None")
+        weapon = equipped_item_dict[1]
+        #print("weapon: ", weapon)
 
       if selected_target_serial != None and selected_target_serial in mobile_dict:
         selected_target = mobile_dict[selected_target_serial]
@@ -150,9 +165,17 @@ def main():
         target_y = 500
         target_serial = 1
 
-      stub.WriteAct(UoService_pb2.Actions(actionType=0, 
-                                          mobileSerial=target_serial,
-                                          walkDirection=UoService_pb2.WalkDirection(direction=2)))
+      if item_pick_flag == False:
+        stub.WriteAct(UoService_pb2.Actions(actionType=0, 
+                                            mobileSerial=target_serial,
+                                            itemSerial=target_serial,
+                                            walkDirection=UoService_pb2.WalkDirection(direction=2)))
+      elif item_pick_flag == True and weapon:
+        item_pick_flag = False
+        stub.WriteAct(UoService_pb2.Actions(actionType=3, 
+                                            mobileSerial=target_serial,
+                                            itemSerial=weapon[1],
+                                            walkDirection=UoService_pb2.WalkDirection(direction=2)))
       
       stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
 
@@ -160,7 +183,7 @@ def main():
 
       res_next = stub.ReadObs(UoService_pb2.Config(name='you'))
 
-      mobile_dict = parse_response(res_next)
+      mobile_dict, equipped_item_dict = parse_response(res_next)
 
       #time.sleep(0.5)
 

@@ -33,20 +33,22 @@ namespace Uoservice {
             "c2VydmljZS5HcnBjTW9iaWxlRGF0YSI1CgxHcnBjSXRlbUxpc3QSJQoEaXRl",
             "bRgBIAMoCzIXLnVvc2VydmljZS5HcnBjSXRlbURhdGEiFgoGQ29uZmlnEgwK",
             "BG5hbWUYASABKAkiNQoHUmV3YXJkcxIVCg1hdHRhY2tNb25zdGVyGAEgASgC",
-            "EhMKC2tpbGxNb25zdGVyGAIgASgCIocBCgZTdGF0ZXMSLQoKbW9iaWxlTGlz",
-            "dBgBIAEoCzIZLnVvc2VydmljZS5HcnBjTW9iaWxlTGlzdBIpCghpdGVtTGlz",
-            "dBgCIAEoCzIXLnVvc2VydmljZS5HcnBjSXRlbUxpc3QSIwoHcmV3YXJkcxgD",
-            "IAEoCzISLnVvc2VydmljZS5SZXdhcmRzIiIKDVdhbGtEaXJlY3Rpb24SEQoJ",
-            "ZGlyZWN0aW9uGAEgASgNIngKB0FjdGlvbnMSEgoKYWN0aW9uVHlwZRgBIAEo",
-            "DRIUCgxtb2JpbGVTZXJpYWwYAiABKA0SEgoKaXRlbVNlcmlhbBgDIAEoDRIv",
-            "Cg13YWxrRGlyZWN0aW9uGAQgASgLMhgudW9zZXJ2aWNlLldhbGtEaXJlY3Rp",
-            "b24ypwIKCVVvU2VydmljZRItCgVSZXNldBIRLnVvc2VydmljZS5Db25maWca",
-            "ES51b3NlcnZpY2UuU3RhdGVzEi8KB1JlYWRPYnMSES51b3NlcnZpY2UuQ29u",
-            "ZmlnGhEudW9zZXJ2aWNlLlN0YXRlcxIwCghXcml0ZUFjdBISLnVvc2Vydmlj",
-            "ZS5BY3Rpb25zGhAudW9zZXJ2aWNlLkVtcHR5EkMKE0FjdFNlbWFwaG9yZUNv",
-            "bnRyb2wSGi51b3NlcnZpY2UuU2VtYXBob3JlQWN0aW9uGhAudW9zZXJ2aWNl",
-            "LkVtcHR5EkMKE09ic1NlbWFwaG9yZUNvbnRyb2wSGi51b3NlcnZpY2UuU2Vt",
-            "YXBob3JlQWN0aW9uGhAudW9zZXJ2aWNlLkVtcHR5YgZwcm90bzM="));
+            "EhMKC2tpbGxNb25zdGVyGAIgASgCIr8BCgZTdGF0ZXMSLQoKbW9iaWxlTGlz",
+            "dBgBIAEoCzIZLnVvc2VydmljZS5HcnBjTW9iaWxlTGlzdBIuCg13b3JsZEl0",
+            "ZW1MaXN0GAIgASgLMhcudW9zZXJ2aWNlLkdycGNJdGVtTGlzdBIxChBlcXVp",
+            "cHBlZEl0ZW1MaXN0GAMgASgLMhcudW9zZXJ2aWNlLkdycGNJdGVtTGlzdBIj",
+            "CgdyZXdhcmRzGAQgASgLMhIudW9zZXJ2aWNlLlJld2FyZHMiIgoNV2Fsa0Rp",
+            "cmVjdGlvbhIRCglkaXJlY3Rpb24YASABKA0ieAoHQWN0aW9ucxISCgphY3Rp",
+            "b25UeXBlGAEgASgNEhQKDG1vYmlsZVNlcmlhbBgCIAEoDRISCgppdGVtU2Vy",
+            "aWFsGAMgASgNEi8KDXdhbGtEaXJlY3Rpb24YBCABKAsyGC51b3NlcnZpY2Uu",
+            "V2Fsa0RpcmVjdGlvbjKnAgoJVW9TZXJ2aWNlEi0KBVJlc2V0EhEudW9zZXJ2",
+            "aWNlLkNvbmZpZxoRLnVvc2VydmljZS5TdGF0ZXMSLwoHUmVhZE9icxIRLnVv",
+            "c2VydmljZS5Db25maWcaES51b3NlcnZpY2UuU3RhdGVzEjAKCFdyaXRlQWN0",
+            "EhIudW9zZXJ2aWNlLkFjdGlvbnMaEC51b3NlcnZpY2UuRW1wdHkSQwoTQWN0",
+            "U2VtYXBob3JlQ29udHJvbBIaLnVvc2VydmljZS5TZW1hcGhvcmVBY3Rpb24a",
+            "EC51b3NlcnZpY2UuRW1wdHkSQwoTT2JzU2VtYXBob3JlQ29udHJvbBIaLnVv",
+            "c2VydmljZS5TZW1hcGhvcmVBY3Rpb24aEC51b3NlcnZpY2UuRW1wdHliBnBy",
+            "b3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -58,7 +60,7 @@ namespace Uoservice {
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcItemList), global::Uoservice.GrpcItemList.Parser, new[]{ "Item" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Config), global::Uoservice.Config.Parser, new[]{ "Name" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Rewards), global::Uoservice.Rewards.Parser, new[]{ "AttackMonster", "KillMonster" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.States), global::Uoservice.States.Parser, new[]{ "MobileList", "ItemList", "Rewards" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.States), global::Uoservice.States.Parser, new[]{ "MobileList", "WorldItemList", "EquippedItemList", "Rewards" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.WalkDirection), global::Uoservice.WalkDirection.Parser, new[]{ "Direction" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Actions), global::Uoservice.Actions.Parser, new[]{ "ActionType", "MobileSerial", "ItemSerial", "WalkDirection" }, null, null, null)
           }));
@@ -1305,7 +1307,8 @@ namespace Uoservice {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public States(States other) : this() {
       mobileList_ = other.mobileList_ != null ? other.mobileList_.Clone() : null;
-      itemList_ = other.itemList_ != null ? other.itemList_.Clone() : null;
+      worldItemList_ = other.worldItemList_ != null ? other.worldItemList_.Clone() : null;
+      equippedItemList_ = other.equippedItemList_ != null ? other.equippedItemList_.Clone() : null;
       rewards_ = other.rewards_ != null ? other.rewards_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -1326,19 +1329,30 @@ namespace Uoservice {
       }
     }
 
-    /// <summary>Field number for the "itemList" field.</summary>
-    public const int ItemListFieldNumber = 2;
-    private global::Uoservice.GrpcItemList itemList_;
+    /// <summary>Field number for the "worldItemList" field.</summary>
+    public const int WorldItemListFieldNumber = 2;
+    private global::Uoservice.GrpcItemList worldItemList_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Uoservice.GrpcItemList ItemList {
-      get { return itemList_; }
+    public global::Uoservice.GrpcItemList WorldItemList {
+      get { return worldItemList_; }
       set {
-        itemList_ = value;
+        worldItemList_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "equippedItemList" field.</summary>
+    public const int EquippedItemListFieldNumber = 3;
+    private global::Uoservice.GrpcItemList equippedItemList_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Uoservice.GrpcItemList EquippedItemList {
+      get { return equippedItemList_; }
+      set {
+        equippedItemList_ = value;
       }
     }
 
     /// <summary>Field number for the "rewards" field.</summary>
-    public const int RewardsFieldNumber = 3;
+    public const int RewardsFieldNumber = 4;
     private global::Uoservice.Rewards rewards_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Uoservice.Rewards Rewards {
@@ -1362,7 +1376,8 @@ namespace Uoservice {
         return true;
       }
       if (!object.Equals(MobileList, other.MobileList)) return false;
-      if (!object.Equals(ItemList, other.ItemList)) return false;
+      if (!object.Equals(WorldItemList, other.WorldItemList)) return false;
+      if (!object.Equals(EquippedItemList, other.EquippedItemList)) return false;
       if (!object.Equals(Rewards, other.Rewards)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -1371,7 +1386,8 @@ namespace Uoservice {
     public override int GetHashCode() {
       int hash = 1;
       if (mobileList_ != null) hash ^= MobileList.GetHashCode();
-      if (itemList_ != null) hash ^= ItemList.GetHashCode();
+      if (worldItemList_ != null) hash ^= WorldItemList.GetHashCode();
+      if (equippedItemList_ != null) hash ^= EquippedItemList.GetHashCode();
       if (rewards_ != null) hash ^= Rewards.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -1390,12 +1406,16 @@ namespace Uoservice {
         output.WriteRawTag(10);
         output.WriteMessage(MobileList);
       }
-      if (itemList_ != null) {
+      if (worldItemList_ != null) {
         output.WriteRawTag(18);
-        output.WriteMessage(ItemList);
+        output.WriteMessage(WorldItemList);
+      }
+      if (equippedItemList_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(EquippedItemList);
       }
       if (rewards_ != null) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(34);
         output.WriteMessage(Rewards);
       }
       if (_unknownFields != null) {
@@ -1409,8 +1429,11 @@ namespace Uoservice {
       if (mobileList_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(MobileList);
       }
-      if (itemList_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ItemList);
+      if (worldItemList_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(WorldItemList);
+      }
+      if (equippedItemList_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(EquippedItemList);
       }
       if (rewards_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Rewards);
@@ -1432,11 +1455,17 @@ namespace Uoservice {
         }
         MobileList.MergeFrom(other.MobileList);
       }
-      if (other.itemList_ != null) {
-        if (itemList_ == null) {
-          itemList_ = new global::Uoservice.GrpcItemList();
+      if (other.worldItemList_ != null) {
+        if (worldItemList_ == null) {
+          worldItemList_ = new global::Uoservice.GrpcItemList();
         }
-        ItemList.MergeFrom(other.ItemList);
+        WorldItemList.MergeFrom(other.WorldItemList);
+      }
+      if (other.equippedItemList_ != null) {
+        if (equippedItemList_ == null) {
+          equippedItemList_ = new global::Uoservice.GrpcItemList();
+        }
+        EquippedItemList.MergeFrom(other.EquippedItemList);
       }
       if (other.rewards_ != null) {
         if (rewards_ == null) {
@@ -1463,13 +1492,20 @@ namespace Uoservice {
             break;
           }
           case 18: {
-            if (itemList_ == null) {
-              itemList_ = new global::Uoservice.GrpcItemList();
+            if (worldItemList_ == null) {
+              worldItemList_ = new global::Uoservice.GrpcItemList();
             }
-            input.ReadMessage(itemList_);
+            input.ReadMessage(worldItemList_);
             break;
           }
           case 26: {
+            if (equippedItemList_ == null) {
+              equippedItemList_ = new global::Uoservice.GrpcItemList();
+            }
+            input.ReadMessage(equippedItemList_);
+            break;
+          }
+          case 34: {
             if (rewards_ == null) {
               rewards_ = new global::Uoservice.Rewards();
             }
