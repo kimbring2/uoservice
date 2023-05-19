@@ -38,10 +38,13 @@ def parse_response(response):
   equipped_item_data = response.equippedItemList.item
   backpack_item_data = response.backpackItemList.item
 
+  land_object_data = response.landObjectList.landObject
+  print("land_object_data: ", land_object_data)
+
   if len(mobile_data) == 0 or len(world_item_data) == 0 or len(equipped_item_data) == 0:
     return mobile_dict, equipped_item_dict, backpack_item_dict
 
-  print("response.playerStatus: ", response.playerStatus)
+  #print("response.playerStatus: ", response.playerStatus)
 
   #screen_data = response.screenImage.image
   #screen_data = io.BytesIO(screen_data).read()
@@ -141,12 +144,16 @@ def get_serial_by_name(item_dict, name):
   #print("")
 
 
-item_unequip_flag = False
+item_unequip_flag = True
 item_equip_flag = False
+
+action_index = 0 
+test_action_sequence = [3, 5]
 
 def main():
   global item_unequip_flag
   global item_equip_flag
+  global action_index
 
   target_weapon_serial = None
   for ep in range(0, 10000):
@@ -188,26 +195,36 @@ def main():
         target_y = 500
         target_serial = 1
 
+      stub.WriteAct(UoService_pb2.Actions(actionType=test_action_sequence[action_index], 
+                                          mobileSerial=target_serial,
+                                          itemSerial=target_weapon_serial,
+                                          walkDirection=UoService_pb2.WalkDirection(direction=2)))
+
+      if action_index != len(test_action_sequence) - 1:
+        action_index += 1
+
+      '''
       if item_unequip_flag == False and item_equip_flag == False:
         stub.WriteAct(UoService_pb2.Actions(actionType=0, 
                                             mobileSerial=target_serial,
                                             itemSerial=target_weapon_serial,
                                             walkDirection=UoService_pb2.WalkDirection(direction=2)))
       elif item_unequip_flag == True and target_weapon_serial:
-        print("action 3")
+        #print("action 3")
         item_unequip_flag = False
         item_equip_flag = True
-        stub.WriteAct(UoService_pb2.Actions(actionType=3, 
+        stub.WriteAct(UoService_pb2.Actions(actionType=test_action_sequence, 
                                             mobileSerial=target_serial,
                                             itemSerial=target_weapon_serial,
                                             walkDirection=UoService_pb2.WalkDirection(direction=2)))
       elif item_equip_flag == True and target_weapon_serial and step == 1000:
-        print("action 4")
+        #print("action 4")
         item_equip_flag = False
         stub.WriteAct(UoService_pb2.Actions(actionType=4, 
                                             mobileSerial=target_serial,
                                             itemSerial=target_weapon_serial,
                                             walkDirection=UoService_pb2.WalkDirection(direction=2)))
+      '''
       
       stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
 

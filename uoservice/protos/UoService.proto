@@ -19,6 +19,21 @@ message GrpcItemData {
   uint32 amount = 4;
 }
 
+message GrpcGameObjectData {
+  string type = 1;
+  uint32 x = 2;
+  uint32 y = 3;
+  uint32 distance = 4;
+}
+
+message GrpcLandObjectList {
+  repeated GrpcGameObjectData landObject = 1;
+}
+
+message GrpcMobileObjectList {
+  repeated GrpcGameObjectData mobileObject = 1;
+}
+
 message SemaphoreAction {
   string mode = 1;
 }
@@ -39,6 +54,18 @@ message PlayerStatus {
   uint32 str = 1;
   uint32 dex = 2;
   uint32 intell = 3;
+
+  uint32 hits = 4;
+  uint32 hitsMax = 5;
+  uint32 stamina = 6;
+  uint32 staminaMax = 7;
+  uint32 mana = 8;
+  uint32 manaMax = 9;
+
+  uint32 gold = 10;
+  uint32 physicalResistance = 11;
+  uint32 weight = 12;
+  uint32 weightMax = 13;
 }
 
 message States {
@@ -47,6 +74,8 @@ message States {
   GrpcItemList equippedItemList = 3;
   GrpcItemList backpackItemList = 4;
   PlayerStatus playerStatus = 5;
+  GrpcLandObjectList landObjectList = 6;
+  GrpcMobileObjectList mobileObjectList = 7;
 }
 
 message WalkDirection {
