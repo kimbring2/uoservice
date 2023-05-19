@@ -26,12 +26,8 @@ message GrpcGameObjectData {
   uint32 distance = 4;
 }
 
-message GrpcLandObjectList {
-  repeated GrpcGameObjectData landObject = 1;
-}
-
-message GrpcMobileObjectList {
-  repeated GrpcGameObjectData mobileObject = 1;
+message GrpcGameObjectList {
+  repeated GrpcGameObjectData gameObject = 1;
 }
 
 message SemaphoreAction {
@@ -74,8 +70,11 @@ message States {
   GrpcItemList equippedItemList = 3;
   GrpcItemList backpackItemList = 4;
   PlayerStatus playerStatus = 5;
-  GrpcLandObjectList landObjectList = 6;
-  GrpcMobileObjectList mobileObjectList = 7;
+  GrpcGameObjectList mobileObjectList = 6;
+  GrpcGameObjectList playerMobileObjectList = 7;
+  GrpcGameObjectList landObjectList = 8;
+  GrpcGameObjectList itemObjectList = 9;
+  GrpcGameObjectList staticObjectList = 10;
 }
 
 message WalkDirection {

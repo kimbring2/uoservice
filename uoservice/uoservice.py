@@ -38,8 +38,56 @@ def parse_response(response):
   equipped_item_data = response.equippedItemList.item
   backpack_item_data = response.backpackItemList.item
 
-  land_object_data = response.landObjectList.landObject
-  print("land_object_data: ", land_object_data)
+  land_object_data = response.landObjectList.gameObject
+  print("len(land_object_data): ", len(land_object_data))
+
+  player_mobile_object_data = response.playerMobileObjectList.gameObject
+  print("len(player_mobile_object_data): ", len(player_mobile_object_data))
+
+  mobile_object_data = response.mobileObjectList.gameObject
+  print("len(mobile_object_data): ", len(mobile_object_data))
+
+  static_object_data = response.staticObjectList.gameObject
+  print("len(static_object_data): ", len(static_object_data))
+
+  item_object_data = response.itemObjectList.gameObject
+  print("len(item_object_data): ", len(item_object_data))
+
+  screen_image = np.zeros((170,135,4), dtype=np.uint8)
+  for obj in land_object_data:
+    #print('type: {0}, x: {1}, y: {2}, distance: {3}'.format(obj.type, 
+    #                                                        obj.x, obj.y, 
+    #                                                        obj.distance))
+    screen_image[int(obj.x / 10), int(obj.y / 10), 0] = 0
+    screen_image[int(obj.x / 10), int(obj.y / 10), 1] = 255
+    screen_image[int(obj.x / 10), int(obj.y / 10), 2] = 255
+
+  for obj in player_mobile_object_data:
+    screen_image[int(obj.x / 10), int(obj.y / 10), 0] = 255
+    screen_image[int(obj.x / 10), int(obj.y / 10), 1] = 0
+    screen_image[int(obj.x / 10), int(obj.y / 10), 2] = 0
+
+  for obj in mobile_object_data:
+    screen_image[int(obj.x / 10), int(obj.y / 10), 0] = 0
+    screen_image[int(obj.x / 10), int(obj.y / 10), 1] = 0
+    screen_image[int(obj.x / 10), int(obj.y / 10), 2] = 255
+
+  for obj in static_object_data:
+    screen_image[int(obj.x / 10), int(obj.y / 10), 0] = 255
+    screen_image[int(obj.x / 10), int(obj.y / 10), 1] = 255
+    screen_image[int(obj.x / 10), int(obj.y / 10), 2] = 0
+
+  for obj in item_object_data:
+    screen_image[int(obj.x / 10), int(obj.y / 10), 0] = 0
+    screen_image[int(obj.x / 10), int(obj.y / 10), 1] = 255
+    screen_image[int(obj.x / 10), int(obj.y / 10), 2] = 0
+
+  dim = (1600, 1280)
+  screen_image = cv2.resize(screen_image, dim, interpolation = cv2.INTER_AREA)
+  screen_image = cv2.rotate(screen_image, cv2.ROTATE_90_CLOCKWISE)
+  screen_image = cv2.flip(screen_image, 1)
+  cv2.imshow('screen_image', screen_image)
+  cv2.waitKey(1)
 
   if len(mobile_data) == 0 or len(world_item_data) == 0 or len(equipped_item_data) == 0:
     return mobile_dict, equipped_item_dict, backpack_item_dict
@@ -65,9 +113,9 @@ def parse_response(response):
     if mobile.x >= 1600 or mobile.y >= 1280:
       continue
 
-    center_coordinates = (int(mobile.x), int(mobile.y))
-    start_point = (int(mobile.x - 40), int(mobile.y - 40))
-    end_point = (int(mobile.x + 40), int(mobile.y + 40))
+    #center_coordinates = (int(mobile.x), int(mobile.y))
+    #start_point = (int(mobile.x - 40), int(mobile.y - 40))
+    #end_point = (int(mobile.x + 40), int(mobile.y + 40))
     #screen_image = cv2.rectangle(screen_image, start_point, end_point, color, 2)
     #screen_image = cv2.circle(screen_image, center_coordinates, 20, color, thickness)
 
@@ -171,7 +219,7 @@ def main():
     mobile_dict, equipped_item_dict, backpack_item_dict = parse_response(res)
 
     for step in range(0, 100000):
-      print("step: ", step)
+      #print("step: ", step)
 
       if len(equipped_item_dict) != 0 and item_unequip_flag == True:
         target_weapon_serial = get_serial_by_name(equipped_item_dict, 'Valorite Longsword')
