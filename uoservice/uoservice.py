@@ -39,48 +39,56 @@ def parse_response(response):
   backpack_item_data = response.backpackItemList.item
 
   land_object_data = response.landObjectList.gameObject
-  print("len(land_object_data): ", len(land_object_data))
+  #print("len(land_object_data): ", len(land_object_data))
 
   player_mobile_object_data = response.playerMobileObjectList.gameObject
-  print("len(player_mobile_object_data): ", len(player_mobile_object_data))
+  #print("len(player_mobile_object_data): ", len(player_mobile_object_data))
 
   mobile_object_data = response.mobileObjectList.gameObject
-  print("len(mobile_object_data): ", len(mobile_object_data))
+  #print("len(mobile_object_data): ", len(mobile_object_data))
 
   static_object_data = response.staticObjectList.gameObject
-  print("len(static_object_data): ", len(static_object_data))
+  #print("len(static_object_data): ", len(static_object_data))
 
   item_object_data = response.itemObjectList.gameObject
-  print("len(item_object_data): ", len(item_object_data))
+  #print("len(item_object_data): ", len(item_object_data))
+
+  item_dropable_land_data = response.itemDropableLandList.gameObject
+  #print("len(item_dropable_land_data): ", len(item_dropable_land_data))
 
   screen_image = np.zeros((170,135,4), dtype=np.uint8)
   for obj in land_object_data:
     #print('type: {0}, x: {1}, y: {2}, distance: {3}'.format(obj.type, 
     #                                                        obj.x, obj.y, 
     #                                                        obj.distance))
-    screen_image[int(obj.x / 10), int(obj.y / 10), 0] = 0
-    screen_image[int(obj.x / 10), int(obj.y / 10), 1] = 255
-    screen_image[int(obj.x / 10), int(obj.y / 10), 2] = 255
-
-  for obj in player_mobile_object_data:
-    screen_image[int(obj.x / 10), int(obj.y / 10), 0] = 255
-    screen_image[int(obj.x / 10), int(obj.y / 10), 1] = 0
-    screen_image[int(obj.x / 10), int(obj.y / 10), 2] = 0
+    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 0
+    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 255
+    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 255
 
   for obj in mobile_object_data:
-    screen_image[int(obj.x / 10), int(obj.y / 10), 0] = 0
-    screen_image[int(obj.x / 10), int(obj.y / 10), 1] = 0
-    screen_image[int(obj.x / 10), int(obj.y / 10), 2] = 255
+    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 0
+    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 0
+    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 255
 
   for obj in static_object_data:
-    screen_image[int(obj.x / 10), int(obj.y / 10), 0] = 255
-    screen_image[int(obj.x / 10), int(obj.y / 10), 1] = 255
-    screen_image[int(obj.x / 10), int(obj.y / 10), 2] = 0
+    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 255
+    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 255
+    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 0
+
+  for obj in item_dropable_land_data:
+    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 255
+    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 0
+    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 255
 
   for obj in item_object_data:
-    screen_image[int(obj.x / 10), int(obj.y / 10), 0] = 0
-    screen_image[int(obj.x / 10), int(obj.y / 10), 1] = 255
-    screen_image[int(obj.x / 10), int(obj.y / 10), 2] = 0
+    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 0
+    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 255
+    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 0
+
+  for obj in player_mobile_object_data:
+    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 255
+    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 0
+    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 0
 
   dim = (1600, 1280)
   screen_image = cv2.resize(screen_image, dim, interpolation = cv2.INTER_AREA)
@@ -137,26 +145,17 @@ def parse_response(response):
                 lineType=cv2.LINE_4)
     '''
 
-  #print("world_item_data: ")
-  #for item in world_item_data:
-  #  print('name: {0}, layer: {1}, serial: {2}, amount: {3}'.format(item.name, item.layer, 
-  #                                                                 item.serial, item.amount))
-  #  pass
-  #print("")
-
   #print("equipped_item_data: ")
   for item in equipped_item_data:
     #print('name: {0}, layer: {1}, serial: {2}, amount: {3}'.format(item.name, item.layer, 
     #                                                               item.serial, item.amount))
     equipped_item_dict[item.serial] = [item.name, item.layer, item.amount]
-  #print("")  
 
   #print("backpack_item_data: ")
   for item in backpack_item_data:
      #print('name: {0}, layer: {1}, serial: {2}, amount: {3}'.format(item.name, item.layer, 
      #                                                              item.serial, item.amount))
      backpack_item_dict[item.serial] = [item.name, item.layer, item.amount]
-  #print("")
 
   if (selected_target_serial not in mobile_dict) and selected_target_serial != None:
     selected_target_serial = None
@@ -192,16 +191,9 @@ def get_serial_by_name(item_dict, name):
   #print("")
 
 
-item_unequip_flag = True
-item_equip_flag = False
-
-action_index = 0 
-test_action_sequence = [3, 5]
-
 def main():
-  global item_unequip_flag
-  global item_equip_flag
-  global action_index
+  action_index = 0
+  test_action_sequence = [3, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5]
 
   target_weapon_serial = None
   for ep in range(0, 10000):
@@ -219,15 +211,6 @@ def main():
     mobile_dict, equipped_item_dict, backpack_item_dict = parse_response(res)
 
     for step in range(0, 100000):
-      #print("step: ", step)
-
-      if len(equipped_item_dict) != 0 and item_unequip_flag == True:
-        target_weapon_serial = get_serial_by_name(equipped_item_dict, 'Valorite Longsword')
-        #print("equipped target_weapon_serial: ", target_weapon_serial)
-      elif len(backpack_item_dict) != 0 and item_unequip_flag == True:
-        target_weapon_serial = get_serial_by_name(backpack_item_dict, 'Valorite Longsword')
-        #print("backpack target_weapon_serial: ", target_weapon_serial)
-
       if selected_target_serial != None and selected_target_serial in mobile_dict:
         selected_target = mobile_dict[selected_target_serial]
         target_x = selected_target[1]
@@ -243,36 +226,20 @@ def main():
         target_y = 500
         target_serial = 1
 
-      stub.WriteAct(UoService_pb2.Actions(actionType=test_action_sequence[action_index], 
-                                          mobileSerial=target_serial,
-                                          itemSerial=target_weapon_serial,
-                                          walkDirection=UoService_pb2.WalkDirection(direction=2)))
+      if step >= 100:
+        if action_index != len(test_action_sequence) - 1:
+          target_weapon_serial = get_serial_by_name(equipped_item_dict, 'Valorite Longsword')
+          stub.WriteAct(UoService_pb2.Actions(actionType=test_action_sequence[action_index], 
+                                              mobileSerial=target_serial,
+                                              itemSerial=target_weapon_serial,
+                                              walkDirection=UoService_pb2.WalkDirection(direction=2)))
 
-      if action_index != len(test_action_sequence) - 1:
-        action_index += 1
-
-      '''
-      if item_unequip_flag == False and item_equip_flag == False:
-        stub.WriteAct(UoService_pb2.Actions(actionType=0, 
-                                            mobileSerial=target_serial,
-                                            itemSerial=target_weapon_serial,
-                                            walkDirection=UoService_pb2.WalkDirection(direction=2)))
-      elif item_unequip_flag == True and target_weapon_serial:
-        #print("action 3")
-        item_unequip_flag = False
-        item_equip_flag = True
-        stub.WriteAct(UoService_pb2.Actions(actionType=test_action_sequence, 
-                                            mobileSerial=target_serial,
-                                            itemSerial=target_weapon_serial,
-                                            walkDirection=UoService_pb2.WalkDirection(direction=2)))
-      elif item_equip_flag == True and target_weapon_serial and step == 1000:
-        #print("action 4")
-        item_equip_flag = False
-        stub.WriteAct(UoService_pb2.Actions(actionType=4, 
-                                            mobileSerial=target_serial,
-                                            itemSerial=target_weapon_serial,
-                                            walkDirection=UoService_pb2.WalkDirection(direction=2)))
-      '''
+          action_index += 1
+        else:
+          stub.WriteAct(UoService_pb2.Actions(actionType=0, 
+                                              mobileSerial=target_serial,
+                                              itemSerial=target_weapon_serial,
+                                              walkDirection=UoService_pb2.WalkDirection(direction=2)))
       
       stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
 

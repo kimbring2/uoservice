@@ -21,9 +21,11 @@ message GrpcItemData {
 
 message GrpcGameObjectData {
   string type = 1;
-  uint32 x = 2;
-  uint32 y = 3;
+  uint32 screenX = 2;
+  uint32 screenY = 3;
   uint32 distance = 4;
+  uint32 gameX = 5;
+  uint32 gameY = 6;
 }
 
 message GrpcGameObjectList {
@@ -75,6 +77,7 @@ message States {
   GrpcGameObjectList landObjectList = 8;
   GrpcGameObjectList itemObjectList = 9;
   GrpcGameObjectList staticObjectList = 10;
+  GrpcGameObjectList itemDropableLandList = 11;
 }
 
 message WalkDirection {
