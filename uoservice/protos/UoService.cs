@@ -42,31 +42,32 @@ namespace Uoservice {
             "aXRzGAQgASgNEg8KB2hpdHNNYXgYBSABKA0SDwoHc3RhbWluYRgGIAEoDRIS",
             "CgpzdGFtaW5hTWF4GAcgASgNEgwKBG1hbmEYCCABKA0SDwoHbWFuYU1heBgJ",
             "IAEoDRIMCgRnb2xkGAogASgNEhoKEnBoeXNpY2FsUmVzaXN0YW5jZRgLIAEo",
-            "DRIOCgZ3ZWlnaHQYDCABKA0SEQoJd2VpZ2h0TWF4GA0gASgNItgECgZTdGF0",
+            "DRIOCgZ3ZWlnaHQYDCABKA0SEQoJd2VpZ2h0TWF4GA0gASgNIokFCgZTdGF0",
             "ZXMSLQoKbW9iaWxlTGlzdBgBIAEoCzIZLnVvc2VydmljZS5HcnBjTW9iaWxl",
             "TGlzdBIuCg13b3JsZEl0ZW1MaXN0GAIgASgLMhcudW9zZXJ2aWNlLkdycGNJ",
             "dGVtTGlzdBIxChBlcXVpcHBlZEl0ZW1MaXN0GAMgASgLMhcudW9zZXJ2aWNl",
             "LkdycGNJdGVtTGlzdBIxChBiYWNrcGFja0l0ZW1MaXN0GAQgASgLMhcudW9z",
-            "ZXJ2aWNlLkdycGNJdGVtTGlzdBItCgxwbGF5ZXJTdGF0dXMYBSABKAsyFy51",
-            "b3NlcnZpY2UuUGxheWVyU3RhdHVzEjcKEG1vYmlsZU9iamVjdExpc3QYBiAB",
-            "KAsyHS51b3NlcnZpY2UuR3JwY0dhbWVPYmplY3RMaXN0Ej0KFnBsYXllck1v",
-            "YmlsZU9iamVjdExpc3QYByABKAsyHS51b3NlcnZpY2UuR3JwY0dhbWVPYmpl",
-            "Y3RMaXN0EjUKDmxhbmRPYmplY3RMaXN0GAggASgLMh0udW9zZXJ2aWNlLkdy",
-            "cGNHYW1lT2JqZWN0TGlzdBI1Cg5pdGVtT2JqZWN0TGlzdBgJIAEoCzIdLnVv",
-            "c2VydmljZS5HcnBjR2FtZU9iamVjdExpc3QSNwoQc3RhdGljT2JqZWN0TGlz",
-            "dBgKIAEoCzIdLnVvc2VydmljZS5HcnBjR2FtZU9iamVjdExpc3QSOwoUaXRl",
-            "bURyb3BhYmxlTGFuZExpc3QYCyABKAsyHS51b3NlcnZpY2UuR3JwY0dhbWVP",
-            "YmplY3RMaXN0IiIKDVdhbGtEaXJlY3Rpb24SEQoJZGlyZWN0aW9uGAEgASgN",
-            "IngKB0FjdGlvbnMSEgoKYWN0aW9uVHlwZRgBIAEoDRIUCgxtb2JpbGVTZXJp",
-            "YWwYAiABKA0SEgoKaXRlbVNlcmlhbBgDIAEoDRIvCg13YWxrRGlyZWN0aW9u",
-            "GAQgASgLMhgudW9zZXJ2aWNlLldhbGtEaXJlY3Rpb24ypwIKCVVvU2Vydmlj",
-            "ZRItCgVSZXNldBIRLnVvc2VydmljZS5Db25maWcaES51b3NlcnZpY2UuU3Rh",
-            "dGVzEi8KB1JlYWRPYnMSES51b3NlcnZpY2UuQ29uZmlnGhEudW9zZXJ2aWNl",
-            "LlN0YXRlcxIwCghXcml0ZUFjdBISLnVvc2VydmljZS5BY3Rpb25zGhAudW9z",
-            "ZXJ2aWNlLkVtcHR5EkMKE0FjdFNlbWFwaG9yZUNvbnRyb2wSGi51b3NlcnZp",
-            "Y2UuU2VtYXBob3JlQWN0aW9uGhAudW9zZXJ2aWNlLkVtcHR5EkMKE09ic1Nl",
-            "bWFwaG9yZUNvbnRyb2wSGi51b3NlcnZpY2UuU2VtYXBob3JlQWN0aW9uGhAu",
-            "dW9zZXJ2aWNlLkVtcHR5YgZwcm90bzM="));
+            "ZXJ2aWNlLkdycGNJdGVtTGlzdBIvCg5jb3Jwc2VJdGVtTGlzdBgFIAEoCzIX",
+            "LnVvc2VydmljZS5HcnBjSXRlbUxpc3QSLQoMcGxheWVyU3RhdHVzGAYgASgL",
+            "MhcudW9zZXJ2aWNlLlBsYXllclN0YXR1cxI3ChBtb2JpbGVPYmplY3RMaXN0",
+            "GAcgASgLMh0udW9zZXJ2aWNlLkdycGNHYW1lT2JqZWN0TGlzdBI9ChZwbGF5",
+            "ZXJNb2JpbGVPYmplY3RMaXN0GAggASgLMh0udW9zZXJ2aWNlLkdycGNHYW1l",
+            "T2JqZWN0TGlzdBI1Cg5sYW5kT2JqZWN0TGlzdBgJIAEoCzIdLnVvc2Vydmlj",
+            "ZS5HcnBjR2FtZU9iamVjdExpc3QSNQoOaXRlbU9iamVjdExpc3QYCiABKAsy",
+            "HS51b3NlcnZpY2UuR3JwY0dhbWVPYmplY3RMaXN0EjcKEHN0YXRpY09iamVj",
+            "dExpc3QYCyABKAsyHS51b3NlcnZpY2UuR3JwY0dhbWVPYmplY3RMaXN0EjsK",
+            "FGl0ZW1Ecm9wYWJsZUxhbmRMaXN0GAwgASgLMh0udW9zZXJ2aWNlLkdycGNH",
+            "YW1lT2JqZWN0TGlzdCIiCg1XYWxrRGlyZWN0aW9uEhEKCWRpcmVjdGlvbhgB",
+            "IAEoDSJ4CgdBY3Rpb25zEhIKCmFjdGlvblR5cGUYASABKA0SFAoMbW9iaWxl",
+            "U2VyaWFsGAIgASgNEhIKCml0ZW1TZXJpYWwYAyABKA0SLwoNd2Fsa0RpcmVj",
+            "dGlvbhgEIAEoCzIYLnVvc2VydmljZS5XYWxrRGlyZWN0aW9uMqcCCglVb1Nl",
+            "cnZpY2USLQoFUmVzZXQSES51b3NlcnZpY2UuQ29uZmlnGhEudW9zZXJ2aWNl",
+            "LlN0YXRlcxIvCgdSZWFkT2JzEhEudW9zZXJ2aWNlLkNvbmZpZxoRLnVvc2Vy",
+            "dmljZS5TdGF0ZXMSMAoIV3JpdGVBY3QSEi51b3NlcnZpY2UuQWN0aW9ucxoQ",
+            "LnVvc2VydmljZS5FbXB0eRJDChNBY3RTZW1hcGhvcmVDb250cm9sEhoudW9z",
+            "ZXJ2aWNlLlNlbWFwaG9yZUFjdGlvbhoQLnVvc2VydmljZS5FbXB0eRJDChNP",
+            "YnNTZW1hcGhvcmVDb250cm9sEhoudW9zZXJ2aWNlLlNlbWFwaG9yZUFjdGlv",
+            "bhoQLnVvc2VydmljZS5FbXB0eWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -80,7 +81,7 @@ namespace Uoservice {
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcItemList), global::Uoservice.GrpcItemList.Parser, new[]{ "Item" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Config), global::Uoservice.Config.Parser, new[]{ "Name" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.PlayerStatus), global::Uoservice.PlayerStatus.Parser, new[]{ "Str", "Dex", "Intell", "Hits", "HitsMax", "Stamina", "StaminaMax", "Mana", "ManaMax", "Gold", "PhysicalResistance", "Weight", "WeightMax" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.States), global::Uoservice.States.Parser, new[]{ "MobileList", "WorldItemList", "EquippedItemList", "BackpackItemList", "PlayerStatus", "MobileObjectList", "PlayerMobileObjectList", "LandObjectList", "ItemObjectList", "StaticObjectList", "ItemDropableLandList" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.States), global::Uoservice.States.Parser, new[]{ "MobileList", "WorldItemList", "EquippedItemList", "BackpackItemList", "CorpseItemList", "PlayerStatus", "MobileObjectList", "PlayerMobileObjectList", "LandObjectList", "ItemObjectList", "StaticObjectList", "ItemDropableLandList" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.WalkDirection), global::Uoservice.WalkDirection.Parser, new[]{ "Direction" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Actions), global::Uoservice.Actions.Parser, new[]{ "ActionType", "MobileSerial", "ItemSerial", "WalkDirection" }, null, null, null)
           }));
@@ -2112,6 +2113,7 @@ namespace Uoservice {
       worldItemList_ = other.worldItemList_ != null ? other.worldItemList_.Clone() : null;
       equippedItemList_ = other.equippedItemList_ != null ? other.equippedItemList_.Clone() : null;
       backpackItemList_ = other.backpackItemList_ != null ? other.backpackItemList_.Clone() : null;
+      corpseItemList_ = other.corpseItemList_ != null ? other.corpseItemList_.Clone() : null;
       playerStatus_ = other.playerStatus_ != null ? other.playerStatus_.Clone() : null;
       mobileObjectList_ = other.mobileObjectList_ != null ? other.mobileObjectList_.Clone() : null;
       playerMobileObjectList_ = other.playerMobileObjectList_ != null ? other.playerMobileObjectList_.Clone() : null;
@@ -2171,8 +2173,19 @@ namespace Uoservice {
       }
     }
 
+    /// <summary>Field number for the "corpseItemList" field.</summary>
+    public const int CorpseItemListFieldNumber = 5;
+    private global::Uoservice.GrpcItemList corpseItemList_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Uoservice.GrpcItemList CorpseItemList {
+      get { return corpseItemList_; }
+      set {
+        corpseItemList_ = value;
+      }
+    }
+
     /// <summary>Field number for the "playerStatus" field.</summary>
-    public const int PlayerStatusFieldNumber = 5;
+    public const int PlayerStatusFieldNumber = 6;
     private global::Uoservice.PlayerStatus playerStatus_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Uoservice.PlayerStatus PlayerStatus {
@@ -2183,7 +2196,7 @@ namespace Uoservice {
     }
 
     /// <summary>Field number for the "mobileObjectList" field.</summary>
-    public const int MobileObjectListFieldNumber = 6;
+    public const int MobileObjectListFieldNumber = 7;
     private global::Uoservice.GrpcGameObjectList mobileObjectList_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Uoservice.GrpcGameObjectList MobileObjectList {
@@ -2194,7 +2207,7 @@ namespace Uoservice {
     }
 
     /// <summary>Field number for the "playerMobileObjectList" field.</summary>
-    public const int PlayerMobileObjectListFieldNumber = 7;
+    public const int PlayerMobileObjectListFieldNumber = 8;
     private global::Uoservice.GrpcGameObjectList playerMobileObjectList_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Uoservice.GrpcGameObjectList PlayerMobileObjectList {
@@ -2205,7 +2218,7 @@ namespace Uoservice {
     }
 
     /// <summary>Field number for the "landObjectList" field.</summary>
-    public const int LandObjectListFieldNumber = 8;
+    public const int LandObjectListFieldNumber = 9;
     private global::Uoservice.GrpcGameObjectList landObjectList_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Uoservice.GrpcGameObjectList LandObjectList {
@@ -2216,7 +2229,7 @@ namespace Uoservice {
     }
 
     /// <summary>Field number for the "itemObjectList" field.</summary>
-    public const int ItemObjectListFieldNumber = 9;
+    public const int ItemObjectListFieldNumber = 10;
     private global::Uoservice.GrpcGameObjectList itemObjectList_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Uoservice.GrpcGameObjectList ItemObjectList {
@@ -2227,7 +2240,7 @@ namespace Uoservice {
     }
 
     /// <summary>Field number for the "staticObjectList" field.</summary>
-    public const int StaticObjectListFieldNumber = 10;
+    public const int StaticObjectListFieldNumber = 11;
     private global::Uoservice.GrpcGameObjectList staticObjectList_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Uoservice.GrpcGameObjectList StaticObjectList {
@@ -2238,7 +2251,7 @@ namespace Uoservice {
     }
 
     /// <summary>Field number for the "itemDropableLandList" field.</summary>
-    public const int ItemDropableLandListFieldNumber = 11;
+    public const int ItemDropableLandListFieldNumber = 12;
     private global::Uoservice.GrpcGameObjectList itemDropableLandList_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Uoservice.GrpcGameObjectList ItemDropableLandList {
@@ -2265,6 +2278,7 @@ namespace Uoservice {
       if (!object.Equals(WorldItemList, other.WorldItemList)) return false;
       if (!object.Equals(EquippedItemList, other.EquippedItemList)) return false;
       if (!object.Equals(BackpackItemList, other.BackpackItemList)) return false;
+      if (!object.Equals(CorpseItemList, other.CorpseItemList)) return false;
       if (!object.Equals(PlayerStatus, other.PlayerStatus)) return false;
       if (!object.Equals(MobileObjectList, other.MobileObjectList)) return false;
       if (!object.Equals(PlayerMobileObjectList, other.PlayerMobileObjectList)) return false;
@@ -2282,6 +2296,7 @@ namespace Uoservice {
       if (worldItemList_ != null) hash ^= WorldItemList.GetHashCode();
       if (equippedItemList_ != null) hash ^= EquippedItemList.GetHashCode();
       if (backpackItemList_ != null) hash ^= BackpackItemList.GetHashCode();
+      if (corpseItemList_ != null) hash ^= CorpseItemList.GetHashCode();
       if (playerStatus_ != null) hash ^= PlayerStatus.GetHashCode();
       if (mobileObjectList_ != null) hash ^= MobileObjectList.GetHashCode();
       if (playerMobileObjectList_ != null) hash ^= PlayerMobileObjectList.GetHashCode();
@@ -2318,32 +2333,36 @@ namespace Uoservice {
         output.WriteRawTag(34);
         output.WriteMessage(BackpackItemList);
       }
-      if (playerStatus_ != null) {
+      if (corpseItemList_ != null) {
         output.WriteRawTag(42);
+        output.WriteMessage(CorpseItemList);
+      }
+      if (playerStatus_ != null) {
+        output.WriteRawTag(50);
         output.WriteMessage(PlayerStatus);
       }
       if (mobileObjectList_ != null) {
-        output.WriteRawTag(50);
+        output.WriteRawTag(58);
         output.WriteMessage(MobileObjectList);
       }
       if (playerMobileObjectList_ != null) {
-        output.WriteRawTag(58);
+        output.WriteRawTag(66);
         output.WriteMessage(PlayerMobileObjectList);
       }
       if (landObjectList_ != null) {
-        output.WriteRawTag(66);
+        output.WriteRawTag(74);
         output.WriteMessage(LandObjectList);
       }
       if (itemObjectList_ != null) {
-        output.WriteRawTag(74);
+        output.WriteRawTag(82);
         output.WriteMessage(ItemObjectList);
       }
       if (staticObjectList_ != null) {
-        output.WriteRawTag(82);
+        output.WriteRawTag(90);
         output.WriteMessage(StaticObjectList);
       }
       if (itemDropableLandList_ != null) {
-        output.WriteRawTag(90);
+        output.WriteRawTag(98);
         output.WriteMessage(ItemDropableLandList);
       }
       if (_unknownFields != null) {
@@ -2365,6 +2384,9 @@ namespace Uoservice {
       }
       if (backpackItemList_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(BackpackItemList);
+      }
+      if (corpseItemList_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(CorpseItemList);
       }
       if (playerStatus_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerStatus);
@@ -2421,6 +2443,12 @@ namespace Uoservice {
           backpackItemList_ = new global::Uoservice.GrpcItemList();
         }
         BackpackItemList.MergeFrom(other.BackpackItemList);
+      }
+      if (other.corpseItemList_ != null) {
+        if (corpseItemList_ == null) {
+          corpseItemList_ = new global::Uoservice.GrpcItemList();
+        }
+        CorpseItemList.MergeFrom(other.CorpseItemList);
       }
       if (other.playerStatus_ != null) {
         if (playerStatus_ == null) {
@@ -2504,48 +2532,55 @@ namespace Uoservice {
             break;
           }
           case 42: {
+            if (corpseItemList_ == null) {
+              corpseItemList_ = new global::Uoservice.GrpcItemList();
+            }
+            input.ReadMessage(corpseItemList_);
+            break;
+          }
+          case 50: {
             if (playerStatus_ == null) {
               playerStatus_ = new global::Uoservice.PlayerStatus();
             }
             input.ReadMessage(playerStatus_);
             break;
           }
-          case 50: {
+          case 58: {
             if (mobileObjectList_ == null) {
               mobileObjectList_ = new global::Uoservice.GrpcGameObjectList();
             }
             input.ReadMessage(mobileObjectList_);
             break;
           }
-          case 58: {
+          case 66: {
             if (playerMobileObjectList_ == null) {
               playerMobileObjectList_ = new global::Uoservice.GrpcGameObjectList();
             }
             input.ReadMessage(playerMobileObjectList_);
             break;
           }
-          case 66: {
+          case 74: {
             if (landObjectList_ == null) {
               landObjectList_ = new global::Uoservice.GrpcGameObjectList();
             }
             input.ReadMessage(landObjectList_);
             break;
           }
-          case 74: {
+          case 82: {
             if (itemObjectList_ == null) {
               itemObjectList_ = new global::Uoservice.GrpcGameObjectList();
             }
             input.ReadMessage(itemObjectList_);
             break;
           }
-          case 82: {
+          case 90: {
             if (staticObjectList_ == null) {
               staticObjectList_ = new global::Uoservice.GrpcGameObjectList();
             }
             input.ReadMessage(staticObjectList_);
             break;
           }
-          case 90: {
+          case 98: {
             if (itemDropableLandList_ == null) {
               itemDropableLandList_ = new global::Uoservice.GrpcGameObjectList();
             }

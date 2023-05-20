@@ -34,11 +34,14 @@ def parse_response(response):
   backpack_item_dict = {}
   ground_item_dict = {}
   corpse_dict = {}
+  corpse_item_dict = {}
 
   mobile_data = response.mobileList.mobile
   world_item_data = response.worldItemList.item
   equipped_item_data = response.equippedItemList.item
   backpack_item_data = response.backpackItemList.item
+  corpse_item_data = response.corpseItemList.item
+  #print("corpse_item_data: ", corpse_item_data)
 
   land_object_data = response.landObjectList.gameObject
   #print("len(land_object_data): ", len(land_object_data))
@@ -115,7 +118,8 @@ def parse_response(response):
   cv2.waitKey(1)
 
   if len(mobile_data) == 0 or len(world_item_data) == 0 or len(equipped_item_data) == 0:
-    return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict
+    return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, \
+          corpse_dict, corpse_item_dict
 
   for mobile in mobile_data:
     #print('name: {0}, x: {1}, y: {2}, race: {3}, serial: {4}\n'.format(mobile.name, 
@@ -159,6 +163,11 @@ def parse_response(response):
      #                                                              item.serial, item.amount))
      backpack_item_dict[item.serial] = [item.name, item.layer, item.amount]
 
+  for item in corpse_item_data:
+     #print('name: {0}, layer: {1}, serial: {2}, amount: {3}'.format(item.name, item.layer, 
+     #                                                               item.serial, item.amount))
+     corpse_item_dict[item.serial] = [item.name, item.layer, item.amount]
+
   if (selected_target_serial not in mobile_dict) and selected_target_serial != None:
     selected_target_serial = None
 
@@ -177,7 +186,8 @@ def parse_response(response):
   #cv2.imshow('screen_image', screen_image)
   #cv2.waitKey(1)
 
-  return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict
+  return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict, \
+      corpse_item_dict
 
 
 def get_serial_by_name(item_dict, name):
@@ -199,10 +209,28 @@ def get_serial_by_name(item_dict, name):
   return None, None
 
 
+def get_serial_of_gold(item_dict):
+  #print("item_dict: ", item_dict)
+
+  keys = list(item_dict.keys())
+  #print("keys: ", keys)
+  for k, v in item_dict.items():
+    #print("k: ", k)
+    #print("v: ", v)
+
+    if "Gold" in v[0]:
+      #print("keys.index(k): ", keys.index(k))
+      return k, keys.index(k)
+
+  #print("")
+
+  return None, None
+
+
 def main():
   action_index = 0
   #test_action_sequence = [3, 5, 6, 4]
-  test_action_sequence = [8, 8, 8]
+  test_action_sequence = [7, 9, 3, 4, 8]
   #test_action_sequence = [0, 0, 0]
 
   target_weapon_serial = None
@@ -218,7 +246,8 @@ def main():
 
     res = stub.ReadObs(UoService_pb2.Config(name='you'))
 
-    mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict = parse_response(res)
+    mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict, \
+        corpse_item_dict = parse_response(res)
 
     for step in range(1, 100000):
       if selected_target_serial != None and selected_target_serial in mobile_dict:
@@ -236,7 +265,8 @@ def main():
         target_y = 500
         target_serial = 1
 
-      print("corpse_dict: ", corpse_dict)
+      #print("corpse_dict: ", corpse_dict)
+      #print("corpse_item_dict: ", corpse_item_dict)
 
       if action_index != len(test_action_sequence) and step % 100 == 0:
         #print("action_index: ", action_index)
@@ -246,15 +276,23 @@ def main():
 
         target_item_serial = 0
         if test_action_sequence[action_index] == 3:
-          target_item_serial, index = get_serial_by_name(equipped_item_dict, 'Valorite Longsword')
+          print("corpse_item_dict: ", corpse_item_dict)
+          #target_item_serial, index = get_serial_by_name(equipped_item_dict, 'Valorite Longsword')
+          target_item_serial, index = get_serial_of_gold(corpse_item_dict)
+          print("target_item_serial: ", target_item_serial)
+          pass
         
         if test_action_sequence[action_index] == 6:
-          target_item_serial, index = get_serial_by_name(ground_item_dict, 'Valorite Longsword')
+          #target_item_serial, index = get_serial_by_name(ground_item_dict, 'Valorite Longsword')
+          pass
 
-        #print("corpse_dict: ", corpse_dict)
-        if len(corpse_dict) != 0 and test_action_sequence[action_index] == 8:
-          target_item_serial = list(corpse_dict.keys())[0]
-          #print("target_item_serial: ", target_item_serial)
+        if len(corpse_dict) != 0: 
+          if test_action_sequence[action_index] == 7 or test_action_sequence[action_index] == 9:
+            print("corpse_dict: ", corpse_dict)
+            target_item_serial = list(corpse_dict.keys())[0]
+            #print("target_item_serial: ", target_item_serial)
+
+        #target_item_serial = 0
 
         #print("target_item_serial: ", target_item_serial)
         #print("index: ", index)
@@ -276,7 +314,8 @@ def main():
 
       res_next = stub.ReadObs(UoService_pb2.Config(name='you'))
 
-      mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict = parse_response(res_next)
+      mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict, \
+        corpse_item_dict = parse_response(res_next)
 
       #time.sleep(0.5)
 
