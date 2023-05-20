@@ -32,6 +32,7 @@ def parse_response(response):
   world_item_dict = {}
   equipped_item_dict = {}
   backpack_item_dict = {}
+  ground_item_dict = {}
 
   mobile_data = response.mobileList.mobile
   world_item_data = response.worldItemList.item
@@ -58,9 +59,10 @@ def parse_response(response):
 
   screen_image = np.zeros((170,135,4), dtype=np.uint8)
   for obj in land_object_data:
-    #print('type: {0}, x: {1}, y: {2}, distance: {3}'.format(obj.type, 
-    #                                                        obj.x, obj.y, 
-    #                                                        obj.distance))
+    #print('type: {0}, x: {1}, y: {2}, distance: {3}, serial: {3}'.format(obj.type, 
+    #                                                                     obj.x, obj.y, 
+    #                                                                     obj.distance,
+    #                                                                     obj.serial))
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 0
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 255
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 255
@@ -81,6 +83,11 @@ def parse_response(response):
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 255
 
   for obj in item_object_data:
+    #print('type: {0}, screen x: {1}, screen y: {2}, distance: {3}, serial: {4}'.format(obj.type, 
+    #                                                                     obj.screenX, obj.screenY, 
+    #                                                                     obj.distance,
+    #                                                                     obj.serial))
+
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 0
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 255
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 0
@@ -98,7 +105,7 @@ def parse_response(response):
   cv2.waitKey(1)
 
   if len(mobile_data) == 0 or len(world_item_data) == 0 or len(equipped_item_data) == 0:
-    return mobile_dict, equipped_item_dict, backpack_item_dict
+    return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict
 
   #print("response.playerStatus: ", response.playerStatus)
 
@@ -157,6 +164,15 @@ def parse_response(response):
      #                                                              item.serial, item.amount))
      backpack_item_dict[item.serial] = [item.name, item.layer, item.amount]
 
+  for item in item_object_data:
+    #print('type: {0}, screen x: {1}, screen y: {2}, distance: {3}, serial: {4}'.format(obj.type, 
+    #                                                                                   obj.screenX, 
+    #                                                                                   obj.screenY, 
+    #                                                                                   obj.distance,
+    #                                                                                   obj.serial))
+
+    ground_item_dict[item.serial] = [item.type, item.distance, item.serial]
+
   if (selected_target_serial not in mobile_dict) and selected_target_serial != None:
     selected_target_serial = None
 
@@ -177,7 +193,7 @@ def parse_response(response):
 
   #print("equipped_item_dict: ", equipped_item_dict)
 
-  return mobile_dict, equipped_item_dict, backpack_item_dict
+  return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict
 
 
 def get_serial_by_name(item_dict, name):
@@ -193,7 +209,7 @@ def get_serial_by_name(item_dict, name):
 
 def main():
   action_index = 0
-  test_action_sequence = [3, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5]
+  test_action_sequence = [3, 5, 6]
 
   target_weapon_serial = None
   for ep in range(0, 10000):
@@ -208,7 +224,7 @@ def main():
 
     res = stub.ReadObs(UoService_pb2.Config(name='you'))
 
-    mobile_dict, equipped_item_dict, backpack_item_dict = parse_response(res)
+    mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict = parse_response(res)
 
     for step in range(0, 100000):
       if selected_target_serial != None and selected_target_serial in mobile_dict:
@@ -226,20 +242,41 @@ def main():
         target_y = 500
         target_serial = 1
 
-      if step >= 100:
-        if action_index != len(test_action_sequence) - 1:
-          target_weapon_serial = get_serial_by_name(equipped_item_dict, 'Valorite Longsword')
-          stub.WriteAct(UoService_pb2.Actions(actionType=test_action_sequence[action_index], 
-                                              mobileSerial=target_serial,
-                                              itemSerial=target_weapon_serial,
-                                              walkDirection=UoService_pb2.WalkDirection(direction=2)))
+      #print("action_index: ", action_index)
 
-          action_index += 1
-        else:
-          stub.WriteAct(UoService_pb2.Actions(actionType=0, 
-                                              mobileSerial=target_serial,
-                                              itemSerial=target_weapon_serial,
-                                              walkDirection=UoService_pb2.WalkDirection(direction=2)))
+      if action_index != len(test_action_sequence) and step == 100:
+        print("test_action_sequence[action_index]: ", test_action_sequence[action_index])
+        print("equipped_item_dict: ", equipped_item_dict)
+        target_weapon_serial = get_serial_by_name(equipped_item_dict, 'Valorite Longsword')
+        stub.WriteAct(UoService_pb2.Actions(actionType=test_action_sequence[action_index], 
+                                            mobileSerial=target_serial,
+                                            itemSerial=target_weapon_serial,
+                                            walkDirection=UoService_pb2.WalkDirection(direction=2)))
+
+        action_index += 1
+      elif action_index != len(test_action_sequence) and step == 200:
+        print("test_action_sequence[action_index]: ", test_action_sequence[action_index])
+        print("ground_item_dict: ", ground_item_dict)
+        #target_weapon_serial = get_serial_by_name(equipped_item_dict, 'Valorite Longsword')
+        print("target_weapon_serial: ", target_weapon_serial)
+        stub.WriteAct(UoService_pb2.Actions(actionType=test_action_sequence[action_index], 
+                                            mobileSerial=target_serial,
+                                            itemSerial=target_weapon_serial,
+                                            walkDirection=UoService_pb2.WalkDirection(direction=2)))
+        action_index += 1
+      elif action_index != len(test_action_sequence) and step == 300:
+        print("test_action_sequence[action_index]: ", test_action_sequence[action_index])
+        print("target_weapon_serial: ", target_weapon_serial)
+        stub.WriteAct(UoService_pb2.Actions(actionType=test_action_sequence[action_index], 
+                                            mobileSerial=target_serial,
+                                            itemSerial=1074076425,
+                                            walkDirection=UoService_pb2.WalkDirection(direction=2)))
+        action_index += 1
+      else:
+        stub.WriteAct(UoService_pb2.Actions(actionType=0, 
+                                            mobileSerial=target_serial,
+                                            itemSerial=target_weapon_serial,
+                                            walkDirection=UoService_pb2.WalkDirection(direction=2)))
       
       stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
 
@@ -247,7 +284,7 @@ def main():
 
       res_next = stub.ReadObs(UoService_pb2.Config(name='you'))
 
-      mobile_dict, equipped_item_dict, backpack_item_dict = parse_response(res_next)
+      mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict = parse_response(res_next)
 
       #time.sleep(0.5)
 

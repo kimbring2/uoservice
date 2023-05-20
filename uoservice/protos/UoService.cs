@@ -28,51 +28,51 @@ namespace Uoservice {
             "TW9iaWxlRGF0YRIMCgRuYW1lGAEgASgJEgkKAXgYAiABKAISCQoBeRgDIAEo",
             "AhIMCgRyYWNlGAQgASgNEg4KBnNlcmlhbBgFIAEoDSJLCgxHcnBjSXRlbURh",
             "dGESDAoEbmFtZRgBIAEoCRINCgVsYXllchgCIAEoDRIOCgZzZXJpYWwYAyAB",
-            "KA0SDgoGYW1vdW50GAQgASgNInQKEkdycGNHYW1lT2JqZWN0RGF0YRIMCgR0",
-            "eXBlGAEgASgJEg8KB3NjcmVlblgYAiABKA0SDwoHc2NyZWVuWRgDIAEoDRIQ",
-            "CghkaXN0YW5jZRgEIAEoDRINCgVnYW1lWBgFIAEoDRINCgVnYW1lWRgGIAEo",
-            "DSJHChJHcnBjR2FtZU9iamVjdExpc3QSMQoKZ2FtZU9iamVjdBgBIAMoCzId",
-            "LnVvc2VydmljZS5HcnBjR2FtZU9iamVjdERhdGEiHwoPU2VtYXBob3JlQWN0",
-            "aW9uEgwKBG1vZGUYASABKAkiOwoOR3JwY01vYmlsZUxpc3QSKQoGbW9iaWxl",
-            "GAEgAygLMhkudW9zZXJ2aWNlLkdycGNNb2JpbGVEYXRhIjUKDEdycGNJdGVt",
-            "TGlzdBIlCgRpdGVtGAEgAygLMhcudW9zZXJ2aWNlLkdycGNJdGVtRGF0YSIW",
-            "CgZDb25maWcSDAoEbmFtZRgBIAEoCSLoAQoMUGxheWVyU3RhdHVzEgsKA3N0",
-            "chgBIAEoDRILCgNkZXgYAiABKA0SDgoGaW50ZWxsGAMgASgNEgwKBGhpdHMY",
-            "BCABKA0SDwoHaGl0c01heBgFIAEoDRIPCgdzdGFtaW5hGAYgASgNEhIKCnN0",
-            "YW1pbmFNYXgYByABKA0SDAoEbWFuYRgIIAEoDRIPCgdtYW5hTWF4GAkgASgN",
-            "EgwKBGdvbGQYCiABKA0SGgoScGh5c2ljYWxSZXNpc3RhbmNlGAsgASgNEg4K",
-            "BndlaWdodBgMIAEoDRIRCgl3ZWlnaHRNYXgYDSABKA0i2AQKBlN0YXRlcxIt",
-            "Cgptb2JpbGVMaXN0GAEgASgLMhkudW9zZXJ2aWNlLkdycGNNb2JpbGVMaXN0",
-            "Ei4KDXdvcmxkSXRlbUxpc3QYAiABKAsyFy51b3NlcnZpY2UuR3JwY0l0ZW1M",
-            "aXN0EjEKEGVxdWlwcGVkSXRlbUxpc3QYAyABKAsyFy51b3NlcnZpY2UuR3Jw",
-            "Y0l0ZW1MaXN0EjEKEGJhY2twYWNrSXRlbUxpc3QYBCABKAsyFy51b3NlcnZp",
-            "Y2UuR3JwY0l0ZW1MaXN0Ei0KDHBsYXllclN0YXR1cxgFIAEoCzIXLnVvc2Vy",
-            "dmljZS5QbGF5ZXJTdGF0dXMSNwoQbW9iaWxlT2JqZWN0TGlzdBgGIAEoCzId",
-            "LnVvc2VydmljZS5HcnBjR2FtZU9iamVjdExpc3QSPQoWcGxheWVyTW9iaWxl",
-            "T2JqZWN0TGlzdBgHIAEoCzIdLnVvc2VydmljZS5HcnBjR2FtZU9iamVjdExp",
-            "c3QSNQoObGFuZE9iamVjdExpc3QYCCABKAsyHS51b3NlcnZpY2UuR3JwY0dh",
-            "bWVPYmplY3RMaXN0EjUKDml0ZW1PYmplY3RMaXN0GAkgASgLMh0udW9zZXJ2",
-            "aWNlLkdycGNHYW1lT2JqZWN0TGlzdBI3ChBzdGF0aWNPYmplY3RMaXN0GAog",
-            "ASgLMh0udW9zZXJ2aWNlLkdycGNHYW1lT2JqZWN0TGlzdBI7ChRpdGVtRHJv",
-            "cGFibGVMYW5kTGlzdBgLIAEoCzIdLnVvc2VydmljZS5HcnBjR2FtZU9iamVj",
-            "dExpc3QiIgoNV2Fsa0RpcmVjdGlvbhIRCglkaXJlY3Rpb24YASABKA0ieAoH",
-            "QWN0aW9ucxISCgphY3Rpb25UeXBlGAEgASgNEhQKDG1vYmlsZVNlcmlhbBgC",
-            "IAEoDRISCgppdGVtU2VyaWFsGAMgASgNEi8KDXdhbGtEaXJlY3Rpb24YBCAB",
-            "KAsyGC51b3NlcnZpY2UuV2Fsa0RpcmVjdGlvbjKnAgoJVW9TZXJ2aWNlEi0K",
-            "BVJlc2V0EhEudW9zZXJ2aWNlLkNvbmZpZxoRLnVvc2VydmljZS5TdGF0ZXMS",
-            "LwoHUmVhZE9icxIRLnVvc2VydmljZS5Db25maWcaES51b3NlcnZpY2UuU3Rh",
-            "dGVzEjAKCFdyaXRlQWN0EhIudW9zZXJ2aWNlLkFjdGlvbnMaEC51b3NlcnZp",
-            "Y2UuRW1wdHkSQwoTQWN0U2VtYXBob3JlQ29udHJvbBIaLnVvc2VydmljZS5T",
-            "ZW1hcGhvcmVBY3Rpb24aEC51b3NlcnZpY2UuRW1wdHkSQwoTT2JzU2VtYXBo",
-            "b3JlQ29udHJvbBIaLnVvc2VydmljZS5TZW1hcGhvcmVBY3Rpb24aEC51b3Nl",
-            "cnZpY2UuRW1wdHliBnByb3RvMw=="));
+            "KA0SDgoGYW1vdW50GAQgASgNIoQBChJHcnBjR2FtZU9iamVjdERhdGESDAoE",
+            "dHlwZRgBIAEoCRIPCgdzY3JlZW5YGAIgASgNEg8KB3NjcmVlblkYAyABKA0S",
+            "EAoIZGlzdGFuY2UYBCABKA0SDQoFZ2FtZVgYBSABKA0SDQoFZ2FtZVkYBiAB",
+            "KA0SDgoGc2VyaWFsGAcgASgNIkcKEkdycGNHYW1lT2JqZWN0TGlzdBIxCgpn",
+            "YW1lT2JqZWN0GAEgAygLMh0udW9zZXJ2aWNlLkdycGNHYW1lT2JqZWN0RGF0",
+            "YSIfCg9TZW1hcGhvcmVBY3Rpb24SDAoEbW9kZRgBIAEoCSI7Cg5HcnBjTW9i",
+            "aWxlTGlzdBIpCgZtb2JpbGUYASADKAsyGS51b3NlcnZpY2UuR3JwY01vYmls",
+            "ZURhdGEiNQoMR3JwY0l0ZW1MaXN0EiUKBGl0ZW0YASADKAsyFy51b3NlcnZp",
+            "Y2UuR3JwY0l0ZW1EYXRhIhYKBkNvbmZpZxIMCgRuYW1lGAEgASgJIugBCgxQ",
+            "bGF5ZXJTdGF0dXMSCwoDc3RyGAEgASgNEgsKA2RleBgCIAEoDRIOCgZpbnRl",
+            "bGwYAyABKA0SDAoEaGl0cxgEIAEoDRIPCgdoaXRzTWF4GAUgASgNEg8KB3N0",
+            "YW1pbmEYBiABKA0SEgoKc3RhbWluYU1heBgHIAEoDRIMCgRtYW5hGAggASgN",
+            "Eg8KB21hbmFNYXgYCSABKA0SDAoEZ29sZBgKIAEoDRIaChJwaHlzaWNhbFJl",
+            "c2lzdGFuY2UYCyABKA0SDgoGd2VpZ2h0GAwgASgNEhEKCXdlaWdodE1heBgN",
+            "IAEoDSLYBAoGU3RhdGVzEi0KCm1vYmlsZUxpc3QYASABKAsyGS51b3NlcnZp",
+            "Y2UuR3JwY01vYmlsZUxpc3QSLgoNd29ybGRJdGVtTGlzdBgCIAEoCzIXLnVv",
+            "c2VydmljZS5HcnBjSXRlbUxpc3QSMQoQZXF1aXBwZWRJdGVtTGlzdBgDIAEo",
+            "CzIXLnVvc2VydmljZS5HcnBjSXRlbUxpc3QSMQoQYmFja3BhY2tJdGVtTGlz",
+            "dBgEIAEoCzIXLnVvc2VydmljZS5HcnBjSXRlbUxpc3QSLQoMcGxheWVyU3Rh",
+            "dHVzGAUgASgLMhcudW9zZXJ2aWNlLlBsYXllclN0YXR1cxI3ChBtb2JpbGVP",
+            "YmplY3RMaXN0GAYgASgLMh0udW9zZXJ2aWNlLkdycGNHYW1lT2JqZWN0TGlz",
+            "dBI9ChZwbGF5ZXJNb2JpbGVPYmplY3RMaXN0GAcgASgLMh0udW9zZXJ2aWNl",
+            "LkdycGNHYW1lT2JqZWN0TGlzdBI1Cg5sYW5kT2JqZWN0TGlzdBgIIAEoCzId",
+            "LnVvc2VydmljZS5HcnBjR2FtZU9iamVjdExpc3QSNQoOaXRlbU9iamVjdExp",
+            "c3QYCSABKAsyHS51b3NlcnZpY2UuR3JwY0dhbWVPYmplY3RMaXN0EjcKEHN0",
+            "YXRpY09iamVjdExpc3QYCiABKAsyHS51b3NlcnZpY2UuR3JwY0dhbWVPYmpl",
+            "Y3RMaXN0EjsKFGl0ZW1Ecm9wYWJsZUxhbmRMaXN0GAsgASgLMh0udW9zZXJ2",
+            "aWNlLkdycGNHYW1lT2JqZWN0TGlzdCIiCg1XYWxrRGlyZWN0aW9uEhEKCWRp",
+            "cmVjdGlvbhgBIAEoDSJ4CgdBY3Rpb25zEhIKCmFjdGlvblR5cGUYASABKA0S",
+            "FAoMbW9iaWxlU2VyaWFsGAIgASgNEhIKCml0ZW1TZXJpYWwYAyABKA0SLwoN",
+            "d2Fsa0RpcmVjdGlvbhgEIAEoCzIYLnVvc2VydmljZS5XYWxrRGlyZWN0aW9u",
+            "MqcCCglVb1NlcnZpY2USLQoFUmVzZXQSES51b3NlcnZpY2UuQ29uZmlnGhEu",
+            "dW9zZXJ2aWNlLlN0YXRlcxIvCgdSZWFkT2JzEhEudW9zZXJ2aWNlLkNvbmZp",
+            "ZxoRLnVvc2VydmljZS5TdGF0ZXMSMAoIV3JpdGVBY3QSEi51b3NlcnZpY2Uu",
+            "QWN0aW9ucxoQLnVvc2VydmljZS5FbXB0eRJDChNBY3RTZW1hcGhvcmVDb250",
+            "cm9sEhoudW9zZXJ2aWNlLlNlbWFwaG9yZUFjdGlvbhoQLnVvc2VydmljZS5F",
+            "bXB0eRJDChNPYnNTZW1hcGhvcmVDb250cm9sEhoudW9zZXJ2aWNlLlNlbWFw",
+            "aG9yZUFjdGlvbhoQLnVvc2VydmljZS5FbXB0eWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Empty), global::Uoservice.Empty.Parser, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcMobileData), global::Uoservice.GrpcMobileData.Parser, new[]{ "Name", "X", "Y", "Race", "Serial" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcItemData), global::Uoservice.GrpcItemData.Parser, new[]{ "Name", "Layer", "Serial", "Amount" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcGameObjectData), global::Uoservice.GrpcGameObjectData.Parser, new[]{ "Type", "ScreenX", "ScreenY", "Distance", "GameX", "GameY" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcGameObjectData), global::Uoservice.GrpcGameObjectData.Parser, new[]{ "Type", "ScreenX", "ScreenY", "Distance", "GameX", "GameY", "Serial" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcGameObjectList), global::Uoservice.GrpcGameObjectList.Parser, new[]{ "GameObject" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.SemaphoreAction), global::Uoservice.SemaphoreAction.Parser, new[]{ "Mode" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcMobileList), global::Uoservice.GrpcMobileList.Parser, new[]{ "Mobile" }, null, null, null),
@@ -674,6 +674,7 @@ namespace Uoservice {
       distance_ = other.distance_;
       gameX_ = other.gameX_;
       gameY_ = other.gameY_;
+      serial_ = other.serial_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -748,6 +749,17 @@ namespace Uoservice {
       }
     }
 
+    /// <summary>Field number for the "serial" field.</summary>
+    public const int SerialFieldNumber = 7;
+    private uint serial_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Serial {
+      get { return serial_; }
+      set {
+        serial_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as GrpcGameObjectData);
@@ -767,6 +779,7 @@ namespace Uoservice {
       if (Distance != other.Distance) return false;
       if (GameX != other.GameX) return false;
       if (GameY != other.GameY) return false;
+      if (Serial != other.Serial) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -779,6 +792,7 @@ namespace Uoservice {
       if (Distance != 0) hash ^= Distance.GetHashCode();
       if (GameX != 0) hash ^= GameX.GetHashCode();
       if (GameY != 0) hash ^= GameY.GetHashCode();
+      if (Serial != 0) hash ^= Serial.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -816,6 +830,10 @@ namespace Uoservice {
         output.WriteRawTag(48);
         output.WriteUInt32(GameY);
       }
+      if (Serial != 0) {
+        output.WriteRawTag(56);
+        output.WriteUInt32(Serial);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -841,6 +859,9 @@ namespace Uoservice {
       }
       if (GameY != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(GameY);
+      }
+      if (Serial != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Serial);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -870,6 +891,9 @@ namespace Uoservice {
       }
       if (other.GameY != 0) {
         GameY = other.GameY;
+      }
+      if (other.Serial != 0) {
+        Serial = other.Serial;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -904,6 +928,10 @@ namespace Uoservice {
           }
           case 48: {
             GameY = input.ReadUInt32();
+            break;
+          }
+          case 56: {
+            Serial = input.ReadUInt32();
             break;
           }
         }

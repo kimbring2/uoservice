@@ -26,6 +26,7 @@ message GrpcGameObjectData {
   uint32 distance = 4;
   uint32 gameX = 5;
   uint32 gameY = 6;
+  uint32 serial = 7;
 }
 
 message GrpcGameObjectList {
