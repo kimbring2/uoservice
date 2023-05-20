@@ -28,51 +28,52 @@ namespace Uoservice {
             "TW9iaWxlRGF0YRIMCgRuYW1lGAEgASgJEgkKAXgYAiABKAISCQoBeRgDIAEo",
             "AhIMCgRyYWNlGAQgASgNEg4KBnNlcmlhbBgFIAEoDSJLCgxHcnBjSXRlbURh",
             "dGESDAoEbmFtZRgBIAEoCRINCgVsYXllchgCIAEoDRIOCgZzZXJpYWwYAyAB",
-            "KA0SDgoGYW1vdW50GAQgASgNIoQBChJHcnBjR2FtZU9iamVjdERhdGESDAoE",
+            "KA0SDgoGYW1vdW50GAQgASgNIpIBChJHcnBjR2FtZU9iamVjdERhdGESDAoE",
             "dHlwZRgBIAEoCRIPCgdzY3JlZW5YGAIgASgNEg8KB3NjcmVlblkYAyABKA0S",
             "EAoIZGlzdGFuY2UYBCABKA0SDQoFZ2FtZVgYBSABKA0SDQoFZ2FtZVkYBiAB",
-            "KA0SDgoGc2VyaWFsGAcgASgNIkcKEkdycGNHYW1lT2JqZWN0TGlzdBIxCgpn",
-            "YW1lT2JqZWN0GAEgAygLMh0udW9zZXJ2aWNlLkdycGNHYW1lT2JqZWN0RGF0",
-            "YSIfCg9TZW1hcGhvcmVBY3Rpb24SDAoEbW9kZRgBIAEoCSI7Cg5HcnBjTW9i",
-            "aWxlTGlzdBIpCgZtb2JpbGUYASADKAsyGS51b3NlcnZpY2UuR3JwY01vYmls",
-            "ZURhdGEiNQoMR3JwY0l0ZW1MaXN0EiUKBGl0ZW0YASADKAsyFy51b3NlcnZp",
-            "Y2UuR3JwY0l0ZW1EYXRhIhYKBkNvbmZpZxIMCgRuYW1lGAEgASgJIugBCgxQ",
-            "bGF5ZXJTdGF0dXMSCwoDc3RyGAEgASgNEgsKA2RleBgCIAEoDRIOCgZpbnRl",
-            "bGwYAyABKA0SDAoEaGl0cxgEIAEoDRIPCgdoaXRzTWF4GAUgASgNEg8KB3N0",
-            "YW1pbmEYBiABKA0SEgoKc3RhbWluYU1heBgHIAEoDRIMCgRtYW5hGAggASgN",
-            "Eg8KB21hbmFNYXgYCSABKA0SDAoEZ29sZBgKIAEoDRIaChJwaHlzaWNhbFJl",
-            "c2lzdGFuY2UYCyABKA0SDgoGd2VpZ2h0GAwgASgNEhEKCXdlaWdodE1heBgN",
-            "IAEoDSLYBAoGU3RhdGVzEi0KCm1vYmlsZUxpc3QYASABKAsyGS51b3NlcnZp",
-            "Y2UuR3JwY01vYmlsZUxpc3QSLgoNd29ybGRJdGVtTGlzdBgCIAEoCzIXLnVv",
-            "c2VydmljZS5HcnBjSXRlbUxpc3QSMQoQZXF1aXBwZWRJdGVtTGlzdBgDIAEo",
-            "CzIXLnVvc2VydmljZS5HcnBjSXRlbUxpc3QSMQoQYmFja3BhY2tJdGVtTGlz",
-            "dBgEIAEoCzIXLnVvc2VydmljZS5HcnBjSXRlbUxpc3QSLQoMcGxheWVyU3Rh",
-            "dHVzGAUgASgLMhcudW9zZXJ2aWNlLlBsYXllclN0YXR1cxI3ChBtb2JpbGVP",
-            "YmplY3RMaXN0GAYgASgLMh0udW9zZXJ2aWNlLkdycGNHYW1lT2JqZWN0TGlz",
-            "dBI9ChZwbGF5ZXJNb2JpbGVPYmplY3RMaXN0GAcgASgLMh0udW9zZXJ2aWNl",
-            "LkdycGNHYW1lT2JqZWN0TGlzdBI1Cg5sYW5kT2JqZWN0TGlzdBgIIAEoCzId",
-            "LnVvc2VydmljZS5HcnBjR2FtZU9iamVjdExpc3QSNQoOaXRlbU9iamVjdExp",
-            "c3QYCSABKAsyHS51b3NlcnZpY2UuR3JwY0dhbWVPYmplY3RMaXN0EjcKEHN0",
-            "YXRpY09iamVjdExpc3QYCiABKAsyHS51b3NlcnZpY2UuR3JwY0dhbWVPYmpl",
-            "Y3RMaXN0EjsKFGl0ZW1Ecm9wYWJsZUxhbmRMaXN0GAsgASgLMh0udW9zZXJ2",
-            "aWNlLkdycGNHYW1lT2JqZWN0TGlzdCIiCg1XYWxrRGlyZWN0aW9uEhEKCWRp",
-            "cmVjdGlvbhgBIAEoDSJ4CgdBY3Rpb25zEhIKCmFjdGlvblR5cGUYASABKA0S",
-            "FAoMbW9iaWxlU2VyaWFsGAIgASgNEhIKCml0ZW1TZXJpYWwYAyABKA0SLwoN",
-            "d2Fsa0RpcmVjdGlvbhgEIAEoCzIYLnVvc2VydmljZS5XYWxrRGlyZWN0aW9u",
-            "MqcCCglVb1NlcnZpY2USLQoFUmVzZXQSES51b3NlcnZpY2UuQ29uZmlnGhEu",
-            "dW9zZXJ2aWNlLlN0YXRlcxIvCgdSZWFkT2JzEhEudW9zZXJ2aWNlLkNvbmZp",
-            "ZxoRLnVvc2VydmljZS5TdGF0ZXMSMAoIV3JpdGVBY3QSEi51b3NlcnZpY2Uu",
-            "QWN0aW9ucxoQLnVvc2VydmljZS5FbXB0eRJDChNBY3RTZW1hcGhvcmVDb250",
-            "cm9sEhoudW9zZXJ2aWNlLlNlbWFwaG9yZUFjdGlvbhoQLnVvc2VydmljZS5F",
-            "bXB0eRJDChNPYnNTZW1hcGhvcmVDb250cm9sEhoudW9zZXJ2aWNlLlNlbWFw",
-            "aG9yZUFjdGlvbhoQLnVvc2VydmljZS5FbXB0eWIGcHJvdG8z"));
+            "KA0SDgoGc2VyaWFsGAcgASgNEgwKBG5hbWUYCCABKAkiRwoSR3JwY0dhbWVP",
+            "YmplY3RMaXN0EjEKCmdhbWVPYmplY3QYASADKAsyHS51b3NlcnZpY2UuR3Jw",
+            "Y0dhbWVPYmplY3REYXRhIh8KD1NlbWFwaG9yZUFjdGlvbhIMCgRtb2RlGAEg",
+            "ASgJIjsKDkdycGNNb2JpbGVMaXN0EikKBm1vYmlsZRgBIAMoCzIZLnVvc2Vy",
+            "dmljZS5HcnBjTW9iaWxlRGF0YSI1CgxHcnBjSXRlbUxpc3QSJQoEaXRlbRgB",
+            "IAMoCzIXLnVvc2VydmljZS5HcnBjSXRlbURhdGEiFgoGQ29uZmlnEgwKBG5h",
+            "bWUYASABKAki6AEKDFBsYXllclN0YXR1cxILCgNzdHIYASABKA0SCwoDZGV4",
+            "GAIgASgNEg4KBmludGVsbBgDIAEoDRIMCgRoaXRzGAQgASgNEg8KB2hpdHNN",
+            "YXgYBSABKA0SDwoHc3RhbWluYRgGIAEoDRISCgpzdGFtaW5hTWF4GAcgASgN",
+            "EgwKBG1hbmEYCCABKA0SDwoHbWFuYU1heBgJIAEoDRIMCgRnb2xkGAogASgN",
+            "EhoKEnBoeXNpY2FsUmVzaXN0YW5jZRgLIAEoDRIOCgZ3ZWlnaHQYDCABKA0S",
+            "EQoJd2VpZ2h0TWF4GA0gASgNItgECgZTdGF0ZXMSLQoKbW9iaWxlTGlzdBgB",
+            "IAEoCzIZLnVvc2VydmljZS5HcnBjTW9iaWxlTGlzdBIuCg13b3JsZEl0ZW1M",
+            "aXN0GAIgASgLMhcudW9zZXJ2aWNlLkdycGNJdGVtTGlzdBIxChBlcXVpcHBl",
+            "ZEl0ZW1MaXN0GAMgASgLMhcudW9zZXJ2aWNlLkdycGNJdGVtTGlzdBIxChBi",
+            "YWNrcGFja0l0ZW1MaXN0GAQgASgLMhcudW9zZXJ2aWNlLkdycGNJdGVtTGlz",
+            "dBItCgxwbGF5ZXJTdGF0dXMYBSABKAsyFy51b3NlcnZpY2UuUGxheWVyU3Rh",
+            "dHVzEjcKEG1vYmlsZU9iamVjdExpc3QYBiABKAsyHS51b3NlcnZpY2UuR3Jw",
+            "Y0dhbWVPYmplY3RMaXN0Ej0KFnBsYXllck1vYmlsZU9iamVjdExpc3QYByAB",
+            "KAsyHS51b3NlcnZpY2UuR3JwY0dhbWVPYmplY3RMaXN0EjUKDmxhbmRPYmpl",
+            "Y3RMaXN0GAggASgLMh0udW9zZXJ2aWNlLkdycGNHYW1lT2JqZWN0TGlzdBI1",
+            "Cg5pdGVtT2JqZWN0TGlzdBgJIAEoCzIdLnVvc2VydmljZS5HcnBjR2FtZU9i",
+            "amVjdExpc3QSNwoQc3RhdGljT2JqZWN0TGlzdBgKIAEoCzIdLnVvc2Vydmlj",
+            "ZS5HcnBjR2FtZU9iamVjdExpc3QSOwoUaXRlbURyb3BhYmxlTGFuZExpc3QY",
+            "CyABKAsyHS51b3NlcnZpY2UuR3JwY0dhbWVPYmplY3RMaXN0IiIKDVdhbGtE",
+            "aXJlY3Rpb24SEQoJZGlyZWN0aW9uGAEgASgNIngKB0FjdGlvbnMSEgoKYWN0",
+            "aW9uVHlwZRgBIAEoDRIUCgxtb2JpbGVTZXJpYWwYAiABKA0SEgoKaXRlbVNl",
+            "cmlhbBgDIAEoDRIvCg13YWxrRGlyZWN0aW9uGAQgASgLMhgudW9zZXJ2aWNl",
+            "LldhbGtEaXJlY3Rpb24ypwIKCVVvU2VydmljZRItCgVSZXNldBIRLnVvc2Vy",
+            "dmljZS5Db25maWcaES51b3NlcnZpY2UuU3RhdGVzEi8KB1JlYWRPYnMSES51",
+            "b3NlcnZpY2UuQ29uZmlnGhEudW9zZXJ2aWNlLlN0YXRlcxIwCghXcml0ZUFj",
+            "dBISLnVvc2VydmljZS5BY3Rpb25zGhAudW9zZXJ2aWNlLkVtcHR5EkMKE0Fj",
+            "dFNlbWFwaG9yZUNvbnRyb2wSGi51b3NlcnZpY2UuU2VtYXBob3JlQWN0aW9u",
+            "GhAudW9zZXJ2aWNlLkVtcHR5EkMKE09ic1NlbWFwaG9yZUNvbnRyb2wSGi51",
+            "b3NlcnZpY2UuU2VtYXBob3JlQWN0aW9uGhAudW9zZXJ2aWNlLkVtcHR5YgZw",
+            "cm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Empty), global::Uoservice.Empty.Parser, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcMobileData), global::Uoservice.GrpcMobileData.Parser, new[]{ "Name", "X", "Y", "Race", "Serial" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcItemData), global::Uoservice.GrpcItemData.Parser, new[]{ "Name", "Layer", "Serial", "Amount" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcGameObjectData), global::Uoservice.GrpcGameObjectData.Parser, new[]{ "Type", "ScreenX", "ScreenY", "Distance", "GameX", "GameY", "Serial" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcGameObjectData), global::Uoservice.GrpcGameObjectData.Parser, new[]{ "Type", "ScreenX", "ScreenY", "Distance", "GameX", "GameY", "Serial", "Name" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcGameObjectList), global::Uoservice.GrpcGameObjectList.Parser, new[]{ "GameObject" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.SemaphoreAction), global::Uoservice.SemaphoreAction.Parser, new[]{ "Mode" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcMobileList), global::Uoservice.GrpcMobileList.Parser, new[]{ "Mobile" }, null, null, null),
@@ -675,6 +676,7 @@ namespace Uoservice {
       gameX_ = other.gameX_;
       gameY_ = other.gameY_;
       serial_ = other.serial_;
+      name_ = other.name_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -760,6 +762,17 @@ namespace Uoservice {
       }
     }
 
+    /// <summary>Field number for the "name" field.</summary>
+    public const int NameFieldNumber = 8;
+    private string name_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Name {
+      get { return name_; }
+      set {
+        name_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as GrpcGameObjectData);
@@ -780,6 +793,7 @@ namespace Uoservice {
       if (GameX != other.GameX) return false;
       if (GameY != other.GameY) return false;
       if (Serial != other.Serial) return false;
+      if (Name != other.Name) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -793,6 +807,7 @@ namespace Uoservice {
       if (GameX != 0) hash ^= GameX.GetHashCode();
       if (GameY != 0) hash ^= GameY.GetHashCode();
       if (Serial != 0) hash ^= Serial.GetHashCode();
+      if (Name.Length != 0) hash ^= Name.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -834,6 +849,10 @@ namespace Uoservice {
         output.WriteRawTag(56);
         output.WriteUInt32(Serial);
       }
+      if (Name.Length != 0) {
+        output.WriteRawTag(66);
+        output.WriteString(Name);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -862,6 +881,9 @@ namespace Uoservice {
       }
       if (Serial != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Serial);
+      }
+      if (Name.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -894,6 +916,9 @@ namespace Uoservice {
       }
       if (other.Serial != 0) {
         Serial = other.Serial;
+      }
+      if (other.Name.Length != 0) {
+        Name = other.Name;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -932,6 +957,10 @@ namespace Uoservice {
           }
           case 56: {
             Serial = input.ReadUInt32();
+            break;
+          }
+          case 66: {
+            Name = input.ReadString();
             break;
           }
         }

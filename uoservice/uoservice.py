@@ -165,13 +165,15 @@ def parse_response(response):
      backpack_item_dict[item.serial] = [item.name, item.layer, item.amount]
 
   for item in item_object_data:
-    #print('type: {0}, screen x: {1}, screen y: {2}, distance: {3}, serial: {4}'.format(obj.type, 
-    #                                                                                   obj.screenX, 
-    #                                                                                   obj.screenY, 
-    #                                                                                   obj.distance,
-    #                                                                                   obj.serial))
+    '''
+    print('type: {0}, screen x: {1}, screen y: {2}, distance: {3}, serial: {4}'.format(obj.type, 
+                                                                                       obj.screenX, 
+                                                                                       obj.screenY, 
+                                                                                       obj.distance,
+                                                                                       obj.serial))
+    '''
 
-    ground_item_dict[item.serial] = [item.type, item.distance, item.serial]
+    ground_item_dict[item.serial] = [item.name, item.type, item.screenX, item.screenY, item.distance]
 
   if (selected_target_serial not in mobile_dict) and selected_target_serial != None:
     selected_target_serial = None
@@ -209,7 +211,7 @@ def get_serial_by_name(item_dict, name):
 
 def main():
   action_index = 0
-  test_action_sequence = [3, 5, 6]
+  test_action_sequence = [3, 5, 6, 4]
 
   target_weapon_serial = None
   for ep in range(0, 10000):
@@ -226,7 +228,7 @@ def main():
 
     mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict = parse_response(res)
 
-    for step in range(0, 100000):
+    for step in range(1, 100000):
       if selected_target_serial != None and selected_target_serial in mobile_dict:
         selected_target = mobile_dict[selected_target_serial]
         target_x = selected_target[1]
@@ -243,34 +245,23 @@ def main():
         target_serial = 1
 
       #print("action_index: ", action_index)
-
-      if action_index != len(test_action_sequence) and step == 100:
+      if action_index != len(test_action_sequence) and step % 100 == 0:
+        print("action_index: ", action_index)
         print("test_action_sequence[action_index]: ", test_action_sequence[action_index])
         print("equipped_item_dict: ", equipped_item_dict)
+        print("ground_item_dict: ", ground_item_dict)
+
         target_weapon_serial = get_serial_by_name(equipped_item_dict, 'Valorite Longsword')
+        if target_weapon_serial == None:
+          target_weapon_serial = get_serial_by_name(ground_item_dict, 'Valorite Longsword')
+
+        print("target_weapon_serial: ", target_weapon_serial)
+
         stub.WriteAct(UoService_pb2.Actions(actionType=test_action_sequence[action_index], 
                                             mobileSerial=target_serial,
                                             itemSerial=target_weapon_serial,
                                             walkDirection=UoService_pb2.WalkDirection(direction=2)))
 
-        action_index += 1
-      elif action_index != len(test_action_sequence) and step == 200:
-        print("test_action_sequence[action_index]: ", test_action_sequence[action_index])
-        print("ground_item_dict: ", ground_item_dict)
-        #target_weapon_serial = get_serial_by_name(equipped_item_dict, 'Valorite Longsword')
-        print("target_weapon_serial: ", target_weapon_serial)
-        stub.WriteAct(UoService_pb2.Actions(actionType=test_action_sequence[action_index], 
-                                            mobileSerial=target_serial,
-                                            itemSerial=target_weapon_serial,
-                                            walkDirection=UoService_pb2.WalkDirection(direction=2)))
-        action_index += 1
-      elif action_index != len(test_action_sequence) and step == 300:
-        print("test_action_sequence[action_index]: ", test_action_sequence[action_index])
-        print("target_weapon_serial: ", target_weapon_serial)
-        stub.WriteAct(UoService_pb2.Actions(actionType=test_action_sequence[action_index], 
-                                            mobileSerial=target_serial,
-                                            itemSerial=1074076425,
-                                            walkDirection=UoService_pb2.WalkDirection(direction=2)))
         action_index += 1
       else:
         stub.WriteAct(UoService_pb2.Actions(actionType=0, 
