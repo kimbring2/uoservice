@@ -28,6 +28,7 @@ message GrpcGameObjectData {
   uint32 gameY = 6;
   uint32 serial = 7;
   string name = 8;
+  bool isCorpse = 9;
 }
 
 message GrpcGameObjectList {

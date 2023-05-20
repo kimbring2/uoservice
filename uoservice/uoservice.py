@@ -83,10 +83,13 @@ def parse_response(response):
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 255
 
   for obj in item_object_data:
-    #print('type: {0}, screen x: {1}, screen y: {2}, distance: {3}, serial: {4}'.format(obj.type, 
-    #                                                                     obj.screenX, obj.screenY, 
-    #                                                                     obj.distance,
-    #                                                                     obj.serial))
+    print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, is_corpse:{6}'.format(obj.type, 
+                                                                         obj.screenX, 
+                                                                         obj.screenY, 
+                                                                         obj.distance,
+                                                                         obj.serial,
+                                                                         obj.name,
+                                                                         obj.isCorpse))
 
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 0
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 255
@@ -211,7 +214,8 @@ def get_serial_by_name(item_dict, name):
 
 def main():
   action_index = 0
-  test_action_sequence = [3, 5, 6, 4]
+  #test_action_sequence = [3, 5, 6, 4]
+  test_action_sequence = [0, 0]
 
   target_weapon_serial = None
   for ep in range(0, 10000):
@@ -246,16 +250,16 @@ def main():
 
       #print("action_index: ", action_index)
       if action_index != len(test_action_sequence) and step % 100 == 0:
-        print("action_index: ", action_index)
-        print("test_action_sequence[action_index]: ", test_action_sequence[action_index])
-        print("equipped_item_dict: ", equipped_item_dict)
-        print("ground_item_dict: ", ground_item_dict)
+        #print("action_index: ", action_index)
+        #print("test_action_sequence[action_index]: ", test_action_sequence[action_index])
+        #print("equipped_item_dict: ", equipped_item_dict)
+        #print("ground_item_dict: ", ground_item_dict)
 
         target_weapon_serial = get_serial_by_name(equipped_item_dict, 'Valorite Longsword')
         if target_weapon_serial == None:
           target_weapon_serial = get_serial_by_name(ground_item_dict, 'Valorite Longsword')
 
-        print("target_weapon_serial: ", target_weapon_serial)
+        #print("target_weapon_serial: ", target_weapon_serial)
 
         stub.WriteAct(UoService_pb2.Actions(actionType=test_action_sequence[action_index], 
                                             mobileSerial=target_serial,
