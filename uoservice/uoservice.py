@@ -234,6 +234,7 @@ def main():
   #test_action_sequence = [0, 0, 0]
 
   target_weapon_serial = None
+  opened_corpse = None
   for ep in range(0, 10000):
     print("ep: ", ep)
 
@@ -286,17 +287,20 @@ def main():
           #target_item_serial, index = get_serial_by_name(ground_item_dict, 'Valorite Longsword')
           pass
 
+        if test_action_sequence[action_index] == 8:
+          target_item_serial = opened_corpse
+
         if len(corpse_dict) != 0: 
           if test_action_sequence[action_index] == 7 or test_action_sequence[action_index] == 9:
             print("corpse_dict: ", corpse_dict)
             target_item_serial = list(corpse_dict.keys())[0]
+            opened_corpse = target_item_serial
             #print("target_item_serial: ", target_item_serial)
 
         #target_item_serial = 0
 
         #print("target_item_serial: ", target_item_serial)
-        #print("index: ", index)
-
+        print("test_action_sequence[action_index]: ", test_action_sequence[action_index])
         stub.WriteAct(UoService_pb2.Actions(actionType=test_action_sequence[action_index], 
                                             mobileSerial=target_serial,
                                             itemSerial=target_item_serial,
