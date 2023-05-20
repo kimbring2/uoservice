@@ -74,13 +74,14 @@ message States {
   GrpcItemList worldItemList = 2;
   GrpcItemList equippedItemList = 3;
   GrpcItemList backpackItemList = 4;
-  PlayerStatus playerStatus = 5;
-  GrpcGameObjectList mobileObjectList = 6;
-  GrpcGameObjectList playerMobileObjectList = 7;
-  GrpcGameObjectList landObjectList = 8;
-  GrpcGameObjectList itemObjectList = 9;
-  GrpcGameObjectList staticObjectList = 10;
-  GrpcGameObjectList itemDropableLandList = 11;
+  GrpcItemList corpseItemList = 5;
+  PlayerStatus playerStatus = 6;
+  GrpcGameObjectList mobileObjectList = 7;
+  GrpcGameObjectList playerMobileObjectList = 8;
+  GrpcGameObjectList landObjectList = 9;
+  GrpcGameObjectList itemObjectList = 10;
+  GrpcGameObjectList staticObjectList = 11;
+  GrpcGameObjectList itemDropableLandList = 12;
 }
 
 message WalkDirection {

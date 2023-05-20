@@ -184,13 +184,13 @@ def get_serial_by_name(item_dict, name):
   #print("item_dict: ", item_dict)
 
   keys = list(item_dict.keys())
-  print("keys: ", keys)
+  #print("keys: ", keys)
   for k, v in item_dict.items():
     #print("k: ", k)
     #print("v: ", v)
 
     if v[0] == name:
-      print("keys.index(k): ", keys.index(k))
+      #print("keys.index(k): ", keys.index(k))
 
       return k, keys.index(k)
 
@@ -203,6 +203,7 @@ def main():
   action_index = 0
   #test_action_sequence = [3, 5, 6, 4]
   test_action_sequence = [8, 8, 8]
+  #test_action_sequence = [0, 0, 0]
 
   target_weapon_serial = None
   for ep in range(0, 10000):
@@ -234,6 +235,8 @@ def main():
         target_x = 500
         target_y = 500
         target_serial = 1
+
+      print("corpse_dict: ", corpse_dict)
 
       if action_index != len(test_action_sequence) and step % 100 == 0:
         #print("action_index: ", action_index)
