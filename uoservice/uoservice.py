@@ -33,6 +33,7 @@ def parse_response(response):
   equipped_item_dict = {}
   backpack_item_dict = {}
   ground_item_dict = {}
+  corpse_dict = {}
 
   mobile_data = response.mobileList.mobile
   world_item_data = response.worldItemList.item
@@ -83,13 +84,19 @@ def parse_response(response):
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 255
 
   for obj in item_object_data:
+    '''
     print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, is_corpse:{6}'.format(obj.type, 
-                                                                         obj.screenX, 
-                                                                         obj.screenY, 
-                                                                         obj.distance,
-                                                                         obj.serial,
-                                                                         obj.name,
-                                                                         obj.isCorpse))
+                                                                                        obj.screenX, 
+                                                                                        obj.screenY, 
+                                                                                        obj.distance,
+                                                                                        obj.serial,
+                                                                                        obj.name,
+                                                                                        obj.isCorpse))
+    '''
+    ground_item_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance]
+
+    if obj.isCorpse:
+      corpse_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance]
 
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 0
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 255
@@ -108,17 +115,8 @@ def parse_response(response):
   cv2.waitKey(1)
 
   if len(mobile_data) == 0 or len(world_item_data) == 0 or len(equipped_item_data) == 0:
-    return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict
+    return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict
 
-  #print("response.playerStatus: ", response.playerStatus)
-
-  #screen_data = response.screenImage.image
-  #screen_data = io.BytesIO(screen_data).read()
-
-  #screen_image = np.ndarray(shape=(80,100,4), dtype=np.uint8, buffer=screen_data)
-  #screen_image = cv2.cvtColor(screen_image, cv2.COLOR_RGB2BGR)
-  #dim = (1600, 1280)
-  #screen_image = cv2.resize(screen_image, dim, interpolation = cv2.INTER_AREA)
   for mobile in mobile_data:
     #print('name: {0}, x: {1}, y: {2}, race: {3}, serial: {4}\n'.format(mobile.name, 
     #                                                                   mobile.x, mobile.y, 
@@ -130,12 +128,6 @@ def parse_response(response):
 
     if mobile.x >= 1600 or mobile.y >= 1280:
       continue
-
-    #center_coordinates = (int(mobile.x), int(mobile.y))
-    #start_point = (int(mobile.x - 40), int(mobile.y - 40))
-    #end_point = (int(mobile.x + 40), int(mobile.y + 40))
-    #screen_image = cv2.rectangle(screen_image, start_point, end_point, color, 2)
-    #screen_image = cv2.circle(screen_image, center_coordinates, 20, color, thickness)
 
     if mobile.race == 1:
       color = (0, 255, 0)
@@ -167,17 +159,6 @@ def parse_response(response):
      #                                                              item.serial, item.amount))
      backpack_item_dict[item.serial] = [item.name, item.layer, item.amount]
 
-  for item in item_object_data:
-    '''
-    print('type: {0}, screen x: {1}, screen y: {2}, distance: {3}, serial: {4}'.format(obj.type, 
-                                                                                       obj.screenX, 
-                                                                                       obj.screenY, 
-                                                                                       obj.distance,
-                                                                                       obj.serial))
-    '''
-
-    ground_item_dict[item.serial] = [item.name, item.type, item.screenX, item.screenY, item.distance]
-
   if (selected_target_serial not in mobile_dict) and selected_target_serial != None:
     selected_target_serial = None
 
@@ -196,26 +177,32 @@ def parse_response(response):
   #cv2.imshow('screen_image', screen_image)
   #cv2.waitKey(1)
 
-  #print("equipped_item_dict: ", equipped_item_dict)
-
-  return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict
+  return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict
 
 
 def get_serial_by_name(item_dict, name):
+  #print("item_dict: ", item_dict)
+
+  keys = list(item_dict.keys())
+  print("keys: ", keys)
   for k, v in item_dict.items():
     #print("k: ", k)
     #print("v: ", v)
 
     if v[0] == name:
-      return k
+      print("keys.index(k): ", keys.index(k))
 
-  #print("")
+      return k, keys.index(k)
+
+  print("")
+
+  return None, None
 
 
 def main():
   action_index = 0
   #test_action_sequence = [3, 5, 6, 4]
-  test_action_sequence = [0, 0]
+  test_action_sequence = [8, 8, 8]
 
   target_weapon_serial = None
   for ep in range(0, 10000):
@@ -230,7 +217,7 @@ def main():
 
     res = stub.ReadObs(UoService_pb2.Config(name='you'))
 
-    mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict = parse_response(res)
+    mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict = parse_response(res)
 
     for step in range(1, 100000):
       if selected_target_serial != None and selected_target_serial in mobile_dict:
@@ -248,22 +235,30 @@ def main():
         target_y = 500
         target_serial = 1
 
-      #print("action_index: ", action_index)
       if action_index != len(test_action_sequence) and step % 100 == 0:
         #print("action_index: ", action_index)
         #print("test_action_sequence[action_index]: ", test_action_sequence[action_index])
         #print("equipped_item_dict: ", equipped_item_dict)
         #print("ground_item_dict: ", ground_item_dict)
 
-        target_weapon_serial = get_serial_by_name(equipped_item_dict, 'Valorite Longsword')
-        if target_weapon_serial == None:
-          target_weapon_serial = get_serial_by_name(ground_item_dict, 'Valorite Longsword')
+        target_item_serial = 0
+        if test_action_sequence[action_index] == 3:
+          target_item_serial, index = get_serial_by_name(equipped_item_dict, 'Valorite Longsword')
+        
+        if test_action_sequence[action_index] == 6:
+          target_item_serial, index = get_serial_by_name(ground_item_dict, 'Valorite Longsword')
 
-        #print("target_weapon_serial: ", target_weapon_serial)
+        #print("corpse_dict: ", corpse_dict)
+        if len(corpse_dict) != 0 and test_action_sequence[action_index] == 8:
+          target_item_serial = list(corpse_dict.keys())[0]
+          #print("target_item_serial: ", target_item_serial)
+
+        #print("target_item_serial: ", target_item_serial)
+        #print("index: ", index)
 
         stub.WriteAct(UoService_pb2.Actions(actionType=test_action_sequence[action_index], 
                                             mobileSerial=target_serial,
-                                            itemSerial=target_weapon_serial,
+                                            itemSerial=target_item_serial,
                                             walkDirection=UoService_pb2.WalkDirection(direction=2)))
 
         action_index += 1
@@ -274,12 +269,11 @@ def main():
                                             walkDirection=UoService_pb2.WalkDirection(direction=2)))
       
       stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
-
       stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
 
       res_next = stub.ReadObs(UoService_pb2.Config(name='you'))
 
-      mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict = parse_response(res_next)
+      mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict = parse_response(res_next)
 
       #time.sleep(0.5)
 
