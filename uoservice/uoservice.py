@@ -46,6 +46,7 @@ def parse_response(response):
   corpse_dict = {}
   corpse_item_dict = {}
   vendor_dict = {}
+  vendor_item_dict = {}
 
   mobile_data = response.mobileList.mobile
   world_item_data = response.worldItemList.item
@@ -59,6 +60,9 @@ def parse_response(response):
   static_object_data = response.staticObjectList.gameObject
   item_object_data = response.itemObjectList.gameObject
   item_dropable_land_data = response.itemDropableLandList.gameObject
+  item_vendor_data = response.vendorItemObjectList.gameObject
+
+  print("item_vendor_data: ", item_vendor_data)
 
   screen_image = np.zeros((172,137,4), dtype=np.uint8)
   for obj in land_object_data:
@@ -85,6 +89,12 @@ def parse_response(response):
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 0
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 255
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 0
+
+  for obj in item_vendor_data:
+    print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
+          format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
+    
+    vendor_item_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
 
   for obj in mobile_object_data:
     vendor_title = isVendor(obj.title)
@@ -208,9 +218,11 @@ def main():
   action_index = 0
   #test_action_sequence = [3, 5, 6, 4]
   #test_action_sequence = [7, 9, 3, 4, 8]
-  test_action_sequence = [10, 11]
+  #test_action_sequence = [10, 11]
+  test_action_sequence = [0, 0]
 
   target_weapon_serial = None
+  target_mobile_serial = None
   opened_corpse = None
   for ep in range(0, 10000):
     print("ep: ", ep)
@@ -276,6 +288,7 @@ def main():
             #print("target_item_serial: ", target_item_serial)
 
         #target_item_serial = 0
+
 
         #print("target_item_serial: ", target_item_serial)
         print("test_action_sequence[action_index]: ", test_action_sequence[action_index])

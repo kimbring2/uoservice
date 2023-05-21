@@ -28,60 +28,62 @@ namespace Uoservice {
             "TW9iaWxlRGF0YRIMCgRuYW1lGAEgASgJEgkKAXgYAiABKAISCQoBeRgDIAEo",
             "AhIMCgRyYWNlGAQgASgNEg4KBnNlcmlhbBgFIAEoDSJLCgxHcnBjSXRlbURh",
             "dGESDAoEbmFtZRgBIAEoCRINCgVsYXllchgCIAEoDRIOCgZzZXJpYWwYAyAB",
-            "KA0SDgoGYW1vdW50GAQgASgNIrMBChJHcnBjR2FtZU9iamVjdERhdGESDAoE",
+            "KA0SDgoGYW1vdW50GAQgASgNItIBChJHcnBjR2FtZU9iamVjdERhdGESDAoE",
             "dHlwZRgBIAEoCRIPCgdzY3JlZW5YGAIgASgNEg8KB3NjcmVlblkYAyABKA0S",
             "EAoIZGlzdGFuY2UYBCABKA0SDQoFZ2FtZVgYBSABKA0SDQoFZ2FtZVkYBiAB",
             "KA0SDgoGc2VyaWFsGAcgASgNEgwKBG5hbWUYCCABKAkSEAoIaXNDb3Jwc2UY",
-            "CSABKAgSDQoFdGl0bGUYCiABKAkiRwoSR3JwY0dhbWVPYmplY3RMaXN0EjEK",
-            "CmdhbWVPYmplY3QYASADKAsyHS51b3NlcnZpY2UuR3JwY0dhbWVPYmplY3RE",
-            "YXRhIh8KD1NlbWFwaG9yZUFjdGlvbhIMCgRtb2RlGAEgASgJIjsKDkdycGNN",
-            "b2JpbGVMaXN0EikKBm1vYmlsZRgBIAMoCzIZLnVvc2VydmljZS5HcnBjTW9i",
-            "aWxlRGF0YSI1CgxHcnBjSXRlbUxpc3QSJQoEaXRlbRgBIAMoCzIXLnVvc2Vy",
-            "dmljZS5HcnBjSXRlbURhdGEiFgoGQ29uZmlnEgwKBG5hbWUYASABKAki6AEK",
-            "DFBsYXllclN0YXR1cxILCgNzdHIYASABKA0SCwoDZGV4GAIgASgNEg4KBmlu",
-            "dGVsbBgDIAEoDRIMCgRoaXRzGAQgASgNEg8KB2hpdHNNYXgYBSABKA0SDwoH",
-            "c3RhbWluYRgGIAEoDRISCgpzdGFtaW5hTWF4GAcgASgNEgwKBG1hbmEYCCAB",
-            "KA0SDwoHbWFuYU1heBgJIAEoDRIMCgRnb2xkGAogASgNEhoKEnBoeXNpY2Fs",
-            "UmVzaXN0YW5jZRgLIAEoDRIOCgZ3ZWlnaHQYDCABKA0SEQoJd2VpZ2h0TWF4",
-            "GA0gASgNIokFCgZTdGF0ZXMSLQoKbW9iaWxlTGlzdBgBIAEoCzIZLnVvc2Vy",
-            "dmljZS5HcnBjTW9iaWxlTGlzdBIuCg13b3JsZEl0ZW1MaXN0GAIgASgLMhcu",
-            "dW9zZXJ2aWNlLkdycGNJdGVtTGlzdBIxChBlcXVpcHBlZEl0ZW1MaXN0GAMg",
-            "ASgLMhcudW9zZXJ2aWNlLkdycGNJdGVtTGlzdBIxChBiYWNrcGFja0l0ZW1M",
-            "aXN0GAQgASgLMhcudW9zZXJ2aWNlLkdycGNJdGVtTGlzdBIvCg5jb3Jwc2VJ",
-            "dGVtTGlzdBgFIAEoCzIXLnVvc2VydmljZS5HcnBjSXRlbUxpc3QSLQoMcGxh",
-            "eWVyU3RhdHVzGAYgASgLMhcudW9zZXJ2aWNlLlBsYXllclN0YXR1cxI3ChBt",
-            "b2JpbGVPYmplY3RMaXN0GAcgASgLMh0udW9zZXJ2aWNlLkdycGNHYW1lT2Jq",
-            "ZWN0TGlzdBI9ChZwbGF5ZXJNb2JpbGVPYmplY3RMaXN0GAggASgLMh0udW9z",
-            "ZXJ2aWNlLkdycGNHYW1lT2JqZWN0TGlzdBI1Cg5sYW5kT2JqZWN0TGlzdBgJ",
-            "IAEoCzIdLnVvc2VydmljZS5HcnBjR2FtZU9iamVjdExpc3QSNQoOaXRlbU9i",
-            "amVjdExpc3QYCiABKAsyHS51b3NlcnZpY2UuR3JwY0dhbWVPYmplY3RMaXN0",
-            "EjcKEHN0YXRpY09iamVjdExpc3QYCyABKAsyHS51b3NlcnZpY2UuR3JwY0dh",
-            "bWVPYmplY3RMaXN0EjsKFGl0ZW1Ecm9wYWJsZUxhbmRMaXN0GAwgASgLMh0u",
-            "dW9zZXJ2aWNlLkdycGNHYW1lT2JqZWN0TGlzdCIiCg1XYWxrRGlyZWN0aW9u",
-            "EhEKCWRpcmVjdGlvbhgBIAEoDSJ4CgdBY3Rpb25zEhIKCmFjdGlvblR5cGUY",
-            "ASABKA0SFAoMbW9iaWxlU2VyaWFsGAIgASgNEhIKCml0ZW1TZXJpYWwYAyAB",
-            "KA0SLwoNd2Fsa0RpcmVjdGlvbhgEIAEoCzIYLnVvc2VydmljZS5XYWxrRGly",
-            "ZWN0aW9uMqcCCglVb1NlcnZpY2USLQoFUmVzZXQSES51b3NlcnZpY2UuQ29u",
-            "ZmlnGhEudW9zZXJ2aWNlLlN0YXRlcxIvCgdSZWFkT2JzEhEudW9zZXJ2aWNl",
-            "LkNvbmZpZxoRLnVvc2VydmljZS5TdGF0ZXMSMAoIV3JpdGVBY3QSEi51b3Nl",
-            "cnZpY2UuQWN0aW9ucxoQLnVvc2VydmljZS5FbXB0eRJDChNBY3RTZW1hcGhv",
-            "cmVDb250cm9sEhoudW9zZXJ2aWNlLlNlbWFwaG9yZUFjdGlvbhoQLnVvc2Vy",
-            "dmljZS5FbXB0eRJDChNPYnNTZW1hcGhvcmVDb250cm9sEhoudW9zZXJ2aWNl",
-            "LlNlbWFwaG9yZUFjdGlvbhoQLnVvc2VydmljZS5FbXB0eWIGcHJvdG8z"));
+            "CSABKAgSDQoFdGl0bGUYCiABKAkSDgoGYW1vdW50GAsgASgNEg0KBXByaWNl",
+            "GAwgASgNIkcKEkdycGNHYW1lT2JqZWN0TGlzdBIxCgpnYW1lT2JqZWN0GAEg",
+            "AygLMh0udW9zZXJ2aWNlLkdycGNHYW1lT2JqZWN0RGF0YSIfCg9TZW1hcGhv",
+            "cmVBY3Rpb24SDAoEbW9kZRgBIAEoCSI7Cg5HcnBjTW9iaWxlTGlzdBIpCgZt",
+            "b2JpbGUYASADKAsyGS51b3NlcnZpY2UuR3JwY01vYmlsZURhdGEiNQoMR3Jw",
+            "Y0l0ZW1MaXN0EiUKBGl0ZW0YASADKAsyFy51b3NlcnZpY2UuR3JwY0l0ZW1E",
+            "YXRhIhYKBkNvbmZpZxIMCgRuYW1lGAEgASgJIugBCgxQbGF5ZXJTdGF0dXMS",
+            "CwoDc3RyGAEgASgNEgsKA2RleBgCIAEoDRIOCgZpbnRlbGwYAyABKA0SDAoE",
+            "aGl0cxgEIAEoDRIPCgdoaXRzTWF4GAUgASgNEg8KB3N0YW1pbmEYBiABKA0S",
+            "EgoKc3RhbWluYU1heBgHIAEoDRIMCgRtYW5hGAggASgNEg8KB21hbmFNYXgY",
+            "CSABKA0SDAoEZ29sZBgKIAEoDRIaChJwaHlzaWNhbFJlc2lzdGFuY2UYCyAB",
+            "KA0SDgoGd2VpZ2h0GAwgASgNEhEKCXdlaWdodE1heBgNIAEoDSLGBQoGU3Rh",
+            "dGVzEi0KCm1vYmlsZUxpc3QYASABKAsyGS51b3NlcnZpY2UuR3JwY01vYmls",
+            "ZUxpc3QSLgoNd29ybGRJdGVtTGlzdBgCIAEoCzIXLnVvc2VydmljZS5HcnBj",
+            "SXRlbUxpc3QSMQoQZXF1aXBwZWRJdGVtTGlzdBgDIAEoCzIXLnVvc2Vydmlj",
+            "ZS5HcnBjSXRlbUxpc3QSMQoQYmFja3BhY2tJdGVtTGlzdBgEIAEoCzIXLnVv",
+            "c2VydmljZS5HcnBjSXRlbUxpc3QSLwoOY29ycHNlSXRlbUxpc3QYBSABKAsy",
+            "Fy51b3NlcnZpY2UuR3JwY0l0ZW1MaXN0Ei0KDHBsYXllclN0YXR1cxgGIAEo",
+            "CzIXLnVvc2VydmljZS5QbGF5ZXJTdGF0dXMSNwoQbW9iaWxlT2JqZWN0TGlz",
+            "dBgHIAEoCzIdLnVvc2VydmljZS5HcnBjR2FtZU9iamVjdExpc3QSPQoWcGxh",
+            "eWVyTW9iaWxlT2JqZWN0TGlzdBgIIAEoCzIdLnVvc2VydmljZS5HcnBjR2Ft",
+            "ZU9iamVjdExpc3QSNQoObGFuZE9iamVjdExpc3QYCSABKAsyHS51b3NlcnZp",
+            "Y2UuR3JwY0dhbWVPYmplY3RMaXN0EjUKDml0ZW1PYmplY3RMaXN0GAogASgL",
+            "Mh0udW9zZXJ2aWNlLkdycGNHYW1lT2JqZWN0TGlzdBI3ChBzdGF0aWNPYmpl",
+            "Y3RMaXN0GAsgASgLMh0udW9zZXJ2aWNlLkdycGNHYW1lT2JqZWN0TGlzdBI7",
+            "ChRpdGVtRHJvcGFibGVMYW5kTGlzdBgMIAEoCzIdLnVvc2VydmljZS5HcnBj",
+            "R2FtZU9iamVjdExpc3QSOwoUdmVuZG9ySXRlbU9iamVjdExpc3QYDSABKAsy",
+            "HS51b3NlcnZpY2UuR3JwY0dhbWVPYmplY3RMaXN0IiIKDVdhbGtEaXJlY3Rp",
+            "b24SEQoJZGlyZWN0aW9uGAEgASgNIngKB0FjdGlvbnMSEgoKYWN0aW9uVHlw",
+            "ZRgBIAEoDRIUCgxtb2JpbGVTZXJpYWwYAiABKA0SEgoKaXRlbVNlcmlhbBgD",
+            "IAEoDRIvCg13YWxrRGlyZWN0aW9uGAQgASgLMhgudW9zZXJ2aWNlLldhbGtE",
+            "aXJlY3Rpb24ypwIKCVVvU2VydmljZRItCgVSZXNldBIRLnVvc2VydmljZS5D",
+            "b25maWcaES51b3NlcnZpY2UuU3RhdGVzEi8KB1JlYWRPYnMSES51b3NlcnZp",
+            "Y2UuQ29uZmlnGhEudW9zZXJ2aWNlLlN0YXRlcxIwCghXcml0ZUFjdBISLnVv",
+            "c2VydmljZS5BY3Rpb25zGhAudW9zZXJ2aWNlLkVtcHR5EkMKE0FjdFNlbWFw",
+            "aG9yZUNvbnRyb2wSGi51b3NlcnZpY2UuU2VtYXBob3JlQWN0aW9uGhAudW9z",
+            "ZXJ2aWNlLkVtcHR5EkMKE09ic1NlbWFwaG9yZUNvbnRyb2wSGi51b3NlcnZp",
+            "Y2UuU2VtYXBob3JlQWN0aW9uGhAudW9zZXJ2aWNlLkVtcHR5YgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Empty), global::Uoservice.Empty.Parser, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcMobileData), global::Uoservice.GrpcMobileData.Parser, new[]{ "Name", "X", "Y", "Race", "Serial" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcItemData), global::Uoservice.GrpcItemData.Parser, new[]{ "Name", "Layer", "Serial", "Amount" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcGameObjectData), global::Uoservice.GrpcGameObjectData.Parser, new[]{ "Type", "ScreenX", "ScreenY", "Distance", "GameX", "GameY", "Serial", "Name", "IsCorpse", "Title" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcGameObjectData), global::Uoservice.GrpcGameObjectData.Parser, new[]{ "Type", "ScreenX", "ScreenY", "Distance", "GameX", "GameY", "Serial", "Name", "IsCorpse", "Title", "Amount", "Price" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcGameObjectList), global::Uoservice.GrpcGameObjectList.Parser, new[]{ "GameObject" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.SemaphoreAction), global::Uoservice.SemaphoreAction.Parser, new[]{ "Mode" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcMobileList), global::Uoservice.GrpcMobileList.Parser, new[]{ "Mobile" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcItemList), global::Uoservice.GrpcItemList.Parser, new[]{ "Item" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Config), global::Uoservice.Config.Parser, new[]{ "Name" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.PlayerStatus), global::Uoservice.PlayerStatus.Parser, new[]{ "Str", "Dex", "Intell", "Hits", "HitsMax", "Stamina", "StaminaMax", "Mana", "ManaMax", "Gold", "PhysicalResistance", "Weight", "WeightMax" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.States), global::Uoservice.States.Parser, new[]{ "MobileList", "WorldItemList", "EquippedItemList", "BackpackItemList", "CorpseItemList", "PlayerStatus", "MobileObjectList", "PlayerMobileObjectList", "LandObjectList", "ItemObjectList", "StaticObjectList", "ItemDropableLandList" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.States), global::Uoservice.States.Parser, new[]{ "MobileList", "WorldItemList", "EquippedItemList", "BackpackItemList", "CorpseItemList", "PlayerStatus", "MobileObjectList", "PlayerMobileObjectList", "LandObjectList", "ItemObjectList", "StaticObjectList", "ItemDropableLandList", "VendorItemObjectList" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.WalkDirection), global::Uoservice.WalkDirection.Parser, new[]{ "Direction" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Actions), global::Uoservice.Actions.Parser, new[]{ "ActionType", "MobileSerial", "ItemSerial", "WalkDirection" }, null, null, null)
           }));
@@ -680,6 +682,8 @@ namespace Uoservice {
       name_ = other.name_;
       isCorpse_ = other.isCorpse_;
       title_ = other.title_;
+      amount_ = other.amount_;
+      price_ = other.price_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -798,6 +802,28 @@ namespace Uoservice {
       }
     }
 
+    /// <summary>Field number for the "amount" field.</summary>
+    public const int AmountFieldNumber = 11;
+    private uint amount_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Amount {
+      get { return amount_; }
+      set {
+        amount_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "price" field.</summary>
+    public const int PriceFieldNumber = 12;
+    private uint price_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Price {
+      get { return price_; }
+      set {
+        price_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as GrpcGameObjectData);
@@ -821,6 +847,8 @@ namespace Uoservice {
       if (Name != other.Name) return false;
       if (IsCorpse != other.IsCorpse) return false;
       if (Title != other.Title) return false;
+      if (Amount != other.Amount) return false;
+      if (Price != other.Price) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -837,6 +865,8 @@ namespace Uoservice {
       if (Name.Length != 0) hash ^= Name.GetHashCode();
       if (IsCorpse != false) hash ^= IsCorpse.GetHashCode();
       if (Title.Length != 0) hash ^= Title.GetHashCode();
+      if (Amount != 0) hash ^= Amount.GetHashCode();
+      if (Price != 0) hash ^= Price.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -890,6 +920,14 @@ namespace Uoservice {
         output.WriteRawTag(82);
         output.WriteString(Title);
       }
+      if (Amount != 0) {
+        output.WriteRawTag(88);
+        output.WriteUInt32(Amount);
+      }
+      if (Price != 0) {
+        output.WriteRawTag(96);
+        output.WriteUInt32(Price);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -927,6 +965,12 @@ namespace Uoservice {
       }
       if (Title.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Title);
+      }
+      if (Amount != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Amount);
+      }
+      if (Price != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Price);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -968,6 +1012,12 @@ namespace Uoservice {
       }
       if (other.Title.Length != 0) {
         Title = other.Title;
+      }
+      if (other.Amount != 0) {
+        Amount = other.Amount;
+      }
+      if (other.Price != 0) {
+        Price = other.Price;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -1018,6 +1068,14 @@ namespace Uoservice {
           }
           case 82: {
             Title = input.ReadString();
+            break;
+          }
+          case 88: {
+            Amount = input.ReadUInt32();
+            break;
+          }
+          case 96: {
+            Price = input.ReadUInt32();
             break;
           }
         }
@@ -2149,6 +2207,7 @@ namespace Uoservice {
       itemObjectList_ = other.itemObjectList_ != null ? other.itemObjectList_.Clone() : null;
       staticObjectList_ = other.staticObjectList_ != null ? other.staticObjectList_.Clone() : null;
       itemDropableLandList_ = other.itemDropableLandList_ != null ? other.itemDropableLandList_.Clone() : null;
+      vendorItemObjectList_ = other.vendorItemObjectList_ != null ? other.vendorItemObjectList_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -2289,6 +2348,17 @@ namespace Uoservice {
       }
     }
 
+    /// <summary>Field number for the "vendorItemObjectList" field.</summary>
+    public const int VendorItemObjectListFieldNumber = 13;
+    private global::Uoservice.GrpcGameObjectList vendorItemObjectList_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Uoservice.GrpcGameObjectList VendorItemObjectList {
+      get { return vendorItemObjectList_; }
+      set {
+        vendorItemObjectList_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as States);
@@ -2314,6 +2384,7 @@ namespace Uoservice {
       if (!object.Equals(ItemObjectList, other.ItemObjectList)) return false;
       if (!object.Equals(StaticObjectList, other.StaticObjectList)) return false;
       if (!object.Equals(ItemDropableLandList, other.ItemDropableLandList)) return false;
+      if (!object.Equals(VendorItemObjectList, other.VendorItemObjectList)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -2332,6 +2403,7 @@ namespace Uoservice {
       if (itemObjectList_ != null) hash ^= ItemObjectList.GetHashCode();
       if (staticObjectList_ != null) hash ^= StaticObjectList.GetHashCode();
       if (itemDropableLandList_ != null) hash ^= ItemDropableLandList.GetHashCode();
+      if (vendorItemObjectList_ != null) hash ^= VendorItemObjectList.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -2393,6 +2465,10 @@ namespace Uoservice {
         output.WriteRawTag(98);
         output.WriteMessage(ItemDropableLandList);
       }
+      if (vendorItemObjectList_ != null) {
+        output.WriteRawTag(106);
+        output.WriteMessage(VendorItemObjectList);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -2436,6 +2512,9 @@ namespace Uoservice {
       }
       if (itemDropableLandList_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(ItemDropableLandList);
+      }
+      if (vendorItemObjectList_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(VendorItemObjectList);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -2519,6 +2598,12 @@ namespace Uoservice {
           itemDropableLandList_ = new global::Uoservice.GrpcGameObjectList();
         }
         ItemDropableLandList.MergeFrom(other.ItemDropableLandList);
+      }
+      if (other.vendorItemObjectList_ != null) {
+        if (vendorItemObjectList_ == null) {
+          vendorItemObjectList_ = new global::Uoservice.GrpcGameObjectList();
+        }
+        VendorItemObjectList.MergeFrom(other.VendorItemObjectList);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -2613,6 +2698,13 @@ namespace Uoservice {
               itemDropableLandList_ = new global::Uoservice.GrpcGameObjectList();
             }
             input.ReadMessage(itemDropableLandList_);
+            break;
+          }
+          case 106: {
+            if (vendorItemObjectList_ == null) {
+              vendorItemObjectList_ = new global::Uoservice.GrpcGameObjectList();
+            }
+            input.ReadMessage(vendorItemObjectList_);
             break;
           }
         }

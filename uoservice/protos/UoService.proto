@@ -30,6 +30,8 @@ message GrpcGameObjectData {
   string name = 8;
   bool isCorpse = 9;
   string title = 10;
+  uint32 amount = 11;
+  uint32 price = 12;
 }
 
 message GrpcGameObjectList {
@@ -83,6 +85,7 @@ message States {
   GrpcGameObjectList itemObjectList = 10;
   GrpcGameObjectList staticObjectList = 11;
   GrpcGameObjectList itemDropableLandList = 12;
+  GrpcGameObjectList vendorItemObjectList = 13;
 }
 
 message WalkDirection {
