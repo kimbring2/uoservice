@@ -24,6 +24,16 @@ selected_target_serial = None
 player_serial = None
 
 
+def isVendor(title):
+  vendor_name_list = ['healer']
+  title_split = title.split(" ")
+  for vendor_name in vendor_name_list:
+    if vendor_name == title_split[-1]:
+      return title_split[-1]
+
+  return None
+
+
 def parse_response(response):
   global selected_target_serial
   global player_serial
@@ -35,48 +45,25 @@ def parse_response(response):
   ground_item_dict = {}
   corpse_dict = {}
   corpse_item_dict = {}
+  vendor_dict = {}
 
   mobile_data = response.mobileList.mobile
   world_item_data = response.worldItemList.item
   equipped_item_data = response.equippedItemList.item
   backpack_item_data = response.backpackItemList.item
   corpse_item_data = response.corpseItemList.item
-  #print("corpse_item_data: ", corpse_item_data)
 
   land_object_data = response.landObjectList.gameObject
-  #print("len(land_object_data): ", len(land_object_data))
-
   player_mobile_object_data = response.playerMobileObjectList.gameObject
-  #print("len(player_mobile_object_data): ", len(player_mobile_object_data))
-
   mobile_object_data = response.mobileObjectList.gameObject
-  #print("len(mobile_object_data): ", len(mobile_object_data))
-
   static_object_data = response.staticObjectList.gameObject
-  #print("len(static_object_data): ", len(static_object_data))
-
   item_object_data = response.itemObjectList.gameObject
-  #print("len(item_object_data): ", len(item_object_data))
-
   item_dropable_land_data = response.itemDropableLandList.gameObject
-  #print("len(item_dropable_land_data): ", len(item_dropable_land_data))
 
-  screen_image = np.zeros((171,136,4), dtype=np.uint8)
+  screen_image = np.zeros((172,137,4), dtype=np.uint8)
   for obj in land_object_data:
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 0
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 255
-    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 255
-
-  for obj in mobile_object_data:
-
-    print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, \
-           is_corpse:{6}, title:{7}'.format(obj.type, obj.screenX, obj.screenY, 
-                                                obj.distance, obj.serial,obj.name,
-                                                obj.isCorpse, obj.title))
-    
-
-    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 0
-    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 0
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 255
 
   for obj in static_object_data:
@@ -90,14 +77,32 @@ def parse_response(response):
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 255
 
   for obj in item_object_data:
-    ground_item_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance]
+    ground_item_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
 
     if obj.isCorpse:
-      corpse_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance]
+      corpse_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
 
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 0
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 255
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 0
+
+  for obj in mobile_object_data:
+    vendor_title = isVendor(obj.title)
+
+    if vendor_title:
+      obj.title = vendor_title
+      #print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, is_corpse:{6}, title:{7}'.
+      #  format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.isCorpse, obj.title))
+
+      screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 255
+      screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 255
+      screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 255
+
+      vendor_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
+    else:
+      screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 0
+      screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 0
+      screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 255
 
   for obj in player_mobile_object_data:
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 255
@@ -113,13 +118,11 @@ def parse_response(response):
 
   if len(mobile_data) == 0 or len(world_item_data) == 0 or len(equipped_item_data) == 0:
     return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, \
-          corpse_dict, corpse_item_dict
+          corpse_dict, corpse_item_dict, vendor_dict
 
   for mobile in mobile_data:
     '''
-    print('name: {0}, x: {1}, y: {2}, race: {3}, serial: {4}\n'.format(mobile.name, 
-                                                                       mobile.x, mobile.y, 
-                                                                       mobile.race,
+    print('name: {0}, x: {1}, y: {2}, race: {3}, serial: {4}\n'.format(mobile.name, mobile.x, mobile.y, mobile.race,
                                                                        mobile.serial))
     '''
     if mobile.race != 1:
@@ -134,33 +137,22 @@ def parse_response(response):
       color = (0, 0, 255)
     else:
       color = (255, 0, 0)
+
     '''
     screen_image = cv2.rectangle(screen_image, start_point, end_point, color, 2)
-    cv2.putText(screen_image,
-                text=mobile.name,
-                org=center_coordinates,
-                fontFace=cv2.FONT_HERSHEY_SIMPLEX,
-                fontScale=1.0,
-                color=color,
-                thickness=2,
-                lineType=cv2.LINE_4)
+    cv2.putText(screen_image, text=mobile.name, org=center_coordinates, fontFace=cv2.FONT_HERSHEY_SIMPLEX,
+                fontScale=1.0, color=color, thickness=2, lineType=cv2.LINE_4)
     '''
 
-  #print("equipped_item_data: ")
   for item in equipped_item_data:
     #print('name: {0}, layer: {1}, serial: {2}, amount: {3}'.format(item.name, item.layer, 
     #                                                               item.serial, item.amount))
     equipped_item_dict[item.serial] = [item.name, item.layer, item.amount]
 
-  #print("backpack_item_data: ")
   for item in backpack_item_data:
-     #print('name: {0}, layer: {1}, serial: {2}, amount: {3}'.format(item.name, item.layer, 
-     #                                                              item.serial, item.amount))
      backpack_item_dict[item.serial] = [item.name, item.layer, item.amount]
 
   for item in corpse_item_data:
-     #print('name: {0}, layer: {1}, serial: {2}, amount: {3}'.format(item.name, item.layer, 
-     #                                                               item.serial, item.amount))
      corpse_item_dict[item.serial] = [item.name, item.layer, item.amount]
 
   if (selected_target_serial not in mobile_dict) and selected_target_serial != None:
@@ -182,42 +174,32 @@ def parse_response(response):
   #cv2.waitKey(1)
 
   return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict, \
-      corpse_item_dict
+      corpse_item_dict, vendor_dict
 
 
 def get_serial_by_name(item_dict, name):
-  #print("item_dict: ", item_dict)
-
   keys = list(item_dict.keys())
-  #print("keys: ", keys)
   for k, v in item_dict.items():
-    #print("k: ", k)
-    #print("v: ", v)
-
     if v[0] == name:
-      #print("keys.index(k): ", keys.index(k))
-
       return k, keys.index(k)
 
-  #print("")
+  return None, None
+
+
+def get_serial_by_title(item_dict, title):
+  keys = list(item_dict.keys())
+  for k, v in item_dict.items():
+    if v[5] == title:
+      return k, keys.index(k)
 
   return None, None
 
 
 def get_serial_of_gold(item_dict):
-  #print("item_dict: ", item_dict)
-
   keys = list(item_dict.keys())
-  #print("keys: ", keys)
   for k, v in item_dict.items():
-    #print("k: ", k)
-    #print("v: ", v)
-
     if "Gold" in v[0]:
-      #print("keys.index(k): ", keys.index(k))
       return k, keys.index(k)
-
-  #print("")
 
   return None, None
 
@@ -226,7 +208,7 @@ def main():
   action_index = 0
   #test_action_sequence = [3, 5, 6, 4]
   #test_action_sequence = [7, 9, 3, 4, 8]
-  test_action_sequence = [0, 0, 0]
+  test_action_sequence = [10, 11]
 
   target_weapon_serial = None
   opened_corpse = None
@@ -243,7 +225,7 @@ def main():
     res = stub.ReadObs(UoService_pb2.Config(name='you'))
 
     mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict, \
-        corpse_item_dict = parse_response(res)
+        corpse_item_dict, vendor_dict = parse_response(res)
 
     for step in range(1, 100000):
       if selected_target_serial != None and selected_target_serial in mobile_dict:
@@ -261,8 +243,7 @@ def main():
         target_y = 500
         target_serial = 1
 
-      #print("corpse_dict: ", corpse_dict)
-      #print("corpse_item_dict: ", corpse_item_dict)
+      #print("vendor_dict: ", vendor_dict)
 
       if action_index != len(test_action_sequence) and step % 100 == 0:
         #print("action_index: ", action_index)
@@ -275,8 +256,6 @@ def main():
           print("corpse_item_dict: ", corpse_item_dict)
           #target_item_serial, index = get_serial_by_name(equipped_item_dict, 'Valorite Longsword')
           target_item_serial, index = get_serial_of_gold(corpse_item_dict)
-          print("target_item_serial: ", target_item_serial)
-          pass
         
         if test_action_sequence[action_index] == 6:
           #target_item_serial, index = get_serial_by_name(ground_item_dict, 'Valorite Longsword')
@@ -284,6 +263,10 @@ def main():
 
         if test_action_sequence[action_index] == 8:
           target_item_serial = opened_corpse
+
+        if test_action_sequence[action_index] == 10 or test_action_sequence[action_index] == 11:
+          target_mobile_serial, index = get_serial_by_title(vendor_dict, 'healer')
+          print("target_mobile_serial: ", target_mobile_serial)
 
         if len(corpse_dict) != 0: 
           if test_action_sequence[action_index] == 7 or test_action_sequence[action_index] == 9:
@@ -297,7 +280,7 @@ def main():
         #print("target_item_serial: ", target_item_serial)
         print("test_action_sequence[action_index]: ", test_action_sequence[action_index])
         stub.WriteAct(UoService_pb2.Actions(actionType=test_action_sequence[action_index], 
-                                            mobileSerial=target_serial,
+                                            mobileSerial=target_mobile_serial,
                                             itemSerial=target_item_serial,
                                             walkDirection=UoService_pb2.WalkDirection(direction=2)))
 
@@ -314,7 +297,7 @@ def main():
       res_next = stub.ReadObs(UoService_pb2.Config(name='you'))
 
       mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict, \
-        corpse_item_dict = parse_response(res_next)
+        corpse_item_dict, vendor_dict = parse_response(res_next)
 
       #time.sleep(0.5)
 
