@@ -61,17 +61,20 @@ def parse_response(response):
   item_dropable_land_data = response.itemDropableLandList.gameObject
   #print("len(item_dropable_land_data): ", len(item_dropable_land_data))
 
-  screen_image = np.zeros((170,135,4), dtype=np.uint8)
+  screen_image = np.zeros((171,136,4), dtype=np.uint8)
   for obj in land_object_data:
-    #print('type: {0}, x: {1}, y: {2}, distance: {3}, serial: {3}'.format(obj.type, 
-    #                                                                     obj.x, obj.y, 
-    #                                                                     obj.distance,
-    #                                                                     obj.serial))
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 0
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 255
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 255
 
   for obj in mobile_object_data:
+
+    print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, \
+           is_corpse:{6}, title:{7}'.format(obj.type, obj.screenX, obj.screenY, 
+                                                obj.distance, obj.serial,obj.name,
+                                                obj.isCorpse, obj.title))
+    
+
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 0
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 0
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 255
@@ -87,15 +90,6 @@ def parse_response(response):
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 255
 
   for obj in item_object_data:
-    '''
-    print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, is_corpse:{6}'.format(obj.type, 
-                                                                                        obj.screenX, 
-                                                                                        obj.screenY, 
-                                                                                        obj.distance,
-                                                                                        obj.serial,
-                                                                                        obj.name,
-                                                                                        obj.isCorpse))
-    '''
     ground_item_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance]
 
     if obj.isCorpse:
@@ -122,11 +116,12 @@ def parse_response(response):
           corpse_dict, corpse_item_dict
 
   for mobile in mobile_data:
-    #print('name: {0}, x: {1}, y: {2}, race: {3}, serial: {4}\n'.format(mobile.name, 
-    #                                                                   mobile.x, mobile.y, 
-    #                                                                   mobile.race,
-    #                                                                   mobile.serial))
-
+    '''
+    print('name: {0}, x: {1}, y: {2}, race: {3}, serial: {4}\n'.format(mobile.name, 
+                                                                       mobile.x, mobile.y, 
+                                                                       mobile.race,
+                                                                       mobile.serial))
+    '''
     if mobile.race != 1:
       mobile_dict[mobile.serial] = [mobile.name, int(mobile.x), int(mobile.y), mobile.race]
 
@@ -204,7 +199,7 @@ def get_serial_by_name(item_dict, name):
 
       return k, keys.index(k)
 
-  print("")
+  #print("")
 
   return None, None
 
@@ -230,8 +225,8 @@ def get_serial_of_gold(item_dict):
 def main():
   action_index = 0
   #test_action_sequence = [3, 5, 6, 4]
-  test_action_sequence = [7, 9, 3, 4, 8]
-  #test_action_sequence = [0, 0, 0]
+  #test_action_sequence = [7, 9, 3, 4, 8]
+  test_action_sequence = [0, 0, 0]
 
   target_weapon_serial = None
   opened_corpse = None
