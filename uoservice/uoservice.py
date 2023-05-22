@@ -34,11 +34,15 @@ def isVendor(title):
   return None
 
 
+mountable_list = ['a hellsteed', 'a horse']
+
 def parse_response(response):
   global selected_target_serial
   global player_serial
+  global mountable_list
 
   mobile_dict = {}
+  mountable_mobile_dict = {}
   world_item_dict = {}
   equipped_item_dict = {}
   backpack_item_dict = {}
@@ -133,11 +137,13 @@ def parse_response(response):
           corpse_dict, corpse_item_dict, vendor_dict, vendor_item_dict
 
   for mobile in mobile_data:
-    '''
-    print('name: {0}, x: {1}, y: {2}, race: {3}, serial: {4}\n'.format(mobile.name, mobile.x, mobile.y, mobile.race,
-                                                                       mobile.serial))
-    '''
-    if mobile.race != 1:
+    #print('name: {0}, x: {1}, y: {2}, race: {3}, serial: {4}\n'.format(mobile.name, mobile.x, mobile.y, mobile.race,
+    #                                                                   mobile.serial))
+    if mobile.name in mountable_list:
+      #print('name: {0}, x: {1}, y: {2}, race: {3}, serial: {4}\n'.format(mobile.name, mobile.x, mobile.y, mobile.race,
+      #                                                                   mobile.serial))
+      mountable_mobile_dict[mobile.serial] = [mobile.name, int(mobile.x), int(mobile.y), mobile.race]
+    else:
       mobile_dict[mobile.serial] = [mobile.name, int(mobile.x), int(mobile.y), mobile.race]
 
     if mobile.x >= 1600 or mobile.y >= 1280:
@@ -186,7 +192,7 @@ def parse_response(response):
   #cv2.waitKey(1)
 
   return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict, \
-      corpse_item_dict, vendor_dict, vendor_item_dict
+      corpse_item_dict, vendor_dict, vendor_item_dict, mountable_mobile_dict
 
 
 def get_serial_by_name(item_dict, name):
@@ -220,13 +226,15 @@ def main():
   action_index = 0
   #test_action_sequence = [3, 5, 6, 4]
   #test_action_sequence = [7, 9, 3, 4, 8]
-  test_action_sequence = [10, 11, 13]
-  #test_action_sequence = [0, 0]
+  #test_action_sequence = [10, 11, 12]
+  test_action_sequence = [0, 0]
 
-  target_weapon_serial = None
+  player_mobile_serial = None
+  target_item_serial = None
   target_mobile_serial = None
   opened_corpse = None
   menu_index = 0
+  opened_vendor_serial = None
   for ep in range(0, 10000):
     print("ep: ", ep)
 
@@ -241,73 +249,53 @@ def main():
     res = stub.ReadObs(UoService_pb2.Config(name='you'))
 
     mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict, \
-        corpse_item_dict, vendor_dict, vendor_item_dict = parse_response(res)
+        corpse_item_dict, vendor_dict, vendor_item_dict, mountable_mobile_dict = parse_response(res)
+
+    #print("mobile_dict: ", mobile_dict)
 
     for step in range(1, 100000):
-      if selected_target_serial != None and selected_target_serial in mobile_dict:
-        selected_target = mobile_dict[selected_target_serial]
-        target_x = selected_target[1]
-        target_y = selected_target[2]
-        target_serial = selected_target_serial
-      elif player_serial != None:
-        player = mobile_dict[player_serial]
-        target_x = player[1]
-        target_y = player[2]
-        target_serial = player_serial
-      else:
-        target_x = 500
-        target_y = 500
-        target_serial = 1
-
-      #print("vendor_dict: ", vendor_dict)
-
       if action_index != len(test_action_sequence) and step % 100 == 0:
-        #print("action_index: ", action_index)
-        #print("equipped_item_dict: ", equipped_item_dict)
-        #print("ground_item_dict: ", ground_item_dict)
+        #print("player_mobile_serial: ", player_mobile_serial)
+        print("mountable_mobile_dict: ", mountable_mobile_dict)
 
         target_item_serial = 0
+        target_mobile_serial = 0
+
+        if test_action_sequence[action_index] == 2:
+          player_mobile_serial, index = get_serial_by_name(mobile_dict, "masterkim")
+          #print("player_mobile_serial: ", player_mobile_serial)
+          target_mobile_serial = player_mobile_serial
+
         if test_action_sequence[action_index] == 3:
-          #print("corpse_item_dict: ", corpse_item_dict)
-          #target_item_serial, index = get_serial_by_name(equipped_item_dict, 'Valorite Longsword')
           target_item_serial, index = get_serial_of_gold(corpse_item_dict)
         
         if test_action_sequence[action_index] == 6:
-          #target_item_serial, index = get_serial_by_name(ground_item_dict, 'Valorite Longsword')
-          pass
+          target_item_serial, index = get_serial_by_name(ground_item_dict, 'Valorite Longsword')
 
         if test_action_sequence[action_index] == 8:
           target_item_serial = opened_corpse
-
-        if test_action_sequence[action_index] == 10:
-          target_mobile_serial, index = get_serial_by_title(vendor_dict, 'healer')
 
         if len(corpse_dict) != 0: 
           if test_action_sequence[action_index] == 7 or test_action_sequence[action_index] == 9:
             target_item_serial = list(corpse_dict.keys())[0]
             opened_corpse = target_item_serial
 
+        if test_action_sequence[action_index] == 10:
+          target_mobile_serial, index = get_serial_by_title(vendor_dict, 'healer')
+          opened_vendor_serial = target_mobile_serial
+
         if test_action_sequence[action_index] == 11:
-          #print("vendor_item_dict: ", vendor_item_dict)
-          menu_index = 2
-          #target_item_serial, index = get_serial_by_name(vendor_item_dict, "Clean Bandage")
-          #print("target_item_serial: ", target_item_serial)
-          print("target_mobile_serial: ", target_mobile_serial)
+          menu_index = 1
+          target_mobile_serial = opened_vendor_serial
 
         if test_action_sequence[action_index] == 12:
-          print("vendor_item_dict: ", vendor_item_dict)
           target_item_serial, index = get_serial_by_name(vendor_item_dict, "Clean Bandage")
-          print("target_mobile_serial: ", target_mobile_serial)
-          print("target_item_serial: ", target_item_serial)
+          target_mobile_serial = opened_vendor_serial
 
         if test_action_sequence[action_index] == 13:
-          print("vendor_item_dict: ", vendor_item_dict)
           target_item_serial, index = get_serial_by_name(vendor_item_dict, "clean bandage")
-          print("target_mobile_serial: ", target_mobile_serial)
-          print("target_item_serial: ", target_item_serial)
+          target_mobile_serial = opened_vendor_serial
 
-        #print("target_item_serial: ", target_item_serial)
-        print("test_action_sequence[action_index]: ", test_action_sequence[action_index])
         stub.WriteAct(UoService_pb2.Actions(actionType=test_action_sequence[action_index], 
                                             mobileSerial=target_mobile_serial,
                                             itemSerial=target_item_serial,
@@ -317,8 +305,8 @@ def main():
         action_index += 1
       else:
         stub.WriteAct(UoService_pb2.Actions(actionType=0, 
-                                            mobileSerial=target_serial,
-                                            itemSerial=target_weapon_serial,
+                                            mobileSerial=target_mobile_serial,
+                                            itemSerial=target_item_serial,
                                             walkDirection=UoService_pb2.WalkDirection(direction=2),
                                             amount=1))
       
@@ -328,11 +316,7 @@ def main():
       res_next = stub.ReadObs(UoService_pb2.Config(name='you'))
 
       mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict, \
-        corpse_item_dict, vendor_dict, vendor_item_dict = parse_response(res_next)
-
-      #time.sleep(0.5)
-
-    #cv2.destroyAllWindows()
+        corpse_item_dict, vendor_dict, vendor_item_dict, mountable_mobile_dict = parse_response(res_next)
 
 
 if __name__ == '__main__':
