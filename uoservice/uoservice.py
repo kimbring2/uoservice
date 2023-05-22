@@ -66,7 +66,7 @@ def parse_response(response):
   item_dropable_land_data = response.itemDropableLandList.gameObject
   item_vendor_data = response.vendorItemObjectList.gameObject
 
-  #print("item_vendor_data: ", item_vendor_data)
+  #print("mobile_object_data: ", mobile_object_data)
 
   screen_image = np.zeros((172,137,4), dtype=np.uint8)
   for obj in land_object_data:
@@ -100,16 +100,17 @@ def parse_response(response):
     
     vendor_item_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
 
-    #print("")
-
   for obj in mobile_object_data:
+    #print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, is_corpse:{6}, title:{7}'.
+    #    format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.isCorpse, obj.title))
+
+    if obj.name in mountable_list:
+      mountable_mobile_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
+
     vendor_title = isVendor(obj.title)
 
     if vendor_title:
       obj.title = vendor_title
-      #print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, is_corpse:{6}, title:{7}'.
-      #  format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.isCorpse, obj.title))
-
       screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 255
       screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 255
       screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 255
@@ -134,17 +135,12 @@ def parse_response(response):
 
   if len(mobile_data) == 0 or len(world_item_data) == 0 or len(equipped_item_data) == 0:
     return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, \
-          corpse_dict, corpse_item_dict, vendor_dict, vendor_item_dict
+          corpse_dict, corpse_item_dict, vendor_dict, vendor_item_dict, mountable_mobile_dict
 
   for mobile in mobile_data:
     #print('name: {0}, x: {1}, y: {2}, race: {3}, serial: {4}\n'.format(mobile.name, mobile.x, mobile.y, mobile.race,
     #                                                                   mobile.serial))
-    if mobile.name in mountable_list:
-      #print('name: {0}, x: {1}, y: {2}, race: {3}, serial: {4}\n'.format(mobile.name, mobile.x, mobile.y, mobile.race,
-      #                                                                   mobile.serial))
-      mountable_mobile_dict[mobile.serial] = [mobile.name, int(mobile.x), int(mobile.y), mobile.race]
-    else:
-      mobile_dict[mobile.serial] = [mobile.name, int(mobile.x), int(mobile.y), mobile.race]
+    mobile_dict[mobile.serial] = [mobile.name, int(mobile.x), int(mobile.y), mobile.race]
 
     if mobile.x >= 1600 or mobile.y >= 1280:
       continue
@@ -227,7 +223,7 @@ def main():
   #test_action_sequence = [3, 5, 6, 4]
   #test_action_sequence = [7, 9, 3, 4, 8]
   #test_action_sequence = [10, 11, 12]
-  test_action_sequence = [0, 0]
+  test_action_sequence = [14]
 
   player_mobile_serial = None
   target_item_serial = None
@@ -256,15 +252,18 @@ def main():
     for step in range(1, 100000):
       if action_index != len(test_action_sequence) and step % 100 == 0:
         #print("player_mobile_serial: ", player_mobile_serial)
-        print("mountable_mobile_dict: ", mountable_mobile_dict)
+        #print("mountable_mobile_dict: ", mountable_mobile_dict)
 
         target_item_serial = 0
         target_mobile_serial = 0
-
         if test_action_sequence[action_index] == 2:
-          player_mobile_serial, index = get_serial_by_name(mobile_dict, "masterkim")
-          #print("player_mobile_serial: ", player_mobile_serial)
-          target_mobile_serial = player_mobile_serial
+          #player_mobile_serial, index = get_serial_by_name(mobile_dict, "masterkim")
+          mountable_mobile_serial, index = get_serial_by_name(mountable_mobile_dict, "a hellsteed")
+          #print("mountable_mobile_serial: ", mountable_mobile_serial)
+          distance = mountable_mobile_dict[mountable_mobile_serial][4]
+          #print("distance: ", distance)
+
+          target_mobile_serial = mountable_mobile_serial
 
         if test_action_sequence[action_index] == 3:
           target_item_serial, index = get_serial_of_gold(corpse_item_dict)
