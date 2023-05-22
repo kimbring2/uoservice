@@ -62,7 +62,7 @@ def parse_response(response):
   item_dropable_land_data = response.itemDropableLandList.gameObject
   item_vendor_data = response.vendorItemObjectList.gameObject
 
-  print("item_vendor_data: ", item_vendor_data)
+  #print("item_vendor_data: ", item_vendor_data)
 
   screen_image = np.zeros((172,137,4), dtype=np.uint8)
   for obj in land_object_data:
@@ -91,10 +91,12 @@ def parse_response(response):
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 0
 
   for obj in item_vendor_data:
-    print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
-          format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
+    #print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
+    #      format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
     
     vendor_item_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
+
+    #print("")
 
   for obj in mobile_object_data:
     vendor_title = isVendor(obj.title)
@@ -128,7 +130,7 @@ def parse_response(response):
 
   if len(mobile_data) == 0 or len(world_item_data) == 0 or len(equipped_item_data) == 0:
     return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, \
-          corpse_dict, corpse_item_dict, vendor_dict
+          corpse_dict, corpse_item_dict, vendor_dict, vendor_item_dict
 
   for mobile in mobile_data:
     '''
@@ -184,7 +186,7 @@ def parse_response(response):
   #cv2.waitKey(1)
 
   return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict, \
-      corpse_item_dict, vendor_dict
+      corpse_item_dict, vendor_dict, vendor_item_dict
 
 
 def get_serial_by_name(item_dict, name):
@@ -218,8 +220,8 @@ def main():
   action_index = 0
   #test_action_sequence = [3, 5, 6, 4]
   #test_action_sequence = [7, 9, 3, 4, 8]
-  #test_action_sequence = [10, 11]
-  test_action_sequence = [0, 0]
+  test_action_sequence = [10, 11, 12]
+  #test_action_sequence = [0, 0]
 
   target_weapon_serial = None
   target_mobile_serial = None
@@ -229,7 +231,8 @@ def main():
 
     stub.WriteAct(UoService_pb2.Actions(actionType=0, 
                                         mobileSerial=1,
-                                        walkDirection=UoService_pb2.WalkDirection(direction=1)))
+                                        walkDirection=UoService_pb2.WalkDirection(direction=1),
+                                        amount=1))
     
     stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
     stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
@@ -237,7 +240,7 @@ def main():
     res = stub.ReadObs(UoService_pb2.Config(name='you'))
 
     mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict, \
-        corpse_item_dict, vendor_dict = parse_response(res)
+        corpse_item_dict, vendor_dict, vendor_item_dict = parse_response(res)
 
     for step in range(1, 100000):
       if selected_target_serial != None and selected_target_serial in mobile_dict:
@@ -265,7 +268,7 @@ def main():
 
         target_item_serial = 0
         if test_action_sequence[action_index] == 3:
-          print("corpse_item_dict: ", corpse_item_dict)
+          #print("corpse_item_dict: ", corpse_item_dict)
           #target_item_serial, index = get_serial_by_name(equipped_item_dict, 'Valorite Longsword')
           target_item_serial, index = get_serial_of_gold(corpse_item_dict)
         
@@ -278,16 +281,21 @@ def main():
 
         if test_action_sequence[action_index] == 10 or test_action_sequence[action_index] == 11:
           target_mobile_serial, index = get_serial_by_title(vendor_dict, 'healer')
-          print("target_mobile_serial: ", target_mobile_serial)
+          #print("target_mobile_serial: ", target_mobile_serial)
 
         if len(corpse_dict) != 0: 
           if test_action_sequence[action_index] == 7 or test_action_sequence[action_index] == 9:
-            print("corpse_dict: ", corpse_dict)
+            #print("corpse_dict: ", corpse_dict)
             target_item_serial = list(corpse_dict.keys())[0]
             opened_corpse = target_item_serial
             #print("target_item_serial: ", target_item_serial)
 
-        #target_item_serial = 0
+        if test_action_sequence[action_index] == 12:
+          print("vendor_item_dict: ", vendor_item_dict)
+          target_item_serial = list(vendor_item_dict.keys())[0]
+
+          print("target_mobile_serial: ", target_mobile_serial)
+          #target_item_serial = opened_corpse
 
 
         #print("target_item_serial: ", target_item_serial)
@@ -295,14 +303,16 @@ def main():
         stub.WriteAct(UoService_pb2.Actions(actionType=test_action_sequence[action_index], 
                                             mobileSerial=target_mobile_serial,
                                             itemSerial=target_item_serial,
-                                            walkDirection=UoService_pb2.WalkDirection(direction=2)))
+                                            walkDirection=UoService_pb2.WalkDirection(direction=2),
+                                            amount=1))
 
         action_index += 1
       else:
         stub.WriteAct(UoService_pb2.Actions(actionType=0, 
                                             mobileSerial=target_serial,
                                             itemSerial=target_weapon_serial,
-                                            walkDirection=UoService_pb2.WalkDirection(direction=2)))
+                                            walkDirection=UoService_pb2.WalkDirection(direction=2),
+                                            amount=1))
       
       stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
       stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
@@ -310,7 +320,7 @@ def main():
       res_next = stub.ReadObs(UoService_pb2.Config(name='you'))
 
       mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict, \
-        corpse_item_dict, vendor_dict = parse_response(res_next)
+        corpse_item_dict, vendor_dict, vendor_item_dict = parse_response(res_next)
 
       #time.sleep(0.5)
 

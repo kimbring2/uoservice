@@ -60,16 +60,17 @@ namespace Uoservice {
             "ChRpdGVtRHJvcGFibGVMYW5kTGlzdBgMIAEoCzIdLnVvc2VydmljZS5HcnBj",
             "R2FtZU9iamVjdExpc3QSOwoUdmVuZG9ySXRlbU9iamVjdExpc3QYDSABKAsy",
             "HS51b3NlcnZpY2UuR3JwY0dhbWVPYmplY3RMaXN0IiIKDVdhbGtEaXJlY3Rp",
-            "b24SEQoJZGlyZWN0aW9uGAEgASgNIngKB0FjdGlvbnMSEgoKYWN0aW9uVHlw",
-            "ZRgBIAEoDRIUCgxtb2JpbGVTZXJpYWwYAiABKA0SEgoKaXRlbVNlcmlhbBgD",
-            "IAEoDRIvCg13YWxrRGlyZWN0aW9uGAQgASgLMhgudW9zZXJ2aWNlLldhbGtE",
-            "aXJlY3Rpb24ypwIKCVVvU2VydmljZRItCgVSZXNldBIRLnVvc2VydmljZS5D",
-            "b25maWcaES51b3NlcnZpY2UuU3RhdGVzEi8KB1JlYWRPYnMSES51b3NlcnZp",
-            "Y2UuQ29uZmlnGhEudW9zZXJ2aWNlLlN0YXRlcxIwCghXcml0ZUFjdBISLnVv",
-            "c2VydmljZS5BY3Rpb25zGhAudW9zZXJ2aWNlLkVtcHR5EkMKE0FjdFNlbWFw",
-            "aG9yZUNvbnRyb2wSGi51b3NlcnZpY2UuU2VtYXBob3JlQWN0aW9uGhAudW9z",
-            "ZXJ2aWNlLkVtcHR5EkMKE09ic1NlbWFwaG9yZUNvbnRyb2wSGi51b3NlcnZp",
-            "Y2UuU2VtYXBob3JlQWN0aW9uGhAudW9zZXJ2aWNlLkVtcHR5YgZwcm90bzM="));
+            "b24SEQoJZGlyZWN0aW9uGAEgASgNIogBCgdBY3Rpb25zEhIKCmFjdGlvblR5",
+            "cGUYASABKA0SFAoMbW9iaWxlU2VyaWFsGAIgASgNEhIKCml0ZW1TZXJpYWwY",
+            "AyABKA0SLwoNd2Fsa0RpcmVjdGlvbhgEIAEoCzIYLnVvc2VydmljZS5XYWxr",
+            "RGlyZWN0aW9uEg4KBmFtb3VudBgFIAEoDTKnAgoJVW9TZXJ2aWNlEi0KBVJl",
+            "c2V0EhEudW9zZXJ2aWNlLkNvbmZpZxoRLnVvc2VydmljZS5TdGF0ZXMSLwoH",
+            "UmVhZE9icxIRLnVvc2VydmljZS5Db25maWcaES51b3NlcnZpY2UuU3RhdGVz",
+            "EjAKCFdyaXRlQWN0EhIudW9zZXJ2aWNlLkFjdGlvbnMaEC51b3NlcnZpY2Uu",
+            "RW1wdHkSQwoTQWN0U2VtYXBob3JlQ29udHJvbBIaLnVvc2VydmljZS5TZW1h",
+            "cGhvcmVBY3Rpb24aEC51b3NlcnZpY2UuRW1wdHkSQwoTT2JzU2VtYXBob3Jl",
+            "Q29udHJvbBIaLnVvc2VydmljZS5TZW1hcGhvcmVBY3Rpb24aEC51b3NlcnZp",
+            "Y2UuRW1wdHliBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -85,7 +86,7 @@ namespace Uoservice {
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.PlayerStatus), global::Uoservice.PlayerStatus.Parser, new[]{ "Str", "Dex", "Intell", "Hits", "HitsMax", "Stamina", "StaminaMax", "Mana", "ManaMax", "Gold", "PhysicalResistance", "Weight", "WeightMax" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.States), global::Uoservice.States.Parser, new[]{ "MobileList", "WorldItemList", "EquippedItemList", "BackpackItemList", "CorpseItemList", "PlayerStatus", "MobileObjectList", "PlayerMobileObjectList", "LandObjectList", "ItemObjectList", "StaticObjectList", "ItemDropableLandList", "VendorItemObjectList" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.WalkDirection), global::Uoservice.WalkDirection.Parser, new[]{ "Direction" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Actions), global::Uoservice.Actions.Parser, new[]{ "ActionType", "MobileSerial", "ItemSerial", "WalkDirection" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Actions), global::Uoservice.Actions.Parser, new[]{ "ActionType", "MobileSerial", "ItemSerial", "WalkDirection", "Amount" }, null, null, null)
           }));
     }
     #endregion
@@ -2871,6 +2872,7 @@ namespace Uoservice {
       mobileSerial_ = other.mobileSerial_;
       itemSerial_ = other.itemSerial_;
       walkDirection_ = other.walkDirection_ != null ? other.walkDirection_.Clone() : null;
+      amount_ = other.amount_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -2923,6 +2925,17 @@ namespace Uoservice {
       }
     }
 
+    /// <summary>Field number for the "amount" field.</summary>
+    public const int AmountFieldNumber = 5;
+    private uint amount_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Amount {
+      get { return amount_; }
+      set {
+        amount_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as Actions);
@@ -2940,6 +2953,7 @@ namespace Uoservice {
       if (MobileSerial != other.MobileSerial) return false;
       if (ItemSerial != other.ItemSerial) return false;
       if (!object.Equals(WalkDirection, other.WalkDirection)) return false;
+      if (Amount != other.Amount) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -2950,6 +2964,7 @@ namespace Uoservice {
       if (MobileSerial != 0) hash ^= MobileSerial.GetHashCode();
       if (ItemSerial != 0) hash ^= ItemSerial.GetHashCode();
       if (walkDirection_ != null) hash ^= WalkDirection.GetHashCode();
+      if (Amount != 0) hash ^= Amount.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -2979,6 +2994,10 @@ namespace Uoservice {
         output.WriteRawTag(34);
         output.WriteMessage(WalkDirection);
       }
+      if (Amount != 0) {
+        output.WriteRawTag(40);
+        output.WriteUInt32(Amount);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -2998,6 +3017,9 @@ namespace Uoservice {
       }
       if (walkDirection_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(WalkDirection);
+      }
+      if (Amount != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Amount);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -3024,6 +3046,9 @@ namespace Uoservice {
           walkDirection_ = new global::Uoservice.WalkDirection();
         }
         WalkDirection.MergeFrom(other.WalkDirection);
+      }
+      if (other.Amount != 0) {
+        Amount = other.Amount;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -3053,6 +3078,10 @@ namespace Uoservice {
               walkDirection_ = new global::Uoservice.WalkDirection();
             }
             input.ReadMessage(walkDirection_);
+            break;
+          }
+          case 40: {
+            Amount = input.ReadUInt32();
             break;
           }
         }

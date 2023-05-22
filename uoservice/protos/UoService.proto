@@ -97,6 +97,7 @@ message Actions {
   uint32 mobileSerial = 2;
   uint32 itemSerial = 3;
   WalkDirection walkDirection = 4;
+  uint32 amount = 5;
 }
 
 service UoService {
