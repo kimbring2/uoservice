@@ -25,11 +25,23 @@ player_serial = None
 
 
 def isVendor(title):
-  vendor_name_list = ['healer']
+  vendor_name_list = ['healer', 'armourer']
   title_split = title.split(" ")
   for vendor_name in vendor_name_list:
-    if vendor_name == title_split[-1]:
-      return title_split[-1]
+    if vendor_name in title_split:
+      index = title_split.index(vendor_name)
+      return title_split[index]
+
+  return None
+
+
+def isTeacher(title):
+  teacher_name_list = ['warrior']
+  title_split = title.split(" ")
+  for teacher_name in teacher_name_list:
+    if teacher_name in title_split:
+      index = title_split.index(teacher_name)
+      return title_split[index]
 
   return None
 
@@ -51,12 +63,15 @@ def parse_response(response):
   corpse_item_dict = {}
   vendor_dict = {}
   vendor_item_dict = {}
+  teacher_dict = {}
 
   mobile_data = response.mobileList.mobile
   world_item_data = response.worldItemList.item
   equipped_item_data = response.equippedItemList.item
   backpack_item_data = response.backpackItemList.item
   corpse_item_data = response.corpseItemList.item
+
+  popup_menu_data = response.popupMenuList.menu
 
   land_object_data = response.landObjectList.gameObject
   player_mobile_object_data = response.playerMobileObjectList.gameObject
@@ -66,7 +81,7 @@ def parse_response(response):
   item_dropable_land_data = response.itemDropableLandList.gameObject
   item_vendor_data = response.vendorItemObjectList.gameObject
 
-  #print("mobile_object_data: ", mobile_object_data)
+  print("popup_menu_data: ", popup_menu_data)
 
   screen_image = np.zeros((172,137,4), dtype=np.uint8)
   for obj in land_object_data:
@@ -90,25 +105,30 @@ def parse_response(response):
     if obj.isCorpse:
       corpse_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
 
-    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 0
-    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 255
-    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 0
+    if 'Door' in obj.name:
+      #print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
+      #    format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
+      screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 255
+      screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 153
+      screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 255
+    else:
+      screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 0
+      screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 255
+      screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 0
 
   for obj in item_vendor_data:
     #print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
     #      format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
-    
     vendor_item_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
 
   for obj in mobile_object_data:
     #print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, is_corpse:{6}, title:{7}'.
     #    format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.isCorpse, obj.title))
-
     if obj.name in mountable_list:
       mountable_mobile_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
 
     vendor_title = isVendor(obj.title)
-
+    #print("vendor_title: ", vendor_title)
     if vendor_title:
       obj.title = vendor_title
       screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 255
@@ -120,6 +140,11 @@ def parse_response(response):
       screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 0
       screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 0
       screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 255
+
+    teacher_title = isTeacher(obj.title)
+    if teacher_title:
+      #print("teacher_title: ", teacher_title)
+      teacher_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, teacher_title]
 
   for obj in player_mobile_object_data:
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 255
@@ -135,7 +160,8 @@ def parse_response(response):
 
   if len(mobile_data) == 0 or len(world_item_data) == 0 or len(equipped_item_data) == 0:
     return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, \
-          corpse_dict, corpse_item_dict, vendor_dict, vendor_item_dict, mountable_mobile_dict
+          corpse_dict, corpse_item_dict, vendor_dict, vendor_item_dict, mountable_mobile_dict, \
+          teacher_dict
 
   for mobile in mobile_data:
     #print('name: {0}, x: {1}, y: {2}, race: {3}, serial: {4}\n'.format(mobile.name, mobile.x, mobile.y, mobile.race,
@@ -184,11 +210,8 @@ def parse_response(response):
     end_point = (selected_target[1] + 40, selected_target[2] + 40)
     #screen_image = cv2.rectangle(screen_image, start_point, end_point, color, 2)
 
-  #cv2.imshow('screen_image', screen_image)
-  #cv2.waitKey(1)
-
   return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict, \
-      corpse_item_dict, vendor_dict, vendor_item_dict, mountable_mobile_dict
+      corpse_item_dict, vendor_dict, vendor_item_dict, mountable_mobile_dict, teacher_dict
 
 
 def get_serial_by_name(item_dict, name):
@@ -222,8 +245,8 @@ def main():
   action_index = 0
   #test_action_sequence = [3, 5, 6, 4]
   #test_action_sequence = [7, 9, 3, 4, 8]
-  #test_action_sequence = [10, 11, 12]
-  test_action_sequence = [14]
+  test_action_sequence = [10, 11]
+  #test_action_sequence = [0]
 
   player_mobile_serial = None
   target_item_serial = None
@@ -245,11 +268,15 @@ def main():
     res = stub.ReadObs(UoService_pb2.Config(name='you'))
 
     mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict, \
-        corpse_item_dict, vendor_dict, vendor_item_dict, mountable_mobile_dict = parse_response(res)
-
-    #print("mobile_dict: ", mobile_dict)
+        corpse_item_dict, vendor_dict, vendor_item_dict, mountable_mobile_dict, teacher_dict = parse_response(res)
 
     for step in range(1, 100000):
+      #print("vendor_dict: ", vendor_dict)
+      #print("teacher_dict: ", teacher_dict)
+      target_mobile_serial, index = get_serial_by_title(teacher_dict, 'warrior')
+      #print("target_mobile_serial: ", target_mobile_serial)
+      #print("\n")
+
       if action_index != len(test_action_sequence) and step % 100 == 0:
         #print("player_mobile_serial: ", player_mobile_serial)
         #print("mountable_mobile_dict: ", mountable_mobile_dict)
@@ -259,10 +286,7 @@ def main():
         if test_action_sequence[action_index] == 2:
           #player_mobile_serial, index = get_serial_by_name(mobile_dict, "masterkim")
           mountable_mobile_serial, index = get_serial_by_name(mountable_mobile_dict, "a hellsteed")
-          #print("mountable_mobile_serial: ", mountable_mobile_serial)
           distance = mountable_mobile_dict[mountable_mobile_serial][4]
-          #print("distance: ", distance)
-
           target_mobile_serial = mountable_mobile_serial
 
         if test_action_sequence[action_index] == 3:
@@ -280,7 +304,8 @@ def main():
             opened_corpse = target_item_serial
 
         if test_action_sequence[action_index] == 10:
-          target_mobile_serial, index = get_serial_by_title(vendor_dict, 'healer')
+          #target_mobile_serial, index = get_serial_by_title(vendor_dict, 'healer')
+          target_mobile_serial, index = get_serial_by_title(teacher_dict, 'warrior')
           opened_vendor_serial = target_mobile_serial
 
         if test_action_sequence[action_index] == 11:
@@ -315,7 +340,7 @@ def main():
       res_next = stub.ReadObs(UoService_pb2.Config(name='you'))
 
       mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict, \
-        corpse_item_dict, vendor_dict, vendor_item_dict, mountable_mobile_dict = parse_response(res_next)
+        corpse_item_dict, vendor_dict, vendor_item_dict, mountable_mobile_dict, teacher_dict = parse_response(res_next)
 
 
 if __name__ == '__main__':

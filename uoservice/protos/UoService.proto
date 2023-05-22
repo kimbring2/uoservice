@@ -50,6 +50,10 @@ message GrpcItemList {
   repeated GrpcItemData item = 1;
 }
 
+message GrpcPopupMenuList {
+  repeated string menu = 1;
+}
+
 message Config {
   string name = 1;
 }
@@ -86,6 +90,7 @@ message States {
   GrpcGameObjectList staticObjectList = 11;
   GrpcGameObjectList itemDropableLandList = 12;
   GrpcGameObjectList vendorItemObjectList = 13;
+  GrpcPopupMenuList popupMenuList = 14;
 }
 
 message WalkDirection {
