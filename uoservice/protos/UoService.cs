@@ -60,17 +60,17 @@ namespace Uoservice {
             "ChRpdGVtRHJvcGFibGVMYW5kTGlzdBgMIAEoCzIdLnVvc2VydmljZS5HcnBj",
             "R2FtZU9iamVjdExpc3QSOwoUdmVuZG9ySXRlbU9iamVjdExpc3QYDSABKAsy",
             "HS51b3NlcnZpY2UuR3JwY0dhbWVPYmplY3RMaXN0IiIKDVdhbGtEaXJlY3Rp",
-            "b24SEQoJZGlyZWN0aW9uGAEgASgNIogBCgdBY3Rpb25zEhIKCmFjdGlvblR5",
+            "b24SEQoJZGlyZWN0aW9uGAEgASgNIpcBCgdBY3Rpb25zEhIKCmFjdGlvblR5",
             "cGUYASABKA0SFAoMbW9iaWxlU2VyaWFsGAIgASgNEhIKCml0ZW1TZXJpYWwY",
             "AyABKA0SLwoNd2Fsa0RpcmVjdGlvbhgEIAEoCzIYLnVvc2VydmljZS5XYWxr",
-            "RGlyZWN0aW9uEg4KBmFtb3VudBgFIAEoDTKnAgoJVW9TZXJ2aWNlEi0KBVJl",
-            "c2V0EhEudW9zZXJ2aWNlLkNvbmZpZxoRLnVvc2VydmljZS5TdGF0ZXMSLwoH",
-            "UmVhZE9icxIRLnVvc2VydmljZS5Db25maWcaES51b3NlcnZpY2UuU3RhdGVz",
-            "EjAKCFdyaXRlQWN0EhIudW9zZXJ2aWNlLkFjdGlvbnMaEC51b3NlcnZpY2Uu",
-            "RW1wdHkSQwoTQWN0U2VtYXBob3JlQ29udHJvbBIaLnVvc2VydmljZS5TZW1h",
-            "cGhvcmVBY3Rpb24aEC51b3NlcnZpY2UuRW1wdHkSQwoTT2JzU2VtYXBob3Jl",
-            "Q29udHJvbBIaLnVvc2VydmljZS5TZW1hcGhvcmVBY3Rpb24aEC51b3NlcnZp",
-            "Y2UuRW1wdHliBnByb3RvMw=="));
+            "RGlyZWN0aW9uEg0KBWluZGV4GAUgASgNEg4KBmFtb3VudBgGIAEoDTKnAgoJ",
+            "VW9TZXJ2aWNlEi0KBVJlc2V0EhEudW9zZXJ2aWNlLkNvbmZpZxoRLnVvc2Vy",
+            "dmljZS5TdGF0ZXMSLwoHUmVhZE9icxIRLnVvc2VydmljZS5Db25maWcaES51",
+            "b3NlcnZpY2UuU3RhdGVzEjAKCFdyaXRlQWN0EhIudW9zZXJ2aWNlLkFjdGlv",
+            "bnMaEC51b3NlcnZpY2UuRW1wdHkSQwoTQWN0U2VtYXBob3JlQ29udHJvbBIa",
+            "LnVvc2VydmljZS5TZW1hcGhvcmVBY3Rpb24aEC51b3NlcnZpY2UuRW1wdHkS",
+            "QwoTT2JzU2VtYXBob3JlQ29udHJvbBIaLnVvc2VydmljZS5TZW1hcGhvcmVB",
+            "Y3Rpb24aEC51b3NlcnZpY2UuRW1wdHliBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -86,7 +86,7 @@ namespace Uoservice {
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.PlayerStatus), global::Uoservice.PlayerStatus.Parser, new[]{ "Str", "Dex", "Intell", "Hits", "HitsMax", "Stamina", "StaminaMax", "Mana", "ManaMax", "Gold", "PhysicalResistance", "Weight", "WeightMax" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.States), global::Uoservice.States.Parser, new[]{ "MobileList", "WorldItemList", "EquippedItemList", "BackpackItemList", "CorpseItemList", "PlayerStatus", "MobileObjectList", "PlayerMobileObjectList", "LandObjectList", "ItemObjectList", "StaticObjectList", "ItemDropableLandList", "VendorItemObjectList" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.WalkDirection), global::Uoservice.WalkDirection.Parser, new[]{ "Direction" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Actions), global::Uoservice.Actions.Parser, new[]{ "ActionType", "MobileSerial", "ItemSerial", "WalkDirection", "Amount" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Actions), global::Uoservice.Actions.Parser, new[]{ "ActionType", "MobileSerial", "ItemSerial", "WalkDirection", "Index", "Amount" }, null, null, null)
           }));
     }
     #endregion
@@ -2872,6 +2872,7 @@ namespace Uoservice {
       mobileSerial_ = other.mobileSerial_;
       itemSerial_ = other.itemSerial_;
       walkDirection_ = other.walkDirection_ != null ? other.walkDirection_.Clone() : null;
+      index_ = other.index_;
       amount_ = other.amount_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -2925,8 +2926,19 @@ namespace Uoservice {
       }
     }
 
+    /// <summary>Field number for the "index" field.</summary>
+    public const int IndexFieldNumber = 5;
+    private uint index_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Index {
+      get { return index_; }
+      set {
+        index_ = value;
+      }
+    }
+
     /// <summary>Field number for the "amount" field.</summary>
-    public const int AmountFieldNumber = 5;
+    public const int AmountFieldNumber = 6;
     private uint amount_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public uint Amount {
@@ -2953,6 +2965,7 @@ namespace Uoservice {
       if (MobileSerial != other.MobileSerial) return false;
       if (ItemSerial != other.ItemSerial) return false;
       if (!object.Equals(WalkDirection, other.WalkDirection)) return false;
+      if (Index != other.Index) return false;
       if (Amount != other.Amount) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -2964,6 +2977,7 @@ namespace Uoservice {
       if (MobileSerial != 0) hash ^= MobileSerial.GetHashCode();
       if (ItemSerial != 0) hash ^= ItemSerial.GetHashCode();
       if (walkDirection_ != null) hash ^= WalkDirection.GetHashCode();
+      if (Index != 0) hash ^= Index.GetHashCode();
       if (Amount != 0) hash ^= Amount.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -2994,8 +3008,12 @@ namespace Uoservice {
         output.WriteRawTag(34);
         output.WriteMessage(WalkDirection);
       }
-      if (Amount != 0) {
+      if (Index != 0) {
         output.WriteRawTag(40);
+        output.WriteUInt32(Index);
+      }
+      if (Amount != 0) {
+        output.WriteRawTag(48);
         output.WriteUInt32(Amount);
       }
       if (_unknownFields != null) {
@@ -3017,6 +3035,9 @@ namespace Uoservice {
       }
       if (walkDirection_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(WalkDirection);
+      }
+      if (Index != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Index);
       }
       if (Amount != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Amount);
@@ -3046,6 +3067,9 @@ namespace Uoservice {
           walkDirection_ = new global::Uoservice.WalkDirection();
         }
         WalkDirection.MergeFrom(other.WalkDirection);
+      }
+      if (other.Index != 0) {
+        Index = other.Index;
       }
       if (other.Amount != 0) {
         Amount = other.Amount;
@@ -3081,6 +3105,10 @@ namespace Uoservice {
             break;
           }
           case 40: {
+            Index = input.ReadUInt32();
+            break;
+          }
+          case 48: {
             Amount = input.ReadUInt32();
             break;
           }

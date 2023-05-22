@@ -220,19 +220,20 @@ def main():
   action_index = 0
   #test_action_sequence = [3, 5, 6, 4]
   #test_action_sequence = [7, 9, 3, 4, 8]
-  test_action_sequence = [10, 11, 12]
+  test_action_sequence = [10, 11, 13]
   #test_action_sequence = [0, 0]
 
   target_weapon_serial = None
   target_mobile_serial = None
   opened_corpse = None
+  menu_index = 0
   for ep in range(0, 10000):
     print("ep: ", ep)
 
     stub.WriteAct(UoService_pb2.Actions(actionType=0, 
                                         mobileSerial=1,
                                         walkDirection=UoService_pb2.WalkDirection(direction=1),
-                                        amount=1))
+                                        index=menu_index, amount=1))
     
     stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
     stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
@@ -262,7 +263,6 @@ def main():
 
       if action_index != len(test_action_sequence) and step % 100 == 0:
         #print("action_index: ", action_index)
-        #print("test_action_sequence[action_index]: ", test_action_sequence[action_index])
         #print("equipped_item_dict: ", equipped_item_dict)
         #print("ground_item_dict: ", ground_item_dict)
 
@@ -279,24 +279,32 @@ def main():
         if test_action_sequence[action_index] == 8:
           target_item_serial = opened_corpse
 
-        if test_action_sequence[action_index] == 10 or test_action_sequence[action_index] == 11:
+        if test_action_sequence[action_index] == 10:
           target_mobile_serial, index = get_serial_by_title(vendor_dict, 'healer')
-          #print("target_mobile_serial: ", target_mobile_serial)
 
         if len(corpse_dict) != 0: 
           if test_action_sequence[action_index] == 7 or test_action_sequence[action_index] == 9:
-            #print("corpse_dict: ", corpse_dict)
             target_item_serial = list(corpse_dict.keys())[0]
             opened_corpse = target_item_serial
-            #print("target_item_serial: ", target_item_serial)
+
+        if test_action_sequence[action_index] == 11:
+          #print("vendor_item_dict: ", vendor_item_dict)
+          menu_index = 2
+          #target_item_serial, index = get_serial_by_name(vendor_item_dict, "Clean Bandage")
+          #print("target_item_serial: ", target_item_serial)
+          print("target_mobile_serial: ", target_mobile_serial)
 
         if test_action_sequence[action_index] == 12:
           print("vendor_item_dict: ", vendor_item_dict)
-          target_item_serial = list(vendor_item_dict.keys())[0]
-
+          target_item_serial, index = get_serial_by_name(vendor_item_dict, "Clean Bandage")
           print("target_mobile_serial: ", target_mobile_serial)
-          #target_item_serial = opened_corpse
+          print("target_item_serial: ", target_item_serial)
 
+        if test_action_sequence[action_index] == 13:
+          print("vendor_item_dict: ", vendor_item_dict)
+          target_item_serial, index = get_serial_by_name(vendor_item_dict, "clean bandage")
+          print("target_mobile_serial: ", target_mobile_serial)
+          print("target_item_serial: ", target_item_serial)
 
         #print("target_item_serial: ", target_item_serial)
         print("test_action_sequence[action_index]: ", test_action_sequence[action_index])
@@ -304,7 +312,7 @@ def main():
                                             mobileSerial=target_mobile_serial,
                                             itemSerial=target_item_serial,
                                             walkDirection=UoService_pb2.WalkDirection(direction=2),
-                                            amount=1))
+                                            index=menu_index, amount=1))
 
         action_index += 1
       else:
