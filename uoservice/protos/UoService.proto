@@ -19,6 +19,15 @@ message GrpcItemData {
   uint32 amount = 4;
 }
 
+message GrpcClilocData {
+  string text = 1;
+  string affix = 2;
+}
+
+message GrpcClilocDataList {
+  repeated GrpcClilocData clilocData = 1;
+}
+
 message GrpcGameObjectData {
   string type = 1;
   uint32 screenX = 2;
@@ -91,6 +100,7 @@ message States {
   GrpcGameObjectList itemDropableLandList = 12;
   GrpcGameObjectList vendorItemObjectList = 13;
   GrpcPopupMenuList popupMenuList = 14;
+  GrpcClilocDataList clilocDataList = 15;
 }
 
 message WalkDirection {

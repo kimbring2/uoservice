@@ -28,57 +28,63 @@ namespace Uoservice {
             "TW9iaWxlRGF0YRIMCgRuYW1lGAEgASgJEgkKAXgYAiABKAISCQoBeRgDIAEo",
             "AhIMCgRyYWNlGAQgASgNEg4KBnNlcmlhbBgFIAEoDSJLCgxHcnBjSXRlbURh",
             "dGESDAoEbmFtZRgBIAEoCRINCgVsYXllchgCIAEoDRIOCgZzZXJpYWwYAyAB",
-            "KA0SDgoGYW1vdW50GAQgASgNItIBChJHcnBjR2FtZU9iamVjdERhdGESDAoE",
-            "dHlwZRgBIAEoCRIPCgdzY3JlZW5YGAIgASgNEg8KB3NjcmVlblkYAyABKA0S",
-            "EAoIZGlzdGFuY2UYBCABKA0SDQoFZ2FtZVgYBSABKA0SDQoFZ2FtZVkYBiAB",
-            "KA0SDgoGc2VyaWFsGAcgASgNEgwKBG5hbWUYCCABKAkSEAoIaXNDb3Jwc2UY",
-            "CSABKAgSDQoFdGl0bGUYCiABKAkSDgoGYW1vdW50GAsgASgNEg0KBXByaWNl",
-            "GAwgASgNIkcKEkdycGNHYW1lT2JqZWN0TGlzdBIxCgpnYW1lT2JqZWN0GAEg",
-            "AygLMh0udW9zZXJ2aWNlLkdycGNHYW1lT2JqZWN0RGF0YSIfCg9TZW1hcGhv",
-            "cmVBY3Rpb24SDAoEbW9kZRgBIAEoCSI7Cg5HcnBjTW9iaWxlTGlzdBIpCgZt",
-            "b2JpbGUYASADKAsyGS51b3NlcnZpY2UuR3JwY01vYmlsZURhdGEiNQoMR3Jw",
-            "Y0l0ZW1MaXN0EiUKBGl0ZW0YASADKAsyFy51b3NlcnZpY2UuR3JwY0l0ZW1E",
-            "YXRhIiEKEUdycGNQb3B1cE1lbnVMaXN0EgwKBG1lbnUYASADKAkiFgoGQ29u",
-            "ZmlnEgwKBG5hbWUYASABKAki6AEKDFBsYXllclN0YXR1cxILCgNzdHIYASAB",
-            "KA0SCwoDZGV4GAIgASgNEg4KBmludGVsbBgDIAEoDRIMCgRoaXRzGAQgASgN",
-            "Eg8KB2hpdHNNYXgYBSABKA0SDwoHc3RhbWluYRgGIAEoDRISCgpzdGFtaW5h",
-            "TWF4GAcgASgNEgwKBG1hbmEYCCABKA0SDwoHbWFuYU1heBgJIAEoDRIMCgRn",
-            "b2xkGAogASgNEhoKEnBoeXNpY2FsUmVzaXN0YW5jZRgLIAEoDRIOCgZ3ZWln",
-            "aHQYDCABKA0SEQoJd2VpZ2h0TWF4GA0gASgNIvsFCgZTdGF0ZXMSLQoKbW9i",
-            "aWxlTGlzdBgBIAEoCzIZLnVvc2VydmljZS5HcnBjTW9iaWxlTGlzdBIuCg13",
-            "b3JsZEl0ZW1MaXN0GAIgASgLMhcudW9zZXJ2aWNlLkdycGNJdGVtTGlzdBIx",
-            "ChBlcXVpcHBlZEl0ZW1MaXN0GAMgASgLMhcudW9zZXJ2aWNlLkdycGNJdGVt",
-            "TGlzdBIxChBiYWNrcGFja0l0ZW1MaXN0GAQgASgLMhcudW9zZXJ2aWNlLkdy",
-            "cGNJdGVtTGlzdBIvCg5jb3Jwc2VJdGVtTGlzdBgFIAEoCzIXLnVvc2Vydmlj",
-            "ZS5HcnBjSXRlbUxpc3QSLQoMcGxheWVyU3RhdHVzGAYgASgLMhcudW9zZXJ2",
-            "aWNlLlBsYXllclN0YXR1cxI3ChBtb2JpbGVPYmplY3RMaXN0GAcgASgLMh0u",
-            "dW9zZXJ2aWNlLkdycGNHYW1lT2JqZWN0TGlzdBI9ChZwbGF5ZXJNb2JpbGVP",
-            "YmplY3RMaXN0GAggASgLMh0udW9zZXJ2aWNlLkdycGNHYW1lT2JqZWN0TGlz",
-            "dBI1Cg5sYW5kT2JqZWN0TGlzdBgJIAEoCzIdLnVvc2VydmljZS5HcnBjR2Ft",
-            "ZU9iamVjdExpc3QSNQoOaXRlbU9iamVjdExpc3QYCiABKAsyHS51b3NlcnZp",
-            "Y2UuR3JwY0dhbWVPYmplY3RMaXN0EjcKEHN0YXRpY09iamVjdExpc3QYCyAB",
-            "KAsyHS51b3NlcnZpY2UuR3JwY0dhbWVPYmplY3RMaXN0EjsKFGl0ZW1Ecm9w",
-            "YWJsZUxhbmRMaXN0GAwgASgLMh0udW9zZXJ2aWNlLkdycGNHYW1lT2JqZWN0",
-            "TGlzdBI7ChR2ZW5kb3JJdGVtT2JqZWN0TGlzdBgNIAEoCzIdLnVvc2Vydmlj",
-            "ZS5HcnBjR2FtZU9iamVjdExpc3QSMwoNcG9wdXBNZW51TGlzdBgOIAEoCzIc",
-            "LnVvc2VydmljZS5HcnBjUG9wdXBNZW51TGlzdCIiCg1XYWxrRGlyZWN0aW9u",
-            "EhEKCWRpcmVjdGlvbhgBIAEoDSKXAQoHQWN0aW9ucxISCgphY3Rpb25UeXBl",
-            "GAEgASgNEhQKDG1vYmlsZVNlcmlhbBgCIAEoDRISCgppdGVtU2VyaWFsGAMg",
-            "ASgNEi8KDXdhbGtEaXJlY3Rpb24YBCABKAsyGC51b3NlcnZpY2UuV2Fsa0Rp",
-            "cmVjdGlvbhINCgVpbmRleBgFIAEoDRIOCgZhbW91bnQYBiABKA0ypwIKCVVv",
-            "U2VydmljZRItCgVSZXNldBIRLnVvc2VydmljZS5Db25maWcaES51b3NlcnZp",
-            "Y2UuU3RhdGVzEi8KB1JlYWRPYnMSES51b3NlcnZpY2UuQ29uZmlnGhEudW9z",
-            "ZXJ2aWNlLlN0YXRlcxIwCghXcml0ZUFjdBISLnVvc2VydmljZS5BY3Rpb25z",
-            "GhAudW9zZXJ2aWNlLkVtcHR5EkMKE0FjdFNlbWFwaG9yZUNvbnRyb2wSGi51",
-            "b3NlcnZpY2UuU2VtYXBob3JlQWN0aW9uGhAudW9zZXJ2aWNlLkVtcHR5EkMK",
-            "E09ic1NlbWFwaG9yZUNvbnRyb2wSGi51b3NlcnZpY2UuU2VtYXBob3JlQWN0",
-            "aW9uGhAudW9zZXJ2aWNlLkVtcHR5YgZwcm90bzM="));
+            "KA0SDgoGYW1vdW50GAQgASgNIi0KDkdycGNDbGlsb2NEYXRhEgwKBHRleHQY",
+            "ASABKAkSDQoFYWZmaXgYAiABKAkiQwoSR3JwY0NsaWxvY0RhdGFMaXN0Ei0K",
+            "CmNsaWxvY0RhdGEYASADKAsyGS51b3NlcnZpY2UuR3JwY0NsaWxvY0RhdGEi",
+            "0gEKEkdycGNHYW1lT2JqZWN0RGF0YRIMCgR0eXBlGAEgASgJEg8KB3NjcmVl",
+            "blgYAiABKA0SDwoHc2NyZWVuWRgDIAEoDRIQCghkaXN0YW5jZRgEIAEoDRIN",
+            "CgVnYW1lWBgFIAEoDRINCgVnYW1lWRgGIAEoDRIOCgZzZXJpYWwYByABKA0S",
+            "DAoEbmFtZRgIIAEoCRIQCghpc0NvcnBzZRgJIAEoCBINCgV0aXRsZRgKIAEo",
+            "CRIOCgZhbW91bnQYCyABKA0SDQoFcHJpY2UYDCABKA0iRwoSR3JwY0dhbWVP",
+            "YmplY3RMaXN0EjEKCmdhbWVPYmplY3QYASADKAsyHS51b3NlcnZpY2UuR3Jw",
+            "Y0dhbWVPYmplY3REYXRhIh8KD1NlbWFwaG9yZUFjdGlvbhIMCgRtb2RlGAEg",
+            "ASgJIjsKDkdycGNNb2JpbGVMaXN0EikKBm1vYmlsZRgBIAMoCzIZLnVvc2Vy",
+            "dmljZS5HcnBjTW9iaWxlRGF0YSI1CgxHcnBjSXRlbUxpc3QSJQoEaXRlbRgB",
+            "IAMoCzIXLnVvc2VydmljZS5HcnBjSXRlbURhdGEiIQoRR3JwY1BvcHVwTWVu",
+            "dUxpc3QSDAoEbWVudRgBIAMoCSIWCgZDb25maWcSDAoEbmFtZRgBIAEoCSLo",
+            "AQoMUGxheWVyU3RhdHVzEgsKA3N0chgBIAEoDRILCgNkZXgYAiABKA0SDgoG",
+            "aW50ZWxsGAMgASgNEgwKBGhpdHMYBCABKA0SDwoHaGl0c01heBgFIAEoDRIP",
+            "CgdzdGFtaW5hGAYgASgNEhIKCnN0YW1pbmFNYXgYByABKA0SDAoEbWFuYRgI",
+            "IAEoDRIPCgdtYW5hTWF4GAkgASgNEgwKBGdvbGQYCiABKA0SGgoScGh5c2lj",
+            "YWxSZXNpc3RhbmNlGAsgASgNEg4KBndlaWdodBgMIAEoDRIRCgl3ZWlnaHRN",
+            "YXgYDSABKA0isgYKBlN0YXRlcxItCgptb2JpbGVMaXN0GAEgASgLMhkudW9z",
+            "ZXJ2aWNlLkdycGNNb2JpbGVMaXN0Ei4KDXdvcmxkSXRlbUxpc3QYAiABKAsy",
+            "Fy51b3NlcnZpY2UuR3JwY0l0ZW1MaXN0EjEKEGVxdWlwcGVkSXRlbUxpc3QY",
+            "AyABKAsyFy51b3NlcnZpY2UuR3JwY0l0ZW1MaXN0EjEKEGJhY2twYWNrSXRl",
+            "bUxpc3QYBCABKAsyFy51b3NlcnZpY2UuR3JwY0l0ZW1MaXN0Ei8KDmNvcnBz",
+            "ZUl0ZW1MaXN0GAUgASgLMhcudW9zZXJ2aWNlLkdycGNJdGVtTGlzdBItCgxw",
+            "bGF5ZXJTdGF0dXMYBiABKAsyFy51b3NlcnZpY2UuUGxheWVyU3RhdHVzEjcK",
+            "EG1vYmlsZU9iamVjdExpc3QYByABKAsyHS51b3NlcnZpY2UuR3JwY0dhbWVP",
+            "YmplY3RMaXN0Ej0KFnBsYXllck1vYmlsZU9iamVjdExpc3QYCCABKAsyHS51",
+            "b3NlcnZpY2UuR3JwY0dhbWVPYmplY3RMaXN0EjUKDmxhbmRPYmplY3RMaXN0",
+            "GAkgASgLMh0udW9zZXJ2aWNlLkdycGNHYW1lT2JqZWN0TGlzdBI1Cg5pdGVt",
+            "T2JqZWN0TGlzdBgKIAEoCzIdLnVvc2VydmljZS5HcnBjR2FtZU9iamVjdExp",
+            "c3QSNwoQc3RhdGljT2JqZWN0TGlzdBgLIAEoCzIdLnVvc2VydmljZS5HcnBj",
+            "R2FtZU9iamVjdExpc3QSOwoUaXRlbURyb3BhYmxlTGFuZExpc3QYDCABKAsy",
+            "HS51b3NlcnZpY2UuR3JwY0dhbWVPYmplY3RMaXN0EjsKFHZlbmRvckl0ZW1P",
+            "YmplY3RMaXN0GA0gASgLMh0udW9zZXJ2aWNlLkdycGNHYW1lT2JqZWN0TGlz",
+            "dBIzCg1wb3B1cE1lbnVMaXN0GA4gASgLMhwudW9zZXJ2aWNlLkdycGNQb3B1",
+            "cE1lbnVMaXN0EjUKDmNsaWxvY0RhdGFMaXN0GA8gASgLMh0udW9zZXJ2aWNl",
+            "LkdycGNDbGlsb2NEYXRhTGlzdCIiCg1XYWxrRGlyZWN0aW9uEhEKCWRpcmVj",
+            "dGlvbhgBIAEoDSKXAQoHQWN0aW9ucxISCgphY3Rpb25UeXBlGAEgASgNEhQK",
+            "DG1vYmlsZVNlcmlhbBgCIAEoDRISCgppdGVtU2VyaWFsGAMgASgNEi8KDXdh",
+            "bGtEaXJlY3Rpb24YBCABKAsyGC51b3NlcnZpY2UuV2Fsa0RpcmVjdGlvbhIN",
+            "CgVpbmRleBgFIAEoDRIOCgZhbW91bnQYBiABKA0ypwIKCVVvU2VydmljZRIt",
+            "CgVSZXNldBIRLnVvc2VydmljZS5Db25maWcaES51b3NlcnZpY2UuU3RhdGVz",
+            "Ei8KB1JlYWRPYnMSES51b3NlcnZpY2UuQ29uZmlnGhEudW9zZXJ2aWNlLlN0",
+            "YXRlcxIwCghXcml0ZUFjdBISLnVvc2VydmljZS5BY3Rpb25zGhAudW9zZXJ2",
+            "aWNlLkVtcHR5EkMKE0FjdFNlbWFwaG9yZUNvbnRyb2wSGi51b3NlcnZpY2Uu",
+            "U2VtYXBob3JlQWN0aW9uGhAudW9zZXJ2aWNlLkVtcHR5EkMKE09ic1NlbWFw",
+            "aG9yZUNvbnRyb2wSGi51b3NlcnZpY2UuU2VtYXBob3JlQWN0aW9uGhAudW9z",
+            "ZXJ2aWNlLkVtcHR5YgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Empty), global::Uoservice.Empty.Parser, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcMobileData), global::Uoservice.GrpcMobileData.Parser, new[]{ "Name", "X", "Y", "Race", "Serial" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcItemData), global::Uoservice.GrpcItemData.Parser, new[]{ "Name", "Layer", "Serial", "Amount" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcClilocData), global::Uoservice.GrpcClilocData.Parser, new[]{ "Text", "Affix" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcClilocDataList), global::Uoservice.GrpcClilocDataList.Parser, new[]{ "ClilocData" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcGameObjectData), global::Uoservice.GrpcGameObjectData.Parser, new[]{ "Type", "ScreenX", "ScreenY", "Distance", "GameX", "GameY", "Serial", "Name", "IsCorpse", "Title", "Amount", "Price" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcGameObjectList), global::Uoservice.GrpcGameObjectList.Parser, new[]{ "GameObject" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.SemaphoreAction), global::Uoservice.SemaphoreAction.Parser, new[]{ "Mode" }, null, null, null),
@@ -87,7 +93,7 @@ namespace Uoservice {
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcPopupMenuList), global::Uoservice.GrpcPopupMenuList.Parser, new[]{ "Menu" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Config), global::Uoservice.Config.Parser, new[]{ "Name" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.PlayerStatus), global::Uoservice.PlayerStatus.Parser, new[]{ "Str", "Dex", "Intell", "Hits", "HitsMax", "Stamina", "StaminaMax", "Mana", "ManaMax", "Gold", "PhysicalResistance", "Weight", "WeightMax" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.States), global::Uoservice.States.Parser, new[]{ "MobileList", "WorldItemList", "EquippedItemList", "BackpackItemList", "CorpseItemList", "PlayerStatus", "MobileObjectList", "PlayerMobileObjectList", "LandObjectList", "ItemObjectList", "StaticObjectList", "ItemDropableLandList", "VendorItemObjectList", "PopupMenuList" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.States), global::Uoservice.States.Parser, new[]{ "MobileList", "WorldItemList", "EquippedItemList", "BackpackItemList", "CorpseItemList", "PlayerStatus", "MobileObjectList", "PlayerMobileObjectList", "LandObjectList", "ItemObjectList", "StaticObjectList", "ItemDropableLandList", "VendorItemObjectList", "PopupMenuList", "ClilocDataList" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.WalkDirection), global::Uoservice.WalkDirection.Parser, new[]{ "Direction" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Actions), global::Uoservice.Actions.Parser, new[]{ "ActionType", "MobileSerial", "ItemSerial", "WalkDirection", "Index", "Amount" }, null, null, null)
           }));
@@ -651,6 +657,284 @@ namespace Uoservice {
 
   }
 
+  public sealed partial class GrpcClilocData : pb::IMessage<GrpcClilocData> {
+    private static readonly pb::MessageParser<GrpcClilocData> _parser = new pb::MessageParser<GrpcClilocData>(() => new GrpcClilocData());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<GrpcClilocData> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[3]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GrpcClilocData() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GrpcClilocData(GrpcClilocData other) : this() {
+      text_ = other.text_;
+      affix_ = other.affix_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GrpcClilocData Clone() {
+      return new GrpcClilocData(this);
+    }
+
+    /// <summary>Field number for the "text" field.</summary>
+    public const int TextFieldNumber = 1;
+    private string text_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Text {
+      get { return text_; }
+      set {
+        text_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "affix" field.</summary>
+    public const int AffixFieldNumber = 2;
+    private string affix_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Affix {
+      get { return affix_; }
+      set {
+        affix_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as GrpcClilocData);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(GrpcClilocData other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Text != other.Text) return false;
+      if (Affix != other.Affix) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Text.Length != 0) hash ^= Text.GetHashCode();
+      if (Affix.Length != 0) hash ^= Affix.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Text.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Text);
+      }
+      if (Affix.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(Affix);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Text.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Text);
+      }
+      if (Affix.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Affix);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(GrpcClilocData other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Text.Length != 0) {
+        Text = other.Text;
+      }
+      if (other.Affix.Length != 0) {
+        Affix = other.Affix;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            Text = input.ReadString();
+            break;
+          }
+          case 18: {
+            Affix = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class GrpcClilocDataList : pb::IMessage<GrpcClilocDataList> {
+    private static readonly pb::MessageParser<GrpcClilocDataList> _parser = new pb::MessageParser<GrpcClilocDataList>(() => new GrpcClilocDataList());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<GrpcClilocDataList> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[4]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GrpcClilocDataList() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GrpcClilocDataList(GrpcClilocDataList other) : this() {
+      clilocData_ = other.clilocData_.Clone();
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GrpcClilocDataList Clone() {
+      return new GrpcClilocDataList(this);
+    }
+
+    /// <summary>Field number for the "clilocData" field.</summary>
+    public const int ClilocDataFieldNumber = 1;
+    private static readonly pb::FieldCodec<global::Uoservice.GrpcClilocData> _repeated_clilocData_codec
+        = pb::FieldCodec.ForMessage(10, global::Uoservice.GrpcClilocData.Parser);
+    private readonly pbc::RepeatedField<global::Uoservice.GrpcClilocData> clilocData_ = new pbc::RepeatedField<global::Uoservice.GrpcClilocData>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::Uoservice.GrpcClilocData> ClilocData {
+      get { return clilocData_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as GrpcClilocDataList);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(GrpcClilocDataList other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!clilocData_.Equals(other.clilocData_)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= clilocData_.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      clilocData_.WriteTo(output, _repeated_clilocData_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      size += clilocData_.CalculateSize(_repeated_clilocData_codec);
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(GrpcClilocDataList other) {
+      if (other == null) {
+        return;
+      }
+      clilocData_.Add(other.clilocData_);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            clilocData_.AddEntriesFrom(input, _repeated_clilocData_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
   public sealed partial class GrpcGameObjectData : pb::IMessage<GrpcGameObjectData> {
     private static readonly pb::MessageParser<GrpcGameObjectData> _parser = new pb::MessageParser<GrpcGameObjectData>(() => new GrpcGameObjectData());
     private pb::UnknownFieldSet _unknownFields;
@@ -659,7 +943,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[3]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1096,7 +1380,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[4]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1217,7 +1501,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[5]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[7]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1346,7 +1630,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[6]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[8]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1467,7 +1751,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[7]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[9]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1588,7 +1872,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[8]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[10]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1709,7 +1993,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[9]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[11]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1838,7 +2122,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[10]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[12]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2303,7 +2587,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[11]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[13]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2334,6 +2618,7 @@ namespace Uoservice {
       itemDropableLandList_ = other.itemDropableLandList_ != null ? other.itemDropableLandList_.Clone() : null;
       vendorItemObjectList_ = other.vendorItemObjectList_ != null ? other.vendorItemObjectList_.Clone() : null;
       popupMenuList_ = other.popupMenuList_ != null ? other.popupMenuList_.Clone() : null;
+      clilocDataList_ = other.clilocDataList_ != null ? other.clilocDataList_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -2496,6 +2781,17 @@ namespace Uoservice {
       }
     }
 
+    /// <summary>Field number for the "clilocDataList" field.</summary>
+    public const int ClilocDataListFieldNumber = 15;
+    private global::Uoservice.GrpcClilocDataList clilocDataList_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Uoservice.GrpcClilocDataList ClilocDataList {
+      get { return clilocDataList_; }
+      set {
+        clilocDataList_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as States);
@@ -2523,6 +2819,7 @@ namespace Uoservice {
       if (!object.Equals(ItemDropableLandList, other.ItemDropableLandList)) return false;
       if (!object.Equals(VendorItemObjectList, other.VendorItemObjectList)) return false;
       if (!object.Equals(PopupMenuList, other.PopupMenuList)) return false;
+      if (!object.Equals(ClilocDataList, other.ClilocDataList)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -2543,6 +2840,7 @@ namespace Uoservice {
       if (itemDropableLandList_ != null) hash ^= ItemDropableLandList.GetHashCode();
       if (vendorItemObjectList_ != null) hash ^= VendorItemObjectList.GetHashCode();
       if (popupMenuList_ != null) hash ^= PopupMenuList.GetHashCode();
+      if (clilocDataList_ != null) hash ^= ClilocDataList.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -2612,6 +2910,10 @@ namespace Uoservice {
         output.WriteRawTag(114);
         output.WriteMessage(PopupMenuList);
       }
+      if (clilocDataList_ != null) {
+        output.WriteRawTag(122);
+        output.WriteMessage(ClilocDataList);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -2661,6 +2963,9 @@ namespace Uoservice {
       }
       if (popupMenuList_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(PopupMenuList);
+      }
+      if (clilocDataList_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ClilocDataList);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -2756,6 +3061,12 @@ namespace Uoservice {
           popupMenuList_ = new global::Uoservice.GrpcPopupMenuList();
         }
         PopupMenuList.MergeFrom(other.PopupMenuList);
+      }
+      if (other.clilocDataList_ != null) {
+        if (clilocDataList_ == null) {
+          clilocDataList_ = new global::Uoservice.GrpcClilocDataList();
+        }
+        ClilocDataList.MergeFrom(other.ClilocDataList);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -2866,6 +3177,13 @@ namespace Uoservice {
             input.ReadMessage(popupMenuList_);
             break;
           }
+          case 122: {
+            if (clilocDataList_ == null) {
+              clilocDataList_ = new global::Uoservice.GrpcClilocDataList();
+            }
+            input.ReadMessage(clilocDataList_);
+            break;
+          }
         }
       }
     }
@@ -2880,7 +3198,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[12]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[14]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3009,7 +3327,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[13]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[15]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

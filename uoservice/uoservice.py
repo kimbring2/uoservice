@@ -64,6 +64,8 @@ def parse_response(response):
   vendor_dict = {}
   vendor_item_dict = {}
   teacher_dict = {}
+  popup_menu_list = []
+  cliloc_dict = {}
 
   mobile_data = response.mobileList.mobile
   world_item_data = response.worldItemList.item
@@ -73,6 +75,9 @@ def parse_response(response):
 
   popup_menu_data = response.popupMenuList.menu
 
+  cliloc_data = response.clilocDataList.clilocData
+  print("cliloc_data: ", cliloc_data)
+
   land_object_data = response.landObjectList.gameObject
   player_mobile_object_data = response.playerMobileObjectList.gameObject
   mobile_object_data = response.mobileObjectList.gameObject
@@ -81,7 +86,9 @@ def parse_response(response):
   item_dropable_land_data = response.itemDropableLandList.gameObject
   item_vendor_data = response.vendorItemObjectList.gameObject
 
-  print("popup_menu_data: ", popup_menu_data)
+  for data in popup_menu_data:
+    #print("data: ", data)
+    popup_menu_list.append(data)
 
   screen_image = np.zeros((172,137,4), dtype=np.uint8)
   for obj in land_object_data:
@@ -161,7 +168,7 @@ def parse_response(response):
   if len(mobile_data) == 0 or len(world_item_data) == 0 or len(equipped_item_data) == 0:
     return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, \
           corpse_dict, corpse_item_dict, vendor_dict, vendor_item_dict, mountable_mobile_dict, \
-          teacher_dict
+          teacher_dict, popup_menu_list, cliloc_dict
 
   for mobile in mobile_data:
     #print('name: {0}, x: {1}, y: {2}, race: {3}, serial: {4}\n'.format(mobile.name, mobile.x, mobile.y, mobile.race,
@@ -211,7 +218,8 @@ def parse_response(response):
     #screen_image = cv2.rectangle(screen_image, start_point, end_point, color, 2)
 
   return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict, \
-      corpse_item_dict, vendor_dict, vendor_item_dict, mountable_mobile_dict, teacher_dict
+      corpse_item_dict, vendor_dict, vendor_item_dict, mountable_mobile_dict, teacher_dict, \
+      popup_menu_list, cliloc_dict
 
 
 def get_serial_by_name(item_dict, name):
@@ -245,7 +253,7 @@ def main():
   action_index = 0
   #test_action_sequence = [3, 5, 6, 4]
   #test_action_sequence = [7, 9, 3, 4, 8]
-  test_action_sequence = [10, 11]
+  test_action_sequence = [10, 11, 3]
   #test_action_sequence = [0]
 
   player_mobile_serial = None
@@ -254,6 +262,7 @@ def main():
   opened_corpse = None
   menu_index = 0
   opened_vendor_serial = None
+  item_amount = 1
   for ep in range(0, 10000):
     print("ep: ", ep)
 
@@ -268,7 +277,8 @@ def main():
     res = stub.ReadObs(UoService_pb2.Config(name='you'))
 
     mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict, \
-        corpse_item_dict, vendor_dict, vendor_item_dict, mountable_mobile_dict, teacher_dict = parse_response(res)
+        corpse_item_dict, vendor_dict, vendor_item_dict, mountable_mobile_dict, teacher_dict, \
+        popup_menu_list, cliloc_dict = parse_response(res)
 
     for step in range(1, 100000):
       #print("vendor_dict: ", vendor_dict)
@@ -290,7 +300,14 @@ def main():
           target_mobile_serial = mountable_mobile_serial
 
         if test_action_sequence[action_index] == 3:
-          target_item_serial, index = get_serial_of_gold(corpse_item_dict)
+          #target_item_serial, index = get_serial_of_gold(corpse_item_dict)
+          print("target_item_serial: ", target_item_serial)
+          print("backpack_item_dict: ", backpack_item_dict)
+          target_item_serial, index = get_serial_of_gold(backpack_item_dict)
+          print("target_item_serial: ", target_item_serial)
+
+          print("cliloc_dict: ", cliloc_dict)
+          #item_amount = 
         
         if test_action_sequence[action_index] == 6:
           target_item_serial, index = get_serial_by_name(ground_item_dict, 'Valorite Longsword')
@@ -309,7 +326,10 @@ def main():
           opened_vendor_serial = target_mobile_serial
 
         if test_action_sequence[action_index] == 11:
-          menu_index = 1
+          #menu_index = 1
+          #print("popup_menu_list: ", popup_menu_list)
+          menu_index = popup_menu_list.index('Train Swordsmanship')
+          #print("menu_index: ", menu_index)
           target_mobile_serial = opened_vendor_serial
 
         if test_action_sequence[action_index] == 12:
@@ -324,7 +344,7 @@ def main():
                                             mobileSerial=target_mobile_serial,
                                             itemSerial=target_item_serial,
                                             walkDirection=UoService_pb2.WalkDirection(direction=2),
-                                            index=menu_index, amount=1))
+                                            index=menu_index, amount=item_amount))
 
         action_index += 1
       else:
@@ -332,7 +352,7 @@ def main():
                                             mobileSerial=target_mobile_serial,
                                             itemSerial=target_item_serial,
                                             walkDirection=UoService_pb2.WalkDirection(direction=2),
-                                            amount=1))
+                                            amount=item_amount))
       
       stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
       stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
@@ -340,7 +360,8 @@ def main():
       res_next = stub.ReadObs(UoService_pb2.Config(name='you'))
 
       mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict, \
-        corpse_item_dict, vendor_dict, vendor_item_dict, mountable_mobile_dict, teacher_dict = parse_response(res_next)
+        corpse_item_dict, vendor_dict, vendor_item_dict, mountable_mobile_dict, teacher_dict, \
+        popup_menu_list, cliloc_dict = parse_response(res_next)
 
 
 if __name__ == '__main__':
