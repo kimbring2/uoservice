@@ -39,6 +39,16 @@ class UoServiceStub(object):
                 request_serializer=UoService__pb2.SemaphoreAction.SerializeToString,
                 response_deserializer=UoService__pb2.Empty.FromString,
                 )
+        self.ReadReplay = channel.unary_unary(
+                '/uoservice.UoService/ReadReplay',
+                request_serializer=UoService__pb2.Config.SerializeToString,
+                response_deserializer=UoService__pb2.States.FromString,
+                )
+        self.ReadMPQFile = channel.unary_unary(
+                '/uoservice.UoService/ReadMPQFile',
+                request_serializer=UoService__pb2.Config.SerializeToString,
+                response_deserializer=UoService__pb2.Empty.FromString,
+                )
 
 
 class UoServiceServicer(object):
@@ -74,6 +84,18 @@ class UoServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ReadReplay(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ReadMPQFile(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_UoServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -100,6 +122,16 @@ def add_UoServiceServicer_to_server(servicer, server):
             'ObsSemaphoreControl': grpc.unary_unary_rpc_method_handler(
                     servicer.ObsSemaphoreControl,
                     request_deserializer=UoService__pb2.SemaphoreAction.FromString,
+                    response_serializer=UoService__pb2.Empty.SerializeToString,
+            ),
+            'ReadReplay': grpc.unary_unary_rpc_method_handler(
+                    servicer.ReadReplay,
+                    request_deserializer=UoService__pb2.Config.FromString,
+                    response_serializer=UoService__pb2.States.SerializeToString,
+            ),
+            'ReadMPQFile': grpc.unary_unary_rpc_method_handler(
+                    servicer.ReadMPQFile,
+                    request_deserializer=UoService__pb2.Config.FromString,
                     response_serializer=UoService__pb2.Empty.SerializeToString,
             ),
     }
@@ -193,6 +225,40 @@ class UoService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/uoservice.UoService/ObsSemaphoreControl',
             UoService__pb2.SemaphoreAction.SerializeToString,
+            UoService__pb2.Empty.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ReadReplay(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/uoservice.UoService/ReadReplay',
+            UoService__pb2.Config.SerializeToString,
+            UoService__pb2.States.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ReadMPQFile(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/uoservice.UoService/ReadMPQFile',
+            UoService__pb2.Config.SerializeToString,
             UoService__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

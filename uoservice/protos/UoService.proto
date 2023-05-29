@@ -47,6 +47,15 @@ message GrpcGameObjectList {
   repeated GrpcGameObjectData gameObject = 1;
 }
 
+message GrpcGameObjectSimpleData {
+  uint32 gameX = 1;
+  uint32 gameY = 2;
+}
+
+message GrpcGameObjectSimpleList {
+  repeated GrpcGameObjectSimpleData gameSimpleObject = 1;
+}
+
 message SemaphoreAction {
   string mode = 1;
 }
@@ -94,24 +103,19 @@ message States {
   PlayerStatus playerStatus = 6;
   GrpcGameObjectList mobileObjectList = 7;
   GrpcGameObjectList playerMobileObjectList = 8;
-  GrpcGameObjectList landObjectList = 9;
-  GrpcGameObjectList itemObjectList = 10;
-  GrpcGameObjectList staticObjectList = 11;
-  GrpcGameObjectList itemDropableLandList = 12;
-  GrpcGameObjectList vendorItemObjectList = 13;
-  GrpcPopupMenuList popupMenuList = 14;
-  GrpcClilocDataList clilocDataList = 15;
+  GrpcGameObjectList itemObjectList = 9;
+  GrpcGameObjectSimpleList itemDropableLandList = 11;
+  GrpcGameObjectList vendorItemObjectList = 12;
+  GrpcPopupMenuList popupMenuList = 13;
+  GrpcClilocDataList clilocDataList = 14;
 }
 
-message WalkDirection {
-  uint32 direction = 1;
-}
 
 message Actions {
   uint32 actionType = 1;
   uint32 mobileSerial = 2;
   uint32 itemSerial = 3;
-  WalkDirection walkDirection = 4;
+  uint32 walkDirection = 4;
   uint32 index = 5;
   uint32 amount = 6;
 }
@@ -122,4 +126,7 @@ service UoService {
   rpc WriteAct (Actions) returns (Empty);
   rpc ActSemaphoreControl (SemaphoreAction) returns (Empty);
   rpc ObsSemaphoreControl (SemaphoreAction) returns (Empty);
+
+  rpc ReadReplay (Config) returns (States);
+  rpc ReadMPQFile (Config) returns (Empty);
 }

@@ -1,5 +1,5 @@
-# protoc --csharp_out=. --grpc_out=. --plugin=protoc-gen-grpc=`which grpc_csharp_plugin` helloworld.proto
-# python3.7 -m grpc_tools.protoc -I ../ --python_out=. --grpc_python_out=. helloworld.proto --proto_path /home/kimbring2/grpc/examples/protos/
+# protoc --csharp_out=. --grpc_out=. --plugin=protoc-gen-grpc=`which grpc_csharp_plugin` UoService.proto
+# python3.7 -m grpc_tools.protoc -I ../ --python_out=. --grpc_python_out=. UoService.proto --proto_path /home/kimbring2/uoservice/uoservice/protos/
 
 from __future__ import print_function
 from concurrent import futures
@@ -16,7 +16,7 @@ import cv2
 import random
 
 
-grpc_port = 50051
+grpc_port = 60051
 channel = grpc.insecure_channel('localhost:' + str(grpc_port))
 stub = UoService_pb2_grpc.UoServiceStub(channel)
 
@@ -49,6 +49,7 @@ def isTeacher(title):
 mountable_list = ['a hellsteed', 'a horse']
 
 def parse_response(response):
+  global grpc_port
   global selected_target_serial
   global player_serial
   global mountable_list
@@ -72,9 +73,7 @@ def parse_response(response):
   equipped_item_data = response.equippedItemList.item
   backpack_item_data = response.backpackItemList.item
   corpse_item_data = response.corpseItemList.item
-
   popup_menu_data = response.popupMenuList.menu
-  #print("popup_menu_data: ", popup_menu_data)
 
   cliloc_data = response.clilocDataList.clilocData
   for data in cliloc_data:
@@ -83,33 +82,16 @@ def parse_response(response):
     cliloc_dict['affix'] = data.affix
     cliloc_data_list.append(cliloc_dict)
 
-  land_object_data = response.landObjectList.gameObject
   player_mobile_object_data = response.playerMobileObjectList.gameObject
   mobile_object_data = response.mobileObjectList.gameObject
-  static_object_data = response.staticObjectList.gameObject
   item_object_data = response.itemObjectList.gameObject
-  item_dropable_land_data = response.itemDropableLandList.gameObject
+  item_dropable_land_data = response.itemDropableLandList.gameSimpleObject
   item_vendor_data = response.vendorItemObjectList.gameObject
 
   for menu_data in popup_menu_data:
-    #print("menu_data: ", menu_data)
     popup_menu_list.append(menu_data)
 
   screen_image = np.zeros((172,137,4), dtype=np.uint8)
-  for obj in land_object_data:
-    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 0
-    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 255
-    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 255
-
-  for obj in static_object_data:
-    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 255
-    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 255
-    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 0
-
-  for obj in item_dropable_land_data:
-    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 255
-    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 0
-    screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 255
 
   for obj in item_object_data:
     ground_item_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
@@ -133,6 +115,7 @@ def parse_response(response):
     #      format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
     vendor_item_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
 
+  #print("len(mobile_object_data): ", len(mobile_object_data))
   for obj in mobile_object_data:
     #print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, is_corpse:{6}, title:{7}'.
     #    format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.isCorpse, obj.title))
@@ -159,16 +142,21 @@ def parse_response(response):
       teacher_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, teacher_title]
 
   for obj in player_mobile_object_data:
+    #print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
+    #      format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
+
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 255
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 0
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 0
 
-  dim = (1600, 1280)
-  screen_image = cv2.resize(screen_image, dim, interpolation = cv2.INTER_AREA)
-  screen_image = cv2.rotate(screen_image, cv2.ROTATE_90_CLOCKWISE)
-  screen_image = cv2.flip(screen_image, 1)
-  #cv2.imshow('screen_image', screen_image)
-  #cv2.waitKey(1)
+  vis = False
+  if vis:
+    dim = (1600, 1280)
+    screen_image = cv2.resize(screen_image, dim, interpolation = cv2.INTER_AREA)
+    screen_image = cv2.rotate(screen_image, cv2.ROTATE_90_CLOCKWISE)
+    screen_image = cv2.flip(screen_image, 1)
+    cv2.imshow('screen_image_' + str(grpc_port), screen_image)
+    cv2.waitKey(1)
 
   if len(mobile_data) == 0 or len(world_item_data) == 0 or len(equipped_item_data) == 0:
     return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, \
@@ -257,9 +245,9 @@ def get_serial_of_gold(item_dict):
 def main():
   action_index = 0
   #test_action_sequence = [3, 5, 6, 4]
-  #test_action_sequence = [7, 9, 3, 4, 8]
+  #test_action_sequence = [7]
   #test_action_sequence = [10, 11, 3, 16]
-  test_action_sequence = [0]
+  test_action_sequence = [7, 0, 0]
 
   player_mobile_serial = None
   target_item_serial = None
@@ -273,8 +261,9 @@ def main():
 
     stub.WriteAct(UoService_pb2.Actions(actionType=0, 
                                         mobileSerial=1,
-                                        walkDirection=UoService_pb2.WalkDirection(direction=1),
-                                        index=menu_index, amount=1))
+                                        walkDirection=1,
+                                        index=menu_index, 
+                                        amount=1))
     
     stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
     stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
@@ -299,6 +288,13 @@ def main():
       if action_index != len(test_action_sequence) and step % 100 == 0:
         #print("player_mobile_serial: ", player_mobile_serial)
         #print("mountable_mobile_dict: ", mountable_mobile_dict)
+        print("corpse_dict: ", corpse_dict)
+        print("corpse_item_dict: ", corpse_item_dict)
+        print("")
+
+        if test_action_sequence[action_index] == 0:
+            if len(corpse_dict) != 0: 
+              target_item_serial = list(corpse_dict.keys())[0]
 
         if test_action_sequence[action_index] == 2:
           #player_mobile_serial, index = get_serial_by_name(mobile_dict, "masterkim")
@@ -362,15 +358,17 @@ def main():
         stub.WriteAct(UoService_pb2.Actions(actionType=test_action_sequence[action_index], 
                                             mobileSerial=target_mobile_serial,
                                             itemSerial=target_item_serial,
-                                            walkDirection=UoService_pb2.WalkDirection(direction=2),
-                                            index=menu_index, amount=item_amount))
+                                            walkDirection=2,
+                                            index=menu_index, 
+                                            amount=item_amount))
 
         action_index += 1
       else:
         stub.WriteAct(UoService_pb2.Actions(actionType=0, 
                                             mobileSerial=target_mobile_serial,
                                             itemSerial=target_item_serial,
-                                            walkDirection=UoService_pb2.WalkDirection(direction=2),
+                                            walkDirection=2,
+                                            index=menu_index, 
                                             amount=item_amount))
       
       stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
