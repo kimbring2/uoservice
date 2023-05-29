@@ -45,7 +45,9 @@ def isTeacher(title):
 
 def parse_response(response):
   mobile_data = response.mobileList.mobile
-  world_item_data = response.worldItemList.item
+  #world_item_data = response.worldItemList.item
+  #print("len(world_item_data): ", len(world_item_data))
+
   equipped_item_data = response.equippedItemList.item
   backpack_item_data = response.backpackItemList.item
 
@@ -118,7 +120,7 @@ def parse_response(response):
 
 def main():
   for ep in range(0, 10000):
-    stub.ReadMPQFile(UoService_pb2.Config(name='kimbring2-2023-5-29-13-54-03'))
+    stub.ReadMPQFile(UoService_pb2.Config(name='/home/kimbring2/ClassicUO/bin/dist/Replay'))
 
     for step in range(1, 100000):
       res = stub.ReadReplay(UoService_pb2.Config(name='you'))
