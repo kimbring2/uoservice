@@ -45,9 +45,6 @@ def isTeacher(title):
 
 def parse_response(response):
   mobile_data = response.mobileList.mobile
-  #world_item_data = response.worldItemList.item
-  #print("len(world_item_data): ", len(world_item_data))
-
   equipped_item_data = response.equippedItemList.item
   backpack_item_data = response.backpackItemList.item
 
