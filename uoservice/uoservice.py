@@ -75,6 +75,8 @@ def parse_response(response):
   corpse_item_data = response.corpseItemList.item
   popup_menu_data = response.popupMenuList.menu
 
+  #print("corpse_item_data: ", corpse_item_data)
+
   cliloc_data = response.clilocDataList.clilocData
   for data in cliloc_data:
     cliloc_dict = {}
@@ -158,7 +160,7 @@ def parse_response(response):
     cv2.imshow('screen_image_' + str(grpc_port), screen_image)
     cv2.waitKey(1)
 
-  if len(mobile_data) == 0 or len(world_item_data) == 0 or len(equipped_item_data) == 0:
+  if len(mobile_data) == 0 or len(equipped_item_data) == 0:
     return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, \
           corpse_dict, corpse_item_dict, vendor_dict, vendor_item_dict, mountable_mobile_dict, \
           teacher_dict, popup_menu_list, cliloc_data_list
@@ -247,7 +249,7 @@ def main():
   #test_action_sequence = [3, 5, 6, 4]
   #test_action_sequence = [7]
   #test_action_sequence = [10, 11, 3, 16]
-  test_action_sequence = [7, 0, 0]
+  test_action_sequence = [0, 0, 0]
 
   player_mobile_serial = None
   target_item_serial = None
@@ -282,15 +284,18 @@ def main():
       #print("teacher_dict: ", teacher_dict)
       target_mobile_serial, index = get_serial_by_title(teacher_dict, 'warrior')
       #print("corpse_dict: ", corpse_dict)
-      #print("corpse_item_dict: ", corpse_item_dict)
-      #print("\n")
+
+      if len(corpse_item_dict) != 0:
+        print("corpse_dict: ", corpse_dict)
+        print("corpse_item_dict: ", corpse_item_dict)
+        print("\n")
 
       if action_index != len(test_action_sequence) and step % 100 == 0:
         #print("player_mobile_serial: ", player_mobile_serial)
         #print("mountable_mobile_dict: ", mountable_mobile_dict)
-        print("corpse_dict: ", corpse_dict)
-        print("corpse_item_dict: ", corpse_item_dict)
-        print("")
+        #print("corpse_dict: ", corpse_dict)
+        #print("corpse_item_dict: ", corpse_item_dict)
+        #print("")
 
         if test_action_sequence[action_index] == 0:
             if len(corpse_dict) != 0: 

@@ -47,8 +47,8 @@ def parse_response(response):
   mobile_data = response.mobileList.mobile
   equipped_item_data = response.equippedItemList.item
   backpack_item_data = response.backpackItemList.item
-
   cliloc_data = response.clilocDataList.clilocData
+
   for data in cliloc_data:
     cliloc_dict = {}
     cliloc_dict['text'] = data.text
@@ -58,6 +58,8 @@ def parse_response(response):
   mobile_object_data = response.mobileObjectList.gameObject
   item_object_data = response.itemObjectList.gameObject
   item_dropable_land_data = response.itemDropableLandList.gameSimpleObject
+
+  print("player_mobile_object_data: ", player_mobile_object_data)
 
   screen_image = np.zeros((172,137,4), dtype=np.uint8)
 
@@ -94,7 +96,7 @@ def parse_response(response):
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 0
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 0
 
-  vis = True
+  vis = False
   if vis:
     dim = (1600, 1280)
     screen_image = cv2.resize(screen_image, dim, interpolation = cv2.INTER_AREA)
