@@ -52,6 +52,13 @@ message GrpcGameObjectSimpleData {
   uint32 gameY = 2;
 }
 
+message GrpcGameObjectInfoList {
+  repeated uint32 gameXs = 1;
+  repeated uint32 gameYs = 2;
+  repeated uint32 screenXs = 3;
+  repeated uint32 screenYs = 4;
+}
+
 message GrpcGameObjectSimpleList {
   repeated GrpcGameObjectSimpleData gameSimpleObject = 1;
 }
@@ -96,20 +103,28 @@ message PlayerStatus {
 
 message States {
   GrpcMobileList mobileList = 1;
+
   GrpcItemList worldItemList = 2;
   GrpcItemList equippedItemList = 3;
   GrpcItemList backpackItemList = 4;
   GrpcItemList corpseItemList = 5;
+
   PlayerStatus playerStatus = 6;
+
   GrpcGameObjectList mobileObjectList = 7;
   GrpcGameObjectList playerMobileObjectList = 8;
   GrpcGameObjectList itemObjectList = 9;
   GrpcGameObjectSimpleList itemDropableLandList = 11;
   GrpcGameObjectList vendorItemObjectList = 12;
-  GrpcPopupMenuList popupMenuList = 13;
-  GrpcClilocDataList clilocDataList = 14;
-}
 
+  GrpcPopupMenuList popupMenuList = 13;
+
+  GrpcClilocDataList clilocDataList = 14;
+
+  GrpcActionsList actionsList = 15;
+
+  GrpcGameObjectInfoList staticObjectInfoList = 16;
+}
 
 message Actions {
   uint32 actionType = 1;
@@ -119,6 +134,11 @@ message Actions {
   uint32 index = 5;
   uint32 amount = 6;
 }
+
+message GrpcActionsList {
+  repeated Actions actionsList = 1;
+}
+
 
 service UoService {
   rpc Reset (Config) returns (States);

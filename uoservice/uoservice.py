@@ -75,7 +75,17 @@ def parse_response(response):
   corpse_item_data = response.corpseItemList.item
   popup_menu_data = response.popupMenuList.menu
 
-  #print("corpse_item_data: ", corpse_item_data)
+  #gameObjectInfoList.GameXs.AddRange(grpcStaticObjectGameXs);
+  #gameObjectInfoList.GameYs.AddRange(grpcStaticObjectGameYs);
+  #gameObjectInfoList.ScreenXs.AddRange(grpcStaticObjectScreenXs);
+  #gameObjectInfoList.ScreenYs.AddRange(grpcStaticObjectScreenYs);
+
+  static_object_game_x_data = response.staticObjectInfoList.gameXs
+  static_object_game_y_data = response.staticObjectInfoList.gameYs
+  static_object_screen_x_data = response.staticObjectInfoList.screenXs
+  static_object_screen_y_data = response.staticObjectInfoList.screenYs
+  #print("static_object_game_x_data: ", static_object_game_x_data)
+  #print("static_object_game_y_data: ", static_object_game_y_data)
 
   cliloc_data = response.clilocDataList.clilocData
   for data in cliloc_data:
@@ -146,12 +156,21 @@ def parse_response(response):
   for obj in player_mobile_object_data:
     #print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
     #      format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
-
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 255
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 0
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 0
 
-  vis = False
+
+  #static_object_game_x_data = response.staticObjectInfoList.gameXs
+  #static_object_game_y_data = response.staticObjectInfoList.gameYs
+  #static_object_screen_x_data = response.staticObjectInfoList.screenXs
+  #static_object_screen_y_data = response.staticObjectInfoList.screenYs
+  for i in range(0, len(static_object_game_x_data)):
+    screen_image[int(static_object_screen_x_data[i] / 10), int(static_object_screen_y_data[i] / 10), 0] = 120
+    screen_image[int(static_object_screen_x_data[i] / 10), int(static_object_screen_y_data[i] / 10), 1] = 120
+    screen_image[int(static_object_screen_x_data[i] / 10), int(static_object_screen_y_data[i] / 10), 2] = 120
+
+  vis = True
   if vis:
     dim = (1600, 1280)
     screen_image = cv2.resize(screen_image, dim, interpolation = cv2.INTER_AREA)
