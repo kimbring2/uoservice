@@ -53,10 +53,8 @@ message GrpcGameObjectSimpleData {
 }
 
 message GrpcGameObjectInfoList {
-  repeated uint32 gameXs = 1;
-  repeated uint32 gameYs = 2;
-  repeated uint32 screenXs = 3;
-  repeated uint32 screenYs = 4;
+  repeated uint32 screenXs = 1;
+  repeated uint32 screenYs = 2;
 }
 
 message GrpcGameObjectSimpleList {
@@ -83,7 +81,7 @@ message Config {
   string name = 1;
 }
 
-message PlayerStatus {
+message GrpcPlayerStatus {
   uint32 str = 1;
   uint32 dex = 2;
   uint32 intell = 3;
@@ -109,7 +107,7 @@ message States {
   GrpcItemList backpackItemList = 4;
   GrpcItemList corpseItemList = 5;
 
-  PlayerStatus playerStatus = 6;
+  GrpcPlayerStatus playerStatus = 6;
 
   GrpcGameObjectList mobileObjectList = 7;
   GrpcGameObjectList playerMobileObjectList = 8;

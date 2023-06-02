@@ -47,44 +47,44 @@ namespace Uoservice {
             "YmlsZRgBIAMoCzIZLnVvc2VydmljZS5HcnBjTW9iaWxlRGF0YSI1CgxHcnBj",
             "SXRlbUxpc3QSJQoEaXRlbRgBIAMoCzIXLnVvc2VydmljZS5HcnBjSXRlbURh",
             "dGEiIQoRR3JwY1BvcHVwTWVudUxpc3QSDAoEbWVudRgBIAMoCSIWCgZDb25m",
-            "aWcSDAoEbmFtZRgBIAEoCSLoAQoMUGxheWVyU3RhdHVzEgsKA3N0chgBIAEo",
-            "DRILCgNkZXgYAiABKA0SDgoGaW50ZWxsGAMgASgNEgwKBGhpdHMYBCABKA0S",
-            "DwoHaGl0c01heBgFIAEoDRIPCgdzdGFtaW5hGAYgASgNEhIKCnN0YW1pbmFN",
-            "YXgYByABKA0SDAoEbWFuYRgIIAEoDRIPCgdtYW5hTWF4GAkgASgNEgwKBGdv",
-            "bGQYCiABKA0SGgoScGh5c2ljYWxSZXNpc3RhbmNlGAsgASgNEg4KBndlaWdo",
-            "dBgMIAEoDRIRCgl3ZWlnaHRNYXgYDSABKA0iugYKBlN0YXRlcxItCgptb2Jp",
-            "bGVMaXN0GAEgASgLMhkudW9zZXJ2aWNlLkdycGNNb2JpbGVMaXN0Ei4KDXdv",
-            "cmxkSXRlbUxpc3QYAiABKAsyFy51b3NlcnZpY2UuR3JwY0l0ZW1MaXN0EjEK",
-            "EGVxdWlwcGVkSXRlbUxpc3QYAyABKAsyFy51b3NlcnZpY2UuR3JwY0l0ZW1M",
-            "aXN0EjEKEGJhY2twYWNrSXRlbUxpc3QYBCABKAsyFy51b3NlcnZpY2UuR3Jw",
-            "Y0l0ZW1MaXN0Ei8KDmNvcnBzZUl0ZW1MaXN0GAUgASgLMhcudW9zZXJ2aWNl",
-            "LkdycGNJdGVtTGlzdBItCgxwbGF5ZXJTdGF0dXMYBiABKAsyFy51b3NlcnZp",
-            "Y2UuUGxheWVyU3RhdHVzEjcKEG1vYmlsZU9iamVjdExpc3QYByABKAsyHS51",
-            "b3NlcnZpY2UuR3JwY0dhbWVPYmplY3RMaXN0Ej0KFnBsYXllck1vYmlsZU9i",
-            "amVjdExpc3QYCCABKAsyHS51b3NlcnZpY2UuR3JwY0dhbWVPYmplY3RMaXN0",
-            "EjUKDml0ZW1PYmplY3RMaXN0GAkgASgLMh0udW9zZXJ2aWNlLkdycGNHYW1l",
-            "T2JqZWN0TGlzdBJBChRpdGVtRHJvcGFibGVMYW5kTGlzdBgLIAEoCzIjLnVv",
-            "c2VydmljZS5HcnBjR2FtZU9iamVjdFNpbXBsZUxpc3QSOwoUdmVuZG9ySXRl",
-            "bU9iamVjdExpc3QYDCABKAsyHS51b3NlcnZpY2UuR3JwY0dhbWVPYmplY3RM",
-            "aXN0EjMKDXBvcHVwTWVudUxpc3QYDSABKAsyHC51b3NlcnZpY2UuR3JwY1Bv",
-            "cHVwTWVudUxpc3QSNQoOY2xpbG9jRGF0YUxpc3QYDiABKAsyHS51b3NlcnZp",
-            "Y2UuR3JwY0NsaWxvY0RhdGFMaXN0Ei8KC2FjdGlvbnNMaXN0GA8gASgLMhou",
-            "dW9zZXJ2aWNlLkdycGNBY3Rpb25zTGlzdBI/ChRzdGF0aWNPYmplY3RJbmZv",
-            "TGlzdBgQIAEoCzIhLnVvc2VydmljZS5HcnBjR2FtZU9iamVjdEluZm9MaXN0",
-            "In0KB0FjdGlvbnMSEgoKYWN0aW9uVHlwZRgBIAEoDRIUCgxtb2JpbGVTZXJp",
-            "YWwYAiABKA0SEgoKaXRlbVNlcmlhbBgDIAEoDRIVCg13YWxrRGlyZWN0aW9u",
-            "GAQgASgNEg0KBWluZGV4GAUgASgNEg4KBmFtb3VudBgGIAEoDSI6Cg9HcnBj",
-            "QWN0aW9uc0xpc3QSJwoLYWN0aW9uc0xpc3QYASADKAsyEi51b3NlcnZpY2Uu",
-            "QWN0aW9uczKPAwoJVW9TZXJ2aWNlEi0KBVJlc2V0EhEudW9zZXJ2aWNlLkNv",
-            "bmZpZxoRLnVvc2VydmljZS5TdGF0ZXMSLwoHUmVhZE9icxIRLnVvc2Vydmlj",
-            "ZS5Db25maWcaES51b3NlcnZpY2UuU3RhdGVzEjAKCFdyaXRlQWN0EhIudW9z",
-            "ZXJ2aWNlLkFjdGlvbnMaEC51b3NlcnZpY2UuRW1wdHkSQwoTQWN0U2VtYXBo",
-            "b3JlQ29udHJvbBIaLnVvc2VydmljZS5TZW1hcGhvcmVBY3Rpb24aEC51b3Nl",
-            "cnZpY2UuRW1wdHkSQwoTT2JzU2VtYXBob3JlQ29udHJvbBIaLnVvc2Vydmlj",
-            "ZS5TZW1hcGhvcmVBY3Rpb24aEC51b3NlcnZpY2UuRW1wdHkSMgoKUmVhZFJl",
-            "cGxheRIRLnVvc2VydmljZS5Db25maWcaES51b3NlcnZpY2UuU3RhdGVzEjIK",
-            "C1JlYWRNUFFGaWxlEhEudW9zZXJ2aWNlLkNvbmZpZxoQLnVvc2VydmljZS5F",
-            "bXB0eWIGcHJvdG8z"));
+            "aWcSDAoEbmFtZRgBIAEoCSLsAQoQR3JwY1BsYXllclN0YXR1cxILCgNzdHIY",
+            "ASABKA0SCwoDZGV4GAIgASgNEg4KBmludGVsbBgDIAEoDRIMCgRoaXRzGAQg",
+            "ASgNEg8KB2hpdHNNYXgYBSABKA0SDwoHc3RhbWluYRgGIAEoDRISCgpzdGFt",
+            "aW5hTWF4GAcgASgNEgwKBG1hbmEYCCABKA0SDwoHbWFuYU1heBgJIAEoDRIM",
+            "CgRnb2xkGAogASgNEhoKEnBoeXNpY2FsUmVzaXN0YW5jZRgLIAEoDRIOCgZ3",
+            "ZWlnaHQYDCABKA0SEQoJd2VpZ2h0TWF4GA0gASgNIr4GCgZTdGF0ZXMSLQoK",
+            "bW9iaWxlTGlzdBgBIAEoCzIZLnVvc2VydmljZS5HcnBjTW9iaWxlTGlzdBIu",
+            "Cg13b3JsZEl0ZW1MaXN0GAIgASgLMhcudW9zZXJ2aWNlLkdycGNJdGVtTGlz",
+            "dBIxChBlcXVpcHBlZEl0ZW1MaXN0GAMgASgLMhcudW9zZXJ2aWNlLkdycGNJ",
+            "dGVtTGlzdBIxChBiYWNrcGFja0l0ZW1MaXN0GAQgASgLMhcudW9zZXJ2aWNl",
+            "LkdycGNJdGVtTGlzdBIvCg5jb3Jwc2VJdGVtTGlzdBgFIAEoCzIXLnVvc2Vy",
+            "dmljZS5HcnBjSXRlbUxpc3QSMQoMcGxheWVyU3RhdHVzGAYgASgLMhsudW9z",
+            "ZXJ2aWNlLkdycGNQbGF5ZXJTdGF0dXMSNwoQbW9iaWxlT2JqZWN0TGlzdBgH",
+            "IAEoCzIdLnVvc2VydmljZS5HcnBjR2FtZU9iamVjdExpc3QSPQoWcGxheWVy",
+            "TW9iaWxlT2JqZWN0TGlzdBgIIAEoCzIdLnVvc2VydmljZS5HcnBjR2FtZU9i",
+            "amVjdExpc3QSNQoOaXRlbU9iamVjdExpc3QYCSABKAsyHS51b3NlcnZpY2Uu",
+            "R3JwY0dhbWVPYmplY3RMaXN0EkEKFGl0ZW1Ecm9wYWJsZUxhbmRMaXN0GAsg",
+            "ASgLMiMudW9zZXJ2aWNlLkdycGNHYW1lT2JqZWN0U2ltcGxlTGlzdBI7ChR2",
+            "ZW5kb3JJdGVtT2JqZWN0TGlzdBgMIAEoCzIdLnVvc2VydmljZS5HcnBjR2Ft",
+            "ZU9iamVjdExpc3QSMwoNcG9wdXBNZW51TGlzdBgNIAEoCzIcLnVvc2Vydmlj",
+            "ZS5HcnBjUG9wdXBNZW51TGlzdBI1Cg5jbGlsb2NEYXRhTGlzdBgOIAEoCzId",
+            "LnVvc2VydmljZS5HcnBjQ2xpbG9jRGF0YUxpc3QSLwoLYWN0aW9uc0xpc3QY",
+            "DyABKAsyGi51b3NlcnZpY2UuR3JwY0FjdGlvbnNMaXN0Ej8KFHN0YXRpY09i",
+            "amVjdEluZm9MaXN0GBAgASgLMiEudW9zZXJ2aWNlLkdycGNHYW1lT2JqZWN0",
+            "SW5mb0xpc3QifQoHQWN0aW9ucxISCgphY3Rpb25UeXBlGAEgASgNEhQKDG1v",
+            "YmlsZVNlcmlhbBgCIAEoDRISCgppdGVtU2VyaWFsGAMgASgNEhUKDXdhbGtE",
+            "aXJlY3Rpb24YBCABKA0SDQoFaW5kZXgYBSABKA0SDgoGYW1vdW50GAYgASgN",
+            "IjoKD0dycGNBY3Rpb25zTGlzdBInCgthY3Rpb25zTGlzdBgBIAMoCzISLnVv",
+            "c2VydmljZS5BY3Rpb25zMo8DCglVb1NlcnZpY2USLQoFUmVzZXQSES51b3Nl",
+            "cnZpY2UuQ29uZmlnGhEudW9zZXJ2aWNlLlN0YXRlcxIvCgdSZWFkT2JzEhEu",
+            "dW9zZXJ2aWNlLkNvbmZpZxoRLnVvc2VydmljZS5TdGF0ZXMSMAoIV3JpdGVB",
+            "Y3QSEi51b3NlcnZpY2UuQWN0aW9ucxoQLnVvc2VydmljZS5FbXB0eRJDChNB",
+            "Y3RTZW1hcGhvcmVDb250cm9sEhoudW9zZXJ2aWNlLlNlbWFwaG9yZUFjdGlv",
+            "bhoQLnVvc2VydmljZS5FbXB0eRJDChNPYnNTZW1hcGhvcmVDb250cm9sEhou",
+            "dW9zZXJ2aWNlLlNlbWFwaG9yZUFjdGlvbhoQLnVvc2VydmljZS5FbXB0eRIy",
+            "CgpSZWFkUmVwbGF5EhEudW9zZXJ2aWNlLkNvbmZpZxoRLnVvc2VydmljZS5T",
+            "dGF0ZXMSMgoLUmVhZE1QUUZpbGUSES51b3NlcnZpY2UuQ29uZmlnGhAudW9z",
+            "ZXJ2aWNlLkVtcHR5YgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -103,7 +103,7 @@ namespace Uoservice {
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcItemList), global::Uoservice.GrpcItemList.Parser, new[]{ "Item" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcPopupMenuList), global::Uoservice.GrpcPopupMenuList.Parser, new[]{ "Menu" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Config), global::Uoservice.Config.Parser, new[]{ "Name" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.PlayerStatus), global::Uoservice.PlayerStatus.Parser, new[]{ "Str", "Dex", "Intell", "Hits", "HitsMax", "Stamina", "StaminaMax", "Mana", "ManaMax", "Gold", "PhysicalResistance", "Weight", "WeightMax" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcPlayerStatus), global::Uoservice.GrpcPlayerStatus.Parser, new[]{ "Str", "Dex", "Intell", "Hits", "HitsMax", "Stamina", "StaminaMax", "Mana", "ManaMax", "Gold", "PhysicalResistance", "Weight", "WeightMax" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.States), global::Uoservice.States.Parser, new[]{ "MobileList", "WorldItemList", "EquippedItemList", "BackpackItemList", "CorpseItemList", "PlayerStatus", "MobileObjectList", "PlayerMobileObjectList", "ItemObjectList", "ItemDropableLandList", "VendorItemObjectList", "PopupMenuList", "ClilocDataList", "ActionsList", "StaticObjectInfoList" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Actions), global::Uoservice.Actions.Parser, new[]{ "ActionType", "MobileSerial", "ItemSerial", "WalkDirection", "Index", "Amount" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcActionsList), global::Uoservice.GrpcActionsList.Parser, new[]{ "ActionsList" }, null, null, null)
@@ -2588,11 +2588,11 @@ namespace Uoservice {
 
   }
 
-  public sealed partial class PlayerStatus : pb::IMessage<PlayerStatus> {
-    private static readonly pb::MessageParser<PlayerStatus> _parser = new pb::MessageParser<PlayerStatus>(() => new PlayerStatus());
+  public sealed partial class GrpcPlayerStatus : pb::IMessage<GrpcPlayerStatus> {
+    private static readonly pb::MessageParser<GrpcPlayerStatus> _parser = new pb::MessageParser<GrpcPlayerStatus>(() => new GrpcPlayerStatus());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<PlayerStatus> Parser { get { return _parser; } }
+    public static pb::MessageParser<GrpcPlayerStatus> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -2605,14 +2605,14 @@ namespace Uoservice {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public PlayerStatus() {
+    public GrpcPlayerStatus() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public PlayerStatus(PlayerStatus other) : this() {
+    public GrpcPlayerStatus(GrpcPlayerStatus other) : this() {
       str_ = other.str_;
       dex_ = other.dex_;
       intell_ = other.intell_;
@@ -2630,8 +2630,8 @@ namespace Uoservice {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public PlayerStatus Clone() {
-      return new PlayerStatus(this);
+    public GrpcPlayerStatus Clone() {
+      return new GrpcPlayerStatus(this);
     }
 
     /// <summary>Field number for the "str" field.</summary>
@@ -2779,11 +2779,11 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as PlayerStatus);
+      return Equals(other as GrpcPlayerStatus);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(PlayerStatus other) {
+    public bool Equals(GrpcPlayerStatus other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -2941,7 +2941,7 @@ namespace Uoservice {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(PlayerStatus other) {
+    public void MergeFrom(GrpcPlayerStatus other) {
       if (other == null) {
         return;
       }
@@ -3158,9 +3158,9 @@ namespace Uoservice {
 
     /// <summary>Field number for the "playerStatus" field.</summary>
     public const int PlayerStatusFieldNumber = 6;
-    private global::Uoservice.PlayerStatus playerStatus_;
+    private global::Uoservice.GrpcPlayerStatus playerStatus_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Uoservice.PlayerStatus PlayerStatus {
+    public global::Uoservice.GrpcPlayerStatus PlayerStatus {
       get { return playerStatus_; }
       set {
         playerStatus_ = value;
@@ -3484,7 +3484,7 @@ namespace Uoservice {
       }
       if (other.playerStatus_ != null) {
         if (playerStatus_ == null) {
-          playerStatus_ = new global::Uoservice.PlayerStatus();
+          playerStatus_ = new global::Uoservice.GrpcPlayerStatus();
         }
         PlayerStatus.MergeFrom(other.PlayerStatus);
       }
@@ -3590,7 +3590,7 @@ namespace Uoservice {
           }
           case 50: {
             if (playerStatus_ == null) {
-              playerStatus_ = new global::Uoservice.PlayerStatus();
+              playerStatus_ = new global::Uoservice.GrpcPlayerStatus();
             }
             input.ReadMessage(playerStatus_);
             break;

@@ -49,6 +49,10 @@ def parse_response(response):
   backpack_item_data = response.backpackItemList.item
   cliloc_data = response.clilocDataList.clilocData
 
+  player_status_data = response.playerStatus
+  player_gold = player_status_data.gold
+  #print("player_gold: ", player_gold)
+
   for data in cliloc_data:
     cliloc_dict = {}
     cliloc_dict['text'] = data.text
@@ -59,7 +63,12 @@ def parse_response(response):
   item_object_data = response.itemObjectList.gameObject
   item_dropable_land_data = response.itemDropableLandList.gameSimpleObject
 
-  print("player_mobile_object_data: ", player_mobile_object_data)
+  static_object_screen_x_data = response.staticObjectInfoList.screenXs
+  static_object_screen_y_data = response.staticObjectInfoList.screenYs
+
+  #print("equipped_item_data: ", equipped_item_data)
+  #print("backpack_item_data: ", backpack_item_data)
+  #print("item_dropable_land_data: ", item_dropable_land_data)
 
   screen_image = np.zeros((172,137,4), dtype=np.uint8)
 
@@ -96,7 +105,12 @@ def parse_response(response):
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 0
     screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 0
 
-  vis = False
+  for i in range(0, len(static_object_screen_x_data)):
+    screen_image[int(static_object_screen_x_data[i] / 10), int(static_object_screen_y_data[i] / 10), 0] = 120
+    screen_image[int(static_object_screen_x_data[i] / 10), int(static_object_screen_y_data[i] / 10), 1] = 120
+    screen_image[int(static_object_screen_x_data[i] / 10), int(static_object_screen_y_data[i] / 10), 2] = 120
+
+  vis = True
   if vis:
     dim = (1600, 1280)
     screen_image = cv2.resize(screen_image, dim, interpolation = cv2.INTER_AREA)
