@@ -43,7 +43,7 @@ def isTeacher(title):
   return None
 
 
-def parse_response(response):
+def parse_response(step, response):
   mobile_data = response.mobileList.mobile
   equipped_item_data = response.equippedItemList.item
   backpack_item_data = response.backpackItemList.item
@@ -51,7 +51,13 @@ def parse_response(response):
 
   player_status_data = response.playerStatus
   player_gold = player_status_data.gold
-  #print("player_gold: ", player_gold)
+  action_type = response.replayActions.actionType
+
+  if action_type != 0:
+    print("action_type: ", action_type)
+    print("step: ", step)
+    print("player_gold: ", player_gold)
+    print("")
 
   for data in cliloc_data:
     cliloc_dict = {}
@@ -110,7 +116,7 @@ def parse_response(response):
     screen_image[int(static_object_screen_x_data[i] / 10), int(static_object_screen_y_data[i] / 10), 1] = 120
     screen_image[int(static_object_screen_x_data[i] / 10), int(static_object_screen_y_data[i] / 10), 2] = 120
 
-  vis = True
+  vis = False
   if vis:
     dim = (1600, 1280)
     screen_image = cv2.resize(screen_image, dim, interpolation = cv2.INTER_AREA)
@@ -135,9 +141,9 @@ def main():
   for ep in range(0, 10000):
     stub.ReadMPQFile(UoService_pb2.Config(name='/home/kimbring2/ClassicUO/bin/dist/Replay'))
 
-    for step in range(1, 100000):
+    for step in range(0, 2000):
       res = stub.ReadReplay(UoService_pb2.Config(name='you'))
-      parse_response(res)
+      parse_response(step, res)
 
 
 if __name__ == '__main__':
