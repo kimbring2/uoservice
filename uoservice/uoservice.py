@@ -119,8 +119,8 @@ def parse_response(response):
       screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 0
 
   for obj in vendor_item_data:
-    print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
-          format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
+    #print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
+    #      format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
     vendor_item_dict[obj.serial] = [obj.name, obj.type, obj.price, obj.amount, obj.title]
 
   #print("len(mobile_object_data): ", len(mobile_object_data))
@@ -294,7 +294,7 @@ def main():
       #print("vendor_dict: ", vendor_dict)
       #print("popup_menu_list: ", popup_menu_list)
       #print("vendor_item_dict: ", vendor_item_dict)
-      #print("")
+      print("backpack_item_dict: ", backpack_item_dict)
       #print("teacher_dict: ", teacher_dict)
       #target_mobile_serial, index = get_serial_by_title(teacher_dict, 'warrior')
       healer_vendor_serial, index = get_serial_by_title(vendor_dict, 'healer')

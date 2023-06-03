@@ -82,10 +82,14 @@ def parse_response(step, response):
 
   vendor_item_data = response.vendorItemObjectList.gameObject
 
-  if vendor_item_data:
-    print("step: ", step)
-    print("vendor_item_data: ", vendor_item_data)
-    print("")
+  vendor_item_dict = {}
+  for obj in vendor_item_data:
+    vendor_item_dict[obj.serial] = [obj.name, obj.type, obj.price, obj.amount, obj.title]
+
+  for k in vendor_item_dict.keys():
+    print("vendor_item_dict: ", k)
+    break
+
   #print("backpack_item_data: ", backpack_item_data)
   #print("item_dropable_land_data: ", item_dropable_land_data)
 
