@@ -80,7 +80,12 @@ def parse_response(step, response):
   static_object_screen_x_data = response.staticObjectInfoList.screenXs
   static_object_screen_y_data = response.staticObjectInfoList.screenYs
 
-  #print("equipped_item_data: ", equipped_item_data)
+  vendor_item_data = response.vendorItemObjectList.gameObject
+
+  if vendor_item_data:
+    print("step: ", step)
+    print("vendor_item_data: ", vendor_item_data)
+    print("")
   #print("backpack_item_data: ", backpack_item_data)
   #print("item_dropable_land_data: ", item_dropable_land_data)
 

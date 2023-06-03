@@ -82,6 +82,8 @@ def parse_response(response):
   #print("static_object_screen_x_data: ", static_object_screen_x_data)
   #print("static_object_screen_y_data: ", static_object_screen_y_data)
 
+  vendor_item_data = response.vendorItemObjectList.gameObject
+
   cliloc_data = response.clilocDataList.clilocData
   for data in cliloc_data:
     cliloc_dict = {}
@@ -93,7 +95,6 @@ def parse_response(response):
   mobile_object_data = response.mobileObjectList.gameObject
   item_object_data = response.itemObjectList.gameObject
   item_dropable_land_data = response.itemDropableLandList.gameSimpleObject
-  item_vendor_data = response.vendorItemObjectList.gameObject
 
   for menu_data in popup_menu_data:
     popup_menu_list.append(menu_data)
@@ -117,10 +118,10 @@ def parse_response(response):
       screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 255
       screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 0
 
-  for obj in item_vendor_data:
-    #print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
-    #      format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
-    vendor_item_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
+  for obj in vendor_item_data:
+    print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
+          format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
+    vendor_item_dict[obj.serial] = [obj.name, obj.type, obj.price, obj.amount, obj.title]
 
   #print("len(mobile_object_data): ", len(mobile_object_data))
   for obj in mobile_object_data:
@@ -291,17 +292,20 @@ def main():
 
     for step in range(1, 100000):
       #print("vendor_dict: ", vendor_dict)
+      #print("popup_menu_list: ", popup_menu_list)
+      #print("vendor_item_dict: ", vendor_item_dict)
+      #print("")
       #print("teacher_dict: ", teacher_dict)
       #target_mobile_serial, index = get_serial_by_title(teacher_dict, 'warrior')
       healer_vendor_serial, index = get_serial_by_title(vendor_dict, 'healer')
 
-      if len(corpse_item_dict) != 0:
+      #if len(corpse_item_dict) != 0:
         #print("corpse_dict: ", corpse_dict)
         #print("corpse_item_dict: ", corpse_item_dict)
-        print("\n")
+        #print("\n")
 
       if action_index != len(test_action_sequence) and step % 100 == 0:
-        print("popup_menu_list: ", popup_menu_list)
+        #print("popup_menu_list: ", popup_menu_list)
         #print("mountable_mobile_dict: ", mountable_mobile_dict)
         #print("corpse_dict: ", corpse_dict)
         #print("corpse_item_dict: ", corpse_item_dict)
