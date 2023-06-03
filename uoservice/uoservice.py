@@ -287,20 +287,21 @@ def main():
 
     target_item_serial = 0
     target_mobile_serial = 0
+    healer_vendor_serial = None
 
     for step in range(1, 100000):
       #print("vendor_dict: ", vendor_dict)
       #print("teacher_dict: ", teacher_dict)
-      target_mobile_serial, index = get_serial_by_title(teacher_dict, 'warrior')
-      #print("corpse_dict: ", corpse_dict)
+      #target_mobile_serial, index = get_serial_by_title(teacher_dict, 'warrior')
+      healer_vendor_serial, index = get_serial_by_title(vendor_dict, 'healer')
 
       if len(corpse_item_dict) != 0:
-        print("corpse_dict: ", corpse_dict)
-        print("corpse_item_dict: ", corpse_item_dict)
+        #print("corpse_dict: ", corpse_dict)
+        #print("corpse_item_dict: ", corpse_item_dict)
         print("\n")
 
       if action_index != len(test_action_sequence) and step % 100 == 0:
-        #print("player_mobile_serial: ", player_mobile_serial)
+        print("popup_menu_list: ", popup_menu_list)
         #print("mountable_mobile_dict: ", mountable_mobile_dict)
         #print("corpse_dict: ", corpse_dict)
         #print("corpse_item_dict: ", corpse_item_dict)
@@ -312,16 +313,15 @@ def main():
 
         if test_action_sequence[action_index] == 2:
           #player_mobile_serial, index = get_serial_by_name(mobile_dict, "masterkim")
-          mountable_mobile_serial, index = get_serial_by_name(mountable_mobile_dict, "a hellsteed")
-          distance = mountable_mobile_dict[mountable_mobile_serial][4]
-          target_mobile_serial = mountable_mobile_serial
+          #mountable_mobile_serial, index = get_serial_by_name(mountable_mobile_dict, "a hellsteed")
+          #distance = mountable_mobile_dict[mountable_mobile_serial][4]
+          target_mobile_serial = healer_vendor_serial
 
         if test_action_sequence[action_index] == 3:
           #target_item_serial, index = get_serial_of_gold(corpse_item_dict)
           #print("target_item_serial: ", target_item_serial)
-          #print("backpack_item_dict: ", backpack_item_dict)
+          #print("backpack_item_dict:)
           target_item_serial, index = get_serial_of_gold(backpack_item_dict)
-          #print("target_item_serial: ", target_item_serial)
 
           #print("cliloc_data_list: ", cliloc_data_list)
           for cliloc_dict in cliloc_data_list:
@@ -344,8 +344,8 @@ def main():
             opened_corpse = target_item_serial
 
         if test_action_sequence[action_index] == 10:
-          #target_mobile_serial, index = get_serial_by_title(vendor_dict, 'healer')
-          target_mobile_serial, index = get_serial_by_title(teacher_dict, 'warrior')
+          target_mobile_serial, index = get_serial_by_title(vendor_dict, 'healer')
+          #target_mobile_serial, index = get_serial_by_title(teacher_dict, 'warrior')
           opened_vendor_serial = target_mobile_serial
 
         if test_action_sequence[action_index] == 11:

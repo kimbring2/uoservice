@@ -44,19 +44,27 @@ def isTeacher(title):
 
 
 def parse_response(step, response):
+  vendor_dict = {}
+  vendor_item_dict = {}
+
   mobile_data = response.mobileList.mobile
   equipped_item_data = response.equippedItemList.item
   backpack_item_data = response.backpackItemList.item
   cliloc_data = response.clilocDataList.clilocData
 
+  popup_menu = response.popupMenuList
   player_status_data = response.playerStatus
   player_gold = player_status_data.gold
   action_type = response.replayActions.actionType
 
   if action_type != 0:
-    print("action_type: ", action_type)
     print("step: ", step)
-    print("player_gold: ", player_gold)
+    print("action_type: ", action_type)
+    #print("player_gold: ", player_gold)
+
+  if popup_menu:
+    print("step: ", step)
+    print("popup_menu: ", popup_menu)
     print("")
 
   for data in cliloc_data:
