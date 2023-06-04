@@ -14,7 +14,14 @@ import time
 import numpy as np
 import cv2
 import random
+import pygame
+import sys
+ 
 
+pygame.init()
+pygame.display.set_caption("OpenCV camera stream on Pygame")
+surface = pygame.display.set_mode([1280,1370])
+clock = pygame.time.Clock()
 
 grpc_port = 60051
 channel = grpc.insecure_channel('localhost:' + str(grpc_port))
@@ -43,36 +50,132 @@ def isTeacher(title):
   return None
 
 
+mobile_object_data_list = []
+
 def parse_response(step, response):
+  global mobile_object_data_list
+
+  # Action data parse
+  player_actions = response.replayActions
+  action_type = player_actions.actionType
+  mobile_serial = player_actions.mobileSerial
+  item_serial = player_actions.itemSerial
+  index = player_actions.index
+  amount = player_actions.amount
+
+  # Commnon data parse
+  mobile_data = response.mobileList.mobile
+  equipped_item_data = response.equippedItemList.item
+  backpack_item_data = response.backpackItemList.item
+  corpse_item_data = response.corpseItemList.item
+  popup_menu_data = response.popupMenuList.menu
+  cliloc_data = response.clilocDataList.clilocData
+
+  # Game object data parse
+  player_mobile_object_data = response.playerMobileObjectList.gameObject
+  mobile_object_data = response.mobileObjectList.gameObject
+  item_object_data = response.itemObjectList.gameObject
+  item_dropable_land_data = response.itemDropableLandList.gameSimpleObject
+  vendor_item_data = response.vendorItemObjectList.gameObject
+  static_object_screen_x_data = response.staticObjectInfoList.screenXs
+  static_object_screen_y_data = response.staticObjectInfoList.screenYs
+
+  # Player stat data parse
+  player_status_data = response.playerStatus
+  player_skills_data = response.playerSkillList.skills
+
+  # Save the parsed data for visualize
+  mobile_object_data_list.append(mobile_object_data)
+
+
+def vis_object(mobile_object_data):
+  screen_image = np.zeros((1720,1370,3), dtype=np.uint8)
+
+  for obj in mobile_object_data:
+    screen_image[int(obj.screenX), int(obj.screenY), 0] = 255
+    screen_image[int(obj.screenX), int(obj.screenY), 1] = 255
+    screen_image[int(obj.screenX), int(obj.screenY), 2] = 255
+
+  surf = pygame.surfarray.make_surface(screen_image)
+  surface.blit(surf, (0,0))
+  pygame.display.flip()
+
+
+def vis_response():
+  print("vis_response()")
+  global mobile_object_data_list
+  print("len(mobile_object_data_list): ", len(mobile_object_data_list))
+
+  replay_step = 0
+  while True:
+    #print("while True")
+
+    # creating a loop to check events that
+    # are occurring
+    for event in pygame.event.get():
+         if event.type == pygame.QUIT:
+             running = False
+
+    keys = pygame.key.get_pressed()
+
+    #print("keys[pygame.K_LEFT]:: ", keys[pygame.K_LEFT])
+    #print("keys[pygame.K_RIGHT]:: ", keys[pygame.K_RIGHT])
+
+    if keys[pygame.K_LEFT]:
+      if replay_step >= 1:
+        replay_step -= 1
+        print("replay_step: ", replay_step)
+      else:
+        print("This is start step of replay")
+
+    if keys[pygame.K_RIGHT]:
+      if replay_step < len(mobile_object_data_list) - 1:
+        replay_step += 1
+        print("replay_step: ", replay_step)
+      else:
+        print("This is end step of replay")
+
+    vis_object(mobile_object_data_list[replay_step])
+    clock.tick(100)
+
+
+  '''
   vendor_dict = {}
   vendor_item_dict = {}
   player_skills_dict = {}
 
-  mobile_data = response.mobileList.mobile
-  equipped_item_data = response.equippedItemList.item
-  backpack_item_data = response.backpackItemList.item
-  cliloc_data = response.clilocDataList.clilocData
+  #mobile_data = response.mobileList.mobile
+  #equipped_item_data = response.equippedItemList.item
+  #backpack_item_data = response.backpackItemList.item
+  #cliloc_data = response.clilocDataList.clilocData
 
   popup_menu = response.popupMenuList
   player_status_data = response.playerStatus
   player_gold = player_status_data.gold
-  action_type = response.replayActions.actionType
+  player_actions = response.replayActions
 
-  if action_type != 0:
+  if player_actions.actionType != 0:
     print("step: ", step)
-    print("action_type: ", action_type)
-    #print("player_gold: ", player_gold)
+    print("player_actions.actionType: ", player_actions.actionType)
+    print("player_actions.mobileSerial: ", player_actions.mobileSerial)
+    print("player_actions.itemSerial: ", player_actions.itemSerial)
+    print("")
 
   if popup_menu:
-    print("step: ", step)
-    print("popup_menu: ", popup_menu)
-    print("")
+    #print("step: ", step)
+    #print("popup_menu: ", popup_menu)
+    #print("")
+    pass
 
   player_skills_data = response.playerSkillList.skills
   for skill in player_skills_data:
-    print("skill: ", skill)
+    player_skills_dict[skill.name] = [skill.index, skill.isClickable, skill.value, skill.base, skill.cap, skill.lock]  
 
-  print("")
+  if 'Swordsmanship' in player_skills_dict:
+    #print("step: ", step)
+    #print("player_skills_dict['Swordsmanship']: ", player_skills_dict['Swordsmanship'])
+    #print("")
+    pass
 
   for data in cliloc_data:
     cliloc_dict = {}
@@ -159,15 +262,28 @@ def parse_response(step, response):
       color = (0, 0, 255)
     else:
       color = (255, 0, 0)
+  '''
 
 
 def main():
-  for ep in range(0, 10000):
-    stub.ReadMPQFile(UoService_pb2.Config(name='/home/kimbring2/ClassicUO/bin/dist/Replay'))
+  replay_path = '/home/kimbring2/ClassicUO/bin/dist/Replay/'
+  replay_file_name = 'kimbring2-2023-6-4-20-21-39.uoreplay'
 
-    for step in range(0, 2000):
-      res = stub.ReadReplay(UoService_pb2.Config(name='you'))
-      parse_response(step, res)
+  stub.ReadMPQFile(UoService_pb2.Config(replayName=replay_path + replay_file_name))
+
+  replay_step = 0
+  while True:
+    res = stub.ReadReplay(UoService_pb2.Config(name="test"))
+
+    parse_response(replay_step, res)
+
+    #print("res.replayParseEnd: ", res.replayParseEnd)
+    if res.replayParseEnd:
+      break
+
+    replay_step += 1
+
+  vis_response()
 
 
 if __name__ == '__main__':

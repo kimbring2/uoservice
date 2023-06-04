@@ -79,6 +79,7 @@ message GrpcPopupMenuList {
 
 message Config {
   string name = 1;
+  string replayName = 2;
 }
 
 message GrpcSkill {
@@ -138,6 +139,8 @@ message States {
   GrpcGameObjectInfoList staticObjectInfoList = 16;
 
   GrpcSkillList playerSkillList = 17;
+
+  bool replayParseEnd = 18;
 }
 
 message Actions {

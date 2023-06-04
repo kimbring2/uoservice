@@ -54,7 +54,7 @@ def parse_response(response):
   global player_serial
   global mountable_list
 
-  player_skills_dict = []
+  player_skills_dict = {}
   mobile_dict = {}
   mountable_mobile_dict = {}
   world_item_dict = {}
@@ -66,6 +66,7 @@ def parse_response(response):
   vendor_dict = {}
   vendor_item_dict = {}
   teacher_dict = {}
+  player_skill_dict = {}
   popup_menu_list = []
   cliloc_data_list = []
 
@@ -80,9 +81,17 @@ def parse_response(response):
 
   player_skills_data = response.playerSkillList.skills
   for skill in player_skills_data:
-    print("skill: ", skill)
-
-  #print("")
+    '''
+    print("skill.name: ", skill.name)
+    print("skill.index: ", skill.index)
+    print("skill.isClickable: ", skill.isClickable)
+    print("skill.value: ", skill.value)
+    print("skill.base: ", skill.base)
+    print("skill.cap: ", skill.cap)
+    print("skill.lock: ", skill.lock)
+    print("")
+    '''
+    player_skills_dict[skill.name] = [skill.index, skill.isClickable, skill.value, skill.base, skill.cap, skill.lock]
 
   static_object_screen_x_data = response.staticObjectInfoList.screenXs
   static_object_screen_y_data = response.staticObjectInfoList.screenYs
@@ -180,7 +189,7 @@ def parse_response(response):
   if len(mobile_data) == 0 or len(equipped_item_data) == 0:
     return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, \
           corpse_dict, corpse_item_dict, vendor_dict, vendor_item_dict, mountable_mobile_dict, \
-          teacher_dict, popup_menu_list, cliloc_data_list
+          teacher_dict, popup_menu_list, cliloc_data_list, player_skills_dict
 
   for mobile in mobile_data:
     #print('name: {0}, x: {1}, y: {2}, race: {3}, serial: {4}\n'.format(mobile.name, mobile.x, mobile.y, mobile.race,
@@ -231,7 +240,7 @@ def parse_response(response):
 
   return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict, \
       corpse_item_dict, vendor_dict, vendor_item_dict, mountable_mobile_dict, teacher_dict, \
-      popup_menu_list, cliloc_data_list
+      popup_menu_list, cliloc_data_list, player_skills_dict
 
 
 def get_serial_by_name(item_dict, name):
@@ -291,13 +300,16 @@ def main():
 
     mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict, \
         corpse_item_dict, vendor_dict, vendor_item_dict, mountable_mobile_dict, teacher_dict, \
-        popup_menu_list, cliloc_data_list = parse_response(res)
+        popup_menu_list, cliloc_data_list, player_skills_dict = parse_response(res)
 
     target_item_serial = 0
     target_mobile_serial = 0
     healer_vendor_serial = None
 
     for step in range(1, 100000):
+      #if 'Swordsmanship' in player_skills_dict:
+        #print("player_skills_dict['Swordsmanship']: ", player_skills_dict['Swordsmanship'])
+
       #print("vendor_dict: ", vendor_dict)
       #print("popup_menu_list: ", popup_menu_list)
       #print("vendor_item_dict: ", vendor_item_dict)
@@ -403,7 +415,7 @@ def main():
 
       mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, corpse_dict, \
         corpse_item_dict, vendor_dict, vendor_item_dict, mountable_mobile_dict, teacher_dict, \
-        popup_menu_list, cliloc_data_list = parse_response(res_next)
+        popup_menu_list, cliloc_data_list, player_skills_dict = parse_response(res_next)
 
 
 if __name__ == '__main__':
