@@ -54,6 +54,7 @@ def parse_response(response):
   global player_serial
   global mountable_list
 
+  player_skills_dict = []
   mobile_dict = {}
   mountable_mobile_dict = {}
   world_item_dict = {}
@@ -76,6 +77,12 @@ def parse_response(response):
 
   player_status_data = response.playerStatus
   #print("player_status_data: ", player_status_data)
+
+  player_skills_data = response.playerSkillList.skills
+  for skill in player_skills_data:
+    print("skill: ", skill)
+
+  #print("")
 
   static_object_screen_x_data = response.staticObjectInfoList.screenXs
   static_object_screen_y_data = response.staticObjectInfoList.screenYs
@@ -294,7 +301,7 @@ def main():
       #print("vendor_dict: ", vendor_dict)
       #print("popup_menu_list: ", popup_menu_list)
       #print("vendor_item_dict: ", vendor_item_dict)
-      print("backpack_item_dict: ", backpack_item_dict)
+      #print("backpack_item_dict: ", backpack_item_dict)
       #print("teacher_dict: ", teacher_dict)
       #target_mobile_serial, index = get_serial_by_title(teacher_dict, 'warrior')
       healer_vendor_serial, index = get_serial_by_title(vendor_dict, 'healer')

@@ -81,6 +81,20 @@ message Config {
   string name = 1;
 }
 
+message GrpcSkill {
+  string name = 1;
+  uint32 index = 2;
+  bool isClickable = 3;
+  uint32 value = 4;
+  uint32 base = 5;
+  uint32 cap = 6;
+  uint32 lock = 7;
+}
+
+message GrpcSkillList {
+  repeated GrpcSkill skills = 1;
+}
+
 message GrpcPlayerStatus {
   uint32 str = 1;
   uint32 dex = 2;
@@ -122,6 +136,8 @@ message States {
   Actions replayActions = 15;
 
   GrpcGameObjectInfoList staticObjectInfoList = 16;
+
+  GrpcSkillList playerSkillList = 17;
 }
 
 message Actions {

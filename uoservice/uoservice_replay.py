@@ -46,6 +46,7 @@ def isTeacher(title):
 def parse_response(step, response):
   vendor_dict = {}
   vendor_item_dict = {}
+  player_skills_dict = {}
 
   mobile_data = response.mobileList.mobile
   equipped_item_data = response.equippedItemList.item
@@ -66,6 +67,12 @@ def parse_response(step, response):
     print("step: ", step)
     print("popup_menu: ", popup_menu)
     print("")
+
+  player_skills_data = response.playerSkillList.skills
+  for skill in player_skills_data:
+    print("skill: ", skill)
+
+  print("")
 
   for data in cliloc_data:
     cliloc_dict = {}
