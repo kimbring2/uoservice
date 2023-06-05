@@ -77,13 +77,15 @@ item_serial_list = []
 index_list = []
 amount_list = []
 
-mobile_object_data_list = []
 player_mobile_object_data_list = []
+mobile_object_data_list = []
+item_object_data_list = []
 
 equipped_item_list = []
 backpack_item_list = []
 
 player_status_list = []
+
 
 def parse_response(step, response):
   global action_type_list
@@ -95,6 +97,7 @@ def parse_response(step, response):
 
   global player_mobile_object_data_list
   global mobile_object_data_list
+  global item_object_data_list
 
   global equipped_item_list
   global backpack_item_list
@@ -139,6 +142,7 @@ def parse_response(step, response):
 
   player_mobile_object_data_list.append(player_mobile_object_data)
   mobile_object_data_list.append(mobile_object_data)
+  item_object_data_list.append(item_object_data)
 
   # Player stat data parse
   player_status_data = response.playerStatus
@@ -158,20 +162,7 @@ def vis_object(screen_image, mobile_object_data, color):
 
 def parse_player_status(player_status_grpc):
   player_status_dict = {}
-  '''
-  str: 100
-  dex: 62
-  intell: 133
-  hits: 121
-  hitsMax: 121
-  stamina: 70
-  staminaMax: 70
-  mana: 148
-  gold: 47196
-  physicalResistance: 88
-  weight: 677
-  weightMax: 450
-  '''
+
   player_status_dict['str'] = player_status_grpc.str
   player_status_dict['dex'] = player_status_grpc.dex
   player_status_dict['intell'] = player_status_grpc.intell
@@ -188,6 +179,15 @@ def parse_player_status(player_status_grpc):
   return player_status_dict
 
 
+def parse_backpack_item(backpack_item_grpc):
+  backpack_item_dict = {}
+
+  for item in backpack_item_grpc :
+    backpack_item_dict[item.serial] = [item.name, item.amount]
+
+  return backpack_item_dict
+
+
 def vis_response():
   print("vis_response()")
   global action_type_list
@@ -199,6 +199,7 @@ def vis_response():
 
   global player_mobile_object_data_list
   global mobile_object_data_list
+  global item_object_data_list
 
   global equipped_item_list
   global backpack_item_list
@@ -219,84 +220,92 @@ def vis_response():
         replay_step -= 1
         #print("replay_step: ", replay_step)
       else:
-        print("This is start step of replay")
+        print("This is start of replay")
 
     if keys[pygame.K_RIGHT]:
       if replay_step < len(mobile_object_data_list) - 1:
         replay_step += 1
         #print("replay_step: ", replay_step)
       else:
-        print("This is end step of replay")
+        print("This is end of replay")
 
+    # Create the downscaled array for bigger mobile object drawing
     screen_image = np.zeros((172,137,3), dtype=np.uint8)
 
-    player_mobile_object_data = player_mobile_object_data_list[replay_step]
-    #print("player_mobile_object_data: ", player_mobile_object_data)
-
-    screen_image = vis_object(screen_image, mobile_object_data_list[replay_step], (255, 0, 0))
+    # Draw the player mobile object
     screen_image = vis_object(screen_image, player_mobile_object_data_list[replay_step], (0, 255, 0))
+
+    # Draw the mobile object
+    screen_image = vis_object(screen_image, mobile_object_data_list[replay_step], (255, 0, 0))
+
+    # Draw the item object
+    screen_image = vis_object(screen_image, item_object_data_list[replay_step], (0, 0, 255))
+
+    # Resize the screen size to fit real screen
     screen_image = cv2.resize(screen_image, (1370, 1280), interpolation = cv2.INTER_AREA)
     screen_image = cv2.rotate(screen_image, cv2.ROTATE_90_CLOCKWISE)
     screen_image = cv2.flip(screen_image, 1)
 
+    # Draw the screen image on the Pygame screen
     surf = pygame.surfarray.make_surface(screen_image)
     screen_surface.blit(surf, (0, 0))
 
+    # Draw the replay step on the Pygame screen
     font = pygame.font.Font('freesansbold.ttf', 32)
     replay_step_surface = font.render("step: " + str(replay_step), True, (255, 255, 255))
     screen_surface.blit(replay_step_surface, (0, 0))
 
+    # Draw the action info on the Pygame screen
     action_type_surface = font.render("action type: " + str(action_type_list[replay_step]), True, (255, 255, 255))
     screen_surface.blit(action_type_surface, (0, 30))
-
     action_type_surface = font.render("walk direction: " + str(walk_direction_list[replay_step]), True, (255, 255, 255))
     screen_surface.blit(action_type_surface, (0, 60))
 
+    # Draw the boundary line
     pygame.draw.line(screen_surface, (255, 255, 255), (screen_width - 1, 0), (screen_width - 1, screen_height))
     pygame.draw.line(screen_surface, (255, 255, 255), (0, screen_height - 1), (screen_width, screen_height - 1))
 
-    for backpack_item in backpack_item_list[replay_step]:
-      #print("backpack_item: ", backpack_item)
-      #replay_step_surface = font.render("step: " + str(replay_step), True, (255, 255, 255))
-      #screen_surface.blit(replay_step_surface, (0, 0))
-      pass
-
+    # Equip item draw
     equip_item_surface.fill(((0, 0, 0)))
     font = pygame.font.Font('freesansbold.ttf', 32)
     item_surface = font.render("Equip Items", True, (255, 0, 255))
     equip_item_surface.blit(item_surface, (0, 0))
     for i, equipped_item in enumerate(equipped_item_list[replay_step]):
-      #print("i: ", i)
-      #print("equipped_item.name: ", equipped_item.name)
       font = pygame.font.Font('freesansbold.ttf', 20)
       item_surface = font.render(str(Layers(int(equipped_item.layer)).name) + ": " + str(equipped_item.name), True, (255, 255, 255))
       equip_item_surface.blit(item_surface, (0, 25 * (i + 1) + 20))
 
+    # Backpack item draw
+    backpack_item_grpc = backpack_item_list[replay_step]
+    backpack_item_dict = parse_backpack_item(backpack_item_grpc)
+    font = pygame.font.Font('freesansbold.ttf', 32)
+    text_surface = font.render("Backpack Item", True, (255, 0, 255))
+    equip_item_surface.blit(text_surface, (0, 500))
+    for i, k in enumerate(backpack_item_dict):
+      font = pygame.font.Font('freesansbold.ttf', 16)
+      item = backpack_item_dict[k]
+      text_surface = font.render(str(k) + ": " + str(item[0]) + ", " + str(item[1]), True, (255, 255, 255))
+      equip_item_surface.blit(text_surface, (0, 20 * (i + 1) + 520))
+
+    # Player status draw
     player_status_grpc = player_status_list[replay_step]
     player_status_dict = parse_player_status(player_status_grpc)
     status_surface.fill(((0, 0, 0)))
-    font = pygame.font.Font('freesansbold.ttf', 25)
+    font = pygame.font.Font('freesansbold.ttf', 32)
     text_surface = font.render("Player Status", True, (255, 0, 255))
     status_surface.blit(text_surface, (0, 0))
     for i, k in enumerate(player_status_dict):
-      #print("k: ", k)
-      #print("player_status_dict[k]: ", player_status_dict[k])
       font = pygame.font.Font('freesansbold.ttf', 16)
       text_surface = font.render(str(k) + ": " + str(player_status_dict[k]), True, (255, 255, 255))
-      status_surface.blit(text_surface, (0, 20 * (i + 1) + 10))
+      status_surface.blit(text_surface, (0, 20 * (i + 1) + 20))
 
-    #print("")
-
-    #main_surface = pygame.display.set_mode([width, height])
-    #screen_surface = pygame.Surface((width - 600, height))
-    #equip_item_surface = pygame.Surface((600, height))
-
+    # Draw each surface on root surface
     main_surface.blit(screen_surface, (0, 0))
     main_surface.blit(equip_item_surface, (screen_width, 0))
     main_surface.blit(status_surface, (0, screen_height))
-
     pygame.display.update()
 
+    # Wait little bit
     clock.tick(100)
 
   '''
