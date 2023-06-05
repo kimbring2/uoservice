@@ -83,6 +83,9 @@ item_object_data_list = []
 
 equipped_item_list = []
 backpack_item_list = []
+popup_menu_data_list = []
+vendor_item_data_list = []
+cliloc_data_list = []
 
 player_status_list = []
 
@@ -101,6 +104,9 @@ def parse_response(step, response):
 
   global equipped_item_list
   global backpack_item_list
+  global popup_menu_data_list
+  global vendor_item_data_list
+  global cliloc_data_list
 
   global player_status_list
 
@@ -130,6 +136,8 @@ def parse_response(step, response):
 
   equipped_item_list.append(equipped_item_data)
   backpack_item_list.append(backpack_item_data)
+  popup_menu_data_list.append(popup_menu_data)
+  cliloc_data_list.append(cliloc_data)
 
   # Game object data parse
   player_mobile_object_data = response.playerMobileObjectList.gameObject
@@ -143,6 +151,7 @@ def parse_response(step, response):
   player_mobile_object_data_list.append(player_mobile_object_data)
   mobile_object_data_list.append(mobile_object_data)
   item_object_data_list.append(item_object_data)
+  vendor_item_data_list.append(vendor_item_data)
 
   # Player stat data parse
   player_status_data = response.playerStatus
@@ -179,17 +188,18 @@ def parse_player_status(player_status_grpc):
   return player_status_dict
 
 
-def parse_backpack_item(backpack_item_grpc):
-  backpack_item_dict = {}
+def parse_item(item_grpc):
+  item_dict = {}
 
-  for item in backpack_item_grpc :
-    backpack_item_dict[item.serial] = [item.name, item.amount]
+  for item in item_grpc :
+    item_dict[item.serial] = [item.name, item.amount]
 
-  return backpack_item_dict
+  return item_dict
 
 
 def vis_response():
   print("vis_response()")
+
   global action_type_list
   global walk_direction_list
   global mobile_serial_list
@@ -203,6 +213,9 @@ def vis_response():
 
   global equipped_item_list
   global backpack_item_list
+  global popup_menu_data_list
+  global vendor_item_data_list
+  global cliloc_data_list
 
   global player_status_list
 
@@ -277,15 +290,27 @@ def vis_response():
 
     # Backpack item draw
     backpack_item_grpc = backpack_item_list[replay_step]
-    backpack_item_dict = parse_backpack_item(backpack_item_grpc)
+    backpack_item_dict = parse_item(backpack_item_grpc)
     font = pygame.font.Font('freesansbold.ttf', 32)
     text_surface = font.render("Backpack Item", True, (255, 0, 255))
-    equip_item_surface.blit(text_surface, (0, 500))
+    equip_item_surface.blit(text_surface, (0, 400))
     for i, k in enumerate(backpack_item_dict):
       font = pygame.font.Font('freesansbold.ttf', 16)
       item = backpack_item_dict[k]
       text_surface = font.render(str(k) + ": " + str(item[0]) + ", " + str(item[1]), True, (255, 255, 255))
-      equip_item_surface.blit(text_surface, (0, 20 * (i + 1) + 520))
+      equip_item_surface.blit(text_surface, (0, 20 * (i + 1) + 420))
+
+    # Vendor item draw
+    vendor_item_grpc = vendor_item_data_list[replay_step]
+    vendor_item_dict = parse_item(vendor_item_grpc)
+    font = pygame.font.Font('freesansbold.ttf', 32)
+    text_surface = font.render("Vendor Item", True, (255, 0, 255))
+    equip_item_surface.blit(text_surface, (0, 900))
+    for i, k in enumerate(vendor_item_dict):
+      font = pygame.font.Font('freesansbold.ttf', 16)
+      item = vendor_item_dict[k]
+      text_surface = font.render(str(k) + ": " + str(item[0]) + ", " + str(item[1]), True, (255, 255, 255))
+      equip_item_surface.blit(text_surface, (0, 20 * (i + 1) + 920))
 
     # Player status draw
     player_status_grpc = player_status_list[replay_step]
@@ -298,6 +323,17 @@ def vis_response():
       font = pygame.font.Font('freesansbold.ttf', 16)
       text_surface = font.render(str(k) + ": " + str(player_status_dict[k]), True, (255, 255, 255))
       status_surface.blit(text_surface, (0, 20 * (i + 1) + 20))
+
+    # Pop up menu draw
+    font = pygame.font.Font('freesansbold.ttf', 32)
+    text_surface = font.render("Pop Up Menu", True, (255, 0, 255))
+    status_surface.blit(text_surface, (300, 0))
+    for i, menu in enumerate(popup_menu_data_list[replay_step]):
+      font = pygame.font.Font('freesansbold.ttf', 16)
+      text_surface = font.render(str(i) + ": " + str(menu), True, (255, 255, 255))
+      status_surface.blit(text_surface, (300, 20 * (i + 1) + 20))
+
+
 
     # Draw each surface on root surface
     main_surface.blit(screen_surface, (0, 0))
@@ -436,7 +472,7 @@ def vis_response():
 
 def main():
   replay_path = '/home/kimbring2/ClassicUO/bin/dist/Replay/'
-  replay_file_name = 'kimbring2-2023-6-5-00-02-13.uoreplay'
+  replay_file_name = 'kimbring2-2023-6-5-22-50-40.uoreplay'
 
   stub.ReadMPQFile(UoService_pb2.Config(replayName=replay_path + replay_file_name))
 
