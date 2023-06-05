@@ -16,6 +16,7 @@ import cv2
 import random
 import pygame
 import sys
+from enum import Enum
  
 pygame.init()
 pygame.display.set_caption("OpenCV camera stream on Pygame")
@@ -26,12 +27,48 @@ screen_height = 1280
 main_surface = pygame.display.set_mode([screen_width + 500, screen_height + 350])
 screen_surface = pygame.Surface((screen_width, screen_height))
 equip_item_surface = pygame.Surface((600, screen_height))
+status_surface = pygame.Surface((screen_width, 350))
 
 clock = pygame.time.Clock()
 
 grpc_port = 60051
 channel = grpc.insecure_channel('localhost:' + str(grpc_port))
 stub = UoService_pb2_grpc.UoServiceStub(channel)
+
+
+class Layers(Enum):
+  Invalid = 0
+  OneHanded = 1
+  TwoHanded = 2
+  Shoes = 3
+  Pants = 4
+  Shirt = 5
+  Helmet = 6
+  Gloves = 7
+  Ring = 8
+  Talisman = 9
+  Necklace = 10
+  Hair = 11
+  Waist = 12
+  Torso = 13
+  Bracelet = 14
+  Face = 15
+  Beard = 16
+  Tunic = 17
+  Earrings = 18
+  Arms = 19
+  Cloak = 20
+  Backpack = 21
+  Robe = 22
+  Skirt = 23
+  Legs = 24
+  Mount = 25
+  ShopBuyRestock = 26
+  ShopBuy = 27
+  ShopSell = 28
+  Bank = 29
+
+print(Layers(20).name)
 
 action_type_list = []
 walk_direction_list = []
@@ -46,6 +83,8 @@ player_mobile_object_data_list = []
 equipped_item_list = []
 backpack_item_list = []
 
+player_status_list = []
+
 def parse_response(step, response):
   global action_type_list
   global walk_direction_list
@@ -59,6 +98,8 @@ def parse_response(step, response):
 
   global equipped_item_list
   global backpack_item_list
+
+  global player_status_list
 
   # Action data parse
   player_actions = response.replayActions
@@ -103,6 +144,8 @@ def parse_response(step, response):
   player_status_data = response.playerStatus
   player_skills_data = response.playerSkillList.skills
 
+  player_status_list.append(player_status_data)
+
 
 def vis_object(screen_image, mobile_object_data, color):
   for obj in mobile_object_data:
@@ -111,6 +154,38 @@ def vis_object(screen_image, mobile_object_data, color):
     screen_image[int(obj.screenX / 10.0), int(obj.screenY / 10.0), 2] = color[2]
 
   return screen_image
+
+
+def parse_player_status(player_status_grpc):
+  player_status_dict = {}
+  '''
+  str: 100
+  dex: 62
+  intell: 133
+  hits: 121
+  hitsMax: 121
+  stamina: 70
+  staminaMax: 70
+  mana: 148
+  gold: 47196
+  physicalResistance: 88
+  weight: 677
+  weightMax: 450
+  '''
+  player_status_dict['str'] = player_status_grpc.str
+  player_status_dict['dex'] = player_status_grpc.dex
+  player_status_dict['intell'] = player_status_grpc.intell
+  player_status_dict['hits'] = player_status_grpc.hits
+  player_status_dict['hitsMax'] = player_status_grpc.hitsMax
+  player_status_dict['stamina'] = player_status_grpc.stamina
+  player_status_dict['staminaMax'] = player_status_grpc.staminaMax
+  player_status_dict['mana'] = player_status_grpc.mana
+  player_status_dict['gold'] = player_status_grpc.gold
+  player_status_dict['physicalResistance'] = player_status_grpc.physicalResistance
+  player_status_dict['weight'] = player_status_grpc.weight
+  player_status_dict['weightMax'] = player_status_grpc.weightMax
+
+  return player_status_dict
 
 
 def vis_response():
@@ -127,6 +202,8 @@ def vis_response():
 
   global equipped_item_list
   global backpack_item_list
+
+  global player_status_list
 
   print("len(mobile_object_data_list): ", len(mobile_object_data_list))
 
@@ -189,25 +266,38 @@ def vis_response():
     item_surface = font.render("Equip Items", True, (255, 0, 255))
     equip_item_surface.blit(item_surface, (0, 0))
     for i, equipped_item in enumerate(equipped_item_list[replay_step]):
-      print("i: ", i)
-      print("equipped_item.name: ", equipped_item.name)
+      #print("i: ", i)
+      #print("equipped_item.name: ", equipped_item.name)
       font = pygame.font.Font('freesansbold.ttf', 20)
-      item_surface = font.render("name: " + str(equipped_item.name), True, (255, 255, 255))
-      equip_item_surface.blit(item_surface, (0, 30 * (i + 1)))
+      item_surface = font.render(str(Layers(int(equipped_item.layer)).name) + ": " + str(equipped_item.name), True, (255, 255, 255))
+      equip_item_surface.blit(item_surface, (0, 25 * (i + 1) + 20))
 
-    print("")
+    player_status_grpc = player_status_list[replay_step]
+    player_status_dict = parse_player_status(player_status_grpc)
+    status_surface.fill(((0, 0, 0)))
+    font = pygame.font.Font('freesansbold.ttf', 25)
+    text_surface = font.render("Player Status", True, (255, 0, 255))
+    status_surface.blit(text_surface, (0, 0))
+    for i, k in enumerate(player_status_dict):
+      #print("k: ", k)
+      #print("player_status_dict[k]: ", player_status_dict[k])
+      font = pygame.font.Font('freesansbold.ttf', 16)
+      text_surface = font.render(str(k) + ": " + str(player_status_dict[k]), True, (255, 255, 255))
+      status_surface.blit(text_surface, (0, 20 * (i + 1) + 10))
+
+    #print("")
+
     #main_surface = pygame.display.set_mode([width, height])
     #screen_surface = pygame.Surface((width - 600, height))
     #equip_item_surface = pygame.Surface((600, height))
 
     main_surface.blit(screen_surface, (0, 0))
     main_surface.blit(equip_item_surface, (screen_width, 0))
+    main_surface.blit(status_surface, (0, screen_height))
 
-    #pygame.display.flip()
     pygame.display.update()
 
     clock.tick(100)
-
 
   '''
   vendor_dict = {}
