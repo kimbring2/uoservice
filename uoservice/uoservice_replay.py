@@ -17,51 +17,64 @@ import random
 import pygame
 import sys
  
-
 pygame.init()
 pygame.display.set_caption("OpenCV camera stream on Pygame")
-surface = pygame.display.set_mode([1280,1370])
+
+screen_width = 1370
+screen_height = 1280
+
+main_surface = pygame.display.set_mode([screen_width + 500, screen_height + 350])
+screen_surface = pygame.Surface((screen_width, screen_height))
+equip_item_surface = pygame.Surface((600, screen_height))
+
 clock = pygame.time.Clock()
 
 grpc_port = 60051
 channel = grpc.insecure_channel('localhost:' + str(grpc_port))
 stub = UoService_pb2_grpc.UoServiceStub(channel)
 
-
-def isVendor(title):
-  vendor_name_list = ['healer', 'armourer']
-  title_split = title.split(" ")
-  for vendor_name in vendor_name_list:
-    if vendor_name in title_split:
-      index = title_split.index(vendor_name)
-      return title_split[index]
-
-  return None
-
-
-def isTeacher(title):
-  teacher_name_list = ['warrior']
-  title_split = title.split(" ")
-  for teacher_name in teacher_name_list:
-    if teacher_name in title_split:
-      index = title_split.index(teacher_name)
-      return title_split[index]
-
-  return None
-
+action_type_list = []
+walk_direction_list = []
+mobile_serial_list = []
+item_serial_list = []
+index_list = []
+amount_list = []
 
 mobile_object_data_list = []
+player_mobile_object_data_list = []
+
+equipped_item_list = []
+backpack_item_list = []
 
 def parse_response(step, response):
+  global action_type_list
+  global walk_direction_list
+  global mobile_serial_list
+  global item_serial_list
+  global index_list
+  global amount_list
+
+  global player_mobile_object_data_list
   global mobile_object_data_list
+
+  global equipped_item_list
+  global backpack_item_list
 
   # Action data parse
   player_actions = response.replayActions
   action_type = player_actions.actionType
+  walk_direction = player_actions.walkDirection
   mobile_serial = player_actions.mobileSerial
   item_serial = player_actions.itemSerial
   index = player_actions.index
   amount = player_actions.amount
+
+  action_type_list.append(action_type)
+  walk_direction_list.append(walk_direction)
+  mobile_serial_list.append(mobile_serial)
+  item_serial_list.append(item_serial)
+  index_list.append(index)
+  amount_list.append(amount)
 
   # Commnon data parse
   mobile_data = response.mobileList.mobile
@@ -70,6 +83,9 @@ def parse_response(step, response):
   corpse_item_data = response.corpseItemList.item
   popup_menu_data = response.popupMenuList.menu
   cliloc_data = response.clilocDataList.clilocData
+
+  equipped_item_list.append(equipped_item_data)
+  backpack_item_list.append(backpack_item_data)
 
   # Game object data parse
   player_mobile_object_data = response.playerMobileObjectList.gameObject
@@ -80,62 +96,116 @@ def parse_response(step, response):
   static_object_screen_x_data = response.staticObjectInfoList.screenXs
   static_object_screen_y_data = response.staticObjectInfoList.screenYs
 
+  player_mobile_object_data_list.append(player_mobile_object_data)
+  mobile_object_data_list.append(mobile_object_data)
+
   # Player stat data parse
   player_status_data = response.playerStatus
   player_skills_data = response.playerSkillList.skills
 
-  # Save the parsed data for visualize
-  mobile_object_data_list.append(mobile_object_data)
 
-
-def vis_object(mobile_object_data):
-  screen_image = np.zeros((1720,1370,3), dtype=np.uint8)
-
+def vis_object(screen_image, mobile_object_data, color):
   for obj in mobile_object_data:
-    screen_image[int(obj.screenX), int(obj.screenY), 0] = 255
-    screen_image[int(obj.screenX), int(obj.screenY), 1] = 255
-    screen_image[int(obj.screenX), int(obj.screenY), 2] = 255
+    screen_image[int(obj.screenX / 10.0), int(obj.screenY / 10.0), 0] = color[0]
+    screen_image[int(obj.screenX / 10.0), int(obj.screenY / 10.0), 1] = color[1]
+    screen_image[int(obj.screenX / 10.0), int(obj.screenY / 10.0), 2] = color[2]
 
-  surf = pygame.surfarray.make_surface(screen_image)
-  surface.blit(surf, (0,0))
-  pygame.display.flip()
+  return screen_image
 
 
 def vis_response():
   print("vis_response()")
+  global action_type_list
+  global walk_direction_list
+  global mobile_serial_list
+  global item_serial_list
+  global index_list
+  global amount_list
+
+  global player_mobile_object_data_list
   global mobile_object_data_list
+
+  global equipped_item_list
+  global backpack_item_list
+
   print("len(mobile_object_data_list): ", len(mobile_object_data_list))
 
   replay_step = 0
   while True:
-    #print("while True")
-
-    # creating a loop to check events that
-    # are occurring
     for event in pygame.event.get():
          if event.type == pygame.QUIT:
              running = False
 
     keys = pygame.key.get_pressed()
-
-    #print("keys[pygame.K_LEFT]:: ", keys[pygame.K_LEFT])
-    #print("keys[pygame.K_RIGHT]:: ", keys[pygame.K_RIGHT])
-
     if keys[pygame.K_LEFT]:
       if replay_step >= 1:
         replay_step -= 1
-        print("replay_step: ", replay_step)
+        #print("replay_step: ", replay_step)
       else:
         print("This is start step of replay")
 
     if keys[pygame.K_RIGHT]:
       if replay_step < len(mobile_object_data_list) - 1:
         replay_step += 1
-        print("replay_step: ", replay_step)
+        #print("replay_step: ", replay_step)
       else:
         print("This is end step of replay")
 
-    vis_object(mobile_object_data_list[replay_step])
+    screen_image = np.zeros((172,137,3), dtype=np.uint8)
+
+    player_mobile_object_data = player_mobile_object_data_list[replay_step]
+    #print("player_mobile_object_data: ", player_mobile_object_data)
+
+    screen_image = vis_object(screen_image, mobile_object_data_list[replay_step], (255, 0, 0))
+    screen_image = vis_object(screen_image, player_mobile_object_data_list[replay_step], (0, 255, 0))
+    screen_image = cv2.resize(screen_image, (1370, 1280), interpolation = cv2.INTER_AREA)
+    screen_image = cv2.rotate(screen_image, cv2.ROTATE_90_CLOCKWISE)
+    screen_image = cv2.flip(screen_image, 1)
+
+    surf = pygame.surfarray.make_surface(screen_image)
+    screen_surface.blit(surf, (0, 0))
+
+    font = pygame.font.Font('freesansbold.ttf', 32)
+    replay_step_surface = font.render("step: " + str(replay_step), True, (255, 255, 255))
+    screen_surface.blit(replay_step_surface, (0, 0))
+
+    action_type_surface = font.render("action type: " + str(action_type_list[replay_step]), True, (255, 255, 255))
+    screen_surface.blit(action_type_surface, (0, 30))
+
+    action_type_surface = font.render("walk direction: " + str(walk_direction_list[replay_step]), True, (255, 255, 255))
+    screen_surface.blit(action_type_surface, (0, 60))
+
+    pygame.draw.line(screen_surface, (255, 255, 255), (screen_width - 1, 0), (screen_width - 1, screen_height))
+    pygame.draw.line(screen_surface, (255, 255, 255), (0, screen_height - 1), (screen_width, screen_height - 1))
+
+    for backpack_item in backpack_item_list[replay_step]:
+      #print("backpack_item: ", backpack_item)
+      #replay_step_surface = font.render("step: " + str(replay_step), True, (255, 255, 255))
+      #screen_surface.blit(replay_step_surface, (0, 0))
+      pass
+
+    equip_item_surface.fill(((0, 0, 0)))
+    font = pygame.font.Font('freesansbold.ttf', 32)
+    item_surface = font.render("Equip Items", True, (255, 0, 255))
+    equip_item_surface.blit(item_surface, (0, 0))
+    for i, equipped_item in enumerate(equipped_item_list[replay_step]):
+      print("i: ", i)
+      print("equipped_item.name: ", equipped_item.name)
+      font = pygame.font.Font('freesansbold.ttf', 20)
+      item_surface = font.render("name: " + str(equipped_item.name), True, (255, 255, 255))
+      equip_item_surface.blit(item_surface, (0, 30 * (i + 1)))
+
+    print("")
+    #main_surface = pygame.display.set_mode([width, height])
+    #screen_surface = pygame.Surface((width - 600, height))
+    #equip_item_surface = pygame.Surface((600, height))
+
+    main_surface.blit(screen_surface, (0, 0))
+    main_surface.blit(equip_item_surface, (screen_width, 0))
+
+    #pygame.display.flip()
+    pygame.display.update()
+
     clock.tick(100)
 
 
@@ -267,7 +337,7 @@ def vis_response():
 
 def main():
   replay_path = '/home/kimbring2/ClassicUO/bin/dist/Replay/'
-  replay_file_name = 'kimbring2-2023-6-4-20-21-39.uoreplay'
+  replay_file_name = 'kimbring2-2023-6-5-00-02-13.uoreplay'
 
   stub.ReadMPQFile(UoService_pb2.Config(replayName=replay_path + replay_file_name))
 
