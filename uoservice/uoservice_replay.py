@@ -472,7 +472,7 @@ def vis_response():
 
 def main():
   replay_path = '/home/kimbring2/ClassicUO/bin/dist/Replay/'
-  replay_file_name = 'kimbring2-2023-6-5-22-50-40.uoreplay'
+  replay_file_name = 'kimbring2-2023-6-6-01-56-41.uoreplay'
 
   stub.ReadMPQFile(UoService_pb2.Config(replayName=replay_path + replay_file_name))
 
