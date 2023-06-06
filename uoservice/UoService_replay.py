@@ -90,7 +90,8 @@ class UoServiceReplay:
 		self._playerMobileObjectDataList = []
 		self._mobileObjectDataList = []
 		self._itemObjectDataList = []
-		self._staticObjectInfoList = []
+		self._staticObjectScreenXsList = []
+		self._staticObjectScreenYsList = []
 		self._itemDropableLandObjectList = []
 		self._mobileDataList = []
 		self._equippedItemList = []
@@ -361,24 +362,21 @@ class UoServiceReplay:
 				grpcMobileObjectReplay = UoService_pb2.GrpcGameObjectList().FromString(mobileObjectSubsetArray)
 				#print("grpcMobileObjectReplay: ", grpcMobileObjectReplay)
 				self._mobileObjectDataList.append(grpcMobileObjectReplay.gameObject)
-				#for obj in grpcMobileObjectReplay.gameObject:
-				#	print("obj: ", obj)
-				#print("")
 			else:
 				print("mobileObjectArrRead is None")
 
-			'''
 			if self.staticObjectInfoListArrRead:
 				staticObjectInfoListSubsetArrays, self._staticObjectInfoListArrayOffset = self.GetSubsetArray(step, self.staticObjectInfoListLengthListRead, 
 																				   		   			self._staticObjectInfoListArrayOffset, self.staticObjectInfoListArrRead)
 				grpcStaticObjectInfoListReplay = UoService_pb2.GrpcGameObjectInfoList().FromString(staticObjectInfoListSubsetArrays)
-				#print("grpcStaticObjectInfoListReplay: ", grpcStaticObjectInfoListReplay)
-				self._staticObjectInfoList.append(grpcStaticObjectInfoListReplay.gameObject)
+				#print("grpcStaticObjectInfoListReplay.screenXs: ", grpcStaticObjectInfoListReplay.screenXs)
+				#print("grpcStaticObjectInfoListReplay.screenYs: ", grpcStaticObjectInfoListReplay.screenYs)
+				self._staticObjectScreenXsList.append(grpcStaticObjectInfoListReplay.screenXs)
+				self._staticObjectScreenYsList.append(grpcStaticObjectInfoListReplay.screenYs)
 
 			else:
 				print("staticObjectInfoListArrRead is None")
-			'''
-
+			
 			if step not in self.playerStatusZeroLenStepListRead:
 				if self.playerStatusArrRead:
 					playerStatusSubsetArray, self._playerStatusArrayOffset = self.GetSubsetArrayFix(step, 30, self._playerStatusArrayOffset, 
@@ -391,7 +389,7 @@ class UoServiceReplay:
 
 			if self.playerSkillListArrRead:
 				playerSkillListSubsetArray, self._playerSkillListArrayOffset = self.GetSubsetArray(step, self.playerSkillListArrayLengthListRead, 
-																				   		 self._playerSkillListArrayOffset, self.playerSkillListArrRead)
+																				   		 		   self._playerSkillListArrayOffset, self.playerSkillListArrRead)
 				grpcPlayerSkillListReplay = UoService_pb2.GrpcSkillList().FromString(playerSkillListSubsetArray)
 				#print("grpcPlayerSkillListReplay: ", grpcPlayerSkillListReplay)
 				self._playerSkillListList.append(grpcPlayerSkillListReplay.skills)
@@ -400,7 +398,7 @@ class UoServiceReplay:
 
 			if self.corpseItemArrRead:
 				corpseItemSubsetArray, self._corpseItemArrayOffset = self.GetSubsetArray(step, self.corpseItemArrayLengthListRead, 
-																			   self._corpseItemArrayOffset, self.corpseItemArrRead)
+																			   			 self._corpseItemArrayOffset, self.corpseItemArrRead)
 				grpcCorpseItemReplay = UoService_pb2.GrpcItemList().FromString(corpseItemSubsetArray)
 				#print("grpcCorpseItemReplay: ", grpcCorpseItemReplay)
 				self._corpseItemList.append(grpcCorpseItemReplay.item)
@@ -409,7 +407,7 @@ class UoServiceReplay:
 
 			if self.itemObjectArrRead:
 				itemObjectSubsetArray, self._itemObjectArrayOffset = self.GetSubsetArray(step, self.itemObjectArrayLengthListRead, 
-																			   self._itemObjectArrayOffset, self.itemObjectArrRead)
+																			   			 self._itemObjectArrayOffset, self.itemObjectArrRead)
 				grpcItemObjectReplay = UoService_pb2.GrpcGameObjectList().FromString(itemObjectSubsetArray)
 				#print("grpcItemObjectReplay: ", grpcItemObjectReplay)
 				self._itemObjectDataList.append(grpcItemObjectReplay.gameObject)
@@ -418,7 +416,7 @@ class UoServiceReplay:
 
 			if self.itemDropableLandArrRead:
 				itemDropableLandSubsetArray, self._itemDropableLandArrayOffset = self.GetSubsetArray(step, self.itemDropableLandArrayLengthListRead, 
-																			   			   self._itemDropableLandArrayOffset, self.itemDropableLandArrRead)
+																			   			   			 self._itemDropableLandArrayOffset, self.itemDropableLandArrRead)
 				grpcItemDropableLandReplay = UoService_pb2.GrpcGameObjectSimpleList().FromString(itemDropableLandSubsetArray)
 				#print("grpcItemDropableLandReplay: ", grpcItemDropableLandReplay)
 				self._itemDropableLandObjectList.append(grpcItemDropableLandReplay.gameSimpleObject)
@@ -427,7 +425,7 @@ class UoServiceReplay:
 
 			if self.popupMenuArrRead:
 				popupMenuSubsetArray, self._popupMenuArrayOffset = self.GetSubsetArray(step, self.popupMenuArrayLengthListRead, 
-																			 self._popupMenuArrayOffset, self.popupMenuArrRead)
+																			 		   self._popupMenuArrayOffset, self.popupMenuArrRead)
 				grpcPopupMenuReplay = UoService_pb2.GrpcPopupMenuList().FromString(popupMenuSubsetArray)
 				#print("grpcPopupMenuReplay: ", grpcPopupMenuReplay)
 				self._popupMenuDataList.append(grpcPopupMenuReplay.menu)
@@ -436,7 +434,7 @@ class UoServiceReplay:
 
 			if self.vendorItemObjectArrRead:
 				vendorItemObjectSubsetArray, self._vendorItemObjectArrayOffset = self.GetSubsetArray(step, self.vendorItemObjectArrayLengthListRead, 
-																			 			   self._vendorItemObjectArrayOffset, self.vendorItemObjectArrRead)
+																			 			   			 self._vendorItemObjectArrayOffset, self.vendorItemObjectArrRead)
 				grpcVendorItemObjectReplay = UoService_pb2.GrpcGameObjectList().FromString(vendorItemObjectSubsetArray)
 				#print("grpcVendorItemObjectReplay: ", grpcVendorItemObjectReplay)
 				self._vendorItemDataList.append(grpcVendorItemObjectReplay.gameObject)
@@ -445,7 +443,7 @@ class UoServiceReplay:
 
 			if self.clilocDataArrRead:
 				clilocDataSubsetArray, self._clilocDataArrayOffset = self.GetSubsetArray(step, self.clilocDataArrayLengthListRead, 
-																			   self._clilocDataArrayOffset, self.clilocDataArrRead)
+																			   			 self._clilocDataArrayOffset, self.clilocDataArrRead)
 				grpcClilocDataReplay = UoService_pb2.GrpcClilocDataList().FromString(clilocDataSubsetArray)
 				#print("grpcClilocDataReplay: ", grpcClilocDataReplay)
 				self._clilocDataList.append(grpcClilocDataReplay.clilocData)

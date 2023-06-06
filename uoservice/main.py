@@ -3,12 +3,6 @@
 
 from __future__ import print_function
 from concurrent import futures
-
-import grpc
-import UoService_pb2
-import UoService_pb2_grpc
-from UoService_replay import UoServiceReplay
-
 import io
 from PIL import Image
 import time
@@ -16,9 +10,27 @@ import numpy as np
 import cv2
 import random
 import pygame
+import argparse
 import sys
+import grpc
 from enum import Enum
- 
+
+import UoService_pb2
+import UoService_pb2_grpc
+from UoService_replay import UoServiceReplay
+
+#replay_path = '/home/kimbring2/ClassicUO/bin/dist/Replay'
+#file_name = 'kimbring2-2023-6-6-01-56-41'
+
+parser = argparse.ArgumentParser(description='Ultima Online Replay Parser')
+parser.add_argument('--replay_path', type=str, help='root directory of replay')
+parser.add_argument('--file_name', type=str, help='replay file name')
+
+arguments = parser.parse_args()
+
+replay_path = arguments.replay_path
+file_name = arguments.file_name
+
 pygame.init()
 pygame.display.set_caption("OpenCV camera stream on Pygame")
 
@@ -31,10 +43,6 @@ equip_item_surface = pygame.Surface((600, screen_height))
 status_surface = pygame.Surface((screen_width, 350))
 
 clock = pygame.time.Clock()
-
-#grpc_port = 60051
-#channel = grpc.insecure_channel('localhost:' + str(grpc_port))
-#stub = UoService_pb2_grpc.UoServiceStub(channel)
 
 
 class Layers(Enum):
@@ -472,30 +480,14 @@ def vis_response():
 
 
 def main():
-  replay_path = '/home/kimbring2/ClassicUO/bin/dist/Replay'
-  replay_file_name = 'kimbring2-2023-6-6-01-56-41'
+  #replay_path = '/home/kimbring2/ClassicUO/bin/dist/Replay'
+  #file_name = 'kimbring2-2023-6-6-01-56-41'
 
   uo_service_replay = UoServiceReplay(replay_path)
-  uo_service_replay.ReadReplay(replay_file_name)
+  uo_service_replay.ReadReplay(file_name)
   uo_service_replay.ParseReplay()
 
   uo_service_replay.InteractWithReplay()
-
-  #stub.ReadMPQFile(UoService_pb2.Config(replayName=replay_path + replay_file_name))
-
-  #replay_step = 0
-  #while True:
-    #res = stub.ReadReplay(UoService_pb2.Config(name="test"))
-
-    #parse_response(replay_step, res)
-
-    #print("res.replayParseEnd: ", res.replayParseEnd)
-    #if res.replayParseEnd:
-    #  break
-
-    #replay_step += 1
-
-  #vis_response()
 
 
 if __name__ == '__main__':
