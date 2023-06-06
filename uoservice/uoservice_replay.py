@@ -7,6 +7,7 @@ from concurrent import futures
 import grpc
 import UoService_pb2
 import UoService_pb2_grpc
+from UoService_replay import UoServiceReplay
 
 import io
 from PIL import Image
@@ -31,9 +32,9 @@ status_surface = pygame.Surface((screen_width, 350))
 
 clock = pygame.time.Clock()
 
-grpc_port = 60051
-channel = grpc.insecure_channel('localhost:' + str(grpc_port))
-stub = UoService_pb2_grpc.UoServiceStub(channel)
+#grpc_port = 60051
+#channel = grpc.insecure_channel('localhost:' + str(grpc_port))
+#stub = UoService_pb2_grpc.UoServiceStub(channel)
 
 
 class Layers(Enum):
@@ -471,24 +472,30 @@ def vis_response():
 
 
 def main():
-  replay_path = '/home/kimbring2/ClassicUO/bin/dist/Replay/'
-  replay_file_name = 'kimbring2-2023-6-6-01-56-41.uoreplay'
+  replay_path = '/home/kimbring2/ClassicUO/bin/dist/Replay'
+  replay_file_name = 'kimbring2-2023-6-6-01-56-41'
 
-  stub.ReadMPQFile(UoService_pb2.Config(replayName=replay_path + replay_file_name))
+  uo_service_replay = UoServiceReplay(replay_path)
+  uo_service_replay.ReadReplay(replay_file_name)
+  uo_service_replay.ParseReplay()
 
-  replay_step = 0
-  while True:
-    res = stub.ReadReplay(UoService_pb2.Config(name="test"))
+  uo_service_replay.InteractWithReplay()
 
-    parse_response(replay_step, res)
+  #stub.ReadMPQFile(UoService_pb2.Config(replayName=replay_path + replay_file_name))
+
+  #replay_step = 0
+  #while True:
+    #res = stub.ReadReplay(UoService_pb2.Config(name="test"))
+
+    #parse_response(replay_step, res)
 
     #print("res.replayParseEnd: ", res.replayParseEnd)
-    if res.replayParseEnd:
-      break
+    #if res.replayParseEnd:
+    #  break
 
-    replay_step += 1
+    #replay_step += 1
 
-  vis_response()
+  #vis_response()
 
 
 if __name__ == '__main__':
