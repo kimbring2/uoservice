@@ -40,50 +40,21 @@ playerSkillListArrayLengthArrRead = archive.read_file("replay.metadata.playerSki
 
 staticObjectInfoListLengthArrRead = archive.read_file("replay.metadata.staticObjectInfoListArraysLen");
 
-
 ## Convert the byte array to int array
 mobileDataArrayLengthListRead = ConvertByteArrayToIntList(mobileDataArrayLengthArrRead);
-print("len(mobileDataArrayLengthListRead): ", len(mobileDataArrayLengthListRead))
-
 equippedItemArrayLengthListRead = ConvertByteArrayToIntList(equippedItemArrayLengthArrRead);
-print("len(equippedItemArrayLengthListRead): ", len(equippedItemArrayLengthListRead))
-
 backpackItemArrayLengthListRead = ConvertByteArrayToIntList(backpackItemArrayLengthArrRead);
-print("len(backpackItemArrayLengthListRead): ", len(backpackItemArrayLengthListRead))
-
 corpseItemArrayLengthListRead = ConvertByteArrayToIntList(corpseItemArrayLengthArrRead);
-print("len(corpseItemArrayLengthListRead): ", len(corpseItemArrayLengthListRead))
-
 popupMenuArrayLengthListRead = ConvertByteArrayToIntList(popupMenuArrayLengthArrRead);
-print("len(popupMenuArrayLengthListRead): ", len(popupMenuArrayLengthListRead))
-
 clilocDataArrayLengthListRead = ConvertByteArrayToIntList(clilocDataArrayLengthArrRead);
-print("len(clilocDataArrayLengthListRead): ", len(clilocDataArrayLengthListRead))
-
 playerMobileObjectArrayLengthListRead = ConvertByteArrayToIntList(playerMobileObjectArrayLengthArrRead);
-print("len(playerMobileObjectArrayLengthListRead): ", len(playerMobileObjectArrayLengthListRead))
-
 mobileObjectArrayLengthListRead = ConvertByteArrayToIntList(mobileObjectArrayLengthArrRead);
-print("len(mobileDataArrayLengthListRead): ", len(mobileDataArrayLengthListRead))
-
 itemObjectArrayLengthListRead = ConvertByteArrayToIntList(itemObjectArrayLengthArrRead);
-print("len(itemObjectArrayLengthListRead): ", len(itemObjectArrayLengthListRead))
-
 itemDropableLandArrayLengthListRead = ConvertByteArrayToIntList(itemDropableLandArrayLengthArrRead);
-print("len(itemDropableLandArrayLengthListRead): ", len(itemDropableLandArrayLengthListRead))
-
 vendorItemObjectArrayLengthListRead = ConvertByteArrayToIntList(vendorItemObjectArrayLengthArrRead);
-print("len(vendorItemObjectArrayLengthListRead): ", len(vendorItemObjectArrayLengthListRead))
-
 playerStatusZeroLenStepListRead = ConvertByteArrayToIntList(playerStatusZeroLenStepArrRead);
-print("len(playerStatusZeroLenStepListRead): ", len(playerStatusZeroLenStepListRead))
-
 playerSkillListArrayLengthListRead = ConvertByteArrayToIntList(playerSkillListArrayLengthArrRead);
-print("len(playerSkillListArrayLengthListRead): ", len(playerSkillListArrayLengthListRead))
-
 staticObjectInfoListLengthListRead = ConvertByteArrayToIntList(staticObjectInfoListLengthArrRead);
-print("len(staticObjectInfoListLengthListRead): ", len(staticObjectInfoListLengthListRead))
-
 
 ## Read the actual for data array
 mobileDataArrRead = archive.read_file("replay.data.mobileData");
@@ -103,7 +74,6 @@ playerStatusArrRead = archive.read_file("replay.data.playerStatus");
 playerSkillListArrRead = archive.read_file("replay.data.playerSkillList");
 
 staticObjectInfoListArrRead = archive.read_file("replay.data.staticObjectInfoList");
-
 
 ## Check the data array is existed
 if mobileDataArrRead:
@@ -200,27 +170,136 @@ _staticObjectInfoListArrayOffset = 0
 
 
 def GetSubsetArray(index, lengthListRead, offset, arrRead):
-	item = lengthListRead[index];
-	#print("item: ", item)
-
-	startIndex = offset; 
-	#Array.Copy(arrRead, startIndex, subsetArray, 0, item);
+	item = lengthListRead[index]
+	startIndex = offset
 	subsetArray = arrRead[startIndex:startIndex + item]
-	#print("subsetArray: ", subsetArray)
+	offset += item
 
-	offset += item;
+	return subsetArray, offset
 
-	return subsetArray, offset;
+
+def GetSubsetArrayFix(index, lengthRead, offset, arrRead):
+	item = lengthRead
+	startIndex = offset
+	subsetArray = arrRead[startIndex:startIndex + item]
+	offset += item
+
+	return subsetArray, offset
 
 
 for step in range(0, _replayStep):
-	mobileDataSubsetArray, _mobileDataArrayOffset = GetSubsetArray(step, mobileDataArrayLengthListRead, _mobileDataArrayOffset, mobileDataArrRead)
+	print("step: ", step)
 
-	#print("mobileDataSubsetArray: ", mobileDataSubsetArray)
+	if mobileDataArrRead:
+		mobileDataSubsetArray, _mobileDataArrayOffset = GetSubsetArray(step, mobileDataArrayLengthListRead, 
+																	   _mobileDataArrayOffset, mobileDataArrRead)
+		grpcMobileDataReplay = UoService_pb2.GrpcMobileList().FromString(mobileDataSubsetArray);
+		#print("grpcMobileDataReplay: ", grpcMobileDataReplay)
+	else:
+		print("mobileDataArrRead is None")
 
-	message = UoService_pb2.GrpcMobileList()
-	grpcMobileDataReplay = message.FromString(mobileDataSubsetArray);
-	print("grpcMobileDataReplay: ", grpcMobileDataReplay)
-	#print("")
+	if equippedItemArrRead:
+		equippedItemSubsetArray, _equippedItemArrayOffset = GetSubsetArray(step, equippedItemArrayLengthListRead, 
+																		   _equippedItemArrayOffset, equippedItemArrRead)
+		grpcEquippedItemReplay = UoService_pb2.GrpcItemList().FromString(equippedItemSubsetArray);
+		#print("grpcEquippedItemReplay: ", grpcEquippedItemReplay)
+	else:
+		print("equippedItemArrRead is None")
 
-	#states.MobileList = grpcMobileDataReplay;
+	if backpackItemArrRead:
+		backpackItemSubsetArray, _backpackItemArrayOffset = GetSubsetArray(step, backpackItemArrayLengthListRead, 
+																		  _backpackItemArrayOffset, backpackItemArrRead)
+		grpcBackpackItemReplay = UoService_pb2.GrpcItemList().FromString(backpackItemSubsetArray);
+		#print("grpcBackpackItemReplay: ", grpcBackpackItemReplay)
+	else:
+		print("backpackItemArrRead is None")
+
+	if playerMobileObjectArrRead:
+		playerMobileObjectSubsetArray, _playerMobileObjectArrayOffset = GetSubsetArray(step, playerMobileObjectArrayLengthListRead, 
+																		  			   _playerMobileObjectArrayOffset, playerMobileObjectArrRead)
+		grpcPlayerMobileObjectReplay = UoService_pb2.GrpcGameObjectList().FromString(playerMobileObjectSubsetArray);
+		#print("grpcPlayerMobileObjectReplay: ", grpcPlayerMobileObjectReplay)
+	else:
+		print("playerMobileObjectArrRead is None")
+
+	if mobileObjectArrRead:
+		mobileObjectSubsetArray, _mobileObjectArrayOffset = GetSubsetArray(step, mobileObjectArrayLengthListRead, 
+																		   _mobileObjectArrayOffset, mobileObjectArrRead)
+		grpcMobileObjectReplay = UoService_pb2.GrpcGameObjectList().FromString(mobileObjectSubsetArray);
+		#print("grpcMobileObjectReplay: ", grpcMobileObjectReplay)
+	else:
+		print("mobileObjectArrRead is None")
+
+	if staticObjectInfoListArrRead:
+		staticObjectInfoListSubsetArrays, _staticObjectInfoListArrayOffset = GetSubsetArray(step, staticObjectInfoListLengthListRead, 
+																		   		   			_staticObjectInfoListArrayOffset, staticObjectInfoListArrRead)
+		grpcStaticObjectInfoListReplay = UoService_pb2.GrpcGameObjectInfoList().FromString(staticObjectInfoListSubsetArrays);
+		#print("grpcStaticObjectInfoListReplay: ", grpcStaticObjectInfoListReplay)
+	else:
+		print("staticObjectInfoListArrRead is None")
+
+	if step not in playerStatusZeroLenStepListRead:
+		if playerStatusArrRead:
+			playerStatusSubsetArray, _playerStatusArrayOffset = GetSubsetArrayFix(step, 30, _playerStatusArrayOffset, playerStatusArrRead);
+			grpcPlayerStatusReplay = UoService_pb2.GrpcPlayerStatus().FromString(playerStatusSubsetArray);
+			#print("grpcPlayerStatusReplay: ", grpcPlayerStatusReplay)
+		else:
+			print("playerStatusArrRead is None")
+
+
+	if playerSkillListArrRead:
+		playerSkillListSubsetArray, _playerSkillListArrayOffset = GetSubsetArray(step, playerSkillListArrayLengthListRead, 
+																		   		 _playerSkillListArrayOffset, playerSkillListArrRead)
+		grpcPlayerSkillListReplay = UoService_pb2.GrpcSkillList().FromString(playerSkillListSubsetArray);
+		#print("grpcPlayerSkillListReplay: ", grpcPlayerSkillListReplay)
+	else:
+		print("playerSkillListArrRead is None")
+
+	if corpseItemArrRead:
+		corpseItemSubsetArray, _corpseItemArrayOffset = GetSubsetArray(step, corpseItemArrayLengthListRead, 
+																	   _corpseItemArrayOffset, corpseItemArrRead)
+		grpcCorpseItemReplay = UoService_pb2.GrpcItemList().FromString(corpseItemSubsetArray);
+		#print("grpcCorpseItemReplay: ", grpcCorpseItemReplay)
+	else:
+		print("corpseItemArrRead is None")
+
+	if itemObjectArrRead:
+		itemObjectSubsetArray, _itemObjectArrayOffset = GetSubsetArray(step, itemObjectArrayLengthListRead, 
+																	   _itemObjectArrayOffset, itemObjectArrRead)
+		grpcItemObjectReplay = UoService_pb2.GrpcGameObjectList().FromString(itemObjectSubsetArray);
+		#print("grpcItemObjectReplay: ", grpcItemObjectReplay)
+	else:
+		print("itemObjectArrRead is None")
+
+	if itemObjectArrRead:
+		itemDropableLandSubsetArray, _itemDropableLandArrayOffset = GetSubsetArray(step, itemDropableLandArrayLengthListRead, 
+																	   			   _itemDropableLandArrayOffset, itemDropableLandArrRead)
+		grpcItemDropableLandReplay = UoService_pb2.GrpcGameObjectSimpleList().FromString(itemDropableLandSubsetArray);
+		#print("grpcItemDropableLandReplay: ", grpcItemDropableLandReplay)
+	else:
+		print("itemObjectArrRead is None")
+
+	if popupMenuArrRead:
+		popupMenuSubsetArray, _popupMenuArrayOffset = GetSubsetArray(step, popupMenuArrayLengthListRead, 
+																	 _popupMenuArrayOffset, popupMenuArrRead)
+		grpcPopupMenuReplay = UoService_pb2.GrpcPopupMenuList().FromString(popupMenuSubsetArray);
+		#print("grpcPopupMenuReplay: ", grpcPopupMenuReplay)
+	else:
+		print("popupMenuArrRead is None")
+
+	if vendorItemObjectArrRead:
+		vendorItemObjectSubsetArray, _vendorItemObjectArrayOffset = GetSubsetArray(step, vendorItemObjectArrayLengthListRead, 
+																	 			   _vendorItemObjectArrayOffset, vendorItemObjectArrRead)
+		grpcVendorItemObjectReplay = UoService_pb2.GrpcGameObjectList().FromString(vendorItemObjectSubsetArray);
+		#print("grpcVendorItemObjectReplay: ", grpcVendorItemObjectReplay)
+	else:
+		print("vendorItemObjectArrRead is None")
+
+
+	if clilocDataArrRead:
+		clilocDataSubsetArray, _clilocDataArrayOffset = GetSubsetArray(step, clilocDataArrayLengthListRead, 
+																	   _clilocDataArrayOffset, clilocDataArrRead)
+		grpcClilocDataReplay = UoService_pb2.GrpcClilocDataList().FromString(clilocDataSubsetArray);
+		#print("grpcClilocDataReplay: ", grpcClilocDataReplay)
+	else:
+		print("clilocDataArrRead is None")
