@@ -114,13 +114,23 @@ message GrpcPlayerStatus {
   uint32 weightMax = 13;
 }
 
+message GrpcOpenedCorpse {
+  GrpcGameObjectData corpse = 1;
+  GrpcItemList corpseItemList = 2;
+}
+
+message GrpcOpenedCorpseList {
+  repeated GrpcOpenedCorpse corpse = 1;
+}
+
 message States {
   GrpcMobileList mobileList = 1;
 
   GrpcItemList worldItemList = 2;
   GrpcItemList equippedItemList = 3;
   GrpcItemList backpackItemList = 4;
-  GrpcItemList corpseItemList = 5;
+
+  GrpcOpenedCorpseList openedCorpseList = 5;
 
   GrpcPlayerStatus playerStatus = 6;
 
