@@ -25,17 +25,24 @@ from UoService_replay import UoServiceReplay
 parser = argparse.ArgumentParser(description='Ultima Online Replay Parser')
 parser.add_argument('--replay_path', type=str, help='root directory of replay')
 parser.add_argument('--file_name', type=str, help='replay file name')
+parser.add_argument('--screen_width', type=int, default=1370, help='screen width of game')
+parser.add_argument('--screen_height', type=int, default=1280, help='screen height of game')
 
 arguments = parser.parse_args()
 
 replay_path = arguments.replay_path
 file_name = arguments.file_name
+screen_width = arguments.screen_width
+screen_height = arguments.screen_height
+
+print("screen_width: ", screen_width)
+print("screen_height: ", screen_height)
 
 pygame.init()
 pygame.display.set_caption("OpenCV camera stream on Pygame")
 
-screen_width = 1370
-screen_height = 1280
+#screen_width = 1370
+#screen_height = 1280
 
 main_surface = pygame.display.set_mode([screen_width + 500, screen_height + 350])
 screen_surface = pygame.Surface((screen_width, screen_height))
@@ -43,7 +50,6 @@ equip_item_surface = pygame.Surface((600, screen_height))
 status_surface = pygame.Surface((screen_width, 350))
 
 clock = pygame.time.Clock()
-
 
 class Layers(Enum):
   Invalid = 0
@@ -207,7 +213,7 @@ def parse_item(item_grpc):
 
 
 def vis_response():
-  print("vis_response()")
+  #print("vis_response()")
 
   global action_type_list
   global walk_direction_list
@@ -228,7 +234,7 @@ def vis_response():
 
   global player_status_list
 
-  print("len(mobile_object_data_list): ", len(mobile_object_data_list))
+  #print("len(mobile_object_data_list): ", len(mobile_object_data_list))
 
   replay_step = 0
   while True:
@@ -251,8 +257,11 @@ def vis_response():
       else:
         print("This is end of replay")
 
+    #screen_width = 1370
+    #screen_height = 1280
+
     # Create the downscaled array for bigger mobile object drawing
-    screen_image = np.zeros((172,137,3), dtype=np.uint8)
+    screen_image = np.zeros((int(screen_width / 10), int(screen_height / 10), 3), dtype=np.uint8)
 
     # Draw the player mobile object
     screen_image = vis_object(screen_image, player_mobile_object_data_list[replay_step], (0, 255, 0))
@@ -264,7 +273,7 @@ def vis_response():
     screen_image = vis_object(screen_image, item_object_data_list[replay_step], (0, 0, 255))
 
     # Resize the screen size to fit real screen
-    screen_image = cv2.resize(screen_image, (1370, 1280), interpolation = cv2.INTER_AREA)
+    screen_image = cv2.resize(screen_image, (screen_width, screen_height), interpolation = cv2.INTER_AREA)
     screen_image = cv2.rotate(screen_image, cv2.ROTATE_90_CLOCKWISE)
     screen_image = cv2.flip(screen_image, 1)
 
@@ -341,8 +350,6 @@ def vis_response():
       font = pygame.font.Font('freesansbold.ttf', 16)
       text_surface = font.render(str(i) + ": " + str(menu), True, (255, 255, 255))
       status_surface.blit(text_surface, (300, 20 * (i + 1) + 20))
-
-
 
     # Draw each surface on root surface
     main_surface.blit(screen_surface, (0, 0))
@@ -483,7 +490,7 @@ def main():
   #replay_path = '/home/kimbring2/ClassicUO/bin/dist/Replay'
   #file_name = 'kimbring2-2023-6-6-01-56-41'
 
-  uo_service_replay = UoServiceReplay(replay_path)
+  uo_service_replay = UoServiceReplay(replay_path, screen_width, screen_height)
   uo_service_replay.ReadReplay(file_name)
   uo_service_replay.ParseReplay()
 

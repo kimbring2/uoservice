@@ -55,7 +55,7 @@ class Layers(Enum):
 
 
 class UoServiceReplay:
-	def __init__(self, rootPath):
+	def __init__(self, rootPath, screenWidth, screenHeight):
 		self._rootPath = rootPath
 		self._archive = None
 
@@ -103,8 +103,8 @@ class UoServiceReplay:
 		self._playerStatusList = []
 		self._playerSkillListList = []
 
-		self._screenWidth = 1370
-		self._screenHeight = 1280
+		self._screenWidth = screenWidth
+		self._screenHeight = screenHeight
 
 		self._mainSurface = pygame.display.set_mode([self._screenWidth + 500, self._screenHeight + 350])
 		self._screenSurface = pygame.Surface((self._screenWidth, self._screenHeight))
@@ -474,7 +474,8 @@ class UoServiceReplay:
 		        print("This is end of replay")
 
 		    # Create the downscaled array for bigger mobile object drawing
-		    screen_image = np.zeros((172,137,3), dtype=np.uint8)
+		    #screen_image = np.zeros((172,137,3), dtype=np.uint8)
+		    screen_image = np.zeros((int((self._screenWidth + 100) / 10), int((self._screenHeight + 100) / 10), 3), dtype=np.uint8)
 
 		    # Draw the player mobile object
 		    screen_image = self.visObject(screen_image, self._playerMobileObjectDataList[replay_step], (0, 255, 0))
@@ -486,7 +487,7 @@ class UoServiceReplay:
 		    screen_image = self.visObject(screen_image, self._itemObjectDataList[replay_step], (0, 0, 255))
 
 		    # Resize the screen size to fit real screen
-		    screen_image = cv2.resize(screen_image, (1370, 1280), interpolation = cv2.INTER_AREA)
+		    screen_image = cv2.resize(screen_image, (self._screenWidth, self._screenHeight), interpolation=cv2.INTER_AREA)
 		    screen_image = cv2.rotate(screen_image, cv2.ROTATE_90_CLOCKWISE)
 		    screen_image = cv2.flip(screen_image, 1)
 
@@ -516,20 +517,6 @@ class UoServiceReplay:
 		    pygame.draw.line(self._screenSurface, (255, 255, 255), (self._screenWidth - 1, 0), (self._screenWidth - 1, self._screenHeight))
 		    pygame.draw.line(self._screenSurface, (255, 255, 255), (0, self._screenHeight - 1), (self._screenWidth, self._screenHeight - 1))
 
-		    '''
-			self._staticObjectInfoList = []
-			self._itemDropableLandObjectList = []
-			self._mobileDataList = []
-			self._equippedItemList = []
-			self._backpackItemList = []
-			self._popupMenuDataList = []
-			self._corpseItemList = []
-			self._vendorItemDataList = []
-			self._clilocDataList = []
-			self._playerStatusList = []
-			self._playerSkillListList = []
-			'''
-
 		    # Equip item draw
 		    self._equipItemSurface.fill(((0, 0, 0)))
 		    font = pygame.font.Font('freesansbold.ttf', 32)
@@ -553,22 +540,18 @@ class UoServiceReplay:
 		      self._equipItemSurface.blit(text_surface, (0, 20 * (i + 1) + 420))
 
 		    # Vendor item draw
-		    vendor_item_grpc = self._vendorItemDataList[replay_step]
-		    vendor_item_dict = self.parseItem(vendor_item_grpc)
+		    #print("len(self._vendorItemDataList): ", len(self._vendorItemDataList))
 		    font = pygame.font.Font('freesansbold.ttf', 32)
 		    text_surface = font.render("Vendor Item", True, (255, 0, 255))
 		    self._equipItemSurface.blit(text_surface, (0, 900))
-		    for i, k in enumerate(vendor_item_dict):
-		      font = pygame.font.Font('freesansbold.ttf', 16)
-		      item = vendor_item_dict[k]
-		      text_surface = font.render(str(k) + ": " + str(item[0]) + ", " + str(item[1]), True, (255, 255, 255))
-		      self._equipItemSurface.blit(text_surface, (0, 20 * (i + 1) + 920))
-
-		    #self._mainSurface = pygame.display.set_mode([self._screenWidth + 500, self._screenHeight + 350])
-			#self._screenSurface = pygame.Surface((self._screenWidth, self._screenHeight))
-			#self._equipItemSurface = pygame.Surface((600, self._screenHeight))
-			#self._statusSurface = pygame.Surface((self._screenWidth, 350))
-			#self._clock = pygame.time.Clock()
+		    if len(self._vendorItemDataList) > 0:
+			    vendor_item_grpc = self._vendorItemDataList[replay_step]
+			    vendor_item_dict = self.parseItem(vendor_item_grpc)
+			    for i, k in enumerate(vendor_item_dict):
+			      font = pygame.font.Font('freesansbold.ttf', 16)
+			      item = vendor_item_dict[k]
+			      text_surface = font.render(str(k) + ": " + str(item[0]) + ", " + str(item[1]), True, (255, 255, 255))
+			      self._equipItemSurface.blit(text_surface, (0, 20 * (i + 1) + 920))
 
 		    # Player status draw
 		    player_status_grpc = self._playerStatusList[replay_step]
@@ -586,10 +569,11 @@ class UoServiceReplay:
 		    font = pygame.font.Font('freesansbold.ttf', 32)
 		    text_surface = font.render("Pop Up Menu", True, (255, 0, 255))
 		    self._statusSurface.blit(text_surface, (300, 0))
-		    for i, menu in enumerate(self._popupMenuDataList[replay_step]):
-		      font = pygame.font.Font('freesansbold.ttf', 16)
-		      text_surface = font.render(str(i) + ": " + str(menu), True, (255, 255, 255))
-		      self._statusSurface.blit(text_surface, (300, 20 * (i + 1) + 20))
+		    if len(self._popupMenuDataList) > 0:
+			    for i, menu in enumerate(self._popupMenuDataList[replay_step]):
+			      font = pygame.font.Font('freesansbold.ttf', 16)
+			      text_surface = font.render(str(i) + ": " + str(menu), True, (255, 255, 255))
+			      self._statusSurface.blit(text_surface, (300, 20 * (i + 1) + 20))
 
 		    # Draw each surface on root surface
 		    self._mainSurface.blit(self._screenSurface, (0, 0))
