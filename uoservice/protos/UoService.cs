@@ -81,19 +81,19 @@ namespace Uoservice {
             "ZS5BY3Rpb25zEj8KFHN0YXRpY09iamVjdEluZm9MaXN0GBAgASgLMiEudW9z",
             "ZXJ2aWNlLkdycGNHYW1lT2JqZWN0SW5mb0xpc3QSMQoPcGxheWVyU2tpbGxM",
             "aXN0GBEgASgLMhgudW9zZXJ2aWNlLkdycGNTa2lsbExpc3QSFgoOcmVwbGF5",
-            "UGFyc2VFbmQYEiABKAgifQoHQWN0aW9ucxISCgphY3Rpb25UeXBlGAEgASgN",
-            "EhQKDG1vYmlsZVNlcmlhbBgCIAEoDRISCgppdGVtU2VyaWFsGAMgASgNEhUK",
-            "DXdhbGtEaXJlY3Rpb24YBCABKA0SDQoFaW5kZXgYBSABKA0SDgoGYW1vdW50",
-            "GAYgASgNMo8DCglVb1NlcnZpY2USLQoFUmVzZXQSES51b3NlcnZpY2UuQ29u",
-            "ZmlnGhEudW9zZXJ2aWNlLlN0YXRlcxIvCgdSZWFkT2JzEhEudW9zZXJ2aWNl",
-            "LkNvbmZpZxoRLnVvc2VydmljZS5TdGF0ZXMSMAoIV3JpdGVBY3QSEi51b3Nl",
-            "cnZpY2UuQWN0aW9ucxoQLnVvc2VydmljZS5FbXB0eRJDChNBY3RTZW1hcGhv",
-            "cmVDb250cm9sEhoudW9zZXJ2aWNlLlNlbWFwaG9yZUFjdGlvbhoQLnVvc2Vy",
-            "dmljZS5FbXB0eRJDChNPYnNTZW1hcGhvcmVDb250cm9sEhoudW9zZXJ2aWNl",
-            "LlNlbWFwaG9yZUFjdGlvbhoQLnVvc2VydmljZS5FbXB0eRIyCgpSZWFkUmVw",
-            "bGF5EhEudW9zZXJ2aWNlLkNvbmZpZxoRLnVvc2VydmljZS5TdGF0ZXMSMgoL",
-            "UmVhZE1QUUZpbGUSES51b3NlcnZpY2UuQ29uZmlnGhAudW9zZXJ2aWNlLkVt",
-            "cHR5YgZwcm90bzM="));
+            "UGFyc2VFbmQYEiABKAgijgEKB0FjdGlvbnMSEgoKYWN0aW9uVHlwZRgBIAEo",
+            "DRIWCg5zZWxlY3RlZFNlcmlhbBgCIAEoDRIUCgx0YXJnZXRTZXJpYWwYAyAB",
+            "KA0SFQoNd2Fsa0RpcmVjdGlvbhgEIAEoDRINCgVpbmRleBgFIAEoDRIOCgZh",
+            "bW91bnQYBiABKA0SCwoDcnVuGAcgASgNMo8DCglVb1NlcnZpY2USLQoFUmVz",
+            "ZXQSES51b3NlcnZpY2UuQ29uZmlnGhEudW9zZXJ2aWNlLlN0YXRlcxIvCgdS",
+            "ZWFkT2JzEhEudW9zZXJ2aWNlLkNvbmZpZxoRLnVvc2VydmljZS5TdGF0ZXMS",
+            "MAoIV3JpdGVBY3QSEi51b3NlcnZpY2UuQWN0aW9ucxoQLnVvc2VydmljZS5F",
+            "bXB0eRJDChNBY3RTZW1hcGhvcmVDb250cm9sEhoudW9zZXJ2aWNlLlNlbWFw",
+            "aG9yZUFjdGlvbhoQLnVvc2VydmljZS5FbXB0eRJDChNPYnNTZW1hcGhvcmVD",
+            "b250cm9sEhoudW9zZXJ2aWNlLlNlbWFwaG9yZUFjdGlvbhoQLnVvc2Vydmlj",
+            "ZS5FbXB0eRIyCgpSZWFkUmVwbGF5EhEudW9zZXJ2aWNlLkNvbmZpZxoRLnVv",
+            "c2VydmljZS5TdGF0ZXMSMgoLUmVhZE1QUUZpbGUSES51b3NlcnZpY2UuQ29u",
+            "ZmlnGhAudW9zZXJ2aWNlLkVtcHR5YgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -118,7 +118,7 @@ namespace Uoservice {
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcOpenedCorpse), global::Uoservice.GrpcOpenedCorpse.Parser, new[]{ "Corpse", "CorpseItemList" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcOpenedCorpseList), global::Uoservice.GrpcOpenedCorpseList.Parser, new[]{ "Corpse" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.States), global::Uoservice.States.Parser, new[]{ "MobileList", "WorldItemList", "EquippedItemList", "BackpackItemList", "OpenedCorpseList", "PlayerStatus", "MobileObjectList", "PlayerMobileObjectList", "ItemObjectList", "ItemDropableLandList", "VendorItemObjectList", "PopupMenuList", "ClilocDataList", "ReplayActions", "StaticObjectInfoList", "PlayerSkillList", "ReplayParseEnd" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Actions), global::Uoservice.Actions.Parser, new[]{ "ActionType", "MobileSerial", "ItemSerial", "WalkDirection", "Index", "Amount" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Actions), global::Uoservice.Actions.Parser, new[]{ "ActionType", "SelectedSerial", "TargetSerial", "WalkDirection", "Index", "Amount", "Run" }, null, null, null)
           }));
     }
     #endregion
@@ -4514,11 +4514,12 @@ namespace Uoservice {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Actions(Actions other) : this() {
       actionType_ = other.actionType_;
-      mobileSerial_ = other.mobileSerial_;
-      itemSerial_ = other.itemSerial_;
+      selectedSerial_ = other.selectedSerial_;
+      targetSerial_ = other.targetSerial_;
       walkDirection_ = other.walkDirection_;
       index_ = other.index_;
       amount_ = other.amount_;
+      run_ = other.run_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -4538,25 +4539,25 @@ namespace Uoservice {
       }
     }
 
-    /// <summary>Field number for the "mobileSerial" field.</summary>
-    public const int MobileSerialFieldNumber = 2;
-    private uint mobileSerial_;
+    /// <summary>Field number for the "selectedSerial" field.</summary>
+    public const int SelectedSerialFieldNumber = 2;
+    private uint selectedSerial_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint MobileSerial {
-      get { return mobileSerial_; }
+    public uint SelectedSerial {
+      get { return selectedSerial_; }
       set {
-        mobileSerial_ = value;
+        selectedSerial_ = value;
       }
     }
 
-    /// <summary>Field number for the "itemSerial" field.</summary>
-    public const int ItemSerialFieldNumber = 3;
-    private uint itemSerial_;
+    /// <summary>Field number for the "targetSerial" field.</summary>
+    public const int TargetSerialFieldNumber = 3;
+    private uint targetSerial_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint ItemSerial {
-      get { return itemSerial_; }
+    public uint TargetSerial {
+      get { return targetSerial_; }
       set {
-        itemSerial_ = value;
+        targetSerial_ = value;
       }
     }
 
@@ -4593,6 +4594,17 @@ namespace Uoservice {
       }
     }
 
+    /// <summary>Field number for the "run" field.</summary>
+    public const int RunFieldNumber = 7;
+    private uint run_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Run {
+      get { return run_; }
+      set {
+        run_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as Actions);
@@ -4607,11 +4619,12 @@ namespace Uoservice {
         return true;
       }
       if (ActionType != other.ActionType) return false;
-      if (MobileSerial != other.MobileSerial) return false;
-      if (ItemSerial != other.ItemSerial) return false;
+      if (SelectedSerial != other.SelectedSerial) return false;
+      if (TargetSerial != other.TargetSerial) return false;
       if (WalkDirection != other.WalkDirection) return false;
       if (Index != other.Index) return false;
       if (Amount != other.Amount) return false;
+      if (Run != other.Run) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -4619,11 +4632,12 @@ namespace Uoservice {
     public override int GetHashCode() {
       int hash = 1;
       if (ActionType != 0) hash ^= ActionType.GetHashCode();
-      if (MobileSerial != 0) hash ^= MobileSerial.GetHashCode();
-      if (ItemSerial != 0) hash ^= ItemSerial.GetHashCode();
+      if (SelectedSerial != 0) hash ^= SelectedSerial.GetHashCode();
+      if (TargetSerial != 0) hash ^= TargetSerial.GetHashCode();
       if (WalkDirection != 0) hash ^= WalkDirection.GetHashCode();
       if (Index != 0) hash ^= Index.GetHashCode();
       if (Amount != 0) hash ^= Amount.GetHashCode();
+      if (Run != 0) hash ^= Run.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -4641,13 +4655,13 @@ namespace Uoservice {
         output.WriteRawTag(8);
         output.WriteUInt32(ActionType);
       }
-      if (MobileSerial != 0) {
+      if (SelectedSerial != 0) {
         output.WriteRawTag(16);
-        output.WriteUInt32(MobileSerial);
+        output.WriteUInt32(SelectedSerial);
       }
-      if (ItemSerial != 0) {
+      if (TargetSerial != 0) {
         output.WriteRawTag(24);
-        output.WriteUInt32(ItemSerial);
+        output.WriteUInt32(TargetSerial);
       }
       if (WalkDirection != 0) {
         output.WriteRawTag(32);
@@ -4661,6 +4675,10 @@ namespace Uoservice {
         output.WriteRawTag(48);
         output.WriteUInt32(Amount);
       }
+      if (Run != 0) {
+        output.WriteRawTag(56);
+        output.WriteUInt32(Run);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -4672,11 +4690,11 @@ namespace Uoservice {
       if (ActionType != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(ActionType);
       }
-      if (MobileSerial != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(MobileSerial);
+      if (SelectedSerial != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(SelectedSerial);
       }
-      if (ItemSerial != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(ItemSerial);
+      if (TargetSerial != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TargetSerial);
       }
       if (WalkDirection != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(WalkDirection);
@@ -4686,6 +4704,9 @@ namespace Uoservice {
       }
       if (Amount != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Amount);
+      }
+      if (Run != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Run);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -4701,11 +4722,11 @@ namespace Uoservice {
       if (other.ActionType != 0) {
         ActionType = other.ActionType;
       }
-      if (other.MobileSerial != 0) {
-        MobileSerial = other.MobileSerial;
+      if (other.SelectedSerial != 0) {
+        SelectedSerial = other.SelectedSerial;
       }
-      if (other.ItemSerial != 0) {
-        ItemSerial = other.ItemSerial;
+      if (other.TargetSerial != 0) {
+        TargetSerial = other.TargetSerial;
       }
       if (other.WalkDirection != 0) {
         WalkDirection = other.WalkDirection;
@@ -4715,6 +4736,9 @@ namespace Uoservice {
       }
       if (other.Amount != 0) {
         Amount = other.Amount;
+      }
+      if (other.Run != 0) {
+        Run = other.Run;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -4732,11 +4756,11 @@ namespace Uoservice {
             break;
           }
           case 16: {
-            MobileSerial = input.ReadUInt32();
+            SelectedSerial = input.ReadUInt32();
             break;
           }
           case 24: {
-            ItemSerial = input.ReadUInt32();
+            TargetSerial = input.ReadUInt32();
             break;
           }
           case 32: {
@@ -4749,6 +4773,10 @@ namespace Uoservice {
           }
           case 48: {
             Amount = input.ReadUInt32();
+            break;
+          }
+          case 56: {
+            Run = input.ReadUInt32();
             break;
           }
         }

@@ -89,7 +89,7 @@ class UoService:
 			if data.name == "Jockles":
 				cliloc_data_list.append(cliloc_dict)
 
-		print("cliloc_data_list: ", cliloc_data_list)
+		#print("cliloc_data_list: ", cliloc_data_list)
 
 		for menu_data in popup_menu_data:
 			popup_menu_list.append(menu_data)

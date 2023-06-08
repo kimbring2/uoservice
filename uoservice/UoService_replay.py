@@ -82,10 +82,11 @@ class UoServiceReplay:
 
 		self._actionTypeList = []
 		self._walkDirectionList = []
-		self._mobileSerialList = []
-		self._itemSerialList = []
+		self._targetSerialList = []
+		self._selectedSerialList = []
 		self._indexList = []
 		self._amountList = []
+		self._runList = []
 
 		self._playerMobileObjectDataList = []
 		self._mobileObjectDataList = []
@@ -119,6 +120,15 @@ class UoServiceReplay:
 			intList.append(intValue)
 		
 		return intList
+
+	def ConvertByteArrayToBoolList(self, byteArray):
+		boolList = []
+		for byte in byteArray:
+		    for i in range(8):
+		        bit = (byte >> i) & 1
+		        boolList.append(bool(bit))
+		
+		return boolList
 
 	def GetSubsetArray(self, index, lengthListRead, offset, arrRead):
 		item = lengthListRead[index]
@@ -163,9 +173,12 @@ class UoServiceReplay:
 
 	def visObject(self, screenImage, ObjectData, color):
 		for obj in ObjectData:
-			screenImage[int(obj.screenX / 10.0), int(obj.screenY / 10.0), 0] = color[0]
-			screenImage[int(obj.screenX / 10.0), int(obj.screenY / 10.0), 1] = color[1]
-			screenImage[int(obj.screenX / 10.0), int(obj.screenY / 10.0), 2] = color[2]
+			try:
+				screenImage[int(obj.screenX / 10.0), int(obj.screenY / 10.0), 0] = color[0]
+				screenImage[int(obj.screenX / 10.0), int(obj.screenY / 10.0), 1] = color[1]
+				screenImage[int(obj.screenX / 10.0), int(obj.screenY / 10.0), 2] = color[2]
+			except:
+				print("screenX: {0}, screenY: {1}", obj.screenX, obj.screenY)
 
 		return screenImage
 
@@ -223,20 +236,22 @@ class UoServiceReplay:
 		self.staticObjectInfoListArrRead = self._archive.read_file("replay.data.staticObjectInfoList");
 
 		## Read the action data as byte array
-		self.actionTypeArrRead = self._archive.read_file("replay.data.type");
-		self.walkDirectionArrRead = self._archive.read_file("replay.data.walkDirection");
-		self.mobileSerialArrRead = self._archive.read_file("replay.data.mobileSerial");
-		self.itemSerialArrRead = self._archive.read_file("replay.data.itemSerial");
-		self.indexArrRead = self._archive.read_file("replay.data.index");
-		self.amountArrRead = self._archive.read_file("replay.data.amount");
+		self.actionTypeArrRead = self._archive.read_file("replay.action.type");
+		self.walkDirectionArrRead = self._archive.read_file("replay.action.walkDirection");
+		self.targetSerialArrRead = self._archive.read_file("replay.action.targetSerial");
+		self.selectedSerialArrRead = self._archive.read_file("replay.action.selectedSerial");
+		self.indexArrRead = self._archive.read_file("replay.action.index");
+		self.amountArrRead = self._archive.read_file("replay.action.amount");
+		self.runArrRead = self._archive.read_file("replay.action.run");
 
 		## Convert the byte array to int array
 		self.actionTypeListRead = self.ConvertByteArrayToIntList(self.actionTypeArrRead);
 		self.walkDirectionListRead = self.ConvertByteArrayToIntList(self.walkDirectionArrRead);
-		self.mobileSerialListRead = self.ConvertByteArrayToIntList(self.mobileSerialArrRead);
-		self.itemSerialListRead = self.ConvertByteArrayToIntList(self.itemSerialArrRead);
+		self.targetSerialListRead = self.ConvertByteArrayToIntList(self.targetSerialArrRead);
+		self.selectedSerialListRead = self.ConvertByteArrayToIntList(self.selectedSerialArrRead);
 		self.indexListRead = self.ConvertByteArrayToIntList(self.indexArrRead);
 		self.amountListRead = self.ConvertByteArrayToIntList(self.amountArrRead);
+		self.runListRead = self.ConvertByteArrayToBoolList(self.runArrRead);
 
 		## Check the data array is existed
 		if self.mobileDataArrRead:
@@ -315,10 +330,11 @@ class UoServiceReplay:
 
 			self._actionTypeList.append(self.actionTypeListRead[step])
 			self._walkDirectionList.append(self.walkDirectionListRead[step])
-			self._mobileSerialList.append(self.mobileSerialListRead[step])
-			self._itemSerialList.append(self.itemSerialListRead[step])
+			self._targetSerialList.append(self.targetSerialListRead[step])
+			self._selectedSerialList.append(self.selectedSerialListRead[step])
 			self._indexList.append(self.indexListRead[step])
 			self._amountList.append(self.amountListRead[step])
+			self._runList.append(self.runListRead[step])
 
 			if self.mobileDataArrRead:
 				mobileDataSubsetArray, self._mobileDataArrayOffset = self.GetSubsetArray(step, self.mobileDataArrayLengthListRead, 
@@ -502,8 +518,8 @@ class UoServiceReplay:
 
 		    #self._actionTypeList.append(self.actionTypeListRead[step])
 			#self._walkDirectionList.append(self.walkDirectionListRead[step])
-		    #self._mobileSerialList.append(self.mobileSerialListRead[step])
-		    #self._itemSerialList.append(self.itemSerialListRead[step])
+		    #self._targetSerialList.append(self.targetSerialListRead[step])
+		    #self._selectedSerialList.append(self.selectedSerialListRead[step])
 		    #self._indexList.append(self.indexListRead[step])
 		    #self._amountList.append(self.amountListRead[step])
 
@@ -518,6 +534,8 @@ class UoServiceReplay:
 		    self._screenSurface.blit(action_type_surface, (0, 30))
 		    action_type_surface = font.render("walk direction: " + str(self._walkDirectionList[replay_step]), True, (255, 255, 255))
 		    self._screenSurface.blit(action_type_surface, (0, 60))
+		    action_type_surface = font.render("run: " + str(self._runList[replay_step]), True, (255, 255, 255))
+		    self._screenSurface.blit(action_type_surface, (0, 90))
 
 		    # Draw the boundary line
 		    pygame.draw.line(self._screenSurface, (255, 255, 255), (self._screenWidth - 1, 0), (self._screenWidth - 1, self._screenHeight))

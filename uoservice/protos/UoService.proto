@@ -157,11 +157,12 @@ message States {
 
 message Actions {
   uint32 actionType = 1;
-  uint32 mobileSerial = 2;
-  uint32 itemSerial = 3;
+  uint32 selectedSerial = 2;
+  uint32 targetSerial = 3;
   uint32 walkDirection = 4;
   uint32 index = 5;
   uint32 amount = 6;
+  uint32 run = 7;
 }
 
 service UoService {

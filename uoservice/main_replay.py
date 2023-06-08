@@ -87,10 +87,11 @@ print(Layers(20).name)
 
 action_type_list = []
 walk_direction_list = []
-mobile_serial_list = []
-item_serial_list = []
+target_serial_list = []
+selected_serial_list = []
 index_list = []
 amount_list = []
+run_list = []
 
 player_mobile_object_data_list = []
 mobile_object_data_list = []
@@ -108,10 +109,11 @@ player_status_list = []
 def parse_response(step, response):
   global action_type_list
   global walk_direction_list
-  global mobile_serial_list
-  global item_serial_list
+  global target_serial_list
+  global selected_serial_list
   global index_list
   global amount_list
+  global run_list
 
   global player_mobile_object_data_list
   global mobile_object_data_list
@@ -133,13 +135,15 @@ def parse_response(step, response):
   item_serial = player_actions.itemSerial
   index = player_actions.index
   amount = player_actions.amount
+  run = player_actions.run
 
   action_type_list.append(action_type)
   walk_direction_list.append(walk_direction)
-  mobile_serial_list.append(mobile_serial)
-  item_serial_list.append(item_serial)
+  target_serial_list.append(mobile_serial)
+  selected_serial_list.append(item_serial)
   index_list.append(index)
   amount_list.append(amount)
+  run_list.append(run)
 
   # Commnon data parse
   mobile_data = response.mobileList.mobile
@@ -217,10 +221,11 @@ def vis_response():
 
   global action_type_list
   global walk_direction_list
-  global mobile_serial_list
-  global item_serial_list
+  global target_serial_list
+  global selected_serial_list
   global index_list
   global amount_list
+  global run_list
 
   global player_mobile_object_data_list
   global mobile_object_data_list
@@ -291,6 +296,10 @@ def vis_response():
     screen_surface.blit(action_type_surface, (0, 30))
     action_type_surface = font.render("walk direction: " + str(walk_direction_list[replay_step]), True, (255, 255, 255))
     screen_surface.blit(action_type_surface, (0, 60))
+
+    #print("run_list[replay_step]: ", run_list[replay_step])
+    action_type_surface = font.render("run: " + str(run_list[replay_step]), True, (255, 255, 255))
+    screen_surface.blit(action_type_surface, (0, 90))
 
     # Draw the boundary line
     pygame.draw.line(screen_surface, (255, 255, 255), (screen_width - 1, 0), (screen_width - 1, screen_height))
