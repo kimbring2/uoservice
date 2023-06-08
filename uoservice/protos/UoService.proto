@@ -20,8 +20,10 @@ message GrpcItemData {
 }
 
 message GrpcClilocData {
-  string text = 1;
-  string affix = 2;
+  uint32 serial = 1;
+  string text = 2;
+  string affix = 3;
+  string name = 4;
 }
 
 message GrpcClilocDataList {
