@@ -9,7 +9,6 @@ import time
 import numpy as np
 import cv2
 import random
-import pygame
 import argparse
 import sys
 import grpc
@@ -24,23 +23,34 @@ from UoService import UoService
 
 parser = argparse.ArgumentParser(description='Ultima Online Replay Parser')
 parser.add_argument('--game_path', type=str, help='root directory of UO execution')
+parser.add_argument('--window_width', type=int, help='root directory of UO execution')
 
 arguments = parser.parse_args()
 
-game_path = arguments.game_path
-username = 'kimbring2'
-password = 'kimbring2'
 grpc_port = 60051
 window_width = 1370
 window_height = 1280
-human_play = True
+human_play = False
 replay = None
 
 def main():
   # username, password, grpc_port, window_width, window_height, replay=None, human_play=None
-  uo_service = UoService(game_path, username, password, grpc_port, window_width, window_height, human_play, replay)
-  uo_service._run_uo()
+  uo_service = UoService(grpc_port, window_width, window_height)
+  uo_service._open_grpc()
 
+  obs = uo_service.reset()
+  for step in range(0, 100000):
+    #print("step: ", step)
+
+    action = {}
+    action['action_type'] = 0
+    action['mobile_serial'] = 0
+    action['item_serial'] = 0
+    action['walk_direction'] = 4
+    action['index'] = 0
+    action['amount'] = 0
+
+    obs_next = uo_service.step(action)
 
 if __name__ == '__main__':
   main()
