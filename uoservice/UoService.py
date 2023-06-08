@@ -44,6 +44,7 @@ class UoService:
 	def parse_response(self, response):
 	  player_skills_dict = {}
 	  mobile_dict = {}
+	  player_mobile_dict = {}
 	  mountable_mobile_dict = {}
 	  world_item_dict = {}
 	  equipped_item_dict = {}
@@ -56,35 +57,33 @@ class UoService:
 	  player_skill_dict = {}
 	  popup_menu_list = []
 	  cliloc_data_list = []
+	  static_object_screen_x_list = []
+	  static_object_screen_y_list = []
 
 	  mobile_data = response.mobileList.mobile
 	  equipped_item_data = response.equippedItemList.item
 	  backpack_item_data = response.backpackItemList.item
 	  opened_corpse_list = response.openedCorpseList.corpse
 	  popup_menu_data = response.popupMenuList.menu
-
 	  player_status_data = response.playerStatus
-
 	  player_skills_data = response.playerSkillList.skills
+	  static_object_screen_x_data = response.staticObjectInfoList.screenXs
+	  static_object_screen_y_data = response.staticObjectInfoList.screenYs
+	  vendor_item_data = response.vendorItemObjectList.gameObject
+	  cliloc_data = response.clilocDataList.clilocData
+	  player_mobile_object_data = response.playerMobileObjectList.gameObject
+	  mobile_object_data = response.mobileObjectList.gameObject
+	  item_object_data = response.itemObjectList.gameObject
+	  item_dropable_land_data = response.itemDropableLandList.gameSimpleObject
+
 	  for skill in player_skills_data:
 	    player_skills_dict[skill.name] = [skill.index, skill.isClickable, skill.value, skill.base, skill.cap, skill.lock]
 
-	  static_object_screen_x_data = response.staticObjectInfoList.screenXs
-	  static_object_screen_y_data = response.staticObjectInfoList.screenYs
-
-	  vendor_item_data = response.vendorItemObjectList.gameObject
-
-	  cliloc_data = response.clilocDataList.clilocData
 	  for data in cliloc_data:
 	    cliloc_dict = {}
 	    cliloc_dict['text'] = data.text
 	    cliloc_dict['affix'] = data.affix
 	    cliloc_data_list.append(cliloc_dict)
-
-	  player_mobile_object_data = response.playerMobileObjectList.gameObject
-	  mobile_object_data = response.mobileObjectList.gameObject
-	  item_object_data = response.itemObjectList.gameObject
-	  item_dropable_land_data = response.itemDropableLandList.gameSimpleObject
 
 	  for menu_data in popup_menu_data:
 	    popup_menu_list.append(menu_data)
@@ -97,19 +96,19 @@ class UoService:
 	    #      format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
 	    vendor_item_dict[obj.serial] = [obj.name, obj.type, obj.price, obj.amount, obj.title]
 
-	  #print("len(mobile_object_data): ", len(mobile_object_data))
 	  for obj in mobile_object_data:
 	    #print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, is_corpse:{6}, title:{7}'.
 	    #    format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.isCorpse, obj.title))
-	    pass
+	    mobile_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
 
 	  for obj in player_mobile_object_data:
 	    #print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
 	    #      format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
-	    pass
+	    player_mobile_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
 
 	  for i in range(0, len(static_object_screen_x_data)):
-	  	pass
+	  	static_object_screen_x_list.append(static_object_screen_x_data[i])
+	  	static_object_screen_y_list.append(static_object_screen_y_data[i])
 
 	  if len(mobile_data) == 0 or len(equipped_item_data) == 0:
 	    return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, opened_corpse_list_dict, \
@@ -125,47 +124,26 @@ class UoService:
 	      continue
 
 	  for item in equipped_item_data:
-	    #print('name: {0}, layer: {1}, serial: {2}, amount: {3}'.format(item.name, item.layer, 
-	    #                                                               item.serial, item.amount))
+	    #print('name: {0}, layer: {1}, serial: {2}, amount: {3}'.format(item.name, item.layer, item.serial, item.amount))
 	    equipped_item_dict[item.serial] = [item.name, item.layer, item.amount]
 
 	  for item in backpack_item_data:
 	    backpack_item_dict[item.serial] = [item.name, item.layer, item.amount]
 
 	  for opened_corpse in opened_corpse_list:
-	    #print('name: {0}, x: {1}, y: {2}, race: {3}, serial: {4}\n'.format(item.name, item.layer, item.amount))
-	    #opened_corpse_dict[item.serial] = [item.name, item.layer, item.amount]
-	    '''
-	    message GrpcGameObjectData {
-	     string type = 1;
-	     uint32 screenX = 2;
-	     uint32 screenY = 3;
-	     uint32 distance = 4;
-	     uint32 gameX = 5;
-	     uint32 gameY = 6;
-	     uint32 serial = 7;
-	     string name = 8;
-	     bool isCorpse = 9;
-	     string title = 10;
-	     uint32 amount = 11;
-	     uint32 price = 12;
-	    }
-	    '''
-
 	    corpse_object = opened_corpse.corpse
-	    print('type: {0}, x: {1}, y: {2}, distance: {3}, name: {4}'.format(corpse_object.type, corpse_object.screenX, corpse_object.screenY,
-	    																																	 corpse_object.distance, corpse_object.name))
+	    #print('type: {0}, x: {1}, y: {2}, distance: {3}, name: {4}'.format(corpse_object.type, corpse_object.screenX, corpse_object.screenY,
+	    #																																	 corpse_object.distance, corpse_object.name))
+	    corpse_item_list = []
+	    for item in opened_corpse.corpseItemList.item:
+	    	corpse_item_list.append([item.name, item.layer, item.amount])
 
-	    corpse_item_list = opened_corpse.corpseItemList.item
-	    print("corpse_item_list: ", corpse_item_list)
+	    opened_corpse_list_dict[corpse_object.serial] = corpse_item_list
 
-	    #opened_corpse_list_dict[corpse_object.serial] = 
-
-	  print("")
+	  #print("opened_corpse_list_dict: ", opened_corpse_list_dict)
 
 	  return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, opened_corpse_list_dict, \
-	      vendor_dict, vendor_item_dict, mountable_mobile_dict, teacher_dict, \
-	      popup_menu_list, cliloc_data_list, player_skills_dict
+	      vendor_dict, vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_data_list, player_skills_dict
 
 	def step(self, action):
 		action_type = action['action_type']
