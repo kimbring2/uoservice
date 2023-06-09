@@ -4,6 +4,7 @@ import subprocess
 
 import UoService_pb2
 import UoService_pb2_grpc
+import utils
 
 
 class UoService:
@@ -18,7 +19,7 @@ class UoService:
 		self.stub = UoService_pb2_grpc.UoServiceStub(channel)
 
 	def reset(self):
-		self.stub.WriteAct(UoService_pb2.Actions(actionType=0, targetSerial=0, walkDirection=0, index=0, amount=0))
+		self.stub.WriteAct(UoService_pb2.Actions(actionType=0, mobileSerial=0, walkDirection=0, index=0, amount=0))
 		
 		self.stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
 		self.stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
@@ -39,6 +40,7 @@ class UoService:
 		obs['popup_menu_data'] = obs_raw[9]
 		obs['player_skills_data'] = obs_raw[11]
 		obs['vendor_item_data'] = obs_raw[6]
+		obs['vendor_data'] = obs_raw[5]
 
 		return obs
 
@@ -116,6 +118,10 @@ class UoService:
 			#		format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.isCorpse, obj.title))
 			mobile_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
 
+			vendor_title = utils.isVendor(obj.title)
+			if vendor_title:
+				vendor_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
+
 		for obj in player_mobile_object_data:
 			#print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
 			#			format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
@@ -162,15 +168,15 @@ class UoService:
 
 	def step(self, action):
 		action_type = action['action_type']
-		selected_serial = action['selected_serial']
-		target_serial = action['target_serial']
+		item_serial = action['item_serial']
+		mobile_serial = action['mobile_serial']
 		walk_direction = action['walk_direction']
 		index = action['index']
 		amount = action['amount']
 
 		self.stub.WriteAct(UoService_pb2.Actions(actionType=action_type, 
-																						 selectedSerial=selected_serial,
-																						 targetSerial=target_serial,
+																						 itemSerial=item_serial,
+																						 mobileSerial=mobile_serial,
 																						 walkDirection=walk_direction,
 																						 index=index, 
 																						 amount=amount))
@@ -194,5 +200,6 @@ class UoService:
 		obs['popup_menu_data'] = obs_raw[9]
 		obs['player_skills_data'] = obs_raw[11]
 		obs['vendor_item_data'] = obs_raw[6]
+		obs['vendor_data'] = obs_raw[5]
 		
 		return obs

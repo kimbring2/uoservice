@@ -82,19 +82,19 @@ namespace Uoservice {
             "c3QYECABKAsyIS51b3NlcnZpY2UuR3JwY0dhbWVPYmplY3RJbmZvTGlzdBIx",
             "Cg9wbGF5ZXJTa2lsbExpc3QYESABKAsyGC51b3NlcnZpY2UuR3JwY1NraWxs",
             "TGlzdBItCgxiYW5rSXRlbUxpc3QYEiABKAsyFy51b3NlcnZpY2UuR3JwY0l0",
-            "ZW1MaXN0Io4BCgdBY3Rpb25zEhIKCmFjdGlvblR5cGUYASABKA0SFgoOc2Vs",
-            "ZWN0ZWRTZXJpYWwYAiABKA0SFAoMdGFyZ2V0U2VyaWFsGAMgASgNEhUKDXdh",
-            "bGtEaXJlY3Rpb24YBCABKA0SDQoFaW5kZXgYBSABKA0SDgoGYW1vdW50GAYg",
-            "ASgNEgsKA3J1bhgHIAEoDTKPAwoJVW9TZXJ2aWNlEi0KBVJlc2V0EhEudW9z",
-            "ZXJ2aWNlLkNvbmZpZxoRLnVvc2VydmljZS5TdGF0ZXMSLwoHUmVhZE9icxIR",
-            "LnVvc2VydmljZS5Db25maWcaES51b3NlcnZpY2UuU3RhdGVzEjAKCFdyaXRl",
-            "QWN0EhIudW9zZXJ2aWNlLkFjdGlvbnMaEC51b3NlcnZpY2UuRW1wdHkSQwoT",
-            "QWN0U2VtYXBob3JlQ29udHJvbBIaLnVvc2VydmljZS5TZW1hcGhvcmVBY3Rp",
-            "b24aEC51b3NlcnZpY2UuRW1wdHkSQwoTT2JzU2VtYXBob3JlQ29udHJvbBIa",
-            "LnVvc2VydmljZS5TZW1hcGhvcmVBY3Rpb24aEC51b3NlcnZpY2UuRW1wdHkS",
-            "MgoKUmVhZFJlcGxheRIRLnVvc2VydmljZS5Db25maWcaES51b3NlcnZpY2Uu",
-            "U3RhdGVzEjIKC1JlYWRNUFFGaWxlEhEudW9zZXJ2aWNlLkNvbmZpZxoQLnVv",
-            "c2VydmljZS5FbXB0eWIGcHJvdG8z"));
+            "ZW1MaXN0IooBCgdBY3Rpb25zEhIKCmFjdGlvblR5cGUYASABKA0SEgoKaXRl",
+            "bVNlcmlhbBgCIAEoDRIUCgxtb2JpbGVTZXJpYWwYAyABKA0SFQoNd2Fsa0Rp",
+            "cmVjdGlvbhgEIAEoDRINCgVpbmRleBgFIAEoDRIOCgZhbW91bnQYBiABKA0S",
+            "CwoDcnVuGAcgASgNMo8DCglVb1NlcnZpY2USLQoFUmVzZXQSES51b3NlcnZp",
+            "Y2UuQ29uZmlnGhEudW9zZXJ2aWNlLlN0YXRlcxIvCgdSZWFkT2JzEhEudW9z",
+            "ZXJ2aWNlLkNvbmZpZxoRLnVvc2VydmljZS5TdGF0ZXMSMAoIV3JpdGVBY3QS",
+            "Ei51b3NlcnZpY2UuQWN0aW9ucxoQLnVvc2VydmljZS5FbXB0eRJDChNBY3RT",
+            "ZW1hcGhvcmVDb250cm9sEhoudW9zZXJ2aWNlLlNlbWFwaG9yZUFjdGlvbhoQ",
+            "LnVvc2VydmljZS5FbXB0eRJDChNPYnNTZW1hcGhvcmVDb250cm9sEhoudW9z",
+            "ZXJ2aWNlLlNlbWFwaG9yZUFjdGlvbhoQLnVvc2VydmljZS5FbXB0eRIyCgpS",
+            "ZWFkUmVwbGF5EhEudW9zZXJ2aWNlLkNvbmZpZxoRLnVvc2VydmljZS5TdGF0",
+            "ZXMSMgoLUmVhZE1QUUZpbGUSES51b3NlcnZpY2UuQ29uZmlnGhAudW9zZXJ2",
+            "aWNlLkVtcHR5YgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -119,7 +119,7 @@ namespace Uoservice {
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcContainerData), global::Uoservice.GrpcContainerData.Parser, new[]{ "Container", "ContainerItemList" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcContainerDataList), global::Uoservice.GrpcContainerDataList.Parser, new[]{ "Containers" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.States), global::Uoservice.States.Parser, new[]{ "MobileList", "WorldItemList", "EquippedItemList", "BackpackItemList", "OpenedCorpseList", "PlayerStatus", "MobileObjectList", "PlayerMobileObjectList", "ItemObjectList", "ItemDropableLandList", "VendorItemObjectList", "PopupMenuList", "ClilocDataList", "ReplayActions", "StaticObjectInfoList", "PlayerSkillList", "BankItemList" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Actions), global::Uoservice.Actions.Parser, new[]{ "ActionType", "SelectedSerial", "TargetSerial", "WalkDirection", "Index", "Amount", "Run" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Actions), global::Uoservice.Actions.Parser, new[]{ "ActionType", "ItemSerial", "MobileSerial", "WalkDirection", "Index", "Amount", "Run" }, null, null, null)
           }));
     }
     #endregion
@@ -4521,8 +4521,8 @@ namespace Uoservice {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Actions(Actions other) : this() {
       actionType_ = other.actionType_;
-      selectedSerial_ = other.selectedSerial_;
-      targetSerial_ = other.targetSerial_;
+      itemSerial_ = other.itemSerial_;
+      mobileSerial_ = other.mobileSerial_;
       walkDirection_ = other.walkDirection_;
       index_ = other.index_;
       amount_ = other.amount_;
@@ -4546,25 +4546,25 @@ namespace Uoservice {
       }
     }
 
-    /// <summary>Field number for the "selectedSerial" field.</summary>
-    public const int SelectedSerialFieldNumber = 2;
-    private uint selectedSerial_;
+    /// <summary>Field number for the "itemSerial" field.</summary>
+    public const int ItemSerialFieldNumber = 2;
+    private uint itemSerial_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint SelectedSerial {
-      get { return selectedSerial_; }
+    public uint ItemSerial {
+      get { return itemSerial_; }
       set {
-        selectedSerial_ = value;
+        itemSerial_ = value;
       }
     }
 
-    /// <summary>Field number for the "targetSerial" field.</summary>
-    public const int TargetSerialFieldNumber = 3;
-    private uint targetSerial_;
+    /// <summary>Field number for the "mobileSerial" field.</summary>
+    public const int MobileSerialFieldNumber = 3;
+    private uint mobileSerial_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint TargetSerial {
-      get { return targetSerial_; }
+    public uint MobileSerial {
+      get { return mobileSerial_; }
       set {
-        targetSerial_ = value;
+        mobileSerial_ = value;
       }
     }
 
@@ -4626,8 +4626,8 @@ namespace Uoservice {
         return true;
       }
       if (ActionType != other.ActionType) return false;
-      if (SelectedSerial != other.SelectedSerial) return false;
-      if (TargetSerial != other.TargetSerial) return false;
+      if (ItemSerial != other.ItemSerial) return false;
+      if (MobileSerial != other.MobileSerial) return false;
       if (WalkDirection != other.WalkDirection) return false;
       if (Index != other.Index) return false;
       if (Amount != other.Amount) return false;
@@ -4639,8 +4639,8 @@ namespace Uoservice {
     public override int GetHashCode() {
       int hash = 1;
       if (ActionType != 0) hash ^= ActionType.GetHashCode();
-      if (SelectedSerial != 0) hash ^= SelectedSerial.GetHashCode();
-      if (TargetSerial != 0) hash ^= TargetSerial.GetHashCode();
+      if (ItemSerial != 0) hash ^= ItemSerial.GetHashCode();
+      if (MobileSerial != 0) hash ^= MobileSerial.GetHashCode();
       if (WalkDirection != 0) hash ^= WalkDirection.GetHashCode();
       if (Index != 0) hash ^= Index.GetHashCode();
       if (Amount != 0) hash ^= Amount.GetHashCode();
@@ -4662,13 +4662,13 @@ namespace Uoservice {
         output.WriteRawTag(8);
         output.WriteUInt32(ActionType);
       }
-      if (SelectedSerial != 0) {
+      if (ItemSerial != 0) {
         output.WriteRawTag(16);
-        output.WriteUInt32(SelectedSerial);
+        output.WriteUInt32(ItemSerial);
       }
-      if (TargetSerial != 0) {
+      if (MobileSerial != 0) {
         output.WriteRawTag(24);
-        output.WriteUInt32(TargetSerial);
+        output.WriteUInt32(MobileSerial);
       }
       if (WalkDirection != 0) {
         output.WriteRawTag(32);
@@ -4697,11 +4697,11 @@ namespace Uoservice {
       if (ActionType != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(ActionType);
       }
-      if (SelectedSerial != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(SelectedSerial);
+      if (ItemSerial != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(ItemSerial);
       }
-      if (TargetSerial != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TargetSerial);
+      if (MobileSerial != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(MobileSerial);
       }
       if (WalkDirection != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(WalkDirection);
@@ -4729,11 +4729,11 @@ namespace Uoservice {
       if (other.ActionType != 0) {
         ActionType = other.ActionType;
       }
-      if (other.SelectedSerial != 0) {
-        SelectedSerial = other.SelectedSerial;
+      if (other.ItemSerial != 0) {
+        ItemSerial = other.ItemSerial;
       }
-      if (other.TargetSerial != 0) {
-        TargetSerial = other.TargetSerial;
+      if (other.MobileSerial != 0) {
+        MobileSerial = other.MobileSerial;
       }
       if (other.WalkDirection != 0) {
         WalkDirection = other.WalkDirection;
@@ -4763,11 +4763,11 @@ namespace Uoservice {
             break;
           }
           case 16: {
-            SelectedSerial = input.ReadUInt32();
+            ItemSerial = input.ReadUInt32();
             break;
           }
           case 24: {
-            TargetSerial = input.ReadUInt32();
+            MobileSerial = input.ReadUInt32();
             break;
           }
           case 32: {
