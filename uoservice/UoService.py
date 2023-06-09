@@ -41,12 +41,14 @@ class UoService:
 		obs['player_skills_data'] = obs_raw[11]
 		obs['vendor_item_data'] = obs_raw[6]
 		obs['vendor_data'] = obs_raw[5]
+		obs['corpse_dict'] = obs_raw[12]
 
 		return obs
 
 	def parse_response(self, response):
 		player_skills_dict = {}
 		mobile_dict = {}
+		corpse_dict = {}
 		player_mobile_dict = {}
 		mountable_mobile_dict = {}
 		ground_item_dict = {}
@@ -108,6 +110,9 @@ class UoService:
 		for obj in item_object_data:
 			ground_item_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
 
+			if obj.isCorpse:
+				corpse_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
+
 		for obj in vendor_item_data:
 			#print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
 			#			format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
@@ -133,14 +138,13 @@ class UoService:
 
 		if len(mobile_data) == 0 or len(equipped_item_data) == 0:
 			return mobile_dict, equipped_item_dict, backpack_item_dict, bank_item_dict, opened_corpse_list_dict, \
-				vendor_dict, vendor_item_dict, mountable_mobile_dict, teacher_dict, \
-				popup_menu_list, cliloc_data_list, player_skills_dict
+				vendor_dict, vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_data_list, \
+				player_skills_dict, corpse_dict
 
 		for mobile in mobile_data:
 			#print('name: {0}, x: {1}, y: {2}, race: {3}, serial: {4}\n'.format(mobile.name, mobile.x, mobile.y, mobile.race,
 			#																																	 mobile.serial))
 			mobile_dict[mobile.serial] = [mobile.name, int(mobile.x), int(mobile.y), mobile.race]
-
 			if mobile.x >= 1600 or mobile.y >= 1280:
 				continue
 
@@ -164,7 +168,8 @@ class UoService:
 		#print("opened_corpse_list_dict: ", opened_corpse_list_dict)
 
 		return mobile_dict, equipped_item_dict, backpack_item_dict, bank_item_dict, opened_corpse_list_dict, vendor_dict, \
-					 vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_data_list, player_skills_dict
+					 vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_data_list, player_skills_dict, \
+					 corpse_dict
 
 	def step(self, action):
 		action_type = action['action_type']
@@ -201,5 +206,6 @@ class UoService:
 		obs['player_skills_data'] = obs_raw[11]
 		obs['vendor_item_data'] = obs_raw[6]
 		obs['vendor_data'] = obs_raw[5]
+		obs['corpse_dict'] = obs_raw[12]
 		
 		return obs
