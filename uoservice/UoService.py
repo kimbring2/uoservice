@@ -18,7 +18,7 @@ class UoService:
 		self.stub = UoService_pb2_grpc.UoServiceStub(channel)
 
 	def reset(self):
-		self.stub.WriteAct(UoService_pb2.Actions(actionType=0, mobileSerial=0, walkDirection=0, index=0, amount=0))
+		self.stub.WriteAct(UoService_pb2.Actions(actionType=0, targetSerial=0, walkDirection=0, index=0, amount=0))
 		
 		self.stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
 		self.stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
@@ -29,7 +29,7 @@ class UoService:
 		obs['mobile_data'] = response.mobileList.mobile
 		obs['equipped_item_data'] = response.equippedItemList.item
 		obs['backpack_item_data'] = response.backpackItemList.item
-		obs['opened_corpse_list'] = response.openedCorpseList.corpse
+		obs['opened_corpse_list'] = response.openedCorpseList.containers
 		obs['popup_menu_data'] = response.popupMenuList.menu
 		obs['player_status_data'] = response.playerStatus
 		obs['player_skills_data'] = response.playerSkillList.skills
@@ -63,7 +63,7 @@ class UoService:
 		mobile_data = response.mobileList.mobile
 		equipped_item_data = response.equippedItemList.item
 		backpack_item_data = response.backpackItemList.item
-		opened_corpse_list = response.openedCorpseList.corpse
+		opened_corpse_list = response.openedCorpseList.containers
 		popup_menu_data = response.popupMenuList.menu
 		player_status_data = response.playerStatus
 		player_skills_data = response.playerSkillList.skills
@@ -137,11 +137,11 @@ class UoService:
 			backpack_item_dict[item.serial] = [item.name, item.layer, item.amount]
 
 		for opened_corpse in opened_corpse_list:
-			corpse_object = opened_corpse.corpse
+			corpse_object = opened_corpse.container
 			#print('type: {0}, x: {1}, y: {2}, distance: {3}, name: {4}'.format(corpse_object.type, corpse_object.screenX, corpse_object.screenY,
 			#																																	 corpse_object.distance, corpse_object.name))
 			corpse_item_list = []
-			for item in opened_corpse.corpseItemList.item:
+			for item in opened_corpse.containerItemList.item:
 				corpse_item_list.append([item.name, item.layer, item.amount])
 
 			opened_corpse_list_dict[corpse_object.serial] = corpse_item_list
@@ -160,8 +160,8 @@ class UoService:
 		amount = action['amount']
 
 		self.stub.WriteAct(UoService_pb2.Actions(actionType=action_type, 
-																						 mobileSerial=mobile_serial,
-																						 itemSerial=item_serial,
+																						 targetSerial=mobile_serial,
+																						 selectedSerial=item_serial,
 																						 walkDirection=walk_direction,
 																						 index=index, 
 																						 amount=amount))

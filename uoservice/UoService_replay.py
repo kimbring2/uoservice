@@ -415,9 +415,9 @@ class UoServiceReplay:
 			if self.openedCorpseArrRead:
 				openedCorpseSubsetArray, self._openedCorpseArrayOffset = self.GetSubsetArray(step, self.openedCorpseArrayLengthListRead, 
 																			   			     self._openedCorpseArrayOffset, self.openedCorpseArrRead)
-				grpcOpenedCorpseReplay = UoService_pb2.GrpcOpenedCorpseList().FromString(openedCorpseSubsetArray)
+				grpcOpenedCorpseReplay = UoService_pb2.GrpcContainerDataList().FromString(openedCorpseSubsetArray)
 				#print("grpcOpenedCorpseReplay: ", grpcOpenedCorpseReplay)
-				self._openedCorpseList.append(grpcOpenedCorpseReplay.corpse)
+				self._openedCorpseList.append(grpcOpenedCorpseReplay.containers)
 			else:
 				print("openedCorpseArrRead is None")
 
