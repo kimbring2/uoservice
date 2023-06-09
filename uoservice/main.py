@@ -33,7 +33,21 @@ window_height = 1280
 human_play = False
 replay = None
 
+
+def get_serial_by_name(item_dict, name):
+  keys = list(item_dict.keys())
+  for k, v in item_dict.items():
+    if v[0] == name:
+      return k, keys.index(k)
+
+  return None, None
+
+
 def main():
+  pick_up_flag = True
+  drop_flag = False
+  hold_item = 0
+
   # username, password, grpc_port, window_width, window_height, replay=None, human_play=None
   uo_service = UoService(grpc_port, window_width, window_height)
   uo_service._open_grpc()
@@ -42,15 +56,51 @@ def main():
   for step in range(0, 100000):
     #print("step: ", step)
 
+    #print("obs[\"backpack_item_data\"]: ", obs["backpack_item_data"])
+    #print("obs[\"bank_item_data\"]: ", obs["bank_item_data"])
+
+    target_serial = 0
+    if len(obs["bank_item_data"]) != 0:
+      target_serial, index = get_serial_by_name(obs["backpack_item_data"], "2 Lesser Heal Potion")
+      #print("selected_serial: ", selected_serial)
+
     action = {}
     action['action_type'] = 0
-    action['mobile_serial'] = 0
-    action['item_serial'] = 0
-    action['walk_direction'] = 4
+    action['selected_serial'] = 0
+    action['target_serial'] = 0
+    action['walk_direction'] = 0
     action['index'] = 0
     action['amount'] = 0
 
+    if step % 100 == 0:
+      print("step: ", step)
+
+      if pick_up_flag == True and target_serial != 0:
+        action['action_type'] = 3
+        action['selected_serial'] = 0
+        action['target_serial'] = target_serial
+        action['walk_direction'] = 0
+        action['index'] = 0
+        action['amount'] = 1
+        pick_up_flag = False
+        drop_flag = True
+        hold_item = target_serial
+
+        print("action: ", action)
+      elif drop_flag == True and target_serial != 0:
+        action['action_type'] = 18
+        action['selected_serial'] = 0
+        action['target_serial'] = hold_item
+        action['walk_direction'] = 0
+        action['index'] = 0
+        action['amount'] = 1
+        drop_flag = False
+
+        print("action: ", action)
+
     obs_next = uo_service.step(action)
+
+    obs = obs_next
 
 if __name__ == '__main__':
   main()

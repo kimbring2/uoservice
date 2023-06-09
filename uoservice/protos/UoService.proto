@@ -152,7 +152,7 @@ message States {
 
   GrpcSkillList playerSkillList = 17;
 
-  GrpcContainerData bankData = 18;
+  GrpcItemList bankItemList = 18;
 }
 
 message Actions {

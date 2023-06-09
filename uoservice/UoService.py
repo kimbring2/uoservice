@@ -25,19 +25,20 @@ class UoService:
 
 		response = self.stub.ReadObs(UoService_pb2.Config(name='reset'))
 
+		obs_raw = self.parse_response(response)
+
 		obs = {}
-		obs['mobile_data'] = response.mobileList.mobile
-		obs['equipped_item_data'] = response.equippedItemList.item
-		obs['backpack_item_data'] = response.backpackItemList.item
-		obs['opened_corpse_list'] = response.openedCorpseList.containers
-		obs['popup_menu_data'] = response.popupMenuList.menu
-		obs['player_status_data'] = response.playerStatus
-		obs['player_skills_data'] = response.playerSkillList.skills
-		obs['vendor_item_data'] = response.vendorItemObjectList.gameObject
-		obs['player_mobile_object_data'] = response.playerMobileObjectList.gameObject
-		obs['mobile_object_data'] = response.mobileObjectList.gameObject
-		obs['item_object_data'] = response.itemObjectList.gameObject
-		obs['item_dropable_land_data'] = response.itemDropableLandList.gameSimpleObject
+		
+		#mobile_dict, equipped_item_dict, backpack_item_dict, bank_item_dict, opened_corpse_list_dict, vendor_dict, \
+		#			 vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_data_list, player_skills_dict
+		obs['mobile_data'] = obs_raw[0]
+		obs['equipped_item_data'] = obs_raw[1]
+		obs['backpack_item_data'] = obs_raw[2]
+		obs['bank_item_data'] = obs_raw[3]
+		obs['opened_corpse_list'] = obs_raw[4]
+		obs['popup_menu_data'] = obs_raw[9]
+		obs['player_skills_data'] = obs_raw[11]
+		obs['vendor_item_data'] = obs_raw[6]
 
 		return obs
 
@@ -46,10 +47,11 @@ class UoService:
 		mobile_dict = {}
 		player_mobile_dict = {}
 		mountable_mobile_dict = {}
+		ground_item_dict = {}
 		world_item_dict = {}
 		equipped_item_dict = {}
 		backpack_item_dict = {}
-		ground_item_dict = {}
+		bank_item_dict = {}
 		opened_corpse_list_dict = {}
 		vendor_dict = {}
 		vendor_item_dict = {}
@@ -63,6 +65,7 @@ class UoService:
 		mobile_data = response.mobileList.mobile
 		equipped_item_data = response.equippedItemList.item
 		backpack_item_data = response.backpackItemList.item
+		bank_item_data = response.bankItemList.item
 		opened_corpse_list = response.openedCorpseList.containers
 		popup_menu_data = response.popupMenuList.menu
 		player_status_data = response.playerStatus
@@ -89,7 +92,13 @@ class UoService:
 			if data.name == "Jockles":
 				cliloc_data_list.append(cliloc_dict)
 
-		#print("cliloc_data_list: ", cliloc_data_list)
+		for item in bank_item_data:
+			#print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
+			#			format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
+			bank_item_dict[item.serial] = [item.name, item.layer, item.amount]
+
+		#print("bank_item_data: ", bank_item_data)
+		#print("\n")
 
 		for menu_data in popup_menu_data:
 			popup_menu_list.append(menu_data)
@@ -117,7 +126,7 @@ class UoService:
 			static_object_screen_y_list.append(static_object_screen_y_data[i])
 
 		if len(mobile_data) == 0 or len(equipped_item_data) == 0:
-			return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, opened_corpse_list_dict, \
+			return mobile_dict, equipped_item_dict, backpack_item_dict, bank_item_dict, opened_corpse_list_dict, \
 				vendor_dict, vendor_item_dict, mountable_mobile_dict, teacher_dict, \
 				popup_menu_list, cliloc_data_list, player_skills_dict
 
@@ -148,20 +157,20 @@ class UoService:
 
 		#print("opened_corpse_list_dict: ", opened_corpse_list_dict)
 
-		return mobile_dict, equipped_item_dict, backpack_item_dict, ground_item_dict, opened_corpse_list_dict, \
-				vendor_dict, vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_data_list, player_skills_dict
+		return mobile_dict, equipped_item_dict, backpack_item_dict, bank_item_dict, opened_corpse_list_dict, vendor_dict, \
+					 vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_data_list, player_skills_dict
 
 	def step(self, action):
 		action_type = action['action_type']
-		mobile_serial = action['mobile_serial']
-		item_serial = action['item_serial']
+		selected_serial = action['selected_serial']
+		target_serial = action['target_serial']
 		walk_direction = action['walk_direction']
 		index = action['index']
 		amount = action['amount']
 
 		self.stub.WriteAct(UoService_pb2.Actions(actionType=action_type, 
-																						 targetSerial=mobile_serial,
-																						 selectedSerial=item_serial,
+																						 selectedSerial=selected_serial,
+																						 targetSerial=target_serial,
 																						 walkDirection=walk_direction,
 																						 index=index, 
 																						 amount=amount))
@@ -171,26 +180,19 @@ class UoService:
 
 		response = self.stub.ReadObs(UoService_pb2.Config(name='step'))
 
-		self.parse_response(response)
+		obs_raw = self.parse_response(response)
 
 		obs = {}
-		'''
-		obs['mobile_data'] = response.mobileList.mobile
-		obs['equipped_item_data'] = response.equippedItemList.item
-		obs['backpack_item_data'] = response.backpackItemList.item
-		obs['opened_corpse_list'] = response.openedCorpseList.corpse
-		obs['popup_menu_data'] = response.popupMenuList.menu
-		obs['player_status_data'] = response.playerStatus
-		obs['player_skills_data'] = response.playerSkillList.skills
-		obs['vendor_item_data'] = response.vendorItemObjectList.gameObject
-		obs['player_mobile_object_data'] = response.playerMobileObjectList.gameObject
-		obs['mobile_object_data'] = response.mobileObjectList.gameObject
-		obs['item_object_data'] = response.itemObjectList.gameObject
-		obs['item_dropable_land_data'] = response.itemDropableLandList.gameSimpleObject
-		'''
-
+		
+		#mobile_dict, equipped_item_dict, backpack_item_dict, bank_item_dict, opened_corpse_list_dict, vendor_dict, \
+		#			 vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_data_list, player_skills_dict
+		obs['mobile_data'] = obs_raw[0]
+		obs['equipped_item_data'] = obs_raw[1]
+		obs['backpack_item_data'] = obs_raw[2]
+		obs['bank_item_data'] = obs_raw[3]
+		obs['opened_corpse_list'] = obs_raw[4]
+		obs['popup_menu_data'] = obs_raw[9]
+		obs['player_skills_data'] = obs_raw[11]
+		obs['vendor_item_data'] = obs_raw[6]
+		
 		return obs
-
-
-
-

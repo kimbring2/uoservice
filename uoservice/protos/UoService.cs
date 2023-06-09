@@ -61,7 +61,7 @@ namespace Uoservice {
             "dmljZS5HcnBjR2FtZU9iamVjdERhdGESMgoRY29udGFpbmVySXRlbUxpc3QY",
             "AiABKAsyFy51b3NlcnZpY2UuR3JwY0l0ZW1MaXN0IkkKFUdycGNDb250YWlu",
             "ZXJEYXRhTGlzdBIwCgpjb250YWluZXJzGAEgAygLMhwudW9zZXJ2aWNlLkdy",
-            "cGNDb250YWluZXJEYXRhIqYHCgZTdGF0ZXMSLQoKbW9iaWxlTGlzdBgBIAEo",
+            "cGNDb250YWluZXJEYXRhIqUHCgZTdGF0ZXMSLQoKbW9iaWxlTGlzdBgBIAEo",
             "CzIZLnVvc2VydmljZS5HcnBjTW9iaWxlTGlzdBIuCg13b3JsZEl0ZW1MaXN0",
             "GAIgASgLMhcudW9zZXJ2aWNlLkdycGNJdGVtTGlzdBIxChBlcXVpcHBlZEl0",
             "ZW1MaXN0GAMgASgLMhcudW9zZXJ2aWNlLkdycGNJdGVtTGlzdBIxChBiYWNr",
@@ -81,20 +81,20 @@ namespace Uoservice {
             "ASgLMhIudW9zZXJ2aWNlLkFjdGlvbnMSPwoUc3RhdGljT2JqZWN0SW5mb0xp",
             "c3QYECABKAsyIS51b3NlcnZpY2UuR3JwY0dhbWVPYmplY3RJbmZvTGlzdBIx",
             "Cg9wbGF5ZXJTa2lsbExpc3QYESABKAsyGC51b3NlcnZpY2UuR3JwY1NraWxs",
-            "TGlzdBIuCghiYW5rRGF0YRgSIAEoCzIcLnVvc2VydmljZS5HcnBjQ29udGFp",
-            "bmVyRGF0YSKOAQoHQWN0aW9ucxISCgphY3Rpb25UeXBlGAEgASgNEhYKDnNl",
-            "bGVjdGVkU2VyaWFsGAIgASgNEhQKDHRhcmdldFNlcmlhbBgDIAEoDRIVCg13",
-            "YWxrRGlyZWN0aW9uGAQgASgNEg0KBWluZGV4GAUgASgNEg4KBmFtb3VudBgG",
-            "IAEoDRILCgNydW4YByABKA0yjwMKCVVvU2VydmljZRItCgVSZXNldBIRLnVv",
-            "c2VydmljZS5Db25maWcaES51b3NlcnZpY2UuU3RhdGVzEi8KB1JlYWRPYnMS",
-            "ES51b3NlcnZpY2UuQ29uZmlnGhEudW9zZXJ2aWNlLlN0YXRlcxIwCghXcml0",
-            "ZUFjdBISLnVvc2VydmljZS5BY3Rpb25zGhAudW9zZXJ2aWNlLkVtcHR5EkMK",
-            "E0FjdFNlbWFwaG9yZUNvbnRyb2wSGi51b3NlcnZpY2UuU2VtYXBob3JlQWN0",
-            "aW9uGhAudW9zZXJ2aWNlLkVtcHR5EkMKE09ic1NlbWFwaG9yZUNvbnRyb2wS",
-            "Gi51b3NlcnZpY2UuU2VtYXBob3JlQWN0aW9uGhAudW9zZXJ2aWNlLkVtcHR5",
-            "EjIKClJlYWRSZXBsYXkSES51b3NlcnZpY2UuQ29uZmlnGhEudW9zZXJ2aWNl",
-            "LlN0YXRlcxIyCgtSZWFkTVBRRmlsZRIRLnVvc2VydmljZS5Db25maWcaEC51",
-            "b3NlcnZpY2UuRW1wdHliBnByb3RvMw=="));
+            "TGlzdBItCgxiYW5rSXRlbUxpc3QYEiABKAsyFy51b3NlcnZpY2UuR3JwY0l0",
+            "ZW1MaXN0Io4BCgdBY3Rpb25zEhIKCmFjdGlvblR5cGUYASABKA0SFgoOc2Vs",
+            "ZWN0ZWRTZXJpYWwYAiABKA0SFAoMdGFyZ2V0U2VyaWFsGAMgASgNEhUKDXdh",
+            "bGtEaXJlY3Rpb24YBCABKA0SDQoFaW5kZXgYBSABKA0SDgoGYW1vdW50GAYg",
+            "ASgNEgsKA3J1bhgHIAEoDTKPAwoJVW9TZXJ2aWNlEi0KBVJlc2V0EhEudW9z",
+            "ZXJ2aWNlLkNvbmZpZxoRLnVvc2VydmljZS5TdGF0ZXMSLwoHUmVhZE9icxIR",
+            "LnVvc2VydmljZS5Db25maWcaES51b3NlcnZpY2UuU3RhdGVzEjAKCFdyaXRl",
+            "QWN0EhIudW9zZXJ2aWNlLkFjdGlvbnMaEC51b3NlcnZpY2UuRW1wdHkSQwoT",
+            "QWN0U2VtYXBob3JlQ29udHJvbBIaLnVvc2VydmljZS5TZW1hcGhvcmVBY3Rp",
+            "b24aEC51b3NlcnZpY2UuRW1wdHkSQwoTT2JzU2VtYXBob3JlQ29udHJvbBIa",
+            "LnVvc2VydmljZS5TZW1hcGhvcmVBY3Rpb24aEC51b3NlcnZpY2UuRW1wdHkS",
+            "MgoKUmVhZFJlcGxheRIRLnVvc2VydmljZS5Db25maWcaES51b3NlcnZpY2Uu",
+            "U3RhdGVzEjIKC1JlYWRNUFFGaWxlEhEudW9zZXJ2aWNlLkNvbmZpZxoQLnVv",
+            "c2VydmljZS5FbXB0eWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -118,7 +118,7 @@ namespace Uoservice {
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcPlayerStatus), global::Uoservice.GrpcPlayerStatus.Parser, new[]{ "Str", "Dex", "Intell", "Hits", "HitsMax", "Stamina", "StaminaMax", "Mana", "ManaMax", "Gold", "PhysicalResistance", "Weight", "WeightMax" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcContainerData), global::Uoservice.GrpcContainerData.Parser, new[]{ "Container", "ContainerItemList" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcContainerDataList), global::Uoservice.GrpcContainerDataList.Parser, new[]{ "Containers" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.States), global::Uoservice.States.Parser, new[]{ "MobileList", "WorldItemList", "EquippedItemList", "BackpackItemList", "OpenedCorpseList", "PlayerStatus", "MobileObjectList", "PlayerMobileObjectList", "ItemObjectList", "ItemDropableLandList", "VendorItemObjectList", "PopupMenuList", "ClilocDataList", "ReplayActions", "StaticObjectInfoList", "PlayerSkillList", "BankData" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.States), global::Uoservice.States.Parser, new[]{ "MobileList", "WorldItemList", "EquippedItemList", "BackpackItemList", "OpenedCorpseList", "PlayerStatus", "MobileObjectList", "PlayerMobileObjectList", "ItemObjectList", "ItemDropableLandList", "VendorItemObjectList", "PopupMenuList", "ClilocDataList", "ReplayActions", "StaticObjectInfoList", "PlayerSkillList", "BankItemList" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Actions), global::Uoservice.Actions.Parser, new[]{ "ActionType", "SelectedSerial", "TargetSerial", "WalkDirection", "Index", "Amount", "Run" }, null, null, null)
           }));
     }
@@ -3857,7 +3857,7 @@ namespace Uoservice {
       replayActions_ = other.replayActions_ != null ? other.replayActions_.Clone() : null;
       staticObjectInfoList_ = other.staticObjectInfoList_ != null ? other.staticObjectInfoList_.Clone() : null;
       playerSkillList_ = other.playerSkillList_ != null ? other.playerSkillList_.Clone() : null;
-      bankData_ = other.bankData_ != null ? other.bankData_.Clone() : null;
+      bankItemList_ = other.bankItemList_ != null ? other.bankItemList_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -4042,14 +4042,14 @@ namespace Uoservice {
       }
     }
 
-    /// <summary>Field number for the "bankData" field.</summary>
-    public const int BankDataFieldNumber = 18;
-    private global::Uoservice.GrpcContainerData bankData_;
+    /// <summary>Field number for the "bankItemList" field.</summary>
+    public const int BankItemListFieldNumber = 18;
+    private global::Uoservice.GrpcItemList bankItemList_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Uoservice.GrpcContainerData BankData {
-      get { return bankData_; }
+    public global::Uoservice.GrpcItemList BankItemList {
+      get { return bankItemList_; }
       set {
-        bankData_ = value;
+        bankItemList_ = value;
       }
     }
 
@@ -4082,7 +4082,7 @@ namespace Uoservice {
       if (!object.Equals(ReplayActions, other.ReplayActions)) return false;
       if (!object.Equals(StaticObjectInfoList, other.StaticObjectInfoList)) return false;
       if (!object.Equals(PlayerSkillList, other.PlayerSkillList)) return false;
-      if (!object.Equals(BankData, other.BankData)) return false;
+      if (!object.Equals(BankItemList, other.BankItemList)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -4105,7 +4105,7 @@ namespace Uoservice {
       if (replayActions_ != null) hash ^= ReplayActions.GetHashCode();
       if (staticObjectInfoList_ != null) hash ^= StaticObjectInfoList.GetHashCode();
       if (playerSkillList_ != null) hash ^= PlayerSkillList.GetHashCode();
-      if (bankData_ != null) hash ^= BankData.GetHashCode();
+      if (bankItemList_ != null) hash ^= BankItemList.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -4183,9 +4183,9 @@ namespace Uoservice {
         output.WriteRawTag(138, 1);
         output.WriteMessage(PlayerSkillList);
       }
-      if (bankData_ != null) {
+      if (bankItemList_ != null) {
         output.WriteRawTag(146, 1);
-        output.WriteMessage(BankData);
+        output.WriteMessage(BankItemList);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -4243,8 +4243,8 @@ namespace Uoservice {
       if (playerSkillList_ != null) {
         size += 2 + pb::CodedOutputStream.ComputeMessageSize(PlayerSkillList);
       }
-      if (bankData_ != null) {
-        size += 2 + pb::CodedOutputStream.ComputeMessageSize(BankData);
+      if (bankItemList_ != null) {
+        size += 2 + pb::CodedOutputStream.ComputeMessageSize(BankItemList);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -4353,11 +4353,11 @@ namespace Uoservice {
         }
         PlayerSkillList.MergeFrom(other.PlayerSkillList);
       }
-      if (other.bankData_ != null) {
-        if (bankData_ == null) {
-          bankData_ = new global::Uoservice.GrpcContainerData();
+      if (other.bankItemList_ != null) {
+        if (bankItemList_ == null) {
+          bankItemList_ = new global::Uoservice.GrpcItemList();
         }
-        BankData.MergeFrom(other.BankData);
+        BankItemList.MergeFrom(other.BankItemList);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -4483,10 +4483,10 @@ namespace Uoservice {
             break;
           }
           case 146: {
-            if (bankData_ == null) {
-              bankData_ = new global::Uoservice.GrpcContainerData();
+            if (bankItemList_ == null) {
+              bankItemList_ = new global::Uoservice.GrpcItemList();
             }
-            input.ReadMessage(bankData_);
+            input.ReadMessage(bankItemList_);
             break;
           }
         }
