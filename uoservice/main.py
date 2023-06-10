@@ -39,7 +39,8 @@ def main():
   drop_flag = False
   bank_vendor_flag = False
   open_bank_flag = False
-  open_corpse_flag = True
+  open_corpse_flag = False
+  change_skill_flag = True
   hold_item = 0
   opened_vendor = 0
 
@@ -51,16 +52,18 @@ def main():
   for step in range(0, 100000):
     #print("step: ", step)
 
-    print("corpse_dict: ", obs["corpse_dict"])
-    print("opened_corpse_list: ", obs["opened_corpse_list"])
+    #print("corpse_dict: ", obs["corpse_dict"])
+    #print("opened_corpse_list: ", obs["opened_corpse_list"])
     #print("backpack_item_data: ", obs["backpack_item_data"])
     #print("bank_item_data: ", obs["bank_item_data"])
-    #print("vendor_data: ", obs["vendor_data"])
+    print("vendor_data: ", obs["vendor_data"])
     #print("popup_menu_data: ", obs["popup_menu_data"])
-    #print("Swordsmanship skill info: ", obs["player_skills_data"]['Swordsmanship'])
+    if 'Swordsmanship' in obs["player_skills_data"]:
+      print("Swordsmanship skill info: ", obs["player_skills_data"]['Swordsmanship'])
 
     item_serial = 0
     mobile_serial = 0
+    index = 0
     #if len(obs["bank_item_data"]) != 0:
     #  item_serial, index = get_serial_by_name(obs["backpack_item_data"], "Lesser Heal Potion")
     #  print("item_serial: ", item_serial)
@@ -76,6 +79,10 @@ def main():
     if len(obs["corpse_dict"]) != 0 and open_corpse_flag == True:
       item_serial = list(obs["corpse_dict"].keys())[0]
       print("item_serial: ", item_serial)
+
+    if (change_skill_flag == True) and ('Swordsmanship' in obs["player_skills_data"]):
+      #print("Swordsmanship skill info: ", obs["player_skills_data"]['Swordsmanship'])
+      index = obs["player_skills_data"]['Swordsmanship'][0]
 
     action = {}
     action['action_type'] = 0
@@ -121,6 +128,11 @@ def main():
         action['item_serial'] = item_serial
         action['index'] = 1
         open_corpse_flag = False
+        print("action: ", action)
+      elif change_skill_flag == True:
+        action['action_type'] = 8
+        action['index'] = index
+        change_skill_flag = False
         print("action: ", action)
 
     obs_next = uo_service.step(action)
