@@ -1,3 +1,5 @@
+import cv2
+
 def get_serial_by_name(item_dict, name):
   keys = list(item_dict.keys())
   for k, v in item_dict.items():
@@ -8,7 +10,8 @@ def get_serial_by_name(item_dict, name):
 
 
 def isVendor(title):
-  vendor_name_list = ['healer', 'armourer', 'banker']
+  vendor_name_list = ['healer', 'armourer', 'banker', 'alchemist', 'herbalist', 'stylist', 'waiter',
+                      'baker']
   title_split = title.split(" ")
   for vendor_name in vendor_name_list:
     if vendor_name in title_split:
@@ -19,7 +22,7 @@ def isVendor(title):
 
 
 def isTeacher(title):
-  teacher_name_list = ['warrior']
+  teacher_name_list = ['warrior', 'healer', 'alchemist', 'herbalist', 'baker']
   title_split = title.split(" ")
   for teacher_name in teacher_name_list:
     if teacher_name in title_split:
@@ -57,11 +60,11 @@ def parsePlayerStatus(playerStatusGrpc):
 
 
 def visObject(screenImage, ObjectData, color):
+  radius = 20
+  thickness = 2
   for obj in ObjectData:
     try:
-      screenImage[int(obj.screenX / 10.0), int(obj.screenY / 10.0), 0] = color[0]
-      screenImage[int(obj.screenX / 10.0), int(obj.screenY / 10.0), 1] = color[1]
-      screenImage[int(obj.screenX / 10.0), int(obj.screenY / 10.0), 2] = color[2]
+      screenImage = cv2.circle(screenImage, (obj.screenX, obj.screenY), radius, color, thickness)
     except:
       print("screenX: {0}, screenY: {1}", obj.screenX, obj.screenY)
 

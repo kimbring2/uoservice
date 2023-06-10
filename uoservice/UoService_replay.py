@@ -470,23 +470,44 @@ class UoServiceReplay:
 				self._tickScale = 10
 
 			# Create the downscaled array for bigger mobile object drawing
-			screen_image = np.zeros((int((self._screenWidth + 100) / 10), int((self._screenHeight + 100) / 10), 3), dtype=np.uint8)
+			screen_image = np.zeros((int((self._screenWidth + 100)), int((self._screenHeight + 100)), 3), dtype=np.uint8)
+
+			# Draw the static object
+			static_object_screen_x_data = self._staticObjectScreenXsList[replay_step]
+			static_object_screen_y_data = self._staticObjectScreenYsList[replay_step]
+
+			radius = 1
+			color = (120, 120, 120)
+			thickness = 2
+			for i in range(0, len(static_object_screen_x_data)):
+				if static_object_screen_x_data[i] >= 1400 or static_object_screen_y_data[i] >= 1280:
+					continue
+
+				image = cv2.circle(screen_image, (static_object_screen_x_data[i], static_object_screen_y_data[i]), 
+								   radius, color, thickness)
 
 			# Draw the player mobile object
 			screen_image = utils.visObject(screen_image, self._playerMobileObjectDataList[replay_step], (0, 255, 0))
+			for obj in self._playerMobileObjectDataList[replay_step]:
+				#print("vendor_title: {0}, obj: {1}".format(vendor_title, obj))
+				cv2.putText(screen_image, text=obj.name, org=(obj.screenX, obj.screenY),
+			            	fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=0.8,
+			            	color=(200, 200, 0), thickness=2, lineType=cv2.LINE_4)
 
 			# Draw the mobile object
-			screen_image = utils.visObject(screen_image, self._mobileObjectDataList[replay_step], (255, 0, 0))
-			for obj in self._mobileObjectDataList[replay_step]:
-				vendor_title = utils.isVendor(obj.title)
-				print("vendor_title: ", vendor_title)
-				print("")
+			screen_image = utils.visObject(screen_image, self._mobileObjectDataList[replay_step], (0, 0, 255))
 
 			# Draw the item object
-			screen_image = utils.visObject(screen_image, self._itemObjectDataList[replay_step], (0, 0, 255))
+			#screen_image = utils.visObject(screen_image, self._itemObjectDataList[replay_step], (0, 0, 255))
 
-			# Resize the screen size to fit real screen
-			screen_image = cv2.resize(screen_image, (self._screenWidth, self._screenHeight), interpolation=cv2.INTER_AREA)
+			for obj in self._mobileObjectDataList[replay_step]:
+				vendor_title = utils.isVendor(obj.title)
+				if vendor_title != None:
+					#print("vendor_title: {0}, obj: {1}".format(vendor_title, obj))
+					cv2.putText(screen_image, text=vendor_title, org=(obj.screenX, obj.screenY),
+				            	fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=0.5,
+				            	color=(0, 200, 200), thickness=2, lineType=cv2.LINE_4)
+
 			screen_image = cv2.rotate(screen_image, cv2.ROTATE_90_CLOCKWISE)
 			screen_image = cv2.flip(screen_image, 1)
 

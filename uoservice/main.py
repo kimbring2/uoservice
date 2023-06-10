@@ -52,14 +52,22 @@ def main():
   for step in range(0, 100000):
     #print("step: ", step)
 
+    #if 10284 in obs["cliloc_dict"]:
+    #  print("cliloc_dict: ", obs["cliloc_dict"][10284])
+    #print("cliloc_dict: ", obs["cliloc_dict"])
+    #for k, v in obs["cliloc_dict"].items():
+    #  print("k: {0}, v: {1}", k, v)
+
+    #print("")
     #print("corpse_dict: ", obs["corpse_dict"])
     #print("opened_corpse_list: ", obs["opened_corpse_list"])
     #print("backpack_item_data: ", obs["backpack_item_data"])
     #print("bank_item_data: ", obs["bank_item_data"])
-    print("vendor_data: ", obs["vendor_data"])
+    #print("vendor_data: ", obs["vendor_data"])
     #print("popup_menu_data: ", obs["popup_menu_data"])
     if 'Swordsmanship' in obs["player_skills_data"]:
-      print("Swordsmanship skill info: ", obs["player_skills_data"]['Swordsmanship'])
+      #print("Swordsmanship skill info: ", obs["player_skills_data"]['Swordsmanship'])
+      pass
 
     item_serial = 0
     mobile_serial = 0
