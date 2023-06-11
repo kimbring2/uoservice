@@ -64,7 +64,6 @@ class UoServiceReplay:
 		self._tickScale = 10
 		self._previousControl = 0
 
-		self._mobileDataArrayOffset = 0
 		self._equippedItemArrayOffset = 0
 		self._backpackItemArrayOffset = 0
 		self._openedCorpseArrayOffset = 0
@@ -96,7 +95,6 @@ class UoServiceReplay:
 		self._staticObjectScreenXsList = []
 		self._staticObjectScreenYsList = []
 		self._itemDropableLandObjectList = []
-		self._mobileDataList = []
 		self._equippedItemList = []
 		self._backpackItemList = []
 		self._popupMenuDataList = []
@@ -154,7 +152,6 @@ class UoServiceReplay:
 		self._archive = MPQArchive(self._rootPath + '/' + fileName + ".uoreplay")
 
 		## Read the length byte array for data array
-		self.mobileDataArrayLengthArrRead = self._archive.read_file("replay.metadata.mobileDataLen");
 		self.equippedItemArrayLengthArrRead = self._archive.read_file("replay.metadata.equippedItemLen");
 		self.backpackItemArrayLengthArrRead = self._archive.read_file("replay.metadata.backpackitemLen");
 		self.openedCorpseArrayLengthArrRead = self._archive.read_file("replay.metadata.openedCorpseLen");
@@ -170,7 +167,6 @@ class UoServiceReplay:
 		self.staticObjectInfoListLengthArrRead = self._archive.read_file("replay.metadata.staticObjectInfoListArraysLen");
 
 		## Convert the byte array to int array
-		self.mobileDataArrayLengthListRead = self.ConvertByteArrayToIntList(self.mobileDataArrayLengthArrRead);
 		self.equippedItemArrayLengthListRead = self.ConvertByteArrayToIntList(self.equippedItemArrayLengthArrRead);
 		self.backpackItemArrayLengthListRead = self.ConvertByteArrayToIntList(self.backpackItemArrayLengthArrRead);
 		self.openedCorpseArrayLengthListRead = self.ConvertByteArrayToIntList(self.openedCorpseArrayLengthArrRead);
@@ -185,10 +181,9 @@ class UoServiceReplay:
 		self.playerSkillListArrayLengthListRead = self.ConvertByteArrayToIntList(self.playerSkillListArrayLengthArrRead);
 		self.staticObjectInfoListLengthListRead = self.ConvertByteArrayToIntList(self.staticObjectInfoListLengthArrRead);
 
-		self._replayLength = len(self.mobileDataArrayLengthListRead)
+		self._replayLength = len(self.equippedItemArrayLengthListRead)
 
 		## Read the actual data as byte array
-		self.mobileDataArrRead = self._archive.read_file("replay.data.mobileData");
 		self.equippedItemArrRead = self._archive.read_file("replay.data.equippedItem");
 		self.backpackItemArrRead = self._archive.read_file("replay.data.backpackItem");
 		self.openedCorpseArrRead = self._archive.read_file("replay.data.openedCorpse");
@@ -222,11 +217,6 @@ class UoServiceReplay:
 		self.runListRead = self.ConvertByteArrayToBoolList(self.runArrRead);
 
 		## Check the data array is existed
-		if self.mobileDataArrRead:
-			print("len(self.mobileDataArrRead): ", len(self.mobileDataArrRead))
-		else:
-			print("self.mobileDataArrRead is None")
-
 		if self.equippedItemArrRead:
 			print("len(self.equippedItemArrRead): ", len(self.equippedItemArrRead))
 		else:
@@ -303,15 +293,6 @@ class UoServiceReplay:
 			self._indexList.append(self.indexListRead[step])
 			self._amountList.append(self.amountListRead[step])
 			self._runList.append(self.runListRead[step])
-
-			if self.mobileDataArrRead:
-				mobileDataSubsetArray, self._mobileDataArrayOffset = self.GetSubsetArray(step, self.mobileDataArrayLengthListRead, 
-																			   self._mobileDataArrayOffset, self.mobileDataArrRead)
-				grpcMobileDataReplay = UoService_pb2.GrpcMobileList().FromString(mobileDataSubsetArray)
-				#print("grpcMobileDataReplay: ", grpcMobileDataReplay)
-				self._mobileDataList.append(grpcMobileDataReplay.mobile)
-			else:
-				print("mobileDataArrRead is None")
 
 			if self.equippedItemArrRead:
 				equippedItemSubsetArray, self._equippedItemArrayOffset = self.GetSubsetArray(step, self.equippedItemArrayLengthListRead, 

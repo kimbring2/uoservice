@@ -99,10 +99,6 @@ message SemaphoreAction {
   string mode = 1;
 }
 
-message GrpcMobileList {
-  repeated GrpcMobileData mobile = 1;
-}
-
 message GrpcItemList {
   repeated GrpcItemData item = 1;
 }
@@ -126,32 +122,28 @@ message GrpcContainerDataList {
 }
 
 message States {
-  GrpcMobileList mobileList = 1;
+  GrpcItemList equippedItemList = 1;
+  GrpcItemList backpackItemList = 2;
+  GrpcContainerDataList openedCorpseList = 3;
+  GrpcPlayerStatus playerStatus = 4;
 
-  GrpcItemList worldItemList = 2;
+  GrpcGameObjectList mobileObjectList = 5;
+  GrpcGameObjectList playerMobileObjectList = 6;
+  GrpcGameObjectList itemObjectList = 7;
+  GrpcGameObjectSimpleList itemDropableLandList = 8;
+  GrpcGameObjectList vendorItemObjectList = 9;
 
-  GrpcItemList equippedItemList = 3;
-  GrpcItemList backpackItemList = 4;
-  GrpcContainerDataList openedCorpseList = 5;
-  GrpcPlayerStatus playerStatus = 6;
+  GrpcPopupMenuList popupMenuList = 10;
 
-  GrpcGameObjectList mobileObjectList = 7;
-  GrpcGameObjectList playerMobileObjectList = 8;
-  GrpcGameObjectList itemObjectList = 9;
-  GrpcGameObjectSimpleList itemDropableLandList = 11;
-  GrpcGameObjectList vendorItemObjectList = 12;
+  GrpcClilocDataList clilocDataList = 11;
 
-  GrpcPopupMenuList popupMenuList = 13;
+  Actions replayActions = 12;
 
-  GrpcClilocDataList clilocDataList = 14;
+  GrpcGameObjectInfoList staticObjectInfoList = 13;
 
-  Actions replayActions = 15;
+  GrpcSkillList playerSkillList = 14;
 
-  GrpcGameObjectInfoList staticObjectInfoList = 16;
-
-  GrpcSkillList playerSkillList = 17;
-
-  GrpcItemList bankItemList = 18;
+  GrpcItemList bankItemList = 15;
 }
 
 message Actions {

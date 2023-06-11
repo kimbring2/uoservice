@@ -51,10 +51,11 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col" id="GrpcItemData">
-                <script>createHeader("GrpcItemData", "GrpcItemData", "");</script>
+            <div class="col" id="1">
+                <script>createHeader("1", "GrpcItemData", "");</script>
+                <img src="Fig/Item.png" class="rounded mx-auto d-block float-center" alt="Logo" width="220" height="150">
                 <script>
-                    generate_table("GrpcItemData", 
+                    generate_table("1", 
                                     [
                                         ["name", "string", "name of item"], 
                                         ["layer", "uint32", "which layer the item is included"],
@@ -65,15 +66,16 @@
                 </script>
             </div>
 
-            <div class="col" id="GrpcMobileData">
-                <script>createHeader("GrpcMobileData", "GrpcMobileData", "");</script>
+            <div class="col" id="2">
+                <script>createHeader("2", "GrpcMobileData", "");</script>
+                <img src="Fig/Mobile.png" class="rounded mx-auto d-block float-center" alt="Logo" width="250" height="150">
                 <script>
-                    generate_table("GrpcMobileData", 
+                    generate_table("2", 
                                     [
                                         ["name", "string", "name of mobile"], 
-                                        ["x", "float", "X position of mobile in game screen"],
-                                        ["y", "float", "Y position of mobile in game screen"],
-                                        ["race", "uint32", "Race of mobile"],
+                                        ["x", "float", "x position of mobile in game screen"],
+                                        ["y", "float", "y position of mobile in game screen"],
+                                        ["race", "uint32", "race of mobile"],
                                         ["serial", "uint32", "unique serial number of mobile"]
                                     ]
                                     );
@@ -82,64 +84,118 @@
         </div>
 
         <div class="row">
-            <div class="col" id="GrpcGameObjectData">
-                <!--
-                GrpcGameObjectData
-                    string type = 1;
-                    uint32 screenX = 2;
-                    uint32 screenY = 3;
-                    uint32 distance = 4;
-                    uint32 gameX = 5;
-                    uint32 gameY = 6;
-                    uint32 serial = 7;
-                    string name = 8;
-                    bool isCorpse = 9;
-                    string title = 10;
-                    uint32 amount = 11;
-                    uint32 price = 12;
-                -->
-
-                <script>createHeader("GrpcGameObjectData", "GrpcGameObjectData", "");</script>
+            <div class="col" id="3">
+                <script>createHeader("3", "GrpcSkill", "");</script>
+                <img src="Fig/Skill.png" class="rounded mx-auto d-block float-center" alt="Logo" width="350" height="300">
                 <script>
-                    generate_table("GrpcGameObjectData", 
+                    generate_table("3", 
                                     [
-                                        ["type", "string", "type of object"], 
-                                        ["screenX", "uint32", "X position of mobile in game screen"],
-                                        ["screenY", "uint32", "Y position of mobile in game screen"],
-                                        ["distance", "uint32", "The distance between the player and object"],
-                                        ["gameX", "uint32", "X position of mobile in game scene"],
-                                        ["gameY", "uint32", "Y position of mobile in game scene"],
-                                        ["serial", "uint32", "The number of item if it can be stacked"],
-                                        ["name", "string", "which layer the item is included"],
-                                        ["isCorpse", "bool", "unique serial number of item"],
-                                        ["title", "string", "The number of item if it can be stacked"],
-                                        ["amount", "uint32", "The number of item if it can be stacked"],
-                                        ["price", "uint32", "The number of item if it can be stacked"]
+                                        ["name", "string", "name of skill"], 
+                                        ["index", "uint32", "unique index numer of skill"],
+                                        ["isClickable", "bool", "whether the skill can be activated by clicking"],
+                                        ["value", "uint32", "current skill level"],
+                                        ["base", "uint32", "base skill level"],
+                                        ["cap", "uint32", "maximum value of skill can be increased"],
+                                        ["lock", "uint32", "skill can be increased if this value is 0"]
                                     ]
                                     );
                 </script>
             </div>
 
-            <div class="col" id="GrpcSkill">
-                <!--
-                GrpcSkill
-                  string name = 1;
-                  uint32 index = 2;
-                  bool isClickable = 3;
-                  uint32 value = 4;
-                  uint32 base = 5;
-                  uint32 cap = 6;
-                  uint32 lock = 7;
-                -->
-
-                <script>createHeader("GrpcSkill", "GrpcSkill", "");</script>
+            <div class="col" id="4">
+                <script>createHeader("4", "GrpcPlayerStatus", "");</script>
+                <img src="Fig/Status.png" class="rounded mx-auto d-block float-center" alt="Logo" width="420" height="150">
                 <script>
-                    generate_table("GrpcSkill", 
+                    generate_table("4", 
                                     [
-                                        ["name", "string", "name of item"], 
-                                        ["layer", "uint32", "which layer the item is included"],
-                                        ["serial", "uint32", "unique serial number of item"],
-                                        ["amount", "uint32", "The number of item if it can be stacked"]
+                                        ["str", "uint32", "strenthg of player"], 
+                                        ["dex", "uint32", "dexterity of player"],
+                                        ["intell", "uint32", "intelligence of player"],
+                                        ["hits", "uint32", "current hp of player"],
+                                        ["hitsMax", "uint32", "maximum value of HP of player"], 
+                                        ["stamina", "uint32", "stamina of player"],
+                                        ["staminaMax", "uint32", "maximum value of stamina of player"],
+                                        ["mana", "uint32", "mana of player"],
+                                        ["manaMax", "uint32", "maximum value of mana of player"], 
+                                        ["gold", "uint32", "gold the player currently has"],
+                                        ["physicalResistance", "uint32", "the physical resistance of player"],
+                                        ["weightMax", "uint32", "maximum value of weight of player"]
+                                    ]
+                                    );
+                </script>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col" id="5">
+                <script>createHeader("5", "GrpcGameObjectData", "");</script>
+                This includes the every object of game such as item, mobile, tree, rock, etc. This information can be used to find the obstacls that can block the movement of player on the screen.
+                <script>
+                    generate_table("5", 
+                                    [
+                                        ["type", "string", "type of object"], 
+                                        ["screenX", "uint32", "x position of mobile in the game screen"],
+                                        ["screenY", "uint32", "y position of mobile in the game screen"],
+                                        ["distance", "uint32", "The distance between the player and object"],
+                                        ["gameX", "uint32", "x position of mobile in the game scene"],
+                                        ["gameY", "uint32", "y position of mobile in the game scene"],
+                                        ["serial", "uint32", "unique serial number of object"],
+                                        ["name", "string", "name of object"],
+                                        ["isCorpse", "bool", "whether the object is corpse"],
+                                        ["title", "string", "title of object"],
+                                        ["amount", "uint32", "number of item if it can be stacked"],
+                                        ["price", "uint32", "price of item when buying and selling"]
+                                    ]
+                                    );
+                </script>
+            </div>
+
+            <div class="col" id="6">
+                <script>createHeader("6", "GrpcGameObjectSimpleData", "");</script>
+                This is simplied version of the GrpcGameObjectData that is made to reduce the size of data. For specific, it can be used to save the land object that need to have the only position information to drop the item.
+                <img src="Fig/Land.png" class="rounded mx-auto d-block float-center" alt="Logo" width="100" height="100">
+                <script>
+                    generate_table("6", 
+                                    [
+                                        ["gameX", "uint32", "x position of mobile in the game scene"],
+                                        ["gameY", "uint32", "y position of mobile in the game scene"],
+                                    ]
+                                    );
+                </script>
+
+                <script>createHeader("6", "GrpcGameObjectInfoList", "");</script>
+                <img src="Fig/Static.png" class="rounded mx-auto d-block float-center" alt="Logo" width="100" height="100">
+                <script>
+                    generate_table("6", 
+                                    [
+                                        ["screenXs", "list of uint32", "list of x position of mobile in the game scene"],
+                                        ["screenYs", "list of uint32", "list of y position of mobile in the game scene"],
+                                    ]
+                                    );
+                </script>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col" id="7">
+                <script>createHeader("7", "GrpcPopupMenuList", "");</script>
+                <script>
+                    generate_table("7", 
+                                    [
+                                        ["menu", "list of string", "list of pop up menu text of mobile"],
+                                    ]
+                                    );
+                </script>
+            </div>
+
+            <div class="col" id="8">
+                <script>createHeader("8", "GrpcPopupMenuList", "");</script>
+                <script>
+                    generate_table("8", 
+                                    [
+                                        ["menu", "list of string", "list of pop up menu text of mobile"],
                                     ]
                                     );
                 </script>
@@ -155,7 +211,7 @@
         <div class="row">
             <div class="col", id="EquippedItem">
                 <script>createHeader("EquippedItem", "GrpcItemList", "EquippedItemList", "State", "(handle)");</script>
-                <img src="Fig/equippedItem.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="300">
+                <img src="Fig/EquippedItem.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="300">
             </div>
             <div class="col">
                 <h1>Description</h1>
