@@ -26,10 +26,6 @@ message GrpcClilocData {
   string name = 4;
 }
 
-message GrpcClilocDataList {
-  repeated GrpcClilocData clilocData = 1;
-}
-
 message GrpcGameObjectData {
   string type = 1;
   uint32 screenX = 2;
@@ -45,45 +41,6 @@ message GrpcGameObjectData {
   uint32 price = 12;
 }
 
-message GrpcGameObjectList {
-  repeated GrpcGameObjectData gameObject = 1;
-}
-
-message GrpcGameObjectSimpleData {
-  uint32 gameX = 1;
-  uint32 gameY = 2;
-}
-
-message GrpcGameObjectInfoList {
-  repeated uint32 screenXs = 1;
-  repeated uint32 screenYs = 2;
-}
-
-message GrpcGameObjectSimpleList {
-  repeated GrpcGameObjectSimpleData gameSimpleObject = 1;
-}
-
-message SemaphoreAction {
-  string mode = 1;
-}
-
-message GrpcMobileList {
-  repeated GrpcMobileData mobile = 1;
-}
-
-message GrpcItemList {
-  repeated GrpcItemData item = 1;
-}
-
-message GrpcPopupMenuList {
-  repeated string menu = 1;
-}
-
-message Config {
-  string name = 1;
-  string replayName = 2;
-}
-
 message GrpcSkill {
   string name = 1;
   uint32 index = 2;
@@ -92,10 +49,6 @@ message GrpcSkill {
   uint32 base = 5;
   uint32 cap = 6;
   uint32 lock = 7;
-}
-
-message GrpcSkillList {
-  repeated GrpcSkill skills = 1;
 }
 
 message GrpcPlayerStatus {
@@ -116,6 +69,53 @@ message GrpcPlayerStatus {
   uint32 weightMax = 13;
 }
 
+message GrpcGameObjectSimpleData {
+  uint32 gameX = 1;
+  uint32 gameY = 2;
+}
+
+message GrpcGameObjectInfoList {
+  repeated uint32 screenXs = 1;
+  repeated uint32 screenYs = 2;
+}
+
+message GrpcPopupMenuList {
+  repeated string menu = 1;
+}
+
+message GrpcClilocDataList {
+  repeated GrpcClilocData clilocData = 1;
+}
+
+message GrpcGameObjectList {
+  repeated GrpcGameObjectData gameObject = 1;
+}
+
+message GrpcGameObjectSimpleList {
+  repeated GrpcGameObjectSimpleData gameSimpleObject = 1;
+}
+
+message SemaphoreAction {
+  string mode = 1;
+}
+
+message GrpcMobileList {
+  repeated GrpcMobileData mobile = 1;
+}
+
+message GrpcItemList {
+  repeated GrpcItemData item = 1;
+}
+
+message Config {
+  string name = 1;
+  string replayName = 2;
+}
+
+message GrpcSkillList {
+  repeated GrpcSkill skills = 1;
+}
+
 message GrpcContainerData {
   GrpcGameObjectData container = 1;
   GrpcItemList containerItemList = 2;
@@ -129,11 +129,10 @@ message States {
   GrpcMobileList mobileList = 1;
 
   GrpcItemList worldItemList = 2;
+
   GrpcItemList equippedItemList = 3;
   GrpcItemList backpackItemList = 4;
-
   GrpcContainerDataList openedCorpseList = 5;
-
   GrpcPlayerStatus playerStatus = 6;
 
   GrpcGameObjectList mobileObjectList = 7;

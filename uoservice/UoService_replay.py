@@ -469,6 +469,11 @@ class UoServiceReplay:
 				self._previousControl = 0
 				self._tickScale = 10
 
+			#mobileDataList = self._mobileDataList[replay_step]
+			#print("len(mobileDataList): ", len(mobileDataList))
+			#for mobileData in mobileDataList:
+			#	print("mobileData: ", mobileData)
+
 			# Create the downscaled array for bigger mobile object drawing
 			screen_image = np.zeros((int((self._screenWidth + 100)), int((self._screenHeight + 100)), 3), dtype=np.uint8)
 

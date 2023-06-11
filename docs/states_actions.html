@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>Godot AI Gym</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://getbootstrap.com/docs/4.1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/tmp.css" rel="stylesheet">
+    <script src="js/scripts.js"></script>
+
+    <script src="js/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="https://github.com/kimbring2/uoservice">GitHub</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">Home<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+            <a class="nav-link" href="states_actions.html">States/Actions<span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item active">
+            <a class="nav-link" href="tutorial_replay.html">Replay<span class="sr-only"></span></a>
+            </li>
+        </ul>
+        </div>
+    </nav>
+    
+<main role="main" class="container-fluid">
+    <div class="starter-template">
+        <h1>States/Actions</h1>
+    </div>
+    <div class="starter-template">
+        <h1>Basic States</h1>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col" id="GrpcItemData">
+                <script>createHeader("GrpcItemData", "GrpcItemData", "");</script>
+                <script>
+                    generate_table("GrpcItemData", 
+                                    [
+                                        ["name", "string", "name of item"], 
+                                        ["layer", "uint32", "which layer the item is included"],
+                                        ["serial", "uint32", "unique serial number of item"],
+                                        ["amount", "uint32", "The number of item if it can be stacked"]
+                                    ]
+                                    );
+                </script>
+            </div>
+
+            <div class="col" id="GrpcMobileData">
+                <script>createHeader("GrpcMobileData", "GrpcMobileData", "");</script>
+                <script>
+                    generate_table("GrpcMobileData", 
+                                    [
+                                        ["name", "string", "name of mobile"], 
+                                        ["x", "float", "X position of mobile in game screen"],
+                                        ["y", "float", "Y position of mobile in game screen"],
+                                        ["race", "uint32", "Race of mobile"],
+                                        ["serial", "uint32", "unique serial number of mobile"]
+                                    ]
+                                    );
+                </script>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col" id="GrpcGameObjectData">
+                <!--
+                GrpcGameObjectData
+                    string type = 1;
+                    uint32 screenX = 2;
+                    uint32 screenY = 3;
+                    uint32 distance = 4;
+                    uint32 gameX = 5;
+                    uint32 gameY = 6;
+                    uint32 serial = 7;
+                    string name = 8;
+                    bool isCorpse = 9;
+                    string title = 10;
+                    uint32 amount = 11;
+                    uint32 price = 12;
+                -->
+
+                <script>createHeader("GrpcGameObjectData", "GrpcGameObjectData", "");</script>
+                <script>
+                    generate_table("GrpcGameObjectData", 
+                                    [
+                                        ["type", "string", "type of object"], 
+                                        ["screenX", "uint32", "X position of mobile in game screen"],
+                                        ["screenY", "uint32", "Y position of mobile in game screen"],
+                                        ["distance", "uint32", "The distance between the player and object"],
+                                        ["gameX", "uint32", "X position of mobile in game scene"],
+                                        ["gameY", "uint32", "Y position of mobile in game scene"],
+                                        ["serial", "uint32", "The number of item if it can be stacked"],
+                                        ["name", "string", "which layer the item is included"],
+                                        ["isCorpse", "bool", "unique serial number of item"],
+                                        ["title", "string", "The number of item if it can be stacked"],
+                                        ["amount", "uint32", "The number of item if it can be stacked"],
+                                        ["price", "uint32", "The number of item if it can be stacked"]
+                                    ]
+                                    );
+                </script>
+            </div>
+
+            <div class="col" id="GrpcSkill">
+                <!--
+                GrpcSkill
+                  string name = 1;
+                  uint32 index = 2;
+                  bool isClickable = 3;
+                  uint32 value = 4;
+                  uint32 base = 5;
+                  uint32 cap = 6;
+                  uint32 lock = 7;
+                -->
+
+                <script>createHeader("GrpcSkill", "GrpcSkill", "");</script>
+                <script>
+                    generate_table("GrpcSkill", 
+                                    [
+                                        ["name", "string", "name of item"], 
+                                        ["layer", "uint32", "which layer the item is included"],
+                                        ["serial", "uint32", "unique serial number of item"],
+                                        ["amount", "uint32", "The number of item if it can be stacked"]
+                                    ]
+                                    );
+                </script>
+            </div>
+        </div>
+    </div><!-- /.container -->
+
+
+    <div class="starter-template">
+        <h1>States</h1>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col", id="EquippedItem">
+                <script>createHeader("EquippedItem", "GrpcItemList", "EquippedItemList", "State", "(handle)");</script>
+                <img src="Fig/equippedItem.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="300">
+            </div>
+            <div class="col">
+                <h1>Description</h1>
+                Cloak, Shirt, Pants, Shoes, Legs, Arms, Torso, Tunic,
+                Ring, Bracelet, Face, Gloves, Skirt, Robe, Waist, Necklace,
+                Hair, Beard, Earrings, Helmet, OneHanded, TwoHanded, Talisman
+            </div>
+        </div>
+
+        <div class="starter-template">
+            <h1>Actions</h1>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h1>Python</h1>
+            </div>
+            <div class="col">
+                <h1>Description</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col" id="SharedMemorySemaphore">
+            <script>createHeader("SharedMemorySemaphore", "class", "_GodotEnv", "SharedMemorySemaphore", "(name, init_val)");</script>
+            Creates a semaphore <b>name</b> in the shared memory with initial count <b>init_val</b>.
+            
+            <script>createHeader("SharedMemorySemaphore", "function", "SharedMemorySemaphore", "post", "()");</script>
+            Increases semaphore value by 1.
+
+            <script>createHeader("SharedMemorySemaphore", "function", "SharedMemorySemaphore", "wait", "()");</script>
+            Decreases semaphore value by 1. If the value is less or equal to zeros, blocks the process until the value increases.
+            </div>
+            
+            <div class="col">
+                These classes manage the semaphores in the shared memory. Godot classes assume that the semaphores are already
+                created. Meanwhile python classes create them on initialization.
+            </div>
+        </div>
+
+        <div class="starter-template">
+            <h1>Deployment</h1>
+        </div>
+        <div class="row">
+            <div class="col">
+            </div>
+            <div class="col">
+                <h1>Description</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col" id="">
+            </div>
+            <div class="col">
+                These classes manage torch jit model loading and executing in Godot engine.
+            </div>
+        </div>
+    </div><!-- /.container -->
+</main>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+<script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script>
+<script src="https://getbootstrap.com/docs/4.1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>Godot AI Gym</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://getbootstrap.com/docs/4.1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/tmp.css" rel="stylesheet">
+
+    <script src="js/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="https://github.com/lupoglaz/GodotAIGym">GitHub</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="index.html">Home<span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item active">
+            <a class="nav-link" href="API.html">API<span class="sr-only"></span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="tutorial_basic.html">Tutorial<span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    
+<main role="main" class="container-fluid">
+    <div class="starter-template">
+        <h1>Training tutorial</h1>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <h5>Figure1</h5>
+                <img src="Fig/DDPG.png" class="rounded mx-auto d-block float-center" alt="Training process" width=80%>
+            </div>
+            <div class="col">
+                <h2>Introduction</h2>
+                Unlike supervised training algorithms, DRL and your success in training a model for your environment strongly depends 
+                on the details of implementation of your training algorithm. In this tutorial we use DDPG, however we do not follow 
+                the publication in details. <br><br>
+
+                The key idea of the algorithm is that we have two neural networks: the policy network and critic network. Policy network 
+                is the one that generates action of the agent using the observer state of the environment. The critic network, instead takes 
+                the state and generated action as inputs and tries to predict the future cumulative reward of such action in this state.<br><br>
+
+                The training step has two substeps. First we compute gradient for the critic neural network and make a gradient descent step. 
+                The problem of training the critic is supervised, because we know the next state and action and we compare predictions of 
+                the critic for the current state and current action with the next state and the next action. They should differ by a discounted reward.<br><br>
+                
+                Then we optimize policy using the critic network as a loss function: the policy should output the best possible action, 
+                therefore maximizing critic prediction.<br>
+                The additional target critic and policy networks are used for the stability of the algorithm.
+                
+                <b>Figure1</b> shows the outline of the algorithm. <b>Code1</b> is the corresponding code for one step of the 
+                training process (implemented in DDPG.py).<br><br><br>
+            </div>
+            <div class="col">
+                <h5>Code 1: DDPG.py.</h5>
+                <pre class="pre"><code class="python">
+def train(self, buffer):
+    b_state, b_action, b_reward, b_state_next, b_term = buffer.sample(self.batch_size)
+    with torch.no_grad():
+        action_target = self.policy_target(b_state_next)
+        Q_prime = self.critic_target(b_state_next, action_target)
+
+    self.opt_critic.zero_grad()
+    Q = self.critic(b_state, b_action)
+    L_critic = self.critic_loss(Q, b_reward + self.gamma*Q_prime*(1.0-b_term))
+    L_critic.backward()
+    self.opt_critic.step()
+    
+    self.opt_policy.zero_grad()
+    action = self.policy(b_state)
+    L_Q = -1.0*self.critic(b_state, action).mean()
+    L_Q.backward()
+    self.opt_policy.step()
+
+    self.soft_update(self.critic, self.critic_target)
+    self.soft_update(self.policy, self.policy_target)
+
+    return L_critic.item(), L_Q.item()
+                </code></pre>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+            </div>
+            <div class="col">
+                <h2>Training cycle</h2>
+                The main training cycle is rather simple (<b>Code2</b>), however the important detail here is the warmup period. 
+                We sample random actions to give initial training some information on rewards and states of the environment. Because the policy 
+                network relies on critic for training, without this step the critic neural network will likely overfit the initial state and action 
+                and won't provide any useful direction to impove the policy. <br><br>
+                <b>Code2</b> also shows that we place state, action, reward and the next state into the buffer, from which we sample 
+                during the training step.<br><br><br>
+            </div>
+            <div class="col">
+                <h5>Code 2: DDPG training cycle (main.py)</h5>
+                <pre class="pre"><code class="python">
+for training_step in range(num_train + num_warmup):
+    if training_step<=num_warmup:
+        action = ddpg.random_action().to(dtype=state.dtype, device=state.device)
+    else:
+        action = ddpg.select_action(state, noise)
+    
+    state_next, reward, term, _ = env.step(action.cpu())
+    state_next = state_next.to(dtype=state.dtype, device=state.device)
+    buffer.append(state, action, reward, state_next, term)
+
+    if training_step>num_warmup:
+        critic_loss, policy_loss = ddpg.train(buffer)
+    state = state_next.clone()
+            </code></pre>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+            </div>
+            <div class="col">
+                <h2>Normalizing the environment</h2>
+                Often we want to scale the reward as well as action space of the environment. In this particular case just action normalization 
+                is enough to train the policy. In the case you want to scale the reward, do not change the scaling factor during training, because critic 
+                tries to predict the values of the reward. Also, do not subtract reward average, because it makes algorithm think that it's getting
+                rewards where there are none.<br><br><br>
+            </div>
+            <div class="col">
+                <h5>Code 4: Environment scaling</h5>
+                <pre class="pre"><code class="python">
+main.py:
+GODOT_BIN_PATH = "InvPendulum/InvPendulum.server.x86_64"
+env_abs_path = "InvPendulum/InvPendulum.server.pck"
+env = NormalizedEnv(InvPendulumEnv(exec_path=GODOT_BIN_PATH, env_path=env_abs_path))
+
+NormalizedEnvironment.py:
+class NormalizedEnv(gym.ActionWrapper):
+    def action(self, action):
+        act_k = torch.from_numpy(self.action_space.high - self.action_space.low)/2.0
+        act_b = torch.from_numpy(self.action_space.high + self.action_space.low)/2.0
+        return act_k * action + act_b
+
+    def reverse_action(self, action):
+        act_k_inv = 2.0/(self.action_space.high - self.action_space.low)
+        act_b = (self.action_space.high + self.action_space.low)/2.0
+        return act_k_inv * (action - act_b)
+                </code></pre>
+            </div>
+        </div>
+        <div class="row">
+                <div class="col">
+                    <h5>Figure 2: Plots</h5>
+                    <img src="Fig/result.png" class="rounded mx-auto d-block float-center" alt="Annotated scene" width=80%>
+                </div>
+                <div class="col">
+                    <h2>What to plot</h2>
+                    <b>1.Critic loss</b>: you want to be sure that the critic is able to predict future rewards, because it provides the information 
+                    for training the policy itself. If this step does not work, the whole algorithm breaks. However if the loss is zero, then
+                    your critic overfitted to a small state space, which is equally bad.<br><br>
+
+                    <b>2.Average episode reward</b>: this is the main outcome of the training algorithm, you'll have to look at it anyway.<br><br>
+
+                    <b>3.Policy entropy</b>: this is very informative metric of how sure your policy is in its predictions. You can detect overfitting
+                    of the policy if the entropy has stable value. Generally it's hard to get entropy for DDPG algorithm, but in this case we can sample
+                    the state space and approximate the entropy.<br><br>
+
+                    <b>Figure2</b> shows these plots for a successful training run.
+                    
+                </div>
+                <div class="col">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+            </div>
+            <div class="col">
+                <h2>Result</h2>
+                In the end, you'll see something like this:
+                <video width="800" height="600" controls>
+                    <source src="Fig/TrainingResult.webm" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <br>
+                <br>
+                <br>
+                <br>
+            </div>
+            <div class="col">
+            </div>
+        </div>
+    </div><!-- /.container -->
+</main>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+<script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script>
+<script src="https://getbootstrap.com/docs/4.1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
