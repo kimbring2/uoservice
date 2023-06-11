@@ -20,10 +20,9 @@ class UoService:
 
 	def reset(self):
 		self.stub.WriteAct(UoService_pb2.Actions(actionType=0, mobileSerial=0, walkDirection=0, index=0, amount=0))
-		
 		self.stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
-		self.stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
 
+		self.stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
 		response = self.stub.ReadObs(UoService_pb2.Config(name='reset'))
 
 		obs_raw = self.parse_response(response)
@@ -41,8 +40,9 @@ class UoService:
 		obs['player_skills_data'] = obs_raw[11]
 		obs['vendor_item_data'] = obs_raw[6]
 		obs['vendor_data'] = obs_raw[5]
-		obs['corpse_dict'] = obs_raw[12]
-		obs['cliloc_dict'] = obs_raw[10]
+		obs['corpse_data'] = obs_raw[12]
+		obs['cliloc_data'] = obs_raw[10]
+		obs['teacher_data'] = obs_raw[8]
 
 		return obs
 
@@ -95,8 +95,6 @@ class UoService:
 			else:
 				cliloc_dict[data.serial].append([[data.text, data.affix, data.name]])
 
-		#print("")
-
 		for item in bank_item_data:
 			#print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
 			#			format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
@@ -125,8 +123,16 @@ class UoService:
 			mobile_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
 
 			vendor_title = utils.isVendor(obj.title)
-			if vendor_title:
+			if vendor_title and obj.distance <= 5:
 				vendor_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
+
+			#if obj.distance <= 5:
+			#	print("obj.title: ", obj.title)
+
+			teacher_title = utils.isTeacher(obj.title)
+			if teacher_title and obj.distance <= 5:
+				#print("teacher_title: ", teacher_title)
+				teacher_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, teacher_title]
 
 		for obj in player_mobile_object_data:
 			#print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
@@ -186,10 +192,9 @@ class UoService:
 																						 walkDirection=walk_direction,
 																						 index=index, 
 																						 amount=amount))
-
 		self.stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
-		self.stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
 
+		self.stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
 		response = self.stub.ReadObs(UoService_pb2.Config(name='step'))
 
 		obs_raw = self.parse_response(response)
@@ -208,7 +213,8 @@ class UoService:
 		obs['player_skills_data'] = obs_raw[11]
 		obs['vendor_item_data'] = obs_raw[6]
 		obs['vendor_data'] = obs_raw[5]
-		obs['corpse_dict'] = obs_raw[12]
-		obs['cliloc_dict'] = obs_raw[10]
+		obs['corpse_data'] = obs_raw[12]
+		obs['cliloc_data'] = obs_raw[10]
+		obs['teacher_data'] = obs_raw[8]
 		
 		return obs

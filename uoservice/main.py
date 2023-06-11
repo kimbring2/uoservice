@@ -37,10 +37,10 @@ window_height = 1280
 def main():
   pick_up_flag = False
   drop_flag = False
-  bank_vendor_flag = False
-  open_bank_flag = False
+  vendor_flag = True
+  open_vendor_flag = False
   open_corpse_flag = False
-  change_skill_flag = True
+  change_skill_flag = False
   hold_item = 0
   opened_vendor = 0
 
@@ -58,13 +58,15 @@ def main():
     #for k, v in obs["cliloc_dict"].items():
     #  print("k: {0}, v: {1}", k, v)
 
-    #print("")
     #print("corpse_dict: ", obs["corpse_dict"])
     #print("opened_corpse_list: ", obs["opened_corpse_list"])
     #print("backpack_item_data: ", obs["backpack_item_data"])
     #print("bank_item_data: ", obs["bank_item_data"])
     #print("vendor_data: ", obs["vendor_data"])
-    #print("popup_menu_data: ", obs["popup_menu_data"])
+
+    if len(obs["popup_menu_data"]) != 0:
+      print("popup_menu_data: ", obs["popup_menu_data"])
+
     if 'Swordsmanship' in obs["player_skills_data"]:
       #print("Swordsmanship skill info: ", obs["player_skills_data"]['Swordsmanship'])
       pass
@@ -76,15 +78,19 @@ def main():
     #  item_serial, index = get_serial_by_name(obs["backpack_item_data"], "Lesser Heal Potion")
     #  print("item_serial: ", item_serial)
 
-    if len(obs["bank_item_data"]) != 0 and open_bank_flag == True:
+    if len(obs["bank_item_data"]) != 0 and open_vendor_flag == True:
       item_serial, index = utils.get_serial_by_name(obs["bank_item_data"], "Lesser Heal Potion")
       #print("item_serial: ", item_serial)
 
-    if len(obs["vendor_data"]) != 0  and bank_vendor_flag == True:
-      mobile_serial = list(obs["vendor_data"].keys())[0]
-      #print("mobile_serial: ", mobile_serial)
+    if len(obs["vendor_data"]) != 0 and vendor_flag == True:
+      #print("len(obs[\"vendor_data\"]) != 0  and vendor_flag == True",)
+      for k, v in obs["vendor_data"].items():
+        if "blacksmith" in v[5]:
+          #print("k: {0}, v: {1}".format(k, v))
+          mobile_serial = k
+      #print("")
 
-    if len(obs["corpse_dict"]) != 0 and open_corpse_flag == True:
+    if len(obs["corpse_data"]) != 0 and open_corpse_flag == True:
       item_serial = list(obs["corpse_dict"].keys())[0]
       print("item_serial: ", item_serial)
 
@@ -117,19 +123,19 @@ def main():
         action['amount'] = 1
         drop_flag = False
         print("action: ", action)
-      elif bank_vendor_flag == True:
+      elif vendor_flag == True and mobile_serial != 0:
         action['action_type'] = 10
         action['mobile_serial'] = mobile_serial
         action['amount'] = 1
-        bank_vendor_flag = False
-        open_bank_flag = True
+        vendor_flag = False
+        open_vendor_flag = True
         opened_vendor = mobile_serial
         print("action: ", action)
-      elif open_bank_flag == True:
+      elif open_vendor_flag == True:
         action['action_type'] = 11
         action['mobile_serial'] = opened_vendor
         action['index'] = 1
-        open_bank_flag = False
+        open_vendor_flag = False
         print("action: ", action)
       elif open_corpse_flag == True:
         action['action_type'] = 7

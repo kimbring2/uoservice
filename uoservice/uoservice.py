@@ -148,12 +148,11 @@ def parse_response(response):
 
     vendor_title = isVendor(obj.title)
     #print("vendor_title: ", vendor_title)
-    if vendor_title:
+    if vendor_title and obj.distance <= 5:
       obj.title = vendor_title
       screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 255
       screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 1] = 255
       screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 2] = 255
-
       vendor_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
     else:
       screen_image[int(obj.screenX / 10), int(obj.screenY / 10), 0] = 0

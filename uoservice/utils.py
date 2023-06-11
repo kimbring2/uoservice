@@ -1,5 +1,7 @@
 import cv2
 
+warrior_npc_title_list = ['healer', 'armourer', 'banker', 'blacksmith', 'weaponsmith', 'armourer', 'armourer']
+
 def get_serial_by_name(item_dict, name):
   keys = list(item_dict.keys())
   for k, v in item_dict.items():
@@ -10,10 +12,8 @@ def get_serial_by_name(item_dict, name):
 
 
 def isVendor(title):
-  vendor_name_list = ['healer', 'armourer', 'banker', 'alchemist', 'herbalist', 'stylist', 'waiter',
-                      'baker']
   title_split = title.split(" ")
-  for vendor_name in vendor_name_list:
+  for vendor_name in warrior_npc_title_list:
     if vendor_name in title_split:
       index = title_split.index(vendor_name)
       return title_split[index]
@@ -22,9 +22,18 @@ def isVendor(title):
 
 
 def isTeacher(title):
-  teacher_name_list = ['warrior', 'healer', 'alchemist', 'herbalist', 'baker']
   title_split = title.split(" ")
-  for teacher_name in teacher_name_list:
+  for teacher_name in warrior_npc_title_list:
+    if teacher_name in title_split:
+      index = title_split.index(teacher_name)
+      return title_split[index]
+
+  return None
+
+
+def isTeacher(title):
+  title_split = title.split(" ")
+  for teacher_name in warrior_npc_title_list:
     if teacher_name in title_split:
       index = title_split.index(teacher_name)
       return title_split[index]
