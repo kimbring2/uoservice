@@ -289,6 +289,49 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col", id="states_7">
+                <script>createHeader("states_7", "ClilocDataList", "");</script>
+                    The speech of NPC consists of multiple sentence even if it looks like a one sentence in game. Therefore, old cliloc text should be kept for a certain period of time(50 is default length)
+                    <img src="Fig/Clilocs.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="130">
+                    <script>
+                        generate_table("states_7", 
+                                        [
+                                            ["GrpcClilocDataList", "list of GrpcClilocData", "list of cliloc text"]
+                                        ]
+                                        );
+                </script>
+            </div>
+
+            <div class="col", id="states_8">
+                <script>createHeader("states_8", "ItemDropableLandList", "");</script>
+                    
+                    <img src="Fig/ItemDropableLand.png" class="rounded mx-auto d-block float-center" alt="Logo" width="100" height="100">
+                    <script>
+                        generate_table("states_8", 
+                                        [
+                                            ["gameSimpleObjects", "list of GrpcGameObjectSimpleData", "list of x position"],
+                                        ]
+                                        );
+                </script>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col", id="states_9">
+                <script>createHeader("states_9", "BankItemList", "");</script>
+                It is possible to save the gold and item in bank. This state type stores the list of items when player open it.
+                <img src="Fig/Bank.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="300">
+                <script>
+                    generate_table("states_9", 
+                                    [
+                                        ["GrpcItemList", "list of GrpcItemData", "Show the list of bank items"]
+                                    ]
+                                    );
+                </script>
+            </div>
+        </div>
+
         <div class="starter-template">
             <h1>Actions</h1>
         </div>

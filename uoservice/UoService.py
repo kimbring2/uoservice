@@ -93,7 +93,7 @@ class UoService:
 			player_skills_dict[skill.name] = [skill.index, skill.isClickable, skill.value, skill.base, skill.cap, skill.lock]
 
 		for data in cliloc_data:
-			#print("data: ", data)
+			print("data: ", data)
 
 			if data.serial not in cliloc_dict:
 				cliloc_dict[data.serial] = [[data.text, data.affix, data.name]]
@@ -144,19 +144,20 @@ class UoService:
 			#print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
 			#			format(obj.type, obj.gameX, obj.gameY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
 			player_mobile_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
-			screen_image[int(obj.gameX - 3400), int(obj.gameY - 2600), 0] = 255
-			screen_image[int(obj.gameX - 3400), int(obj.gameY - 2600), 1] = 0
-			screen_image[int(obj.gameX - 3400), int(obj.gameY - 2600), 2] = 0
+			#screen_image[int(obj.gameX - 3400), int(obj.gameY - 2600), 0] = 255
+			#screen_image[int(obj.gameX - 3400), int(obj.gameY - 2600), 1] = 0
+			#screen_image[int(obj.gameX - 3400), int(obj.gameY - 2600), 2] = 0
 
 		for obj in item_dropable_land_data:
-			print("gameX: {0}, gameY: {1}".format(obj.gameX, obj.gameY))
-			screen_image[int(obj.gameX - 3400), int(obj.gameY - 2600), 0] = 255
-			screen_image[int(obj.gameX - 3400), int(obj.gameY - 2600), 1] = 255
-			screen_image[int(obj.gameX - 3400), int(obj.gameY - 2600), 2] = 0
+			#print("gameX: {0}, gameY: {1}".format(obj.gameX, obj.gameY))
+			#screen_image[int(obj.gameX - 3400), int(obj.gameY - 2600), 0] = 255
+			#screen_image[int(obj.gameX - 3400), int(obj.gameY - 2600), 1] = 255
+			#screen_image[int(obj.gameX - 3400), int(obj.gameY - 2600), 2] = 0
+			pass
 
 		#screen_image = cv2.resize(screen_image, (1, 1280), interpolation = cv2.INTER_AREA)
-		cv2.imshow('screen_image', screen_image)
-		cv2.waitKey(1)
+		#cv2.imshow('screen_image', screen_image)
+		#cv2.waitKey(1)
 
 		for i in range(0, len(static_object_screen_x_data)):
 			static_object_screen_x_list.append(static_object_screen_x_data[i])
