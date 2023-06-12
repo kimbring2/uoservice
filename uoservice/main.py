@@ -37,12 +37,15 @@ window_height = 1280
 def main():
   pick_up_flag = False
   drop_flag = False
-  vendor_flag = True
+  vendor_flag = False
   open_vendor_flag = False
   open_corpse_flag = False
   change_skill_flag = False
+  war_mode_flag = True
   hold_item = 0
   opened_vendor = 0
+
+  war_mode = True
 
   # username, password, grpc_port, window_width, window_height, replay=None, human_play=None
   uo_service = UoService(grpc_port, window_width, window_height)
@@ -64,8 +67,8 @@ def main():
     #print("bank_item_data: ", obs["bank_item_data"])
     #print("vendor_data: ", obs["vendor_data"])
 
-    if len(obs["popup_menu_data"]) != 0:
-      print("popup_menu_data: ", obs["popup_menu_data"])
+    #if len(obs["popup_menu_data"]) != 0:
+      #print("popup_menu_data: ", obs["popup_menu_data"])
 
     if 'Swordsmanship' in obs["player_skills_data"]:
       #print("Swordsmanship skill info: ", obs["player_skills_data"]['Swordsmanship'])
@@ -148,6 +151,10 @@ def main():
         action['index'] = index
         change_skill_flag = False
         print("action: ", action)
+      elif war_mode_flag == True:
+        action['action_type'] = 19
+        action['index'] = war_mode
+        war_mode = not war_mode
 
     obs_next = uo_service.step(action)
 

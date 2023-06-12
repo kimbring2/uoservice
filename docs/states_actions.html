@@ -48,6 +48,8 @@
     </div>
     <div class="starter-template">
         <h1>Data Type</h1>
+        <p style="text-align:left; font-size:18px;">Ultima Online is high level complex game consist of various components. Therefore, it is not possible to implement the current state recognized by the player only with basic data such as string, int, and float. Furthermore, action representation also requires a more complex form than basic data because the game basically receives action input from the mouse.
+        </p>
     </div>
     <div class="container-fluid">
         <div class="row">
@@ -183,7 +185,7 @@
 
             <div class="col" id="8">
                 <script>createHeader("8", "Actions", "");</script>
-                <script>
+                Due to the huge number of pixels, using the position of screen as action directly is really inefficient. However, we can project the any mouse input into a specific game event by using the multiple action arguments. <script>
                     generate_table("8", 
                                     [
                                         ["actionType", "uint32", "type of action"],
@@ -203,6 +205,8 @@
 
     <div class="starter-template">
         <h1>States</h1>
+        <p style="text-align:left; font-size:18px;">The base data type what we declare above section can be combined to represent the higher level game situation. 
+        </p>
     </div>
     <div class="container-fluid">
         <div class="row">
@@ -236,12 +240,12 @@
         <div class="row">
             <div class="col", id="states_3">
                 <script>createHeader("states_3", "OpenedCorpseList", "");</script>
-                Test
+                Opening the multiple corpse together is possible at Ultima Online. This data type can be used for that purpose. 
                 <img src="Fig/Corpses.png" class="rounded mx-auto d-block float-center" alt="Logo" width="300" height="210">
                 <script>
                     generate_table("states_3", 
                                     [
-                                        ["GrpcContainerDataList", "list of GrpcContainerData", "list of item what player equips now"],
+                                        ["GrpcContainerDataList", "list of GrpcContainerData", "list of corpse currently opened"],
                                     ]
                                     );
                 </script>
@@ -304,81 +308,39 @@
             </div>
 
             <div class="col", id="states_8">
-                <script>createHeader("states_8", "ItemDropableLandList", "");</script>
-                    
-                    <img src="Fig/ItemDropableLand.png" class="rounded mx-auto d-block float-center" alt="Logo" width="100" height="100">
-                    <script>
-                        generate_table("states_8", 
-                                        [
-                                            ["gameSimpleObjects", "list of GrpcGameObjectSimpleData", "list of x position"],
-                                        ]
-                                        );
-                </script>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col", id="states_9">
-                <script>createHeader("states_9", "BankItemList", "");</script>
+                <script>createHeader("states_8", "BankItemList", "");</script>
                 It is possible to save the gold and item in bank. This state type stores the list of items when player open it.
                 <img src="Fig/Bank.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="300">
                 <script>
-                    generate_table("states_9", 
+                    generate_table("states_8", 
                                     [
                                         ["GrpcItemList", "list of GrpcItemData", "Show the list of bank items"]
                                     ]
                                     );
                 </script>
             </div>
+
         </div>
 
         <div class="starter-template">
-            <h1>Actions</h1>
+            <h1>List of Possible Actions</h1>
         </div>
         <div class="row">
-            <div class="col">
-                <h1>Python</h1>
+            <div class="col", id="actions_1">
+                <script>createHeaderAction("actions_1", "1. Do nothing", "");</script>
+                <script>
+                    generate_action_table("actions_1", [["0", "", "", "", "", "", ""]]);
+                </script>
             </div>
-            <div class="col">
-                <h1>Description</h1>
+
+            <div class="col", id="actions_2">
+                <script>createHeaderAction("actions_2", "2. Walk to Direction", "");</script>
+                <script>
+                    generate_action_table("actions_2", [["1", "", "", "SET", "", "", "SET"]]);
+                </script>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col" id="SharedMemorySemaphore">
-            <script>createHeader("SharedMemorySemaphore", "class", "_GodotEnv", "SharedMemorySemaphore", "(name, init_val)");</script>
-            Creates a semaphore <b>name</b> in the shared memory with initial count <b>init_val</b>.
-            
-            <script>createHeader("SharedMemorySemaphore", "function", "SharedMemorySemaphore", "post", "()");</script>
-            Increases semaphore value by 1.
-
-            <script>createHeader("SharedMemorySemaphore", "function", "SharedMemorySemaphore", "wait", "()");</script>
-            Decreases semaphore value by 1. If the value is less or equal to zeros, blocks the process until the value increases.
-            </div>
-            
-            <div class="col">
-                These classes manage the semaphores in the shared memory. Godot classes assume that the semaphores are already
-                created. Meanwhile python classes create them on initialization.
-            </div>
-        </div>
-
-        <div class="starter-template">
-            <h1>Deployment</h1>
-        </div>
-        <div class="row">
-            <div class="col">
-            </div>
-            <div class="col">
-                <h1>Description</h1>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col" id="">
-            </div>
-            <div class="col">
-                These classes manage torch jit model loading and executing in Godot engine.
-            </div>
-        </div>
     </div><!-- /.container -->
 </main>
 
