@@ -1,12 +1,15 @@
+# ---------------------------------------------------------------------
+# Project "UoService"
+# Copyright (C) 2023, kimbring2 
+#
+# Purpose of this file : Parsing the MPQ replay file of human player
+#
+# Please reference me when you are going to use this code as reference :)
+
+## general package imports
 import struct
 import numpy as np
 import grpc
-
-from mpyq import MPQArchive
-import UoService_pb2
-import UoService_pb2_grpc
-import utils
-
 import io
 from PIL import Image
 import time
@@ -16,11 +19,22 @@ import random
 import pygame
 import sys
 from enum import Enum
+
+## package for replay
+from mpyq import MPQArchive
+
+## UoService package imports
+import UoService_pb2
+import UoService_pb2_grpc
+import utils
  
+
+## Initialize the PyGame
 pygame.init()
 pygame.display.set_caption("OpenCV camera stream on Pygame")
 
 
+## layers of Equipped item
 class Layers(Enum):
   Invalid = 0
   OneHanded = 1
@@ -55,6 +69,7 @@ class Layers(Enum):
 
 
 class UoServiceReplay:
+	'''UoServiceReplay class including MPQ loader'''
 	def __init__(self, rootPath, screenWidth, screenHeight):
 		self._rootPath = rootPath
 		self._archive = None
@@ -116,6 +131,7 @@ class UoServiceReplay:
 		self._clock = pygame.time.Clock()
 
 	def ConvertByteArrayToIntList(self, byteArray):
+		# Convert byte array of MQP file to int list
 		intList = []
 		for i in range(0, len(byteArray), np.dtype(np.uint32).itemsize):
 			intValue = struct.unpack('I', byteArray[i:i + 4])[0]
@@ -124,6 +140,7 @@ class UoServiceReplay:
 		return intList
 
 	def ConvertByteArrayToBoolList(self, byteArray):
+		# Convert byte array of MQP file to bool list
 		boolList = []
 		for byte in byteArray:
 			for i in range(8):
@@ -133,6 +150,7 @@ class UoServiceReplay:
 		return boolList
 
 	def GetSubsetArray(self, index, lengthListRead, offset, arrRead):
+		# Crop the part of array when the length is variable. Return the modifed offset value for next cropping.
 		item = lengthListRead[index]
 		startIndex = offset
 		subsetArray = arrRead[startIndex:startIndex + item]
@@ -141,6 +159,7 @@ class UoServiceReplay:
 		return subsetArray, offset
 
 	def GetSubsetArrayFix(self, index, lengthRead, offset, arrRead):
+		# Crop the part of array when the length is fixed. Return the modifed offset value for next cropping.
 		item = lengthRead
 		startIndex = offset
 		subsetArray = arrRead[startIndex:startIndex + item]
@@ -149,6 +168,7 @@ class UoServiceReplay:
 		return subsetArray, offset
 
 	def ReadReplay(self, fileName):
+		# Read the original data files and length metadata files for them from MPQ file
 		self._archive = MPQArchive(self._rootPath + '/' + fileName + ".uoreplay")
 
 		## Read the length byte array for data array
@@ -283,6 +303,7 @@ class UoServiceReplay:
 			print("self.staticObjectInfoListArrRead is None")
 
 	def ParseReplay(self):
+		# Saves the loaded replay data into Python list to visualize them one by one
 		for step in range(0, self._replayLength):
 			print("step: ", step)
 
@@ -416,6 +437,7 @@ class UoServiceReplay:
 				print("clilocDataArrRead is None")
 
 	def InteractWithReplay(self):
+		# Viewers can Forward and rewind the saved replay data by left and right arrow key
 		replay_step = 0
 
 		while True:

@@ -1,19 +1,28 @@
+# ---------------------------------------------------------------------
+# Project "UoService"
+# Copyright (C) 2023, kimbring2 
+#
+# Purpose of this file : Communicating with Ultima Online game client through GRPC
+#
+# Please reference me when you are going to use this code as reference :)
+
+## general package imports
 import numpy as np
 import grpc
 import subprocess
-
-import UoService_pb2
-import UoService_pb2_grpc
-import utils
-
 from PIL import Image
 import time
 import numpy as np
 import cv2
 import random
 
+## UoService package imports
+import UoService_pb2
+import UoService_pb2_grpc
+import utils
 
 class UoService:
+	'''UoService class including gRPC client'''
 	def __init__(self, grpc_port, window_width, window_height):
 			self.grpc_port = grpc_port
 			self.window_width = window_width
@@ -21,10 +30,12 @@ class UoService:
 			self.stub = None
 
 	def _open_grpc(self):
+		# Open the gRPC channel using the port that is same of game client 
 		channel = grpc.insecure_channel('localhost:' + str(self.grpc_port))
 		self.stub = UoService_pb2_grpc.UoServiceStub(channel)
 
 	def reset(self):
+		# Reset the gRPC server before communcation with it.
 		self.stub.WriteAct(UoService_pb2.Actions(actionType=0, mobileSerial=0, walkDirection=0, index=0, amount=0))
 		self.stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
 
@@ -53,6 +64,7 @@ class UoService:
 		return obs
 
 	def parse_response(self, response):
+		# Preprocess the gRPC response format to Python friendly type
 		player_skills_dict = {}
 		mobile_dict = {}
 		corpse_dict = {}
@@ -192,6 +204,7 @@ class UoService:
 					 corpse_dict
 
 	def step(self, action):
+		# Send the action data to game client and receive the state of that action
 		action_type = action['action_type']
 		item_serial = action['item_serial']
 		mobile_serial = action['mobile_serial']
