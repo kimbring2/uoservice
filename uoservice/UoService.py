@@ -73,21 +73,21 @@ class UoService:
 		static_object_screen_x_list = []
 		static_object_screen_y_list = []
 
-		equipped_item_data = response.equippedItemList.item
-		backpack_item_data = response.backpackItemList.item
-		bank_item_data = response.bankItemList.item
+		equipped_item_data = response.equippedItemList.items
+		backpack_item_data = response.backpackItemList.items
+		bank_item_data = response.bankItemList.items
 		opened_corpse_list = response.openedCorpseList.containers
-		popup_menu_data = response.popupMenuList.menu
+		popup_menu_data = response.popupMenuList.menus
 		player_status_data = response.playerStatus
 		player_skills_data = response.playerSkillList.skills
 		static_object_screen_x_data = response.staticObjectInfoList.screenXs
 		static_object_screen_y_data = response.staticObjectInfoList.screenYs
-		vendor_item_data = response.vendorItemObjectList.gameObject
-		cliloc_data = response.clilocDataList.clilocData
-		player_mobile_object_data = response.playerMobileObjectList.gameObject
-		mobile_object_data = response.mobileObjectList.gameObject
-		item_object_data = response.itemObjectList.gameObject
-		item_dropable_land_data = response.itemDropableLandList.gameSimpleObject
+		vendor_item_data = response.vendorItemObjectList.gameObjects
+		cliloc_data = response.clilocDataList.clilocDatas
+		player_mobile_object_data = response.playerMobileObjectList.gameObjects
+		mobile_object_data = response.mobileObjectList.gameObjects
+		item_object_data = response.itemObjectList.gameObjects
+		item_dropable_land_data = response.itemDropableLandList.gameSimpleObjects
 
 		for skill in player_skills_data:
 			player_skills_dict[skill.name] = [skill.index, skill.isClickable, skill.value, skill.base, skill.cap, skill.lock]
@@ -139,20 +139,22 @@ class UoService:
 				#print("teacher_title: ", teacher_title)
 				teacher_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, teacher_title]
 
-		screen_image = np.zeros((1370,1280,4), dtype=np.uint8)
+		screen_image = np.zeros((100,100,4), dtype=np.uint8)
 		for obj in player_mobile_object_data:
 			#print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
-			#			format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
+			#			format(obj.type, obj.gameX, obj.gameY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
 			player_mobile_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
+			screen_image[int(obj.gameX - 3400), int(obj.gameY - 2600), 0] = 255
+			screen_image[int(obj.gameX - 3400), int(obj.gameY - 2600), 1] = 0
+			screen_image[int(obj.gameX - 3400), int(obj.gameY - 2600), 2] = 0
 
-			#screen_image[obj.screenX, obj.screenY, 0] = 255
-			#screen_image[obj.screenX, obj.screenY, 1] = 0
-			#screen_image[obj.screenX, obj.screenY, 2] = 0
-			color = (255, 0, 0)
-			radius = 20
-			thickness = 2
-			screenImage = cv2.circle(screen_image, (obj.screenX, obj.screenY), radius, color, thickness)
+		for obj in item_dropable_land_data:
+			print("gameX: {0}, gameY: {1}".format(obj.gameX, obj.gameY))
+			screen_image[int(obj.gameX - 3400), int(obj.gameY - 2600), 0] = 255
+			screen_image[int(obj.gameX - 3400), int(obj.gameY - 2600), 1] = 255
+			screen_image[int(obj.gameX - 3400), int(obj.gameY - 2600), 2] = 0
 
+		#screen_image = cv2.resize(screen_image, (1, 1280), interpolation = cv2.INTER_AREA)
 		cv2.imshow('screen_image', screen_image)
 		cv2.waitKey(1)
 

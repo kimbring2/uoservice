@@ -72,19 +72,19 @@ message GrpcGameObjectInfoList {
 }
 
 message GrpcPopupMenuList {
-  repeated string menu = 1;
+  repeated string menus = 1;
 }
 
 message GrpcClilocDataList {
-  repeated GrpcClilocData clilocData = 1;
+  repeated GrpcClilocData clilocDatas = 1;
 }
 
 message GrpcGameObjectList {
-  repeated GrpcGameObjectData gameObject = 1;
+  repeated GrpcGameObjectData gameObjects = 1;
 }
 
 message GrpcGameObjectSimpleList {
-  repeated GrpcGameObjectSimpleData gameSimpleObject = 1;
+  repeated GrpcGameObjectSimpleData gameSimpleObjects = 1;
 }
 
 message SemaphoreAction {
@@ -92,7 +92,7 @@ message SemaphoreAction {
 }
 
 message GrpcItemList {
-  repeated GrpcItemData item = 1;
+  repeated GrpcItemData items = 1;
 }
 
 message Config {

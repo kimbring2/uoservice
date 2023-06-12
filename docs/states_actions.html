@@ -148,31 +148,9 @@
                                     ]
                                     );
                 </script>
-
-                <script>createHeader("5", "GrpcGameObjectInfoList", "");</script>
-                This data type only stors the position of game object as list type. It is mainly used to store the Stactic object such as tree and rock that is not really important for player's decision.
-                <img src="Fig/Static.png" class="rounded mx-auto d-block float-center" alt="Logo" width="100" height="100">
-                <script>
-                    generate_table("5", 
-                                    [
-                                        ["screenXs", "list of uint32", "list of x position of mobile in the game scene"],
-                                        ["screenYs", "list of uint32", "list of y position of mobile in the game scene"],
-                                    ]
-                                    );
-                </script>
             </div>
 
             <div class="col" id="6">
-                <script>createHeader("6", "GrpcPopupMenuList", "");</script>
-                <img src="Fig/PopUpMenu.png" class="rounded mx-auto d-block float-center" alt="Logo" width="170" height="250">
-                <script>
-                    generate_table("6", 
-                                    [
-                                        ["menu", "list of string", "list of pop up menu text of mobile"],
-                                    ]
-                                    );
-                </script>
-
                 <script>createHeader("6", "GrpcClilocData", "");</script>
                 <img src="Fig/Cliloc.png" class="rounded mx-auto d-block float-center" alt="Logo" width="170" height="190">
                 <script>
@@ -197,7 +175,7 @@
                     generate_table("7", 
                                     [
                                         ["container", "GrpcGameObjectData", "owner of this container"],
-                                        ["containerItemList", "list of GrpcItemList", "list of items that this container hold"]
+                                        ["containerItemList", "list of GrpcItemData", "list of items that this container hold"]
                                     ]
                                     );
                 </script>
@@ -235,7 +213,7 @@
                 <script>
                     generate_table("states_1", 
                                     [
-                                        ["equippedItemList", "list of GrpcItemList", "list of item what player equips now"]
+                                        ["GrpcItemList", "list of GrpcItemData", "list of item what player equips now"]
                                     ]
                                     );
                 </script>
@@ -248,7 +226,7 @@
                 <script>
                     generate_table("states_2", 
                                     [
-                                        ["backpackItemList", "list of GrpcItemList", "list of item of player's backpack"]
+                                        ["GrpcItemList", "list of GrpcItemData", "list of item of player's backpack"]
                                     ]
                                     );
                 </script>
@@ -259,28 +237,54 @@
             <div class="col", id="states_3">
                 <script>createHeader("states_3", "OpenedCorpseList", "");</script>
                 Test
-                <img src="Fig/Corpse.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="210">
+                <img src="Fig/Corpses.png" class="rounded mx-auto d-block float-center" alt="Logo" width="300" height="210">
                 <script>
                     generate_table("states_3", 
                                     [
-                                        ["container", "GrpcGameObjectData", "list of item what player equips now"],
-                                        ["containerItemList", "list of GrpcItemList", "list of item what player equips now"]
+                                        ["GrpcContainerDataList", "list of GrpcContainerData", "list of item what player equips now"],
                                     ]
                                     );
                 </script>
             </div>
 
             <div class="col", id="states_4">
-                <script>createHeader("states_4", "OpenedCorpseList", "");</script>
-                Test
-                <img src="Fig/Corpse.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="210">
+                <script>createHeader("states_4", "GrpcPopupMenuList", "");</script>
+                <img src="Fig/PopUpMenu.png" class="rounded mx-auto d-block float-center" alt="Logo" width="170" height="250">
                 <script>
                     generate_table("states_4", 
                                     [
-                                        ["container", "GrpcGameObjectData", "list of item what player equips now"],
-                                        ["containerItemList", "list of GrpcItemList", "list of item what player equips now"]
+                                        ["menus", "list of string", "list of pop up menu text"],
                                     ]
                                     );
+                </script>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col", id="states_5">
+                <script>createHeader("states_5", "StaticObjectInfoList", "");</script>
+                    This data type only stores the position of game object as list type. It is mainly used to store the Stactic object such as tree and rock that is not really important for player's decision.
+                    <img src="Fig/Static.png" class="rounded mx-auto d-block float-center" alt="Logo" width="100" height="100">
+                    <script>
+                        generate_table("states_5", 
+                                        [
+                                            ["screenXs", "list of uint32", "list of x position of mobile in the game scene"],
+                                            ["screenYs", "list of uint32", "list of y position of mobile in the game scene"],
+                                        ]
+                                        );
+                </script>
+            </div>
+
+            <div class="col", id="states_6">
+                <script>createHeader("states_6", "ItemDropableLandList", "");</script>
+                    This data type only stores the position of game object as list type. It is mainly used to store the Stactic object such as tree and rock that is not really important for player's decision.
+                    <img src="Fig/ItemDropableLand.png" class="rounded mx-auto d-block float-center" alt="Logo" width="100" height="100">
+                    <script>
+                        generate_table("states_6", 
+                                        [
+                                            ["gameSimpleObjects", "list of GrpcGameObjectSimpleData", "list of x position"],
+                                        ]
+                                        );
                 </script>
             </div>
         </div>
