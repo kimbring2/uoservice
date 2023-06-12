@@ -76,7 +76,7 @@ function generate_table(container, inputs, outputs, parameters = []) {
 
     var tblThead = document.createElement("thead");
     tblThead.className = "thead-light";
-    
+
     var header_row = generate_row_header(["Name", "Type", "Description"]);
     tblThead.appendChild(header_row);
     tbl.appendChild(tblThead);
@@ -160,27 +160,33 @@ function createHeader(container, type, module, name, params="") {
 }
 
 
-function createHeaderAction(container, type, module, name, params="") {
+function createHeaderAction(container, type, description) {
     var obj = document.getElementById(container);
     obj.style.display = 'flex';
     obj.style.justifyContent = 'left';
     obj.style.alignItems = 'left';
+    //vertical-align: top; /* here */
 
     var obj_container = document.createElement("div");
     obj_container.className = "container";
 
     var header_obj = document.createElement("div");
-    header_obj.className = "p-1 mb-4 bg-dark text-white";
+    header_obj.className = "p-1 mb-1";
 
     var text_obj = document.createElement("P");
     text_obj.className = "h4";
     
-    var type_obj = document.createElement("EM");
+    var type_obj = document.createElement("div");
     var type_text = document.createTextNode(type + ' ');
+    type_obj.className = "p-1 mb-1 bg-dark";
+    type_obj.style.color = 'white';
     type_obj.appendChild(type_text);
-    
-    var module_obj = document.createElement('EM');
-    var module_text = document.createTextNode(module + '');
+
+    var module_obj = document.createElement('H');
+    var module_text = document.createTextNode(description + '');
+    module_obj.style.color = 'black';
+    module_obj.style.backgroundColor = 'None';
+    module_obj.style.fontSize = '18px';
     module_obj.appendChild(module_text);
 
     header_obj.appendChild(type_obj);

@@ -319,11 +319,10 @@
                                     );
                 </script>
             </div>
-
         </div>
 
         <div class="starter-template">
-            <h1>List of Possible Actions</h1>
+            <h1>Actions</h1>
         </div>
         <div class="row">
             <div class="col", id="actions_1">
@@ -334,13 +333,45 @@
             </div>
 
             <div class="col", id="actions_2">
-                <script>createHeaderAction("actions_2", "2. Walk to Direction", "");</script>
+                <script>createHeaderAction("actions_2", "2. Walk to Direction", "-> North = 0, Right = 1, East = 2, Down = 3, South = 4, Left = 5, West = 6, Up = 7");</script>
                 <script>
-                    generate_action_table("actions_2", [["1", "", "", "SET", "", "", "SET"]]);
+                    generate_action_table("actions_2", [["1", "", "", "0 ~ 7", "", "", "0, 1"]]);
+                </script>
+            </div>
+
+            <div class="col", id="actions_3">
+                <script>createHeaderAction("actions_3", "3. Attack target by it's serial", "-> player must be close enough to attack the target and war mode must be True");</script>
+                <script>
+                    generate_action_table("actions_3", [["2", "", "target mobile serial", "", "", "", ""]]);
+                </script>
+            </div>
+
+            <div class="col", id="actions_4">
+                <script>createHeaderAction("actions_4", "4. Pick up the amount of item by it's serial", "");</script>
+                <script>
+                    generate_action_table("actions_4", [["3", "target item serial", "", "", "", "amount of item to be picked", ""]]);
+                </script>
+            </div>
+
+            <div class="col", id="actions_5">
+                <script>createHeaderAction("actions_5", "5. Drop the holded item into my backpack", "-> Backpack serial will be provided automatically inside of CSharp");</script>
+                <script>
+                    generate_action_table("actions_5", [["4", "holded item serial", "", "", "", "", ""]]);
+                </script>
+            </div>
+
+            <div class="col", id="actions_6">
+                <script>createHeaderAction("actions_6", "6. Drop the holded item on land around the player", "-> This will drop item one of possible droppable land");</script>
+                <script> generate_action_table("actions_6", [["5", "holded item serial", "", "", "", "", ""]]);</script>
+            </div>
+
+            <div class="col", id="actions_7">
+                <script>createHeaderAction("actions_7", "7. Drop the holded item on land around the player", "");</script>
+                <script>
+                    generate_action_table("actions_7", [["5", "holded item serial", "", "", "", "", ""]]);
                 </script>
             </div>
         </div>
-
     </div><!-- /.container -->
 </main>
 
