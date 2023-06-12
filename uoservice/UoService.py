@@ -6,6 +6,12 @@ import UoService_pb2
 import UoService_pb2_grpc
 import utils
 
+from PIL import Image
+import time
+import numpy as np
+import cv2
+import random
+
 
 class UoService:
 	def __init__(self, grpc_port, window_width, window_height):
@@ -67,7 +73,6 @@ class UoService:
 		static_object_screen_x_list = []
 		static_object_screen_y_list = []
 
-		mobile_data = response.mobileList.mobile
 		equipped_item_data = response.equippedItemList.item
 		backpack_item_data = response.backpackItemList.item
 		bank_item_data = response.bankItemList.item
@@ -134,26 +139,31 @@ class UoService:
 				#print("teacher_title: ", teacher_title)
 				teacher_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, teacher_title]
 
+		screen_image = np.zeros((1370,1280,4), dtype=np.uint8)
 		for obj in player_mobile_object_data:
 			#print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
 			#			format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
 			player_mobile_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
 
+			#screen_image[obj.screenX, obj.screenY, 0] = 255
+			#screen_image[obj.screenX, obj.screenY, 1] = 0
+			#screen_image[obj.screenX, obj.screenY, 2] = 0
+			color = (255, 0, 0)
+			radius = 20
+			thickness = 2
+			screenImage = cv2.circle(screen_image, (obj.screenX, obj.screenY), radius, color, thickness)
+
+		cv2.imshow('screen_image', screen_image)
+		cv2.waitKey(1)
+
 		for i in range(0, len(static_object_screen_x_data)):
 			static_object_screen_x_list.append(static_object_screen_x_data[i])
 			static_object_screen_y_list.append(static_object_screen_y_data[i])
 
-		if len(mobile_data) == 0 or len(equipped_item_data) == 0:
+		if len(equipped_item_data) == 0:
 			return mobile_dict, equipped_item_dict, backpack_item_dict, bank_item_dict, opened_corpse_list_dict, \
 				vendor_dict, vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_dict, \
 				player_skills_dict, corpse_dict
-
-		for mobile in mobile_data:
-			#print('name: {0}, x: {1}, y: {2}, race: {3}, serial: {4}\n'.format(mobile.name, mobile.x, mobile.y, mobile.race,
-			#																																	 mobile.serial))
-			mobile_dict[mobile.serial] = [mobile.name, int(mobile.x), int(mobile.y), mobile.race]
-			if mobile.x >= 1600 or mobile.y >= 1280:
-				continue
 
 		for item in equipped_item_data:
 			#print('name: {0}, layer: {1}, serial: {2}, amount: {3}'.format(item.name, item.layer, item.serial, item.amount))

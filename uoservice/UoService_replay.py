@@ -450,11 +450,6 @@ class UoServiceReplay:
 				self._previousControl = 0
 				self._tickScale = 10
 
-			#mobileDataList = self._mobileDataList[replay_step]
-			#print("len(mobileDataList): ", len(mobileDataList))
-			#for mobileData in mobileDataList:
-			#	print("mobileData: ", mobileData)
-
 			# Create the downscaled array for bigger mobile object drawing
 			screen_image = np.zeros((int((self._screenWidth + 100)), int((self._screenHeight + 100)), 3), dtype=np.uint8)
 
@@ -473,6 +468,10 @@ class UoServiceReplay:
 								   radius, color, thickness)
 
 			# Draw the player mobile object
+			playerMobileObjectData = self._playerMobileObjectDataList[replay_step]
+			for obj in playerMobileObjectData:
+				print("screenX: {0}, screenY: {1}".format(obj.screenX, obj.screenY))
+
 			screen_image = utils.visObject(screen_image, self._playerMobileObjectDataList[replay_step], (0, 255, 0))
 			for obj in self._playerMobileObjectDataList[replay_step]:
 				#print("vendor_title: {0}, obj: {1}".format(vendor_title, obj))
