@@ -47,7 +47,7 @@
         <h1>States/Actions</h1>
     </div>
     <div class="starter-template">
-        <h1>Basic States</h1>
+        <h1>Data Type</h1>
     </div>
     <div class="container-fluid">
         <div class="row">
@@ -187,20 +187,53 @@
                 </script>
             </div>
         </div>
-    </div><!-- /.container -->
 
+        <div class="row">
+            <div class="col" id="7">
+                <script>createHeader("7", "GrpcContainerData", "");</script>
+                When the monster is dead, it is transformed from mobile to item type. Then, you can open the dead body of it. You can consider it as the container type. It can have the mutiple items what you can take to your backpack. This data type is for that purpose.
+                <img src="Fig/Container.png" class="rounded mx-auto d-block float-center" alt="Logo" width="230" height="160">
+                <script>
+                    generate_table("7", 
+                                    [
+                                        ["container", "GrpcGameObjectData", "owner of this container"],
+                                        ["containerItemList", "list of GrpcItemList", "list of items that this container hold"]
+                                    ]
+                                    );
+                </script>
+            </div>
+
+            <div class="col" id="8">
+                <script>createHeader("8", "Actions", "");</script>
+                <script>
+                    generate_table("8", 
+                                    [
+                                        ["actionType", "uint32", "type of action"],
+                                        ["itemSerial", "uint32", "unique item serial what player hold now"], 
+                                        ["mobileSerial", "uint32", "unique mobile serial what player want to interact"],
+                                        ["walkDirection", "uint32", "player can walk when the action type is 1. This argument is used to decide the direction of walking"],
+                                        ["index", "uint32", "pop up menu has the multiple choice to select. This argument is used for that"],
+                                        ["amount", "uint32", "player can move the item from one container to another container. This argument is used to set the amount of item will be moved"],
+                                        ["run", "bool", "player run when moving if you set this argument as true"],
+                                    ]
+                                    );
+                </script>
+            </div>
+
+        </div>
+    </div>
 
     <div class="starter-template">
-        <h1>Mixed States</h1>
+        <h1>States</h1>
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col", id="7">
-                <script>createHeader("7", "EquippedItemList", "");</script>
-                There are multiple part in players(Cloak, Shirt, Pants, Shoes, Legs, Arms, Torso, Tunic, Ring, Bracelet, Face, Gloves, Skirt, Robe, Waist, Necklace, Hair, Beard, Earrings, Helmet, OneHanded, TwoHanded, Talisman) where item can be equipped. This data type stores all equipped item at now.
+            <div class="col", id="states_1">
+                <script>createHeader("states_1", "EquippedItemList", "");</script>
+                There are multiple part in player(Cloak, Shirt, Pants, Shoes, Legs, Arms, Torso, Tunic, Ring, Bracelet, Face, Gloves, Skirt, Robe, Waist, Necklace, Hair, Beard, Earrings, Helmet, OneHanded, TwoHanded, Talisman) where specific type of item can be equipped. This data type stores all equipped item at now.
                 <img src="Fig/EquippedItem.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="300">
                 <script>
-                    generate_table("7", 
+                    generate_table("states_1", 
                                     [
                                         ["equippedItemList", "list of GrpcItemList", "list of item what player equips now"]
                                     ]
@@ -208,14 +241,44 @@
                 </script>
             </div>
 
-            <div class="col", id="8">
-                <script>createHeader("8", "backpackItemList", "");</script>
-                
-                <img src="Fig/Backpack.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="230">
+            <div class="col", id="states_2">
+                <script>createHeader("states_2", "BackpackItemList", "");</script>
+                Player has the main bag to hold the various items. This data type stors all items of player's backpack of now.
+                <img src="Fig/Backpack.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="210">
                 <script>
-                    generate_table("8", 
+                    generate_table("states_2", 
                                     [
                                         ["backpackItemList", "list of GrpcItemList", "list of item of player's backpack"]
+                                    ]
+                                    );
+                </script>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col", id="states_3">
+                <script>createHeader("states_3", "OpenedCorpseList", "");</script>
+                Test
+                <img src="Fig/Corpse.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="210">
+                <script>
+                    generate_table("states_3", 
+                                    [
+                                        ["container", "GrpcGameObjectData", "list of item what player equips now"],
+                                        ["containerItemList", "list of GrpcItemList", "list of item what player equips now"]
+                                    ]
+                                    );
+                </script>
+            </div>
+
+            <div class="col", id="states_4">
+                <script>createHeader("states_4", "OpenedCorpseList", "");</script>
+                Test
+                <img src="Fig/Corpse.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="210">
+                <script>
+                    generate_table("states_4", 
+                                    [
+                                        ["container", "GrpcGameObjectData", "list of item what player equips now"],
+                                        ["containerItemList", "list of GrpcItemList", "list of item what player equips now"]
                                     ]
                                     );
                 </script>

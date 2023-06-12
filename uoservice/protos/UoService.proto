@@ -145,7 +145,7 @@ message Actions {
   uint32 walkDirection = 4;
   uint32 index = 5;
   uint32 amount = 6;
-  uint32 run = 7;
+  bool run = 7;
 }
 
 service UoService {

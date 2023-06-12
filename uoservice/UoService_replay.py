@@ -469,8 +469,8 @@ class UoServiceReplay:
 
 			# Draw the player mobile object
 			playerMobileObjectData = self._playerMobileObjectDataList[replay_step]
-			for obj in playerMobileObjectData:
-				print("screenX: {0}, screenY: {1}".format(obj.screenX, obj.screenY))
+			#for obj in playerMobileObjectData:
+			#	print("screenX: {0}, screenY: {1}".format(obj.screenX, obj.screenY))
 
 			screen_image = utils.visObject(screen_image, self._playerMobileObjectDataList[replay_step], (0, 255, 0))
 			for obj in self._playerMobileObjectDataList[replay_step]:
