@@ -14,7 +14,6 @@ import random
 import argparse
 import sys
 import grpc
-import random
 from tqdm import tqdm
 
 ## UoService package imports
@@ -47,12 +46,12 @@ def main():
   obs = uo_service.reset()
 
   ## Event flags to test the scenario manually
-  target_mobile = None
+  target_mobile_serial = None
 
   ## Event flags to test the scenario manually
   for step in tqdm(range(100000)):
     ## Obtain the serial of random mobile around the player
-    if len(obs["mobile_data"]) != 0 and target_mobile == None:
+    if len(obs["mobile_data"]) != 0 and target_mobile_serial == None:
       ## Format of mobile data
       ## [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
       ## 16852: ['a zombie', 'Mobile', 646, 22, 16, ' a zombie ']
@@ -62,9 +61,6 @@ def main():
 
       ## Obtain the serial list of mobiles in current game screen
       target_mobile_serial = random.choice(mobile_serial_list)
-
-      ## Finally, we can acquire the target mobile data 
-      target_mobile = obs["mobile_data"][target_mobile_serial]
 
     ## Declare the empty action
     action = {}
@@ -79,30 +75,41 @@ def main():
     ## Declare the empty action
     if step % 200 == 0:
       print("step: ", step)
-
-      if target_mobile != None:
-        ## Format of player mobile data 
+      if target_mobile_serial != None:
+        ## format of player mobile data 
         # 120: ['masterkim', 'PlayerMobile', 778, 618, 0, 'None']
         player_mobile_serial = list(obs['player_mobile_data'].keys())[0]
         player_mobile = obs['player_mobile_data'][player_mobile_serial]
 
+        ## finally, we can acquire the target mobile data
+        if target_mobile_serial in obs["mobile_data"]:
+          target_mobile = obs["mobile_data"][target_mobile_serial]
+        else:
+          target_mobile_serial = None
+          continue
+
+        print("target_mobile: ", target_mobile)
+
+        ## Parse the x and y position of player 
         player_screen_x = player_mobile[2]
         player_screen_y = player_mobile[3]
 
+        ## Parse x and y position of target mobile
         target_mobile_screen_x = target_mobile[2]
         target_mobile_screen_y = target_mobile[3]
 
-        utils.get_walk_direction_to_target([player_screen_x, player_screen_y], 
-                                           [target_mobile_screen_x, target_mobile_screen_y])
+        ## Calculate the directons to move toward the target mobile
+        direction = utils.get_walk_direction_to_target([player_screen_x, player_screen_y], 
+                                                       [target_mobile_screen_x, target_mobile_screen_y])
 
         # Walk action
-        # North = 0, Right = 1, East = 2, Down = 3, South = 4, Left = 5, West = 6, Up = 7
         action['action_type'] = 1
-        action['walkDirection'] = 1
+        action['walk_direction'] = direction
         action['run'] = True
-        print("action: ", action)
 
-    obs = uo_service.step(action)
+        obs = uo_service.step(action)
+    else:
+      obs = uo_service.step(action)
 
 
 ## Start the main function

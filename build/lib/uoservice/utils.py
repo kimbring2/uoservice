@@ -12,9 +12,33 @@ def get_serial_by_name(item_dict, name):
 
 
 def get_walk_direction_to_target(player_position, target_position):
-  print("player_position: ", player_position)
-  print("target_position: ", target_position)
-  print("")
+  # UpRight = 0, Right = 1, DownRight = 2, Down = 3, DownLeft = 4, Left = 5, UpLeft = 6, Up = 7
+  left = False
+  right = False
+  up = False
+  down = False
+
+  direction = 0
+  if player_position[0] > target_position[0]:
+    left = True
+  else:
+    right = True
+
+  if player_position[1] > target_position[1]:
+    up = True
+  else:
+    down = True  
+
+  if left and up:
+    direction = 6
+  elif left and down:
+    direction = 4
+  elif right and up:
+    direction = 0
+  elif right and down:
+    direction = 2
+
+  return direction
 
 
 def isVendor(title):
