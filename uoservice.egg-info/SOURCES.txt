@@ -1,0 +1,11 @@
+README.md
+setup.py
+uoservice/UoService.py
+uoservice/UoService_replay.py
+uoservice/uoservice.py
+uoservice/utils.py
+uoservice.egg-info/PKG-INFO
+uoservice.egg-info/SOURCES.txt
+uoservice.egg-info/dependency_links.txt
+uoservice.egg-info/requires.txt
+uoservice.egg-info/top_level.txt

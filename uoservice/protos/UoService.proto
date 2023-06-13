@@ -59,6 +59,8 @@ message GrpcPlayerStatus {
   uint32 physicalResistance = 11;
   uint32 weight = 12;
   uint32 weightMax = 13;
+
+  uint32 holdItemSerial = 14;
 }
 
 message GrpcGameObjectSimpleData {

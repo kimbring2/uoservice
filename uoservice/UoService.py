@@ -10,16 +10,15 @@
 import numpy as np
 import grpc
 import subprocess
-from PIL import Image
 import time
 import numpy as np
 import cv2
 import random
 
 ## UoService package imports
-import UoService_pb2
-import UoService_pb2_grpc
-import utils
+from uoservice.protos import UoService_pb2
+from uoservice.protos import UoService_pb2_grpc
+from uoservice import utils
 
 class UoService:
 	'''UoService class including gRPC client'''
@@ -105,7 +104,7 @@ class UoService:
 			player_skills_dict[skill.name] = [skill.index, skill.isClickable, skill.value, skill.base, skill.cap, skill.lock]
 
 		for data in cliloc_data:
-			print("data: ", data)
+			#print("data: ", data)
 
 			if data.serial not in cliloc_dict:
 				cliloc_dict[data.serial] = [[data.text, data.affix, data.name]]
@@ -117,6 +116,7 @@ class UoService:
 			#			format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
 			bank_item_dict[item.serial] = [item.name, item.layer, item.amount]
 
+		print("player_status_data: ", player_status_data)
 		#print("bank_item_data: ", bank_item_data)
 		#print("\n")
 

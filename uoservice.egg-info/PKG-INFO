@@ -1,0 +1,16 @@
+Metadata-Version: 2.1
+Name: uoservice
+Version: 0.0.1
+Summary: Package to connect the Ultima Online C# client with Python and to parse the MPQ replay of human
+Home-page: https://github.com/kimbring2/uoservice
+Download-URL: https://github.com/kimbring2/uoservice
+Author: kimbring2
+Author-email: kimbring2@gmail.com
+License: MIT
+Keywords: Machine Learning,Deep Learning,MMORPG,Ultima Online
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7

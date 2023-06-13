@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import UoService_pb2 as UoService__pb2
+from uoservice.protos import UoService_pb2 as UoService__pb2
 
 
 class UoServiceStub(object):

@@ -2,6 +2,7 @@
 # python3.7 -m grpc_tools.protoc -I ../ --python_out=. --grpc_python_out=. UoService.proto --proto_path /home/kimbring2/uoservice/uoservice/protos/
 
 from __future__ import print_function
+
 from concurrent import futures
 import io
 from PIL import Image
@@ -12,42 +13,42 @@ import random
 import argparse
 import sys
 import grpc
-import utils
 from enum import Enum
 
-import UoService_pb2
-import UoService_pb2_grpc
-from UoService import UoService
+print("grpc.__file__: ", grpc.__file__)
+
+from uoservice.protos import UoService_pb2
+from uoservice.protos import UoService_pb2_grpc
+from uoservice.UoService import UoService
+import uoservice.utils
 
 #replay_path = '/home/kimbring2/ClassicUO/bin/dist/Replay'
 #file_name = 'kimbring2-2023-6-6-01-56-41'
 
 parser = argparse.ArgumentParser(description='Ultima Online Replay Parser')
-parser.add_argument('--game_path', type=str, help='root directory of UO execution')
-parser.add_argument('--window_width', type=int, help='window width of game client')
-parser.add_argument('--window_height', type=int, help='window height of game client')
+parser.add_argument('--window_width', type=int, default=1370, help='screen width of game')
+parser.add_argument('--window_height', type=int, default=1280, help='screen height of game')
+parser.add_argument('--grpc_port', type=int, default=60051, help='port of grpc')
 
 arguments = parser.parse_args()
 
-grpc_port = 60051
-window_width = 1370
-window_height = 1280
-
+grpc_port = arguments.grpc_port
+window_width = arguments.window_width
+window_height = arguments.window_height
 
 def main():
-  pick_up_flag = False
+  pick_up_flag = True
   drop_flag = False
   vendor_flag = False
   open_vendor_flag = False
   open_corpse_flag = False
   change_skill_flag = False
-  war_mode_flag = True
+  war_mode_flag = False
   hold_item = 0
   opened_vendor = 0
 
-  war_mode = True
+  war_mode = False
 
-  # username, password, grpc_port, window_width, window_height, replay=None, human_play=None
   uo_service = UoService(grpc_port, window_width, window_height)
   uo_service._open_grpc()
 
@@ -67,6 +68,8 @@ def main():
     #print("bank_item_data: ", obs["bank_item_data"])
     #print("vendor_data: ", obs["vendor_data"])
 
+    print("vendor_data: ", obs["vendor_data"])
+
     #if len(obs["popup_menu_data"]) != 0:
       #print("popup_menu_data: ", obs["popup_menu_data"])
 
@@ -77,9 +80,9 @@ def main():
     item_serial = 0
     mobile_serial = 0
     index = 0
-    #if len(obs["bank_item_data"]) != 0:
-    #  item_serial, index = get_serial_by_name(obs["backpack_item_data"], "Lesser Heal Potion")
-    #  print("item_serial: ", item_serial)
+    if len(obs["bank_item_data"]) != 0:
+      item_serial, index = get_serial_by_name(obs["backpack_item_data"], "Lesser Heal Potion")
+      print("item_serial: ", item_serial)
 
     if len(obs["bank_item_data"]) != 0 and open_vendor_flag == True:
       item_serial, index = utils.get_serial_by_name(obs["bank_item_data"], "Lesser Heal Potion")
