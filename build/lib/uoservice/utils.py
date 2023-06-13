@@ -64,7 +64,6 @@ def parsePlayerStatus(playerStatusGrpc):
   playerStatusDict['physicalResistance'] = playerStatusGrpc.physicalResistance
   playerStatusDict['weight'] = playerStatusGrpc.weight
   playerStatusDict['weightMax'] = playerStatusGrpc.weightMax
-  playerStatusDict['HoldItemSerial'] = playerStatusGrpc.holdItemSerial
 
   return playerStatusDict
 

@@ -15,8 +15,6 @@ import sys
 import grpc
 from enum import Enum
 
-print("grpc.__file__: ", grpc.__file__)
-
 from uoservice.protos import UoService_pb2
 from uoservice.protos import UoService_pb2_grpc
 from uoservice.UoService import UoService

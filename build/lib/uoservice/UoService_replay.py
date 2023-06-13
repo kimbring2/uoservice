@@ -24,10 +24,10 @@ from enum import Enum
 from mpyq import MPQArchive
 
 ## UoService package imports
-from uoservice.protos import UoService_pb2
-from uoservice.protos import UoService_pb2_grpc
-from uoservice import utils
-
+import UoService_pb2
+import UoService_pb2_grpc
+import utils
+ 
 
 ## Initialize the PyGame
 pygame.init()
@@ -182,7 +182,7 @@ class UoServiceReplay:
 		self.itemObjectArrayLengthArrRead = self._archive.read_file("replay.metadata.itemObjectLen");
 		self.itemDropableLandArrayLengthArrRead = self._archive.read_file("replay.metadata.itemDropableLandSimpleLen");
 		self.vendorItemObjectArrayLengthArrRead = self._archive.read_file("replay.metadata.vendorItemObjectLen");
-		self.playerStatusArrayLengthArrRead = self._archive.read_file("replay.metadata.playerStatusLen");
+		self.playerStatusZeroLenStepArrRead = self._archive.read_file("replay.metadata.playerStatusZeroLenStep");
 		self.playerSkillListArrayLengthArrRead = self._archive.read_file("replay.metadata.playerSkillListLen");
 		self.staticObjectInfoListLengthArrRead = self._archive.read_file("replay.metadata.staticObjectInfoListArraysLen");
 
@@ -197,7 +197,7 @@ class UoServiceReplay:
 		self.itemObjectArrayLengthListRead = self.ConvertByteArrayToIntList(self.itemObjectArrayLengthArrRead);
 		self.itemDropableLandArrayLengthListRead = self.ConvertByteArrayToIntList(self.itemDropableLandArrayLengthArrRead);
 		self.vendorItemObjectArrayLengthListRead = self.ConvertByteArrayToIntList(self.vendorItemObjectArrayLengthArrRead);
-		self.playerStatusArrayLengthListRead = self.ConvertByteArrayToIntList(self.playerStatusArrayLengthArrRead);
+		self.playerStatusZeroLenStepListRead = self.ConvertByteArrayToIntList(self.playerStatusZeroLenStepArrRead);
 		self.playerSkillListArrayLengthListRead = self.ConvertByteArrayToIntList(self.playerSkillListArrayLengthArrRead);
 		self.staticObjectInfoListLengthListRead = self.ConvertByteArrayToIntList(self.staticObjectInfoListLengthArrRead);
 
@@ -353,8 +353,7 @@ class UoServiceReplay:
 
 			if self.staticObjectInfoListArrRead:
 				staticObjectInfoListSubsetArrays, self._staticObjectInfoListArrayOffset = self.GetSubsetArray(step, self.staticObjectInfoListLengthListRead, 
-																				   		   					  self._staticObjectInfoListArrayOffset, 
-																				   		   					  self.staticObjectInfoListArrRead)
+																				   		   			self._staticObjectInfoListArrayOffset, self.staticObjectInfoListArrRead)
 				grpcStaticObjectInfoListReplay = UoService_pb2.GrpcGameObjectInfoList().FromString(staticObjectInfoListSubsetArrays)
 				#print("grpcStaticObjectInfoListReplay.screenXs: ", grpcStaticObjectInfoListReplay.screenXs)
 				#print("grpcStaticObjectInfoListReplay.screenYs: ", grpcStaticObjectInfoListReplay.screenYs)
@@ -364,14 +363,15 @@ class UoServiceReplay:
 			else:
 				print("staticObjectInfoListArrRead is None")
 			
-			if self.playerStatusArrayLengthListRead:
-				playerStatusSubsetArray, self._playerStatusArrayOffset = self.GetSubsetArray(step, self.playerStatusArrayLengthListRead, self._playerStatusArrayOffset, 
-																							 self.playerStatusArrRead)
-				grpcPlayerStatusReplay = UoService_pb2.GrpcPlayerStatus().FromString(playerStatusSubsetArray)
-				#print("grpcPlayerStatusReplay: ", grpcPlayerStatusReplay)
-				self._playerStatusList.append(grpcPlayerStatusReplay)
-			else:
-				print("playerStatusArrRead is None")
+			if step not in self.playerStatusZeroLenStepListRead:
+				if self.playerStatusArrRead:
+					playerStatusSubsetArray, self._playerStatusArrayOffset = self.GetSubsetArrayFix(step, 30, self._playerStatusArrayOffset, 
+																									self.playerStatusArrRead)
+					grpcPlayerStatusReplay = UoService_pb2.GrpcPlayerStatus().FromString(playerStatusSubsetArray)
+					#print("grpcPlayerStatusReplay: ", grpcPlayerStatusReplay)
+					self._playerStatusList.append(grpcPlayerStatusReplay)
+				else:
+					print("playerStatusArrRead is None")
 
 			if self.playerSkillListArrRead:
 				playerSkillListSubsetArray, self._playerSkillListArrayOffset = self.GetSubsetArray(step, self.playerSkillListArrayLengthListRead, 
@@ -448,7 +448,7 @@ class UoServiceReplay:
 			keys = pygame.key.get_pressed()
 			if keys[pygame.K_LEFT]:
 				if self._previousControl == pygame.K_LEFT:
-					if self._tickScale < 300:
+					if self._tickScale < 60:
 				  		self._tickScale += 1
 
 				if replay_step >= 1:
@@ -459,7 +459,7 @@ class UoServiceReplay:
 					print("This is start of replay")
 			elif keys[pygame.K_RIGHT]:
 				if self._previousControl == pygame.K_RIGHT:
-					if self._tickScale < 300:
+					if self._tickScale < 60:
 				  		self._tickScale += 1
 
 				if replay_step < self._replayLength - 1:
@@ -505,7 +505,7 @@ class UoServiceReplay:
 			screen_image = utils.visObject(screen_image, self._mobileObjectDataList[replay_step], (0, 0, 255))
 
 			# Draw the item object
-			screen_image = utils.visObject(screen_image, self._itemObjectDataList[replay_step], (255, 0, 0))
+			#screen_image = utils.visObject(screen_image, self._itemObjectDataList[replay_step], (0, 0, 255))
 
 			for obj in self._mobileObjectDataList[replay_step]:
 				vendor_title = utils.isVendor(obj.title)

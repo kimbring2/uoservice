@@ -3,6 +3,9 @@ from distutils.core import setup
 setup(
   name = 'uoservice',         
   packages = ['uoservice'],   
+  package_data={
+      'uoservice': ['protos/*', 'install_bash.sh'],
+  },
   version = '0.0.1',      
   license='MIT',        
   description = 'Package to connect the Ultima Online C# client with Python and to parse the MPQ replay of human',   

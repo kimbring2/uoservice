@@ -1,0 +1,162 @@
+syntax = "proto3";
+
+package uoservice;
+
+message Empty {}
+
+message GrpcItemData {
+  string name = 1;
+  uint32 layer = 2;
+  uint32 serial = 3;
+  uint32 amount = 4;
+}
+
+message GrpcClilocData {
+  uint32 serial = 1;
+  string text = 2;
+  string affix = 3;
+  string name = 4;
+}
+
+message GrpcGameObjectData {
+  string type = 1;
+  uint32 screenX = 2;
+  uint32 screenY = 3;
+  uint32 distance = 4;
+  uint32 gameX = 5;
+  uint32 gameY = 6;
+  uint32 serial = 7;
+  string name = 8;
+  bool isCorpse = 9;
+  string title = 10;
+  uint32 amount = 11;
+  uint32 price = 12;
+}
+
+message GrpcSkill {
+  string name = 1;
+  uint32 index = 2;
+  bool isClickable = 3;
+  uint32 value = 4;
+  uint32 base = 5;
+  uint32 cap = 6;
+  uint32 lock = 7;
+}
+
+message GrpcPlayerStatus {
+  uint32 str = 1;
+  uint32 dex = 2;
+  uint32 intell = 3;
+
+  uint32 hits = 4;
+  uint32 hitsMax = 5;
+  uint32 stamina = 6;
+  uint32 staminaMax = 7;
+  uint32 mana = 8;
+  uint32 manaMax = 9;
+
+  uint32 gold = 10;
+  uint32 physicalResistance = 11;
+  uint32 weight = 12;
+  uint32 weightMax = 13;
+
+  uint32 holdItemSerial = 14;
+}
+
+message GrpcGameObjectSimpleData {
+  uint32 gameX = 1;
+  uint32 gameY = 2;
+}
+
+message GrpcGameObjectInfoList {
+  repeated uint32 screenXs = 1;
+  repeated uint32 screenYs = 2;
+}
+
+message GrpcPopupMenuList {
+  repeated string menus = 1;
+}
+
+message GrpcClilocDataList {
+  repeated GrpcClilocData clilocDatas = 1;
+}
+
+message GrpcGameObjectList {
+  repeated GrpcGameObjectData gameObjects = 1;
+}
+
+message GrpcGameObjectSimpleList {
+  repeated GrpcGameObjectSimpleData gameSimpleObjects = 1;
+}
+
+message SemaphoreAction {
+  string mode = 1;
+}
+
+message GrpcItemList {
+  repeated GrpcItemData items = 1;
+}
+
+message Config {
+  string name = 1;
+  string replayName = 2;
+}
+
+message GrpcSkillList {
+  repeated GrpcSkill skills = 1;
+}
+
+message GrpcContainerData {
+  GrpcGameObjectData container = 1;
+  GrpcItemList containerItemList = 2;
+}
+
+message GrpcContainerDataList {
+  repeated GrpcContainerData containers = 1;
+}
+
+message States {
+  GrpcItemList equippedItemList = 1;
+  GrpcItemList backpackItemList = 2;
+  GrpcContainerDataList openedCorpseList = 3;
+  GrpcPlayerStatus playerStatus = 4;
+
+  GrpcGameObjectList mobileObjectList = 5;
+  GrpcGameObjectList playerMobileObjectList = 6;
+  GrpcGameObjectList itemObjectList = 7;
+  GrpcGameObjectSimpleList itemDropableLandList = 8;
+  GrpcGameObjectList vendorItemObjectList = 9;
+
+  GrpcPopupMenuList popupMenuList = 10;
+
+  GrpcClilocDataList clilocDataList = 11;
+
+  Actions replayActions = 12;
+
+  GrpcGameObjectInfoList staticObjectInfoList = 13;
+
+  GrpcSkillList playerSkillList = 14;
+
+  GrpcItemList bankItemList = 15;
+}
+
+message Actions {
+  uint32 actionType = 1;
+  uint32 itemSerial = 2;
+  uint32 mobileSerial = 3;
+  uint32 walkDirection = 4;
+  uint32 index = 5;
+  uint32 amount = 6;
+  bool run = 7;
+}
+
+service UoService {
+  rpc Reset (Config) returns (States);
+  rpc ReadObs (Config) returns (States);
+  rpc WriteAct (Actions) returns (Empty);
+  rpc ActSemaphoreControl (SemaphoreAction) returns (Empty);
+  rpc ObsSemaphoreControl (SemaphoreAction) returns (Empty);
+
+  rpc ReadReplay (Config) returns (States);
+  rpc ReadMPQFile (Config) returns (Empty);
+}

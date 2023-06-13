@@ -2,6 +2,7 @@ README.md
 setup.py
 uoservice/UoService.py
 uoservice/UoService_replay.py
+uoservice/install_bash.sh
 uoservice/uoservice.py
 uoservice/utils.py
 uoservice.egg-info/PKG-INFO
@@ -9,3 +10,8 @@ uoservice.egg-info/SOURCES.txt
 uoservice.egg-info/dependency_links.txt
 uoservice.egg-info/requires.txt
 uoservice.egg-info/top_level.txt
+uoservice/protos/UoService.cs
+uoservice/protos/UoService.proto
+uoservice/protos/UoServiceGrpc.cs
+uoservice/protos/UoService_pb2.py
+uoservice/protos/UoService_pb2_grpc.py
