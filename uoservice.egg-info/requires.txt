@@ -2,3 +2,4 @@ numpy
 pygame
 mpyq
 opencv-python
+tqdm

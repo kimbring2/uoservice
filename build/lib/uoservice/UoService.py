@@ -20,6 +20,7 @@ from uoservice.protos import UoService_pb2
 from uoservice.protos import UoService_pb2_grpc
 from uoservice import utils
 
+
 class UoService:
 	'''UoService class including gRPC client'''
 	def __init__(self, grpc_port, window_width, window_height):
@@ -44,9 +45,6 @@ class UoService:
 		obs_raw = self.parse_response(response)
 
 		obs = {}
-		
-		#mobile_dict, equipped_item_dict, backpack_item_dict, bank_item_dict, opened_corpse_list_dict, vendor_dict, \
-		#			 vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_data_list, player_skills_dict
 		obs['mobile_data'] = obs_raw[0]
 		obs['equipped_item_data'] = obs_raw[1]
 		obs['backpack_item_data'] = obs_raw[2]
@@ -59,6 +57,7 @@ class UoService:
 		obs['corpse_data'] = obs_raw[12]
 		obs['cliloc_data'] = obs_raw[10]
 		obs['teacher_data'] = obs_raw[8]
+		obs['player_mobile_data'] = obs_raw[13]
 
 		return obs
 
@@ -180,7 +179,7 @@ class UoService:
 		if len(equipped_item_data) == 0:
 			return mobile_dict, equipped_item_dict, backpack_item_dict, bank_item_dict, opened_corpse_list_dict, \
 				vendor_dict, vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_dict, \
-				player_skills_dict, corpse_dict
+				player_skills_dict, corpse_dict, player_mobile_dict
 
 		for item in equipped_item_data:
 			#print('name: {0}, layer: {1}, serial: {2}, amount: {3}'.format(item.name, item.layer, item.serial, item.amount))
@@ -203,7 +202,7 @@ class UoService:
 
 		return mobile_dict, equipped_item_dict, backpack_item_dict, bank_item_dict, opened_corpse_list_dict, vendor_dict, \
 					 vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_dict, player_skills_dict, \
-					 corpse_dict
+					 corpse_dict, player_mobile_dict
 
 	def step(self, action):
 		# Send the action data to game client and receive the state of that action
@@ -213,13 +212,15 @@ class UoService:
 		walk_direction = action['walk_direction']
 		index = action['index']
 		amount = action['amount']
+		run = action['run']
 
 		self.stub.WriteAct(UoService_pb2.Actions(actionType=action_type, 
 																						 itemSerial=item_serial,
 																						 mobileSerial=mobile_serial,
 																						 walkDirection=walk_direction,
 																						 index=index, 
-																						 amount=amount))
+																						 amount=amount,
+																						 run=run))
 		self.stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
 
 		self.stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
@@ -233,7 +234,7 @@ class UoService:
 		
 		#mobile_dict, equipped_item_dict, backpack_item_dict, bank_item_dict, opened_corpse_list_dict, vendor_dict, \
 		#vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_dict, player_skills_dict, \
-		#corpse_dict
+		#corpse_dict, player_mobile_dict
 		obs['mobile_data'] = obs_raw[0]
 		obs['equipped_item_data'] = obs_raw[1]
 		obs['backpack_item_data'] = obs_raw[2]
@@ -246,5 +247,6 @@ class UoService:
 		obs['corpse_data'] = obs_raw[12]
 		obs['cliloc_data'] = obs_raw[10]
 		obs['teacher_data'] = obs_raw[8]
-		
+		obs['player_mobile_data'] = obs_raw[13]
+
 		return obs

@@ -11,6 +11,12 @@ def get_serial_by_name(item_dict, name):
   return None, None
 
 
+def get_walk_direction_to_target(player_position, target_position):
+  print("player_position: ", player_position)
+  print("target_position: ", target_position)
+  print("")
+
+
 def isVendor(title):
   title_split = title.split(" ")
   for vendor_name in warrior_npc_title_list:

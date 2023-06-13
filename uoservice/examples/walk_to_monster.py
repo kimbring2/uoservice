@@ -14,6 +14,7 @@ import random
 import argparse
 import sys
 import grpc
+import random
 from tqdm import tqdm
 
 ## UoService package imports
@@ -46,16 +47,24 @@ def main():
   obs = uo_service.reset()
 
   ## Event flags to test the scenario manually
-  pick_up_flag = True
-  drop_flag = False
+  target_mobile = None
 
   ## Event flags to test the scenario manually
   for step in tqdm(range(100000)):
-    item_serial = 0
+    ## Obtain the serial of random mobile around the player
+    if len(obs["mobile_data"]) != 0 and target_mobile == None:
+      ## Format of mobile data
+      ## [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
+      ## 16852: ['a zombie', 'Mobile', 646, 22, 16, ' a zombie ']
 
-    ## Obtain the serial of Gold from players' backpack information
-    if len(obs["backpack_item_data"]) != 0:
-      item_serial, index = utils.get_serial_by_name(obs["backpack_item_data"], "Gold")
+      ## Obtain the serial list of mobiles in current game screen 
+      mobile_serial_list = list(obs["mobile_data"].keys())
+
+      ## Obtain the serial list of mobiles in current game screen
+      target_mobile_serial = random.choice(mobile_serial_list)
+
+      ## Finally, we can acquire the target mobile data 
+      target_mobile = obs["mobile_data"][target_mobile_serial]
 
     ## Declare the empty action
     action = {}
@@ -65,24 +74,33 @@ def main():
     action['walk_direction'] = 0
     action['index'] = 0
     action['amount'] = 0
+    action['run'] = False
 
     ## Declare the empty action
     if step % 200 == 0:
       print("step: ", step)
 
-      if pick_up_flag == True and item_serial != 0:
-        # Pick up the item
-        action['action_type'] = 3
-        action['item_serial'] = item_serial
-        action['amount'] = 100
-        pick_up_flag = False
-        drop_flag = True
+      if target_mobile != None:
+        ## Format of player mobile data 
+        # 120: ['masterkim', 'PlayerMobile', 778, 618, 0, 'None']
+        player_mobile_serial = list(obs['player_mobile_data'].keys())[0]
+        player_mobile = obs['player_mobile_data'][player_mobile_serial]
+
+        player_screen_x = player_mobile[2]
+        player_screen_y = player_mobile[3]
+
+        target_mobile_screen_x = target_mobile[2]
+        target_mobile_screen_y = target_mobile[3]
+
+        utils.get_walk_direction_to_target([player_screen_x, player_screen_y], 
+                                           [target_mobile_screen_x, target_mobile_screen_y])
+
+        # Walk action
+        # North = 0, Right = 1, East = 2, Down = 3, South = 4, Left = 5, West = 6, Up = 7
+        action['action_type'] = 1
+        action['walkDirection'] = 1
+        action['run'] = True
         print("action: ", action)
-      elif drop_flag == True:
-        # Drop the item
-        action['action_type'] = 5
-        print("action: ", action)
-        drop_flag = False
 
     obs = uo_service.step(action)
 

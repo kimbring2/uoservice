@@ -19,6 +19,7 @@ setup(
           'pygame',
           'mpyq',
           'opencv-python',
+          'tqdm'
       ],
   classifiers=[
     'Development Status :: 4 - Beta',      
