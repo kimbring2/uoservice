@@ -73,7 +73,7 @@ def main():
     action['run'] = False
 
     ## Declare the empty action
-    if step % 200 == 0:
+    if step % 50 == 0:
       print("step: ", step)
       if target_mobile_serial != None:
         ## format of player mobile data 

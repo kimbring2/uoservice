@@ -20,7 +20,6 @@
   </head>
 
   <body>
-
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
       <a class="navbar-brand" href="https://github.com/kimbring2/uoservice">GitHub</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,76 +48,81 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col">
+                <h5>Figure1: Synchronization diagram between python script and the environment.</h5>
+                <img src="Fig/Process.png" class="rounded mx-auto d-block float-center" alt="Training process" width=80%>
             </div>
             <div class="col">
-                <h2>Introduction</h2>
-                When training reinforcement learning agents, the agent interacts with the environment by sending actions and receiving observations.
-                The agents are trained in a python script and the environment is implemented using Godot. <br>
-                In python the environment is wrapped into a class, that is usually similar to OpenAI Gym environment class (Code 1). We need to implement 
-                the functions: <b>init</b>, <b>step</b>, <b>reset</b> and <b>close</b> to get fully functional environment. <br><br>
-                The <b>init</b> function launches subprocesses associated with your environment. In our case it launches Godot 
-                project as a subprocess.<br>
-                The <b>step</b> function takes an action tensor that was sampled from your model and passes it to the environment. It then computes 
-                the next state and returns the observation of this state along with the reward. The variable <b>done</b> is <b>true</b> if the new state is the 
-                final one, <b>false</b> otherwise.<br>
-                The <b>reset</b> function returns the environment to the initial state and returns the observation of this state.<br>
-                The <b>close</b> function closes all subprocesses associated with your environment.<br>
-                We will ignore <b>seed</b> and <b>render</b> functions for now, because we use random number generator in Godot 
-                and rendering is done by default.<br>
+                <h2>Synchronization in Python</h2>
+                Figure 1 shows the pattern of interaction between Python and Ultima Online client(C#) processes. First, python script 
+                samples an action from the model, meanwhile the C# process waits for the action to be passed. In this 
+                case semaphore <b>sem_act</b> is blocked, while <b>sem_obs</b> has green light. <br>
+                When the <b>step</b> function is called the action tensor is sent into the shared memory and <b>sem_act</b> semaphore
+                turns green. It signals to C# to start processing the action of an agent. Meanwhile the semaphore <b>sem_obs</b> turns
+                red, blocking python process while waiting for C# to send the observation.<br>
             </div>
             <div class="col">
-                <h5>Code 1: Dummy implementation of an OpenAI Gym class.</h5>
+                <h5>Code 1: Introducing semaphores.</h5>
                 <pre class="pre"><code class="python">
-## general package imports
-import io
-import time
-import numpy as np
-import random
-import argparse
-import sys
-import grpc
-from tqdm import tqdm
+class UoService:
+    '''UoService class including gRPC client'''
+    def __init__(self, grpc_port, window_width, window_height):
+            self.grpc_port = grpc_port
+            self.window_width = window_width
+            self.window_height = window_height
+            self.stub = None
 
-## UoService package imports
-from uoservice.protos import UoService_pb2
-from uoservice.protos import UoService_pb2_grpc
-from uoservice.UoService import UoService
-import uoservice.utils as utils
+    def _open_grpc(self):
+        # Open the gRPC channel using the port that is same of game client 
+        channel = grpc.insecure_channel('localhost:' + str(self.grpc_port))
+        self.stub = UoService_pb2_grpc.UoServiceStub(channel)
 
-## Define the command arguments
-parser = argparse.ArgumentParser(description='Ultima Online Replay Parser')
-parser.add_argument('--window_width', type=int, default=1370, help='screen width of game')
-parser.add_argument('--window_height', type=int, default=1280, help='screen height of game')
-parser.add_argument('--grpc_port', type=int, default=60051, help='port of grpc')
+    def step(self, action):
+        # Send the action data to game client and receive the state of that action
+        action_type = action['action_type']
+        item_serial = action['item_serial']
+        mobile_serial = action['mobile_serial']
+        walk_direction = action['walk_direction']
+        index = action['index']
+        amount = action['amount']
+        run = action['run']
 
-## Parse the command argument
-arguments = parser.parse_args()
-grpc_port = arguments.grpc_port
-window_width = arguments.window_width
-window_height = arguments.window_height
+        self.stub.WriteAct(UoService_pb2.Actions(actionType=action_type, 
+                                                 itemSerial=item_serial,
+                                                 mobileSerial=mobile_serial,
+                                                 walkDirection=walk_direction,
+                                                 index=index, 
+                                                 amount=amount,
+                                                 run=run))
+        self.stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
 
-## Declare the main function
+        self.stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
+        response = self.stub.ReadObs(UoService_pb2.Config(name='step'))
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+            </div>
+            <div class="col">
+                <h2>First Step</h2>
+                The first task what the Python application need to know to play the Ultima Online is probably walking. Let's see how to use the states, actions of UoService to do that. The state information we need to know to move toward the mobile object is position of player and target. <b>obs['player_mobile_data']</b> <b>obs['mobile_data']</b>.
+
+                <video width="400" height="200" controls>
+                    <source src="Fig/WalkResult.mkv" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
+            <div class="col">
+                <h5>Code 2: Rule-based walking example code.</h5>
+                <pre class="pre"><code class="python">
+
 def main():
-  ## Declare the UoService using the parsed argument
-  uo_service = UoService(grpc_port, window_width, window_height)
-
-  ## Open the gRPC client to connect with gRPC server of CSharp part
-  uo_service._open_grpc()
-
-  ## Send the reset signal to gRPC server
-  obs = uo_service.reset()
-
-  ## Event flags to test the scenario manually
-  target_mobile_serial = None
-
-  ## Event flags to test the scenario manually
   for step in tqdm(range(100000)):
     ## Obtain the serial of random mobile around the player
     if len(obs["mobile_data"]) != 0 and target_mobile_serial == None:
-      ## Format of mobile data
-      ## [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
       ## 16852: ['a zombie', 'Mobile', 646, 22, 16, ' a zombie ']
-
       ## Obtain the serial list of mobiles in current game screen 
       mobile_serial_list = list(obs["mobile_data"].keys())
 
@@ -127,19 +131,10 @@ def main():
 
     ## Declare the empty action
     action = {}
-    action['action_type'] = 0
-    action['item_serial'] = 0
-    action['mobile_serial'] = 0
-    action['walk_direction'] = 0
-    action['index'] = 0
-    action['amount'] = 0
-    action['run'] = False
 
     ## Declare the empty action
     if step % 200 == 0:
-      print("step: ", step)
       if target_mobile_serial != None:
-        ## format of player mobile data 
         # 120: ['masterkim', 'PlayerMobile', 778, 618, 0, 'None']
         player_mobile_serial = list(obs['player_mobile_data'].keys())[0]
         player_mobile = obs['player_mobile_data'][player_mobile_serial]
@@ -151,19 +146,17 @@ def main():
           target_mobile_serial = None
           continue
 
-        print("target_mobile: ", target_mobile)
-
         ## Parse the x and y position of player 
-        player_screen_x = player_mobile[2]
-        player_screen_y = player_mobile[3]
+        player_x = player_mobile[2]
+        player_y = player_mobile[3]
 
         ## Parse x and y position of target mobile
-        target_mobile_screen_x = target_mobile[2]
-        target_mobile_screen_y = target_mobile[3]
+        target_mobile_x = target_mobile[2]
+        target_mobile_y = target_mobile[3]
 
         ## Calculate the directons to move toward the target mobile
-        direction = utils.get_walk_direction_to_target([player_screen_x, player_screen_y], 
-                                                       [target_mobile_screen_x, target_mobile_screen_y])
+        direction = utils.get_walk_direction_to_target([player_x, player_y], 
+                                         [target_mobile_x, target_mobile_y])
 
         # Walk action
         action['action_type'] = 1
@@ -171,15 +164,10 @@ def main():
         action['run'] = True
 
         obs = uo_service.step(action)
-    else:
-      obs = uo_service.step(action)
 
-
-## Start the main function
-if __name__ == '__main__':
-  main()
                 </code></pre>
             </div>
+
         </div>
         <div class="row">
             <div class="col">
@@ -215,131 +203,12 @@ env.close()
 
         <div class="row">
             <div class="col">
-                <h5>Figure1: Synchronization diagram between python script and the environment.</h5>
-                <img src="Fig/Process.png" class="rounded mx-auto d-block float-center" alt="Training process" width=80%>
-            </div>
-            <div class="col">
-                <h2>Synchronization in Python</h2>
-                Figure 1 shows the pattern of interaction between python and godot processes. First, python script 
-                samples an action from the model, meanwhile the godot process waits for the action to be passed. In this 
-                case semaphore <b>sem_act</b> is blocked, while <b>sem_obs</b> has green light. <br>
-                When the <b>step</b> function is called the action tensor is sent into the shared memory and <b>sem_act</b> semaphore
-                turns green. It signals to godot to start processing the action of an agent. Meanwhile the semaphore <b>sem_obs</b> turns
-                red, blocking python process while waiting for godot to send the observation.<br>
-                In Godot we have to put synchronization procedures in a <b>_physics_process</b> if we have physics-based environment. In other cases 
-                we can use standard <b>_process</b> function.
-            </div>
-            <div class="col">
-                <h5>Code 3: Introducing semaphores.</h5>
-                <pre class="pre"><code class="python">
-class DummyEnvSemaphores(gym.Env):
-    def __init__(self, num_actions, num_observations):
-        self.mem = _GodotEnv.SharedMemoryTensor("environment")
-        self.sem_act = _GodotEnv.SharedMemorySemaphore("sem_action", 0)
-        self.sem_obs = _GodotEnv.SharedMemorySemaphore("sem_observation", 0)
-        
-        #Shared memory tensors
-        self.agent_action_tensor = self.mem.newFloatTensor("agent_action", num_actions)
-        self.observation_tensor = self.mem.newFloatTensor("observation", num_observations)
-
-    def seed(self, seed=None):
-        pass
-
-    def step(self, action):
-        #sending action
-        self.agent_action_tensor.write(action)
-        self.sem_act.post()
-
-        self.sem_obs.wait()
-        #receiving observation
-        observation = self.observation_tensor.read()
-        
-        return observation, reward, done, info
-        
-    def reset(self):
-        return observation
-        
-    def render(self, mode='human'):
-        pass
-
-    def close(self):
-        pass
-                </code></pre>
-            </div>
-        </div>
-        <div class="row">
-                <div class="col">
-                    <h5>Figure 2: Scene organization</h5>
-                    <img src="Fig/SceneAnnotated.png" class="rounded mx-auto d-block float-center" alt="Annotated scene" width=80%>
-                    <h5>Figure 3: Timer properties</h5>
-                    <img src="Fig/TimerProperties.png" class="rounded mx-auto d-block float-center" alt="Timer inspector">
-                </div>
-                <div class="col">
-                    <h2>Synchronization in Godot</h2>
-                    Godot scene contains a pendulum consisting of <b>StaticBody2D</b>, <b>PinJoint2D</b> and <b>RigidBody2D</b>. Moreover,
-                    it has the <b>Timer</b>, synchronized with the physics server that counts down the time between an action received and 
-                    an observation sent.<br>
-                    The <b>Timer</b> properties are shown on the Figure 3. To synchronize the time with the physics server set the Process mode
-                    to Physics.
-                    Code 4 shows the important bits of synchronization code in godot. The semaphores and shared memory are initialized in the 
-                    <b>_ready</b> function. If the shared memory exists, the project was called from python script, otherwise no semaphores needed.
-                    This lets us to run the project in the editor to debug it.
-                    Because we use phyics engine to model the environment, we also synchronize updates with the physiscs server using 
-                    <b>_physics_process</b>.<br>
-                    The engine waits for the actions in the function <b>_physics_process</b> and starts <b>Timer</b> count down. <br>
-                    When the <b>Timer</b> returns the signal <b>_on_Timer_timeout</b> we send the observation back to python and release the 
-                    semaphore <b>sem_obs</b>. Also, we signal to the engine, that we wait for the next action by setting <b>timeout</b> variable to true.
-                    <br>
-                </div>
-                <div class="col">
-                    <h5>Code 4: Environment node script</h5>
-                    <pre class="pre"><code class="python">
-var deltat = 0.1
-var agent_action_tensor
-var observation_tensor
-func _ready():
-    mem = cSharedMemory.new()
-    if mem.exists():
-        sem_action = cSharedMemorySemaphore.new()
-        sem_observation = cSharedMemorySemaphore.new()
-        sem_action.init("sem_action")
-        sem_observation.init("sem_observation")
-        
-        #Shared memory tensors
-        agent_action_tensor = mem.findFloatTensor("agent_action")
-		observation_tensor = mem.findFloatTensor("observation")
-    
-    set_physics_process(true)
-
-func _physics_process(delta):
-    if timeout:    
-        if mem.exists():
-            sem_action.wait()
-            #receiving action
-            agent_action = agent_action_tensor.read()
-        
-        $Timer.start(deltat)
-        timeout = false
-
-func _on_Timer_timeout():
-    if mem.exists():	
-        #sending observation
-        observation_tensor.write(observation)
-        sem_observation.post()
-    
-    timeout = true
-                    </code></pre>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
             </div>
             <div class="col">
                 <h2>Resetting the environment</h2>
                 When the episode of the simulation ends we want to reset the environment to the initial position without relaunching 
                 the engine process. To accomplish this feat we use additional action, that is 1 if the environment should be reset and 
-                0 otherwise. However, the tricky part is resetting the positions and velocities of the objects in Godot.<br>
+                0 otherwise. However, the tricky part is resetting the positions and velocities of the objects in C#.<br>
                 In our case we have one physics object: <b>RigidBody2D</b>. The positions and velocities of the <b>RigidBody2D</b> node can be changed
                 only in the <b>_integrate_forces</b> function of this node. Therefore we introduce the variable <b>reset</b>, which is true when we 
                 want to reinitialize this node and false otherwise. Additionally we create variables to store initial positions and velocities of this node.<br>
@@ -377,13 +246,13 @@ func _ready():
         </div>
         <div class="row">
             <div class="col">
-                <h5>Figure 4: Exporting Godot project</h5>
+                <h5>Figure 4: Exporting C# project</h5>
                 <img src="Fig/ExportTemplates.png" class="rounded mx-auto d-block float-center" alt="Export templates" width=100%>
             </div>
             <div class="col">
                 <h2>Exporting the project</h2>
                 We tested this library using debug exporting templates.
-                Just follow the standard godot export procedure and everything should just work.<br><br><br>
+                Just follow the standard C# export procedure and everything should just work.<br><br><br>
                 Code 7 shows how the environment is launched from the python class: we use subprocess package and 
                 pass the special handle to the environment so that it can access the shared memory allocated by python.
                 We have to note, that it is important to redirect stdout and stderr streams to files instead of pipes. 
@@ -415,11 +284,11 @@ class DummyEnvLaunch(gym.Env):
             </div>
             <div class="col">
                 <h2>Conclusion</h2>
-                In this tutorial we showed the first step to make your own environment in Godot Engine and use it from python script.
-                Right now the godot environment runs in the real time. In the next tutorial we will show how to speed it up.
+                In this tutorial we showed the first step to make your own environment in C# Engine and use it from python script.
+                Right now the C# environment runs in the real time. In the next tutorial we will show how to speed it up.
                 The fully functional code for this tutorial can be found here: <br><br>
-                <a href="https://github.com/lupoglaz/GodotGymAI/tree/master/Tutorials/InvPendulumTut">Tutorials</a><br><br>
-                The Godot project is located in the directory <b>InvPendulum</b> and the python Gym class is in the file <b>InvPendulum.py</b>.
+                <a href="https://github.com/lupoglaz/C#GymAI/tree/master/Tutorials/InvPendulumTut">Tutorials</a><br><br>
+                The C# project is located in the directory <b>InvPendulum</b> and the python Gym class is in the file <b>InvPendulum.py</b>.
 
                 <br>
                 <br>
