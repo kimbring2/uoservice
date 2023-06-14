@@ -18,16 +18,28 @@ def get_walk_direction_to_target(player_position, target_position):
   up = False
   down = False
 
-  direction = 0
-  if player_position[0] > target_position[0]:
-    left = True
-  else:
-    right = True
+  direction = -1
 
-  if player_position[1] > target_position[1]:
-    up = True
-  else:
-    down = True  
+  if abs(player_position[0] - target_position[0]) > 10:
+    if player_position[0] > target_position[0]:
+      left = True
+    else:
+      right = True
+
+  if abs(player_position[1] - target_position[1]) > 10:
+    if player_position[1] > target_position[1]:
+      up = True
+    else:
+      down = True  
+
+  if left:
+    direction = 5
+  elif right:
+    direction = 1
+  elif up:
+    direction = 7
+  elif down:
+    direction = 3
 
   if left and up:
     direction = 6
@@ -95,6 +107,7 @@ def parsePlayerStatus(playerStatusGrpc):
   playerStatusDict['weight'] = playerStatusGrpc.weight
   playerStatusDict['weightMax'] = playerStatusGrpc.weightMax
   playerStatusDict['HoldItemSerial'] = playerStatusGrpc.holdItemSerial
+  playerStatusDict['warMode'] = playerStatusGrpc.warMode
 
   return playerStatusDict
 

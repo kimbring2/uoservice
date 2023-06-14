@@ -61,6 +61,7 @@ message GrpcPlayerStatus {
   uint32 weightMax = 13;
 
   uint32 holdItemSerial = 14;
+  bool warMode = 15;
 }
 
 message GrpcGameObjectSimpleData {

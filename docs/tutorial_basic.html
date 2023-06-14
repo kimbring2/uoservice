@@ -105,11 +105,11 @@ class UoService:
             <div class="col">
             </div>
             <div class="col">
-                <h2>First Step</h2>
+                <h2>First Walk</h2>
                 The first task what the Python application need to know is probably walking. Let's see how to use the states and actions of the UoService to do that.<br> 
                 The first information we need to know is position of player and target. Position of them can be extracted from the <b>obs['player_mobile_data']</b>.<br> 
                 For example, the player mobile data looks like a <b>120: ['masterkim', 'PlayerMobile', 778, 618, 0, 'None']</b>. The key of data if serial number assigned to player mobile and each body column means <b>[obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]</b>. Monster data can be taken similar way as player data. Please the code for more detail.<br>
-                How can we make up the arguments <b>actionType, itemSerial, mobileSerial, walkDirection, index, amount, run</b> of action for walk. First, we just know that the actionType should be 1. Next, the value for the walkDirection can be calculated from the x and y position of player and monster by using any planning algorithm. If you need to move fast based on the situation, set the run arguemnt as True. 
+                How can we make up the arguments <b>actionType, itemSerial, mobileSerial, walkDirection, index, amount, run</b> of action for walk. First, we just know that the actionType should be 1. Next, the value for the walkDirection can be calculated from the x and y position of player and monster by using the <a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/utils.py">simple planning algorithm</a>. If you need to move fast based on the situation, set the run arguemnt as True. 
 
                 <video width="400" height="200" controls>
                     <source src="Fig/WalkResult.mkv" type="video/mp4">
@@ -172,56 +172,118 @@ def main():
 
                 </code></pre>
             </div>
-
         </div>
+        
         <div class="row">
             <div class="col">
             </div>
             <div class="col">
-                <h2>Pick </h2>
-                The training cycle for a reinforcement learning agent looks something like this (Code 2):<br>
-                we collect samples until we observed <b>n_rollout</b> states, these observations along with actions and rewards
-                are collected in the batch.<br>
-                Then the model does one gradient step, empties its batch and resumes simulation. During the simulation, all the actions are 
-                sampled from the model itself.
+                <h2>First Attack</h2>
+
+                <video width="400" height="200" controls>
+                    <source src="Fig/MeleeAttackResult.mkv" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+
+                In the above video, the one skeleton is selected as tartget mobile and player move toward it. The full code is available from <a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/walk_to_monster.py">walk_to_monster.py</a> file.
             </div>
+
             <div class="col">
-                <h5>Code 2: Dummy code for training an agent.</h5>
+                <h5>Code 2: Rule-based walking example code.</h5>
                 <pre class="pre"><code class="python">
-## Event flags to test the scenario manually
-  pick_up_flag = True
-  drop_flag = False
+
+  ## Event flags to test the scenario manually
+  target_mobile_serial = None
 
   ## Event flags to test the scenario manually
   for step in tqdm(range(100000)):
-    item_serial = 0
+    ## Obtain the serial of random mobile around the player
+    if len(obs["mobile_data"]) != 0 and target_mobile_serial == None:
+      ## Format of mobile data
+      ## [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
+      ## 16852: ['a zombie', 'Mobile', 646, 22, 16, ' a zombie ']
 
-    ## Obtain the serial of Gold from players' backpack information
-    if len(obs["backpack_item_data"]) != 0:
-      item_serial, index = utils.get_serial_by_name(obs["backpack_item_data"], "Gold")
+      ## Obtain the serial list of mobiles in current game screen 
+      mobile_serial_list = list(obs["mobile_data"].keys())
+
+      ## Obtain the serial list of mobiles in current game screen
+      target_mobile_serial = random.choice(mobile_serial_list)
 
     ## Declare the empty action
     action = {}
+    action['action_type'] = 0
+    action['item_serial'] = 0
+    action['mobile_serial'] = 0
+    action['walk_direction'] = 0
+    action['index'] = 0
+    action['amount'] = 0
+    action['run'] = False
 
     ## Declare the empty action
-    if step % 200 == 0:
-      if pick_up_flag == True and item_serial != 0:
-        # Pick up the item
-        action['action_type'] = 3
-        action['item_serial'] = item_serial
-        action['amount'] = 100
-        pick_up_flag = False
-        drop_flag = True
-        print("action: ", action)
-      elif drop_flag == True:
-        # Drop the item
-        action['action_type'] = 5
-        print("action: ", action)
-        drop_flag = False
+    if step % 50 == 0:
+      print("step: ", step)
 
-    obs = uo_service.step(action)
+      if target_mobile_serial != None:
+        ## format of player mobile data 
+        # 120: ['masterkim', 'PlayerMobile', 778, 618, 0, 'None']
+        player_mobile_serial = list(obs['player_mobile_data'].keys())[0]
+        player_mobile = obs['player_mobile_data'][player_mobile_serial]
+
+        ## finally, we can acquire the target mobile data
+        if target_mobile_serial in obs["mobile_data"]:
+          target_mobile = obs["mobile_data"][target_mobile_serial]
+        else:
+          target_mobile_serial = None
+          continue
+
+        ## Parse the x and y position of player 
+        player_screen_x = player_mobile[2]
+        player_screen_y = player_mobile[3]
+
+        ## Parse x and y position of target mobile
+        target_mobile_screen_x = target_mobile[2]
+        target_mobile_screen_y = target_mobile[3]
+
+        ## Calculate the directons to move toward the target mobile
+        direction = utils.get_walk_direction_to_target([player_screen_x, player_screen_y], 
+                                                       [target_mobile_screen_x, target_mobile_screen_y])
+
+        ## Distance between the player and target mobile
+        distance = target_mobile[4]
+
+        ## Format of player Status
+        ## [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
+        ## 16852: ['a zombie', 'Mobile', 646, 22, 16, ' a zombie ']
+        war_mode = obs['player_status_dict']['warMode']
+
+        if distance >= 2:
+          ## Target mobile is far away from the player
+          if direction == -1:
+            # Can not find the walk direction
+            action['action_type'] = 0
+          else:
+            ## Walk toward target mobile
+            action['action_type'] = 1
+            action['walk_direction'] = direction
+            action['run'] = True
+        else:
+          ## Player is near the target
+            if war_mode == False:
+              ## Change the war mode to combat to attack
+              action['action_type'] = 19
+              action['index'] = 1
+            else:
+              ## Attack the target mobile
+              action['action_type'] = 2
+              action['mobile_serial'] = target_mobile_serial
+
+        obs = uo_service.step(action)
+    else:
+      obs = uo_service.step(action)
+
                 </code></pre>
             </div>
+
         </div>
 
         <div class="row">

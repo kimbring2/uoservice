@@ -2,7 +2,6 @@ README.md
 setup.py
 uoservice/UoService.py
 uoservice/UoService_replay.py
-uoservice/install_bash.sh
 uoservice/uoservice.py
 uoservice/utils.py
 uoservice.egg-info/PKG-INFO
@@ -15,3 +14,4 @@ uoservice/protos/UoService.proto
 uoservice/protos/UoServiceGrpc.cs
 uoservice/protos/UoService_pb2.py
 uoservice/protos/UoService_pb2_grpc.py
+uoservice/protos/install_bash.sh

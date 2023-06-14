@@ -59,6 +59,7 @@ class UoService:
 		obs['teacher_data'] = obs_raw[8]
 		obs['player_mobile_data'] = obs_raw[13]
 		obs['ground_item_dict'] = obs_raw[14]
+		obs['player_status_dict'] = obs_raw[15]
 
 		return obs
 
@@ -79,6 +80,7 @@ class UoService:
 		vendor_item_dict = {}
 		teacher_dict = {}
 		player_skill_dict = {}
+		player_status_dict = {}
 		popup_menu_list = []
 		cliloc_dict = {}
 		static_object_screen_x_list = []
@@ -117,6 +119,8 @@ class UoService:
 			#print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
 			#			format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
 			bank_item_dict[item.serial] = [item.name, item.layer, item.amount]
+
+		player_status_dict = utils.parsePlayerStatus(player_status_data)
 
 		#print("player_status_data: ", player_status_data)
 		#print("bank_item_data: ", bank_item_data)
@@ -180,7 +184,7 @@ class UoService:
 		if len(equipped_item_data) == 0:
 			return mobile_dict, equipped_item_dict, backpack_item_dict, bank_item_dict, opened_corpse_list_dict, \
 				vendor_dict, vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_dict, \
-				player_skills_dict, corpse_dict, player_mobile_dict, ground_item_dict
+				player_skills_dict, corpse_dict, player_mobile_dict, ground_item_dict, player_status_dict
 
 		for item in equipped_item_data:
 			#print('name: {0}, layer: {1}, serial: {2}, amount: {3}'.format(item.name, item.layer, item.serial, item.amount))
@@ -203,7 +207,7 @@ class UoService:
 
 		return mobile_dict, equipped_item_dict, backpack_item_dict, bank_item_dict, opened_corpse_list_dict, vendor_dict, \
 					 vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_dict, player_skills_dict, \
-					 corpse_dict, player_mobile_dict, ground_item_dict
+					 corpse_dict, player_mobile_dict, ground_item_dict, player_status_dict
 
 	def step(self, action):
 		# Send the action data to game client and receive the state of that action
@@ -235,7 +239,7 @@ class UoService:
 		
 		#mobile_dict, equipped_item_dict, backpack_item_dict, bank_item_dict, opened_corpse_list_dict, vendor_dict, \
 		#vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_dict, player_skills_dict, \
-		#corpse_dict, player_mobile_dict, ground_item_dict
+		#corpse_dict, player_mobile_dict, ground_item_dict, player_status_dict
 		obs['mobile_data'] = obs_raw[0]
 		obs['equipped_item_data'] = obs_raw[1]
 		obs['backpack_item_data'] = obs_raw[2]
@@ -250,5 +254,6 @@ class UoService:
 		obs['teacher_data'] = obs_raw[8]
 		obs['player_mobile_data'] = obs_raw[13]
 		obs['ground_item_dict'] = obs_raw[14]
+		obs['player_status_dict'] = obs_raw[15]
 
 		return obs

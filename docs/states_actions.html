@@ -200,7 +200,6 @@
                                     );
                 </script>
             </div>
-
         </div>
     </div>
 
@@ -336,7 +335,7 @@
             <div class="col", id="actions_2">
                 <script>createHeaderAction("actions_2", "2. Walk to Direction", "-> UpRight = 0, Right = 1, DownRight = 2, Down = 3, DownLeft = 4, Left = 5, UpLeft = 6, Up = 7");</script>
                 <script>
-                    generate_action_table("actions_2", [["1", "", "", "0 ~ 7", "", "", "0, 1"]]);
+                    generate_action_table("actions_2", [["1", "", "", "0 ~ 7", "", "", "True, False"]]);
                 </script>
             </div>
 
@@ -367,9 +366,16 @@
             </div>
 
             <div class="col", id="actions_7">
-                <script>createHeaderAction("actions_7", "7. Drop the holded item on land around the player", "");</script>
+                <script>createHeaderAction("actions_7", "7. Equip the holded item", "-> Player should pick up the item before this action");</script>
                 <script>
-                    generate_action_table("actions_7", [["5", "holded item serial", "", "", "", "", ""]]);
+                    generate_action_table("actions_7", [["6", "", "", "", "", "", ""]]);
+                </script>
+            </div>
+
+            <div class="col", id="actions_20">
+                <script>createHeaderAction("actions_20", "20. Change the war mode", "-> War mode change according to the index argument. 1 is for active");</script>
+                <script>
+                    generate_action_table("actions_20", [["19", "", "", "", "0, 1", "", ""]]);
                 </script>
             </div>
         </div>

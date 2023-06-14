@@ -2,7 +2,7 @@
 # Project "UoService"
 # Copyright (C) 2023, kimbring2 
 #
-# Purpose of this file : Short game scenario: Pick up item from backpack and drop on near ground
+# Purpose of this file : Game scenario 1: Approach to the one of monster
 #
 # Please reference me when you are going to use this code as reference :)
 
