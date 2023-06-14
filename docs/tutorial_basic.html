@@ -120,7 +120,7 @@ class UoService:
             </div>
 
             <div class="col">
-                <h5>Code 2: Rule-based walking example code.</h5>
+                <h5>Code 2: Rule-based attacking example code.</h5>
                 <pre class="pre"><code class="python">
 
 def main():
@@ -179,90 +179,66 @@ def main():
             </div>
             <div class="col">
                 <h2>First Attack</h2>
+                The next task the Python application can do after approaching the monster is, obviously, attack. Let's use the more states and actions of the UoService to do that. <br> 
+                The first necessary information is distance between the player and monstser. If we look at the mobile data(<b>[obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]</b>) again, you can find the it easily. Player only can attack when distance is close to 0 value. <br> 
+                Additionally, there is a war mode system in Ultima Online where only players in war mode can attack other players. That information can be obtained from <b>obs['player_status_dict']</b>. That data is for fundamental status of player and has the format <b>{'str': 100, 'dex': 62, 'intell': 133, 'hits': 121, 'hitsMax': 121, 'stamina': 70, 'staminaMax': 70, 'mana': 148, 'gold': 46739, 'physicalResistance': 88, 'weight': 654, 'weightMax': 450, 'HoldItemSerial': 0, 'warMode': True}</b>. The Python can use these information usefully to decide the next action. <br> 
+                The <b>action_type</b> of attack action is assigned to 2 and argument need to be passed is the target mobile serial. We can use the serial what we used to find the x and y position here. As I said before, player is needed to in War Mode. Please change the mode it is not by using the <b>action['action_type'] = 19, action['index'] = 1</b> argument.
 
                 <video width="400" height="200" controls>
                     <source src="Fig/MeleeAttackResult.mkv" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
 
-                In the above video, the one skeleton is selected as tartget mobile and player move toward it. The full code is available from <a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/walk_to_monster.py">walk_to_monster.py</a> file.
+                In the demo video, player approach and attack the nearby monster randomly. The full code for that video is available from <a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/melee_attack_monster.py">melee_attack_monster.py</a> file.
             </div>
 
             <div class="col">
                 <h5>Code 2: Rule-based walking example code.</h5>
                 <pre class="pre"><code class="python">
-
-  ## Event flags to test the scenario manually
   target_mobile_serial = None
 
-  ## Event flags to test the scenario manually
   for step in tqdm(range(100000)):
-    ## Obtain the serial of random mobile around the player
     if len(obs["mobile_data"]) != 0 and target_mobile_serial == None:
-      ## Format of mobile data
-      ## [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
-      ## 16852: ['a zombie', 'Mobile', 646, 22, 16, ' a zombie ']
-
-      ## Obtain the serial list of mobiles in current game screen 
       mobile_serial_list = list(obs["mobile_data"].keys())
-
-      ## Obtain the serial list of mobiles in current game screen
       target_mobile_serial = random.choice(mobile_serial_list)
 
-    ## Declare the empty action
     action = {}
-    action['action_type'] = 0
-    action['item_serial'] = 0
-    action['mobile_serial'] = 0
-    action['walk_direction'] = 0
-    action['index'] = 0
-    action['amount'] = 0
-    action['run'] = False
 
-    ## Declare the empty action
     if step % 50 == 0:
-      print("step: ", step)
-
       if target_mobile_serial != None:
-        ## format of player mobile data 
-        # 120: ['masterkim', 'PlayerMobile', 778, 618, 0, 'None']
         player_mobile_serial = list(obs['player_mobile_data'].keys())[0]
         player_mobile = obs['player_mobile_data'][player_mobile_serial]
 
-        ## finally, we can acquire the target mobile data
         if target_mobile_serial in obs["mobile_data"]:
           target_mobile = obs["mobile_data"][target_mobile_serial]
         else:
           target_mobile_serial = None
           continue
 
-        ## Parse the x and y position of player 
-        player_screen_x = player_mobile[2]
-        player_screen_y = player_mobile[3]
+        player_x = player_mobile[2]
+        player_y = player_mobile[3]
 
-        ## Parse x and y position of target mobile
-        target_mobile_screen_x = target_mobile[2]
-        target_mobile_screen_y = target_mobile[3]
+        target_mobile_x = target_mobile[2]
+        target_mobile_y = target_mobile[3]
 
-        ## Calculate the directons to move toward the target mobile
-        direction = utils.get_walk_direction_to_target([player_screen_x, player_screen_y], 
-                                                       [target_mobile_screen_x, target_mobile_screen_y])
+        direction = utils.get_walk_direction_to_target([player_x, player_y], 
+                                         [target_mobile_x, target_mobile_y])
 
         ## Distance between the player and target mobile
         distance = target_mobile[4]
 
         ## Format of player Status
-        ## [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
-        ## 16852: ['a zombie', 'Mobile', 646, 22, 16, ' a zombie ']
+        '''player_status_dict:  {'str': 100, 'dex': 62, 'intell': 133, 
+                                 'hits': 121, 'hitsMax': 121, 'stamina': 70, 
+                                 'staminaMax': 70, 'mana': 148, 'gold': 46739, 
+                                 'physicalResistance': 88, 'weight': 654, 
+                                 'weightMax': 450, 'HoldItemSerial': 0, 'warMode': True}'''
         war_mode = obs['player_status_dict']['warMode']
 
         if distance >= 2:
-          ## Target mobile is far away from the player
           if direction == -1:
-            # Can not find the walk direction
             action['action_type'] = 0
           else:
-            ## Walk toward target mobile
             action['action_type'] = 1
             action['walk_direction'] = direction
             action['run'] = True
@@ -278,8 +254,6 @@ def main():
               action['mobile_serial'] = target_mobile_serial
 
         obs = uo_service.step(action)
-    else:
-      obs = uo_service.step(action)
 
                 </code></pre>
             </div>
@@ -290,7 +264,7 @@ def main():
             <div class="col">
             </div>
             <div class="col">
-                <h2>Resetting the environment</h2>
+                <h2>Rooting the corpse</h2>
                 When the episode of the simulation ends we want to reset the environment to the initial position without relaunching 
                 the engine process. To accomplish this feat we use additional action, that is 1 if the environment should be reset and 
                 0 otherwise. However, the tricky part is resetting the positions and velocities of the objects in C#.<br>
