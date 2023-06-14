@@ -60,6 +60,7 @@ class UoService:
 		obs['player_mobile_data'] = obs_raw[13]
 		obs['ground_item_dict'] = obs_raw[14]
 		obs['player_status_dict'] = obs_raw[15]
+		obs['opened_corpse_data'] = obs_raw[4]
 
 		return obs
 
@@ -121,8 +122,7 @@ class UoService:
 			bank_item_dict[item.serial] = [item.name, item.layer, item.amount]
 
 		player_status_dict = utils.parsePlayerStatus(player_status_data)
-
-		#print("player_status_data: ", player_status_data)
+		#print("player_status_dict: ", player_status_dict)
 		#print("bank_item_data: ", bank_item_data)
 		#print("\n")
 
@@ -198,8 +198,8 @@ class UoService:
 			#print('type: {0}, x: {1}, y: {2}, distance: {3}, name: {4}'.format(corpse_object.type, corpse_object.screenX, corpse_object.screenY,
 			#																																	 corpse_object.distance, corpse_object.name))
 			corpse_item_list = []
-			for item in opened_corpse.containerItemList.item:
-				corpse_item_list.append([item.name, item.layer, item.amount])
+			for item in opened_corpse.containerItemList.items:
+				corpse_item_list.append([item.serial, item.name, item.layer, item.amount])
 
 			opened_corpse_list_dict[corpse_object.serial] = corpse_item_list
 
@@ -253,7 +253,8 @@ class UoService:
 		obs['cliloc_data'] = obs_raw[10]
 		obs['teacher_data'] = obs_raw[8]
 		obs['player_mobile_data'] = obs_raw[13]
-		obs['ground_item_dict'] = obs_raw[14]
-		obs['player_status_dict'] = obs_raw[15]
+		obs['ground_item_data'] = obs_raw[14]
+		obs['player_status_data'] = obs_raw[15]
+		obs['opened_corpse_data'] = obs_raw[4]
 
 		return obs

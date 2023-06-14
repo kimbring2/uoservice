@@ -356,7 +356,7 @@
             <div class="col", id="actions_5">
                 <script>createHeaderAction("actions_5", "5. Drop the holded item into my backpack", "-> Backpack serial will be provided automatically inside of CSharp");</script>
                 <script>
-                    generate_action_table("actions_5", [["4", "holded item serial", "", "", "", "", ""]]);
+                    generate_action_table("actions_5", [["4", "", "", "", "", "", ""]]);
                 </script>
             </div>
 
@@ -369,6 +369,13 @@
                 <script>createHeaderAction("actions_7", "7. Equip the holded item", "-> Player should pick up the item before this action");</script>
                 <script>
                     generate_action_table("actions_7", [["6", "", "", "", "", "", ""]]);
+                </script>
+            </div>
+
+            <div class="col", id="actions_8">
+                <script>createHeaderAction("actions_8", "8. Open the corpse by it's serial", "-> Mobile become the item type after dying. Thus, itemSerial argument should be used");</script>
+                <script>
+                    generate_action_table("actions_8", [["7", "corpse item serial", "", "", "", "", ""]]);
                 </script>
             </div>
 

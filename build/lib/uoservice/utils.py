@@ -11,6 +11,14 @@ def get_serial_by_name(item_dict, name):
   return None, None
 
 
+def get_serial_amount_from_corpse_item_list(corpse_item_list, name):
+  for corpse_item in corpse_item_list:
+    if name in corpse_item[1]:
+      return corpse_item[0], corpse_item[3]
+
+  return None, 0
+
+
 def get_walk_direction_to_target(player_position, target_position):
   # UpRight = 0, Right = 1, DownRight = 2, Down = 3, DownLeft = 4, Left = 5, UpLeft = 6, Up = 7
   left = False

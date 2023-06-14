@@ -265,42 +265,105 @@ def main():
             </div>
             <div class="col">
                 <h2>Rooting the corpse</h2>
-                When the episode of the simulation ends we want to reset the environment to the initial position without relaunching 
-                the engine process. To accomplish this feat we use additional action, that is 1 if the environment should be reset and 
-                0 otherwise. However, the tricky part is resetting the positions and velocities of the objects in C#.<br>
-                In our case we have one physics object: <b>RigidBody2D</b>. The positions and velocities of the <b>RigidBody2D</b> node can be changed
-                only in the <b>_integrate_forces</b> function of this node. Therefore we introduce the variable <b>reset</b>, which is true when we 
-                want to reinitialize this node and false otherwise. Additionally we create variables to store initial positions and velocities of this node.<br>
-                The Code 5 shows the gist of this function. First we compute absolute initial <b>Transform2D</b> of the node and change the state accordingly.<br>
-                Unfortunatelly, we have to compute the transforms of <b>Anchor</b> and <b>PinJoint2D</b> in the <b>Environment</b> script (Code 6).
-                Probably, one can avoid this cumbersome procedure by reorganizing the tree or accessing the parent nodes from the <b>RigidBody2D</b> itself.
+                
+                <video width="400" height="200" controls>
+                    <source src="Fig/LootingCorpseResult.mkv" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+
+                In the demo video, player approach and attack the nearby monster randomly. The full code for that video is available from <a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/melee_attack_monster.py">melee_attack_monster.py</a> file.
             </div>
             <div class="col">
                 <h5>Code 5: Resetting the state of the RigidBody2D</h5>
                 <pre class="pre"><code class="python">
-func _integrate_forces(state):
-    if reset:
-        var T = Transform2D(0.0, init_anchor)
-        var Tt = Transform2D(0.0, -init_anchor)
-        var R = Transform2D(rng.randf_range(-PI, PI), Vector2(0,0))
-        var v = Transform2D(init_rotation, init_origin)
-        state.set_transform(T*R*Tt*state.transform)
-        state.set_angular_velocity(init_angular_velocity)
-        state.set_linear_velocity(init_linear_velicity)
-        reset = false
+  target_mobile_serial = None
+  corpse_serial = None
+
+  for step in tqdm(range(100000)):
+    if len(obs["mobile_data"]) != 0 and target_mobile_serial == None:
+      mobile_serial_list = list(obs["mobile_data"].keys())
+      target_mobile_serial = random.choice(mobile_serial_list)
+
+    action = {}
+    if step % 150 == 0:
+      if len(obs['corpse_data']) != 0:
+        corpse_serial_list = list(obs['corpse_data'].keys())
+        corpse_serial_data = random.choice(corpse_serial_list)
+        if corpse_serial == None:
+          corpse_serial = corpse_serial_data
+      
+      if target_mobile_serial != None:
+        player_mobile_serial = list(obs['player_mobile_data'].keys())[0]
+        player_mobile = obs['player_mobile_data'][player_mobile_serial]
+
+        if target_mobile_serial in obs["mobile_data"]:
+          target_mobile = obs["mobile_data"][target_mobile_serial]
+        else:
+          target_mobile_serial = None
+          continue
+
+        player_x = player_mobile[2]
+        player_y = player_mobile[3]
+
+        target_mobile_x = target_mobile[2]
+        target_mobile_y = target_mobile[3]
+
+        direction = utils.get_walk_direction_to_target([player_x, player_y], 
+                                         [target_mobile_x, target_mobile_y])
+
+        distance = target_mobile[4]
+
+        war_mode = obs['player_status_data']['warMode']
+        hold_item_serial = obs['player_status_data']['HoldItemSerial']
+
+        if len(obs['corpse_data']) == 0:
+          if distance >= 2:
+            if direction == -1:
+              action['action_type'] = 0
+            else:
+              action['action_type'] = 1
+              action['walk_direction'] = direction
+              action['run'] = True
+          else:
+              if war_mode == False:
+                action['action_type'] = 19
+                action['index'] = 1
+              else:
+                action['action_type'] = 2
+                action['mobile_serial'] = target_mobile_serial
+        else:
+          if len(obs['opened_corpse_data']) == 0:
+            ## Open the corpse container
+            corpse_serial_list = list(obs['corpse_data'].keys())
+            corpse_serial_data = random.choice(corpse_serial_list)
+            if corpse_serial == None:
+              corpse_serial = corpse_serial_data
+
+            action['action_type'] = 7
+            action['item_serial'] = corpse_serial
+          else:
+            if hold_item_serial == 0:
+              print("action['action_type'] = 3")
+
+              opened_corpse_serial_list = list(obs['opened_corpse_data'].keys())
+              opened_corpse_serial = random.choice(opened_corpse_serial_list)
+              opened_corpse_item_list = obs['opened_corpse_data'][opened_corpse_serial]
+              gold_item_serial, gold_item_max = \
+                utils.get_serial_amount_from_corpse_item_list(opened_corpse_item_list, 'Gold')
+
+              action['action_type'] = 3
+              action['item_serial'] = gold_item_serial
+              action['amount'] = gold_item_max
+            else:
+              print("action['action_type'] = 4")
+              print("distance: ", distance)
+
+              ## Item loot action
+              action['action_type'] = 4
+
+        obs = uo_service.step(action)
                 </code></pre>
                 <h5>Code 6: Initial positions of the RigidBody2D from Environment node</h5>
-                <pre class="pre"><code class="python">
-func _ready():
-    var v = $Anchor/PinJoint2D/RigidBody2D.transform.get_origin()
-    var AnchorT = $Anchor.transform
-    var JointT = $Anchor/PinJoint2D.transform
-    $Anchor/PinJoint2D/RigidBody2D.init_anchor = AnchorT.xform(JointT.get_origin())
-    $Anchor/PinJoint2D/RigidBody2D.init_origin = AnchorT.xform(JointT.xform(v))
-    $Anchor/PinJoint2D/RigidBody2D.init_rotation = 0.0
-    $Anchor/PinJoint2D/RigidBody2D.init_angular_velocity = 0.0
-    $Anchor/PinJoint2D/RigidBody2D.init_linear_velicity = Vector2(0.0, 0.0)
-                </code></pre>
             </div>
         </div>
         <div class="row">

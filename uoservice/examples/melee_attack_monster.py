@@ -78,7 +78,8 @@ def main():
 
       if target_mobile_serial != None:
         ## format of player mobile data 
-        # 120: ['masterkim', 'PlayerMobile', 778, 618, 0, 'None']
+        ## [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
+        ## 120: ['masterkim', 'PlayerMobile', 778, 618, 0, 'None']
         player_mobile_serial = list(obs['player_mobile_data'].keys())[0]
         player_mobile = obs['player_mobile_data'][player_mobile_serial]
 
