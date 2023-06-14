@@ -46,11 +46,26 @@ def main():
   obs = uo_service.reset()
 
   ## Event flags to test the scenario manually
-  pick_up_flag = True
+  target_item_serial = None
+
+  ## Event flags to test the scenario manually
+  pick_up_flag = False
   drop_flag = False
 
   ## Event flags to test the scenario manually
   for step in tqdm(range(100000)):
+    #print("ground_item_dict: ", obs["ground_item_dict"])
+
+    ## Obtain the serial of random mobile around the player
+    if len(obs["ground_item_dict"]) != 0 and target_item_serial == None:
+      print("ground_item_dict: ", obs["ground_item_dict"])
+      
+      ## Format of item data
+      ## 1074150311: ['46 Gold Coin', 'Item', 866, 574, 3, 'None']
+
+      target_item_serial = utils.get_serial_by_name(obs["ground_item_dict"], 'Gold')
+      print("target_item_serial: ", target_item_serial)
+
     item_serial = 0
 
     ## Obtain the serial of Gold from players' backpack information
@@ -65,6 +80,7 @@ def main():
     action['walk_direction'] = 0
     action['index'] = 0
     action['amount'] = 0
+    action['run'] = False
 
     ## Declare the empty action
     if step % 200 == 0:

@@ -58,6 +58,7 @@ class UoService:
 		obs['cliloc_data'] = obs_raw[10]
 		obs['teacher_data'] = obs_raw[8]
 		obs['player_mobile_data'] = obs_raw[13]
+		obs['ground_item_dict'] = obs_raw[14]
 
 		return obs
 
@@ -179,7 +180,7 @@ class UoService:
 		if len(equipped_item_data) == 0:
 			return mobile_dict, equipped_item_dict, backpack_item_dict, bank_item_dict, opened_corpse_list_dict, \
 				vendor_dict, vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_dict, \
-				player_skills_dict, corpse_dict, player_mobile_dict
+				player_skills_dict, corpse_dict, player_mobile_dict, ground_item_dict
 
 		for item in equipped_item_data:
 			#print('name: {0}, layer: {1}, serial: {2}, amount: {3}'.format(item.name, item.layer, item.serial, item.amount))
@@ -202,7 +203,7 @@ class UoService:
 
 		return mobile_dict, equipped_item_dict, backpack_item_dict, bank_item_dict, opened_corpse_list_dict, vendor_dict, \
 					 vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_dict, player_skills_dict, \
-					 corpse_dict, player_mobile_dict
+					 corpse_dict, player_mobile_dict, ground_item_dict
 
 	def step(self, action):
 		# Send the action data to game client and receive the state of that action
@@ -234,7 +235,7 @@ class UoService:
 		
 		#mobile_dict, equipped_item_dict, backpack_item_dict, bank_item_dict, opened_corpse_list_dict, vendor_dict, \
 		#vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_dict, player_skills_dict, \
-		#corpse_dict, player_mobile_dict
+		#corpse_dict, player_mobile_dict, ground_item_dict
 		obs['mobile_data'] = obs_raw[0]
 		obs['equipped_item_data'] = obs_raw[1]
 		obs['backpack_item_data'] = obs_raw[2]
@@ -248,5 +249,6 @@ class UoService:
 		obs['cliloc_data'] = obs_raw[10]
 		obs['teacher_data'] = obs_raw[8]
 		obs['player_mobile_data'] = obs_raw[13]
+		obs['ground_item_dict'] = obs_raw[14]
 
 		return obs

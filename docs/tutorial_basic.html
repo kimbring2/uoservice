@@ -49,15 +49,15 @@
         <div class="row">
             <div class="col">
                 <h5>Figure1: Synchronization diagram between python script and the environment.</h5>
-                <img src="Fig/Process.png" class="rounded mx-auto d-block float-center" alt="Training process" width=80%>
+                <img src="Fig/Process.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
             </div>
             <div class="col">
                 <h2>Synchronization in Python</h2>
                 Figure 1 shows the pattern of interaction between Python and Ultima Online client(C#) processes. First, python script 
                 samples an action from the model, meanwhile the C# process waits for the action to be passed. In this 
-                case semaphore <b>sem_act</b> is blocked, while <b>sem_obs</b> has green light. <br>
-                When the <b>step</b> function is called the action tensor is sent into the shared memory and <b>sem_act</b> semaphore
-                turns green. It signals to C# to start processing the action of an agent. Meanwhile the semaphore <b>sem_obs</b> turns
+                case <b>ActSemaphore</b> is blocked, while <b>ObsSemaphore</b> has green light. <br>
+                When the <b>step</b> function is called the action tensor is sent into the shared memory and <b>ActSemaphore</b>
+                turns green. It signals to C# to start processing the action of an agent. Meanwhile the <b>ObsSemaphore</b> turns
                 red, blocking python process while waiting for C# to send the observation.<br>
             </div>
             <div class="col">
@@ -106,12 +106,17 @@ class UoService:
             </div>
             <div class="col">
                 <h2>First Step</h2>
-                The first task what the Python application need to know to play the Ultima Online is probably walking. Let's see how to use the states, actions of UoService to do that. The state information we need to know to move toward the mobile object is position of player and target. <b>obs['player_mobile_data']</b> <b>obs['mobile_data']</b>.
+                The first task what the Python application need to know is probably walking. Let's see how to use the states and actions of the UoService to do that.<br> 
+                The first information we need to know is position of player and target. Position of them can be extracted from the <b>obs['player_mobile_data']</b>.<br> 
+                For example, the player mobile data looks like a <b>120: ['masterkim', 'PlayerMobile', 778, 618, 0, 'None']</b>. The key of data if serial number assigned to player mobile and each body column means <b>[obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]</b>. Monster data can be taken similar way as player data. Please the code for more detail.<br>
+                How can we make up the arguments <b>actionType, itemSerial, mobileSerial, walkDirection, index, amount, run</b> of action for walk. First, we just know that the actionType should be 1. Next, the value for the walkDirection can be calculated from the x and y position of player and monster by using any planning algorithm. If you need to move fast based on the situation, set the run arguemnt as True. 
 
                 <video width="400" height="200" controls>
                     <source src="Fig/WalkResult.mkv" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
+
+                In the above video, the one skeleton is selected as tartget mobile and player move toward it. The full code is available from <a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/walk_to_monster.py">walk_to_monster.py</a> file.
             </div>
 
             <div class="col">
@@ -173,7 +178,7 @@ def main():
             <div class="col">
             </div>
             <div class="col">
-                <h2>Training cycle</h2>
+                <h2>Pick </h2>
                 The training cycle for a reinforcement learning agent looks something like this (Code 2):<br>
                 we collect samples until we observed <b>n_rollout</b> states, these observations along with actions and rewards
                 are collected in the batch.<br>
@@ -183,20 +188,38 @@ def main():
             <div class="col">
                 <h5>Code 2: Dummy code for training an agent.</h5>
                 <pre class="pre"><code class="python">
-env = DummyEnv()
-for i in range(num_epochs):
-    done = 0
-    while done == 0:
-        for t in range(n_rollout):
-            a = model.sample()
-            s_prime, r, done, info = env.step(a)
-            model.put_data((s, a, r, s_prime, done))
-		    s = s_prime
-            if done:
-                break
-        model.train_net()
-    env.reset()
-env.close()
+## Event flags to test the scenario manually
+  pick_up_flag = True
+  drop_flag = False
+
+  ## Event flags to test the scenario manually
+  for step in tqdm(range(100000)):
+    item_serial = 0
+
+    ## Obtain the serial of Gold from players' backpack information
+    if len(obs["backpack_item_data"]) != 0:
+      item_serial, index = utils.get_serial_by_name(obs["backpack_item_data"], "Gold")
+
+    ## Declare the empty action
+    action = {}
+
+    ## Declare the empty action
+    if step % 200 == 0:
+      if pick_up_flag == True and item_serial != 0:
+        # Pick up the item
+        action['action_type'] = 3
+        action['item_serial'] = item_serial
+        action['amount'] = 100
+        pick_up_flag = False
+        drop_flag = True
+        print("action: ", action)
+      elif drop_flag == True:
+        # Drop the item
+        action['action_type'] = 5
+        print("action: ", action)
+        drop_flag = False
+
+    obs = uo_service.step(action)
                 </code></pre>
             </div>
         </div>
