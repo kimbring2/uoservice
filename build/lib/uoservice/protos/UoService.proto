@@ -63,6 +63,12 @@ message GrpcPlayerStatus {
 
   uint32 holdItemSerial = 14;
   bool warMode = 15;
+
+  uint32 screenX = 16;
+  uint32 screenY = 17;
+
+  uint32 gameX = 18;
+  uint32 gameY = 19;
 }
 
 message GrpcGameObjectSimpleData {
