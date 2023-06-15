@@ -30,6 +30,7 @@ class UoService:
 		self.stub = None
 
 		self.world_item_dict = {}
+		self.world_mobile_dict = {}
 
 	def _open_grpc(self):
 		# Open the gRPC channel using the port that is same of game client 
@@ -92,55 +93,63 @@ class UoService:
 		static_object_screen_x_list = []
 		static_object_screen_y_list = []
 
-		world_item_data = response.WorldItemList.items
+		world_item_data = response.WorldItemList.gameObjects
+		world_mobile_data = response.WorldItemList.gameObjects
 
-		equipped_item_data = response.equippedItemList.serials
-		backpack_item_data = response.backpackItemList.serials
-		bank_item_data = response.bankItemList.items
+		equipped_item_data = response.equippedItemSerialList.serials
+		backpack_item_data = response.backpackItemSerialList.serials
+		bank_item_data = response.bankItemSerialList.serials
 		opened_corpse_list = response.openedCorpseList.containers
 		popup_menu_data = response.popupMenuList.menus
 		player_status_data = response.playerStatus
 		player_skills_data = response.playerSkillList.skills
 		static_object_screen_x_data = response.staticObjectInfoList.screenXs
 		static_object_screen_y_data = response.staticObjectInfoList.screenYs
-		vendor_item_data = response.vendorItemObjectList.gameObjects
+		vendor_item_data = response.vendorItemSerialList.serials
 		cliloc_data = response.clilocDataList.clilocDatas
-		player_mobile_object_data = response.playerMobileObjectList.gameObjects
-		mobile_object_data = response.mobileObjectList.gameObjects
-		item_object_data = response.itemObjectList.gameObjects
+		player_mobile_serial_data = response.playerMobileObjectList.serials
+		mobile_serial_data = response.mobileObjectList.serials
+		item_serial_data = response.itemObjectList.serials
 
 		#print("len(world_item_data): ", len(world_item_data))
 		if len(world_item_data) != 0:
-			for item in world_item_data:
-				self.world_item_dict[item.serial] = [item.name, item.layer, item.amount]
+			for obj in world_item_data:
+				self.world_item_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title, obj.layer]
 
-		for skill in player_skills_data:
-			player_skills_dict[skill.name] = [skill.index, skill.isClickable, skill.value, skill.base, skill.cap, skill.lock]
-
-		for data in cliloc_data:
-			#print("data: ", data)
-
-			if data.serial not in cliloc_dict:
-				cliloc_dict[data.serial] = [[data.text, data.affix, data.name]]
-			else:
-				cliloc_dict[data.serial].append([[data.text, data.affix, data.name]])
+		#print("len(world_item_data): ", len(world_item_data))
+		if len(world_mobile_data) != 0:
+			for obj in world_mobile_data:
+				self.world_mobile_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title, obj.layer]
 
 		for item in bank_item_data:
 			#print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
 			#			format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
 			bank_item_dict[item.serial] = [item.name, item.layer, item.amount]
 
+		for skill in player_skills_data:
+			player_skills_dict[skill.name] = [skill.index, skill.isClickable, skill.value, skill.base, skill.cap, skill.lock]
+
+		for data in cliloc_data:
+			#print("data: ", data)
+			if data.serial not in cliloc_dict:
+				cliloc_dict[data.serial] = [[data.text, data.affix, data.name]]
+			else:
+				cliloc_dict[data.serial].append([[data.text, data.affix, data.name]])
+
 		player_status_dict = utils.parsePlayerStatus(player_status_data)
-		#print("player_status_dict: ", player_status_dict)
+
+		#print("self.world_item_dict: ", self.world_item_dict)
+		print("self.world_mobile_dict: ", self.world_mobile_dict)
+
 		#print("bank_item_data: ", bank_item_data)
 		#print("\n")
 
 		for menu_data in popup_menu_data:
 			popup_menu_list.append(menu_data)
 
+		'''
 		for obj in item_object_data:
 			ground_item_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
-
 			if obj.isCorpse:
 				corpse_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
 
@@ -165,19 +174,38 @@ class UoService:
 			if teacher_title and obj.distance <= 5:
 				#print("teacher_title: ", teacher_title)
 				teacher_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, teacher_title]
+		'''
 
-		screen_image = np.zeros((100,100,4), dtype=np.uint8)
-		for obj in player_mobile_object_data:
+		screen_image = np.zeros((172,137,4), dtype=np.uint8)
+		#print("mobile_serial_data: ", mobile_serial_data)
+		for serial in mobile_serial_data:
 			#print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
 			#			format(obj.type, obj.gameX, obj.gameY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
-			player_mobile_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
-			#screen_image[int(obj.gameX - 3400), int(obj.gameY - 2600), 0] = 255
-			#screen_image[int(obj.gameX - 3400), int(obj.gameY - 2600), 1] = 0
-			#screen_image[int(obj.gameX - 3400), int(obj.gameY - 2600), 2] = 0
 
-		#screen_image = cv2.resize(screen_image, (1, 1280), interpolation = cv2.INTER_AREA)
-		#cv2.imshow('screen_image', screen_image)
-		#cv2.waitKey(1)
+			#[obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title, obj.layer]
+			if serial in self.world_mobile_dict:
+				mobile = self.world_mobile_dict[serial]
+
+				mobile_dict[serial] = [mobile[0], mobile[1], mobile[2], mobile[3], mobile[4], mobile[5]]
+
+				try:
+					screen_image[int(mobile[2] / 10), int(mobile[3] / 10), 0] = 255
+					screen_image[int(mobile[2] / 10), int(mobile[3] / 10), 1] = 0
+					screen_image[int(mobile[2] / 10), int(mobile[3] / 10), 2] = 0
+				except:
+					pass
+			else:
+				#print("mobile serial is not existed in world_mobile_dict: ", serial)
+				pass
+
+		vis = True
+		if vis:
+			dim = (1720, 1370)
+			screen_image = cv2.resize(screen_image, dim, interpolation = cv2.INTER_AREA)
+			screen_image = cv2.rotate(screen_image, cv2.ROTATE_90_CLOCKWISE)
+			screen_image = cv2.flip(screen_image, 1)
+			cv2.imshow('screen_image_' + str(self.grpc_port), screen_image)
+			cv2.waitKey(1)
 
 		for i in range(0, len(static_object_screen_x_data)):
 			static_object_screen_x_list.append(static_object_screen_x_data[i])
@@ -191,22 +219,21 @@ class UoService:
 		for item_serial in equipped_item_data:
 			if item_serial in self.world_item_dict:
 				item = self.world_item_dict[item_serial]
-				#print('equipped name: {0}, layer: {1}, serial: {2}:'.format(item[0], item[1], item[2]))
+				# [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title, obj.layer]
+				equipped_item_dict[item_serial] = [item[0], item[6], item[2]]
 			else:
 				#print("item is not existed: ", item_serial)
 				pass
-			#print('name: {0}, layer: {1}, serial: {2}, amount: {3}'.format(item.name, item.layer, item.serial, item.amount))
-			#equipped_item_dict[item.serial] = [item.name, item.layer, item.amount]
 
 		for item_serial in backpack_item_data:
 			#backpack_item_dict[item.serial] = [item.name, item.layer, item.amount]
 			if item_serial in self.world_item_dict:
 				item = self.world_item_dict[item_serial]
-				print('backpack name: {0}, layer: {1}, serial: {2}:'.format(item[0], item[1], item[2]))
+				#print('backpack name: {0}, layer: {1}, serial: {2}:'.format(item[0], item[1], item[2]))
+				backpack_item_dict[item_serial] = [item[0], item[6], item[2]]
 			else:
-				print("item is not existed: ", item_serial)
-
-		print("")
+				#print("item is not existed: ", item_serial)
+				pass
 
 		for opened_corpse in opened_corpse_list:
 			corpse_object = opened_corpse.container

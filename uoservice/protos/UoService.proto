@@ -31,6 +31,7 @@ message GrpcGameObjectData {
   string title = 10;
   uint32 amount = 11;
   uint32 price = 12;
+  uint32 layer = 13;
 }
 
 message GrpcSkill {
@@ -108,8 +109,8 @@ message GrpcSkillList {
 }
 
 message GrpcContainerData {
-  GrpcGameObjectData container = 1;
-  GrpcItemList containerItemList = 2;
+  uint32 containerSerial = 1;
+  GrpcSerialList containerItemSerialList = 2;
 }
 
 message GrpcContainerDataList {
@@ -121,31 +122,30 @@ message GrpcSerialList {
 }
 
 message States {
-  GrpcItemList WorldItemList = 16;
+  GrpcGameObjectList WorldItemList = 1;
+  GrpcGameObjectList WorldMobileList = 2;
 
-  GrpcSerialList equippedItemList = 1;
-  GrpcSerialList backpackItemList = 2;
+  GrpcSerialList equippedItemSerialList = 3;
+  GrpcSerialList backpackItemSerialList = 4;
+  GrpcSerialList bankItemSerialList = 5;
+  GrpcSerialList vendorItemSerialList = 6;
 
-  GrpcContainerDataList openedCorpseList = 3;
-  GrpcPlayerStatus playerStatus = 4;
+  GrpcContainerDataList openedCorpseList = 7;
+  GrpcPlayerStatus playerStatus = 8;
 
-  GrpcGameObjectList mobileObjectList = 5;
-  GrpcGameObjectList playerMobileObjectList = 6;
-  GrpcGameObjectList itemObjectList = 7;
-  GrpcGameObjectSimpleList itemDropableLandList = 8;
-  GrpcGameObjectList vendorItemObjectList = 9;
+  GrpcSerialList mobileObjectList = 9;
+  GrpcSerialList playerMobileObjectList = 10;
+  GrpcSerialList itemObjectList = 11;
 
-  GrpcPopupMenuList popupMenuList = 10;
+  GrpcPopupMenuList popupMenuList = 13;
 
-  GrpcClilocDataList clilocDataList = 11;
+  GrpcClilocDataList clilocDataList = 14;
 
-  Actions replayActions = 12;
+  Actions replayActions = 15;
 
-  GrpcGameObjectInfoList staticObjectInfoList = 13;
+  GrpcGameObjectInfoList staticObjectInfoList = 16;
 
-  GrpcSkillList playerSkillList = 14;
-
-  GrpcItemList bankItemList = 15;
+  GrpcSkillList playerSkillList = 17;
 }
 
 message Actions {
