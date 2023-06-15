@@ -29,13 +29,19 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="index.html">Home<span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="index.html">Home<span class="sr-only">(current)</span></a>
             </li>
+
             <li class="nav-item active">
-            <a class="nav-link" href="states_actions.html">States/Actions<span class="sr-only"></span></a>
+              <a class="nav-link" href="states_actions.html">States/Actions<span class="sr-only"></span></a>
             </li>
+
             <li class="nav-item active">
-            <a class="nav-link" href="tutorial_replay.html">Replay<span class="sr-only"></span></a>
+              <a class="nav-link" href="tutorial_basic.html">Basic Tutorial<span class="sr-only"></span></a>
+            </li>
+
+            <li class="nav-item active">
+              <a class="nav-link" href="tutorial_replay.html">Replay Tutorial<span class="sr-only"></span></a>
             </li>
         </ul>
       </div>
@@ -120,7 +126,7 @@ class UoService:
             </div>
 
             <div class="col">
-                <h5>Code 2: Rule-based attacking example code.</h5>
+                <h5>Code 2: Rule-based walking example code.</h5>
                 <pre class="pre"><code class="python">
 
 def main():
@@ -193,7 +199,7 @@ def main():
             </div>
 
             <div class="col">
-                <h5>Code 2: Rule-based walking example code.</h5>
+                <h5>Code 3: Rule-based attacking example code.</h5>
                 <pre class="pre"><code class="python">
   target_mobile_serial = None
 
@@ -264,17 +270,17 @@ def main():
             <div class="col">
             </div>
             <div class="col">
-                <h2>Rooting the corpse</h2>
-                
+                <h2>Looting the corpse</h2>
+
                 <video width="400" height="200" controls>
                     <source src="Fig/LootingCorpseResult.mkv" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
 
-                In the demo video, player approach and attack the nearby monster randomly. The full code for that video is available from <a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/melee_attack_monster.py">melee_attack_monster.py</a> file.
+                In the demo video, player approach and attack the nearby monster randomly. The full code for that video is available from <a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/looting_the_corpse.py">looting_the_corpse.py</a> file.
             </div>
             <div class="col">
-                <h5>Code 5: Resetting the state of the RigidBody2D</h5>
+                <h5>Code 4: Rule-based looting the corpse example code.</h5>
                 <pre class="pre"><code class="python">
   target_mobile_serial = None
   corpse_serial = None
@@ -363,44 +369,9 @@ def main():
 
         obs = uo_service.step(action)
                 </code></pre>
-                <h5>Code 6: Initial positions of the RigidBody2D from Environment node</h5>
             </div>
         </div>
-        <div class="row">
-            <div class="col">
-                <h5>Figure 4: Exporting C# project</h5>
-                <img src="Fig/ExportTemplates.png" class="rounded mx-auto d-block float-center" alt="Export templates" width=100%>
-            </div>
-            <div class="col">
-                <h2>Exporting the project</h2>
-                We tested this library using debug exporting templates.
-                Just follow the standard C# export procedure and everything should just work.<br><br><br>
-                Code 7 shows how the environment is launched from the python class: we use subprocess package and 
-                pass the special handle to the environment so that it can access the shared memory allocated by python.
-                We have to note, that it is important to redirect stdout and stderr streams to files instead of pipes. 
-                We found out that using pipes makes semaphores stuck in an impossible combination.
 
-                To correctly close the environment process upon termination of the python script we use the atexit package 
-                to register the close function, that terminates the process. This approach works in case of termination of 
-                the python script due to errors as well as manual signals.
-            </div>
-            <div class="col">
-                <h5>Code 7: Launching the exported environment</h5>
-                <pre class="pre"><code class="python">
-class DummyEnvLaunch(gym.Env):
-    def __init__(self, exec_path, env_path):
-        with open("stdout.txt","wb") as out, open("stderr.txt","wb") as err:
-            self.process = subprocess.Popen([exec_path, "--path", 
-            os.path.abspath(env_path), 
-            "--handle", self.handle], stdout=out, stderr=err)
-                
-        atexit.register(self.close)
-    
-    def close(self):
-        self.process.terminate()
-                </code></pre>
-            </div>
-        </div>
         <div class="row">
             <div class="col">
             </div>

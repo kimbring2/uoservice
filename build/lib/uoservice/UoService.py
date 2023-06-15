@@ -24,10 +24,12 @@ from uoservice import utils
 class UoService:
 	'''UoService class including gRPC client'''
 	def __init__(self, grpc_port, window_width, window_height):
-			self.grpc_port = grpc_port
-			self.window_width = window_width
-			self.window_height = window_height
-			self.stub = None
+		self.grpc_port = grpc_port
+		self.window_width = window_width
+		self.window_height = window_height
+		self.stub = None
+
+		self.world_item_dict = {}
 
 	def _open_grpc(self):
 		# Open the gRPC channel using the port that is same of game client 
@@ -35,12 +37,16 @@ class UoService:
 		self.stub = UoService_pb2_grpc.UoServiceStub(channel)
 
 	def reset(self):
+		print("UoService reset()")
+
+		self.stub.Reset(UoService_pb2.Config(name='reset'))
+
 		# Reset the gRPC server before communcation with it.
 		self.stub.WriteAct(UoService_pb2.Actions(actionType=0, mobileSerial=0, walkDirection=0, index=0, amount=0))
 		self.stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
 
 		self.stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
-		response = self.stub.ReadObs(UoService_pb2.Config(name='reset'))
+		response = self.stub.ReadObs(UoService_pb2.Config(name='readobs'))
 
 		obs_raw = self.parse_response(response)
 
@@ -72,7 +78,6 @@ class UoService:
 		player_mobile_dict = {}
 		mountable_mobile_dict = {}
 		ground_item_dict = {}
-		world_item_dict = {}
 		equipped_item_dict = {}
 		backpack_item_dict = {}
 		bank_item_dict = {}
@@ -87,8 +92,10 @@ class UoService:
 		static_object_screen_x_list = []
 		static_object_screen_y_list = []
 
-		equipped_item_data = response.equippedItemList.items
-		backpack_item_data = response.backpackItemList.items
+		world_item_data = response.WorldItemList.items
+
+		equipped_item_data = response.equippedItemList.serials
+		backpack_item_data = response.backpackItemList.serials
 		bank_item_data = response.bankItemList.items
 		opened_corpse_list = response.openedCorpseList.containers
 		popup_menu_data = response.popupMenuList.menus
@@ -101,9 +108,11 @@ class UoService:
 		player_mobile_object_data = response.playerMobileObjectList.gameObjects
 		mobile_object_data = response.mobileObjectList.gameObjects
 		item_object_data = response.itemObjectList.gameObjects
-		item_dropable_land_data = response.itemDropableLandList.gameSimpleObjects
 
-		#print("backpack_item_data: ", backpack_item_data)
+		#print("len(world_item_data): ", len(world_item_data))
+		if len(world_item_data) != 0:
+			for item in world_item_data:
+				self.world_item_dict[item.serial] = [item.name, item.layer, item.amount]
 
 		for skill in player_skills_data:
 			player_skills_dict[skill.name] = [skill.index, skill.isClickable, skill.value, skill.base, skill.cap, skill.lock]
@@ -166,13 +175,6 @@ class UoService:
 			#screen_image[int(obj.gameX - 3400), int(obj.gameY - 2600), 1] = 0
 			#screen_image[int(obj.gameX - 3400), int(obj.gameY - 2600), 2] = 0
 
-		for obj in item_dropable_land_data:
-			#print("gameX: {0}, gameY: {1}".format(obj.gameX, obj.gameY))
-			#screen_image[int(obj.gameX - 3400), int(obj.gameY - 2600), 0] = 255
-			#screen_image[int(obj.gameX - 3400), int(obj.gameY - 2600), 1] = 255
-			#screen_image[int(obj.gameX - 3400), int(obj.gameY - 2600), 2] = 0
-			pass
-
 		#screen_image = cv2.resize(screen_image, (1, 1280), interpolation = cv2.INTER_AREA)
 		#cv2.imshow('screen_image', screen_image)
 		#cv2.waitKey(1)
@@ -186,12 +188,24 @@ class UoService:
 				vendor_dict, vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_dict, \
 				player_skills_dict, corpse_dict, player_mobile_dict, ground_item_dict, player_status_dict
 
-		for item in equipped_item_data:
+		for item_serial in equipped_item_data:
+			if item_serial in self.world_item_dict:
+				item = self.world_item_dict[item_serial]
+				print('equipped name: {0}, layer: {1}, serial: {2}:'.format(item[0], item[1], item[2]))
+			else:
+				print("item is not existed: ", item_serial)
 			#print('name: {0}, layer: {1}, serial: {2}, amount: {3}'.format(item.name, item.layer, item.serial, item.amount))
-			equipped_item_dict[item.serial] = [item.name, item.layer, item.amount]
+			#equipped_item_dict[item.serial] = [item.name, item.layer, item.amount]
 
-		for item in backpack_item_data:
-			backpack_item_dict[item.serial] = [item.name, item.layer, item.amount]
+		for item_serial in backpack_item_data:
+			#backpack_item_dict[item.serial] = [item.name, item.layer, item.amount]
+			if item_serial in self.world_item_dict:
+				item = self.world_item_dict[item_serial]
+				print('backpack name: {0}, layer: {1}, serial: {2}:'.format(item[0], item[1], item[2]))
+			else:
+				print("item is not existed: ", item_serial)
+
+		print("")
 
 		for opened_corpse in opened_corpse_list:
 			corpse_object = opened_corpse.container
@@ -227,9 +241,8 @@ class UoService:
 																						 amount=amount,
 																						 run=run))
 		self.stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
-
 		self.stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
-		response = self.stub.ReadObs(UoService_pb2.Config(name='step'))
+		response = self.stub.ReadObs(UoService_pb2.Config(name='readobs'))
 
 		obs_raw = self.parse_response(response)
 

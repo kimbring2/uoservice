@@ -79,6 +79,8 @@ class UoServiceReplay:
 		self._tickScale = 10
 		self._previousControl = 0
 
+		## 
+		self._worldItemArrayOffset = 0
 		self._equippedItemArrayOffset = 0
 		self._backpackItemArrayOffset = 0
 		self._openedCorpseArrayOffset = 0
@@ -88,7 +90,6 @@ class UoServiceReplay:
 		self._playerMobileObjectArrayOffset = 0
 		self._mobileObjectArrayOffset = 0
 		self._itemObjectArrayOffset = 0
-		self._itemDropableLandArrayOffset = 0
 		self._vendorItemObjectArrayOffset = 0
 
 		self._playerStatusArrayOffset = 0
@@ -96,6 +97,7 @@ class UoServiceReplay:
 
 		self._staticObjectInfoListArrayOffset = 0
 
+		## 
 		self._actionTypeList = []
 		self._walkDirectionList = []
 		self._mobileSerialList = []
@@ -104,12 +106,14 @@ class UoServiceReplay:
 		self._amountList = []
 		self._runList = []
 
+		## 
 		self._playerMobileObjectDataList = []
 		self._mobileObjectDataList = []
 		self._itemObjectDataList = []
 		self._staticObjectScreenXsList = []
 		self._staticObjectScreenYsList = []
-		self._itemDropableLandObjectList = []
+
+		self._worldItemList = []
 		self._equippedItemList = []
 		self._backpackItemList = []
 		self._popupMenuDataList = []
@@ -119,6 +123,7 @@ class UoServiceReplay:
 		self._playerStatusList = []
 		self._playerSkillListList = []
 
+		## 
 		self._screenWidth = screenWidth
 		self._screenHeight = screenHeight
 
@@ -172,6 +177,8 @@ class UoServiceReplay:
 		self._archive = MPQArchive(self._rootPath + '/' + fileName + ".uoreplay")
 
 		## Read the length byte array for data array
+		self.worldItemArrayLengthArrRead = self._archive.read_file("replay.metadata.worldItemLen");
+
 		self.equippedItemArrayLengthArrRead = self._archive.read_file("replay.metadata.equippedItemLen");
 		self.backpackItemArrayLengthArrRead = self._archive.read_file("replay.metadata.backpackitemLen");
 		self.openedCorpseArrayLengthArrRead = self._archive.read_file("replay.metadata.openedCorpseLen");
@@ -180,13 +187,14 @@ class UoServiceReplay:
 		self.playerMobileObjectArrayLengthArrRead = self._archive.read_file("replay.metadata.playerMobileObjectLen");
 		self.mobileObjectArrayLengthArrRead = self._archive.read_file("replay.metadata.mobileObjectLen");
 		self.itemObjectArrayLengthArrRead = self._archive.read_file("replay.metadata.itemObjectLen");
-		self.itemDropableLandArrayLengthArrRead = self._archive.read_file("replay.metadata.itemDropableLandSimpleLen");
 		self.vendorItemObjectArrayLengthArrRead = self._archive.read_file("replay.metadata.vendorItemObjectLen");
 		self.playerStatusArrayLengthArrRead = self._archive.read_file("replay.metadata.playerStatusLen");
 		self.playerSkillListArrayLengthArrRead = self._archive.read_file("replay.metadata.playerSkillListLen");
 		self.staticObjectInfoListLengthArrRead = self._archive.read_file("replay.metadata.staticObjectInfoListArraysLen");
 
 		## Convert the byte array to int array
+		self.worldItemArrayLengthListRead = self.ConvertByteArrayToIntList(self.worldItemArrayLengthArrRead);
+
 		self.equippedItemArrayLengthListRead = self.ConvertByteArrayToIntList(self.equippedItemArrayLengthArrRead);
 		self.backpackItemArrayLengthListRead = self.ConvertByteArrayToIntList(self.backpackItemArrayLengthArrRead);
 		self.openedCorpseArrayLengthListRead = self.ConvertByteArrayToIntList(self.openedCorpseArrayLengthArrRead);
@@ -195,7 +203,6 @@ class UoServiceReplay:
 		self.playerMobileObjectArrayLengthListRead = self.ConvertByteArrayToIntList(self.playerMobileObjectArrayLengthArrRead);
 		self.mobileObjectArrayLengthListRead = self.ConvertByteArrayToIntList(self.mobileObjectArrayLengthArrRead);
 		self.itemObjectArrayLengthListRead = self.ConvertByteArrayToIntList(self.itemObjectArrayLengthArrRead);
-		self.itemDropableLandArrayLengthListRead = self.ConvertByteArrayToIntList(self.itemDropableLandArrayLengthArrRead);
 		self.vendorItemObjectArrayLengthListRead = self.ConvertByteArrayToIntList(self.vendorItemObjectArrayLengthArrRead);
 		self.playerStatusArrayLengthListRead = self.ConvertByteArrayToIntList(self.playerStatusArrayLengthArrRead);
 		self.playerSkillListArrayLengthListRead = self.ConvertByteArrayToIntList(self.playerSkillListArrayLengthArrRead);
@@ -204,6 +211,8 @@ class UoServiceReplay:
 		self._replayLength = len(self.equippedItemArrayLengthListRead)
 
 		## Read the actual data as byte array
+		self.worldItemArrRead = self._archive.read_file("replay.data.worldItem");
+
 		self.equippedItemArrRead = self._archive.read_file("replay.data.equippedItem");
 		self.backpackItemArrRead = self._archive.read_file("replay.data.backpackItem");
 		self.openedCorpseArrRead = self._archive.read_file("replay.data.openedCorpse");
@@ -212,7 +221,6 @@ class UoServiceReplay:
 		self.playerMobileObjectArrRead = self._archive.read_file("replay.data.playerMobileObject");
 		self.mobileObjectArrRead = self._archive.read_file("replay.data.mobileObject");
 		self.itemObjectArrRead = self._archive.read_file("replay.data.itemObject");
-		self.itemDropableLandArrRead = self._archive.read_file("replay.data.itemDropableLandSimple");
 		self.vendorItemObjectArrRead = self._archive.read_file("replay.data.vendorItemObject");
 		self.playerStatusArrRead = self._archive.read_file("replay.data.playerStatus");
 		self.playerSkillListArrRead = self._archive.read_file("replay.data.playerSkillList");
@@ -237,6 +245,11 @@ class UoServiceReplay:
 		self.runListRead = self.ConvertByteArrayToBoolList(self.runArrRead);
 
 		## Check the data array is existed
+		if self.worldItemArrRead:
+			print("len(self.worldItemArrRead): ", len(self.worldItemArrRead))
+		else:
+			print("self.worldItemArrRead is None")
+
 		if self.equippedItemArrRead:
 			print("len(self.equippedItemArrRead): ", len(self.equippedItemArrRead))
 		else:
@@ -277,11 +290,6 @@ class UoServiceReplay:
 		else:
 			print("self.itemObjectArrRead is None")
 
-		if self.itemDropableLandArrRead:
-			print("len(self.itemDropableLandArrRead): ", len(self.itemDropableLandArrRead))
-		else:
-			print("self.itemDropableLandArrRead is None")
-
 		if self.vendorItemObjectArrRead:
 			print("len(self.vendorItemObjectArrRead): ", len(self.vendorItemObjectArrRead))
 		else:
@@ -315,12 +323,21 @@ class UoServiceReplay:
 			self._amountList.append(self.amountListRead[step])
 			self._runList.append(self.runListRead[step])
 
+			if self.worldItemArrRead:
+				worldItemSubsetArray, self._worldItemArrayOffset = self.GetSubsetArray(step, self.worldItemArrayLengthListRead, 
+																				       self._worldItemArrayOffset, self.worldItemArrRead)
+				grpcWorldItemReplay = UoService_pb2.GrpcSerialList().FromString(equippedItemSubsetArray)
+				#print("grpcEquippedItemReplay: ", grpcEquippedItemReplay)
+				self._worldItemList.append(grpcWorldItemReplay.items)
+			else:
+				print("worldItemArrRead is None")
+
 			if self.equippedItemArrRead:
 				equippedItemSubsetArray, self._equippedItemArrayOffset = self.GetSubsetArray(step, self.equippedItemArrayLengthListRead, 
 																				   self._equippedItemArrayOffset, self.equippedItemArrRead)
 				grpcEquippedItemReplay = UoService_pb2.GrpcItemList().FromString(equippedItemSubsetArray)
 				#print("grpcEquippedItemReplay: ", grpcEquippedItemReplay)
-				self._equippedItemList.append(grpcEquippedItemReplay.items)
+				self._equippedItemList.append(grpcEquippedItemReplay.serials)
 			else:
 				print("equippedItemArrRead is None")
 
@@ -400,15 +417,6 @@ class UoServiceReplay:
 			else:
 				print("itemObjectArrRead is None")
 
-			if self.itemDropableLandArrRead:
-				itemDropableLandSubsetArray, self._itemDropableLandArrayOffset = self.GetSubsetArray(step, self.itemDropableLandArrayLengthListRead, 
-																			   			   			 self._itemDropableLandArrayOffset, self.itemDropableLandArrRead)
-				grpcItemDropableLandReplay = UoService_pb2.GrpcGameObjectSimpleList().FromString(itemDropableLandSubsetArray)
-				#print("grpcItemDropableLandReplay: ", grpcItemDropableLandReplay)
-				self._itemDropableLandObjectList.append(grpcItemDropableLandReplay.gameSimpleObjects)
-			else:
-				print("itemDropableLandArrRead is None")
-
 			if self.popupMenuArrRead:
 				popupMenuSubsetArray, self._popupMenuArrayOffset = self.GetSubsetArray(step, self.popupMenuArrayLengthListRead, 
 																			 		   self._popupMenuArrayOffset, self.popupMenuArrRead)
@@ -454,7 +462,7 @@ class UoServiceReplay:
 				if replay_step >= 1:
 					replay_step -= 1
 					self._previousControl = pygame.K_LEFT
-					#print("replay_step: ", replay_step)
+					print("replay_step: ", replay_step)
 				else:
 					print("This is start of replay")
 			elif keys[pygame.K_RIGHT]:
@@ -465,13 +473,14 @@ class UoServiceReplay:
 				if replay_step < self._replayLength - 1:
 					replay_step += 1
 					self._previousControl = pygame.K_RIGHT
-					#print("replay_step: ", replay_step)
+					print("replay_step: ", replay_step)
 				else:
 					print("This is end of replay")
 			else:
 				self._previousControl = 0
 				self._tickScale = 10
 
+			
 			# Create the downscaled array for bigger mobile object drawing
 			screen_image = np.zeros((int((self._screenWidth + 100)), int((self._screenHeight + 100)), 3), dtype=np.uint8)
 
@@ -482,13 +491,14 @@ class UoServiceReplay:
 			radius = 1
 			color = (120, 120, 120)
 			thickness = 2
+			
 			for i in range(0, len(static_object_screen_x_data)):
 				if static_object_screen_x_data[i] >= 1400 or static_object_screen_y_data[i] >= 1280:
 					continue
 
 				image = cv2.circle(screen_image, (static_object_screen_x_data[i], static_object_screen_y_data[i]), 
 								   radius, color, thickness)
-
+			
 			# Draw the player mobile object
 			playerMobileObjectData = self._playerMobileObjectDataList[replay_step]
 			#for obj in playerMobileObjectData:
@@ -505,7 +515,7 @@ class UoServiceReplay:
 			screen_image = utils.visObject(screen_image, self._mobileObjectDataList[replay_step], (0, 0, 255))
 
 			# Draw the item object
-			screen_image = utils.visObject(screen_image, self._itemObjectDataList[replay_step], (255, 0, 0))
+			#screen_image = utils.visObject(screen_image, self._itemObjectDataList[replay_step], (255, 0, 0))
 
 			for obj in self._mobileObjectDataList[replay_step]:
 				vendor_title = utils.isVendor(obj.title)
@@ -585,10 +595,16 @@ class UoServiceReplay:
 			font = pygame.font.Font('freesansbold.ttf', 32)
 			text_surface = font.render("Equip Items", True, (255, 0, 255))
 			self._equipItemSurface.blit(text_surface, (0, 0))
+
+			equippedItemList = self._equippedItemList[replay_step]
+			print("equippedItemList: ", equippedItemList)
+
+			'''
 			for i, equipped_item in enumerate(self._equippedItemList[replay_step]):
 			  font = pygame.font.Font('freesansbold.ttf', 20)
 			  text_surface = font.render(str(Layers(int(equipped_item.layer)).name) + ": " + str(equipped_item.name), True, (255, 255, 255))
 			  self._equipItemSurface.blit(text_surface, (0, 25 * (i + 1) + 20))
+			'''
 
 			# Backpack item draw
 			backpack_item_grpc = self._backpackItemList[replay_step]
@@ -632,6 +648,7 @@ class UoServiceReplay:
 			self._mainSurface.blit(self._equipItemSurface, (500 + self._screenWidth, 0))
 			self._mainSurface.blit(self._npcSurface, (500, self._screenHeight))
 			self._mainSurface.blit(self._statusSurface, (0, 0))
+			
 			pygame.display.update()
 
 			# Wait little bit

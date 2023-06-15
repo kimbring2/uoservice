@@ -2,7 +2,7 @@
 # Project "UoService"
 # Copyright (C) 2023, kimbring2 
 #
-# Purpose of this file : Game scenario 3: Kill the monster and loot the gold from it
+# Purpose of this file : Game scenario 1: Approach to the one of monster
 #
 # Please reference me when you are going to use this code as reference :)
 
@@ -47,8 +47,6 @@ def main():
 
   ## Event flags to test the scenario manually
   target_mobile_serial = None
-  corpse_serial = None
-  hold_item_serial = 0
 
   ## Event flags to test the scenario manually
   for step in tqdm(range(100000)):
@@ -75,18 +73,8 @@ def main():
     action['run'] = False
 
     ## Declare the empty action
-    if step % 150 == 0:
+    if step % 50 == 0:
       print("step: ", step)
-
-      ## [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
-      ## {1074164822: ['A Skeletal Corpse', 'Item', 734, 662, 2, 'None']}
-      
-      if len(obs['corpse_data']) != 0:
-        corpse_serial_list = list(obs['corpse_data'].keys())
-        corpse_serial_data = random.choice(corpse_serial_list)
-        if corpse_serial == None:
-          corpse_serial = corpse_serial_data
-      
       if target_mobile_serial != None:
         ## format of player mobile data 
         ## [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
@@ -101,6 +89,8 @@ def main():
           target_mobile_serial = None
           continue
 
+        print("target_mobile: ", target_mobile)
+
         ## Parse the x and y position of player 
         player_screen_x = player_mobile[2]
         player_screen_y = player_mobile[3]
@@ -113,77 +103,12 @@ def main():
         direction = utils.get_walk_direction_to_target([player_screen_x, player_screen_y], 
                                                        [target_mobile_screen_x, target_mobile_screen_y])
 
-        ## Distance between the player and target mobile
-        distance = target_mobile[4]
+        # Walk action
+        action['action_type'] = 1
+        action['walk_direction'] = direction
+        action['run'] = True
 
-        ## Format of player status
-        '''player_status_dict:  {'str': 100, 'dex': 62, 'intell': 133, 'hits': 121, 'hitsMax': 121, 
-                                 'stamina': 70, 'staminaMax': 70, 'mana': 148, 'gold': 46739, 
-                                 'physicalResistance': 88, 'weight': 654, 'weightMax': 450, 
-                                 'HoldItemSerial': 0, 'warMode': True}'''
-        if 'player_status_data' in obs:
-          war_mode = obs['player_status_data']['warMode']
-          hold_item_serial = obs['player_status_data']['HoldItemSerial']
-
-        #print("obs['corpse_data']: ", obs['corpse_data'])
-        #print("opened_corpse_data: ", obs['opened_corpse_data'])
-
-        if len(obs['corpse_data']) == 0:
-          if distance >= 2:
-            ## Target mobile is far away from the player
-            if direction == -1:
-              # Can not find the walk direction
-              action['action_type'] = 0
-            else:
-              ## Walk toward target mobile
-              action['action_type'] = 1
-              action['walk_direction'] = direction
-              action['run'] = True
-          else:
-            ## Player is near the target
-              if war_mode == False:
-                ## Change the war mode to combat to attack
-                action['action_type'] = 19
-                action['index'] = 1
-              else:
-                ## Attack the target mobile
-                action['action_type'] = 2
-                action['mobile_serial'] = target_mobile_serial
-        else:
-          if len(obs['opened_corpse_data']) == 0:
-            ## Open the corpse container
-            corpse_serial_list = list(obs['corpse_data'].keys())
-            corpse_serial_data = random.choice(corpse_serial_list)
-            if corpse_serial == None:
-              corpse_serial = corpse_serial_data
-
-            action['action_type'] = 7
-            action['item_serial'] = corpse_serial
-          else:
-            if hold_item_serial == 0:
-              print("action['action_type'] = 3")
-
-              opened_corpse_serial_list = list(obs['opened_corpse_data'].keys())
-              opened_corpse_serial = random.choice(opened_corpse_serial_list)
-              opened_corpse_item_list = obs['opened_corpse_data'][opened_corpse_serial]
-              gold_item_serial, gold_item_max = \
-                utils.get_serial_amount_from_corpse_item_list(opened_corpse_item_list, 'Gold')
-
-              action['action_type'] = 3
-              action['item_serial'] = gold_item_serial
-              action['amount'] = gold_item_max
-            else:
-              print("action['action_type'] = 4")
-              print("distance: ", distance)
-
-              ## Item loot action
-              action['action_type'] = 4
-
-        print("action_type: ", action['action_type'])
         obs = uo_service.step(action)
-        #break
-
-        print("")
     else:
       obs = uo_service.step(action)
 

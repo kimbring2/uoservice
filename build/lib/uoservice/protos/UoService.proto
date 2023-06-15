@@ -116,9 +116,16 @@ message GrpcContainerDataList {
   repeated GrpcContainerData containers = 1;
 }
 
+message GrpcSerialList {
+  repeated uint32 serials = 1;
+}
+
 message States {
-  GrpcItemList equippedItemList = 1;
-  GrpcItemList backpackItemList = 2;
+  GrpcItemList WorldItemList = 16;
+
+  GrpcSerialList equippedItemList = 1;
+  GrpcSerialList backpackItemList = 2;
+
   GrpcContainerDataList openedCorpseList = 3;
   GrpcPlayerStatus playerStatus = 4;
 
