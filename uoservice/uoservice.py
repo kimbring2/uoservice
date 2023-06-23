@@ -77,7 +77,7 @@ def parse_response(response):
   popup_menu_data = response.popupMenuList.menu
 
   player_status_data = response.playerStatus
-  #print("player_status_data: ", player_status_data)
+  print("player_status_data: ", player_status_data)
 
   player_skills_data = response.playerSkillList.skills
   for skill in player_skills_data:

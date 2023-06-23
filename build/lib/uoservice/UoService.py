@@ -107,7 +107,6 @@ class UoService:
 		static_object_screen_y_data = response.staticObjectInfoList.screenYs
 		vendor_item_data = response.vendorItemSerialList.serials
 		cliloc_data = response.clilocDataList.clilocDatas
-		player_mobile_serial_data = response.playerMobileObjectList.serials
 		mobile_serial_data = response.mobileObjectList.serials
 		item_serial_data = response.itemObjectList.serials
 
@@ -122,9 +121,9 @@ class UoService:
 				self.world_mobile_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title, obj.layer]
 
 		for item in bank_item_data:
-			#print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
-			#			format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
-			bank_item_dict[item.serial] = [item.name, item.layer, item.amount]
+			print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
+						format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
+			#bank_item_dict[item.serial] = [item.name, item.layer, item.amount]
 
 		for skill in player_skills_data:
 			player_skills_dict[skill.name] = [skill.index, skill.isClickable, skill.value, skill.base, skill.cap, skill.lock]
@@ -139,10 +138,14 @@ class UoService:
 		player_status_dict = utils.parsePlayerStatus(player_status_data)
 
 		#print("self.world_item_dict: ", self.world_item_dict)
-		print("self.world_mobile_dict: ", self.world_mobile_dict)
+		#print("self.world_mobile_dict: ", self.world_mobile_dict)
 
-		#print("bank_item_data: ", bank_item_data)
-		#print("\n")
+		player_status_etc = response.playerStatusEtc
+		holdItem_serial = player_status_etc.holdItemSerial
+		war_mode = player_status_etc.warMode
+		print("holdItem_serial: ", holdItem_serial)
+		print("war_mode: ", war_mode)
+		print("\n")
 
 		for menu_data in popup_menu_data:
 			popup_menu_list.append(menu_data)

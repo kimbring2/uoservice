@@ -60,15 +60,11 @@ message GrpcPlayerStatus {
   uint32 physicalResistance = 11;
   uint32 weight = 12;
   uint32 weightMax = 13;
+}
 
-  uint32 holdItemSerial = 14;
-  bool warMode = 15;
-
-  uint32 screenX = 16;
-  uint32 screenY = 17;
-
-  uint32 gameX = 18;
-  uint32 gameY = 19;
+message GrpcPlayerStatusEtc {
+  uint32 holdItemSerial = 1;
+  bool warMode = 2;
 }
 
 message GrpcGameObjectSimpleData {
@@ -128,30 +124,33 @@ message GrpcSerialList {
 }
 
 message States {
-  GrpcGameObjectList WorldItemList = 1;
-  GrpcGameObjectList WorldMobileList = 2;
+  GrpcGameObjectData playerGameObject = 1;
 
-  GrpcSerialList equippedItemSerialList = 3;
-  GrpcSerialList backpackItemSerialList = 4;
-  GrpcSerialList bankItemSerialList = 5;
-  GrpcSerialList vendorItemSerialList = 6;
+  GrpcGameObjectList WorldItemList = 2;
+  GrpcGameObjectList WorldMobileList = 3;
 
-  GrpcContainerDataList openedCorpseList = 7;
-  GrpcPlayerStatus playerStatus = 8;
+  GrpcSerialList equippedItemSerialList = 4;
+  GrpcSerialList backpackItemSerialList = 5;
+  GrpcSerialList bankItemSerialList = 6;
+  GrpcSerialList vendorItemSerialList = 7;
 
-  GrpcSerialList mobileObjectList = 9;
-  GrpcSerialList playerMobileObjectList = 10;
+  GrpcContainerDataList openedCorpseList = 8;
+  GrpcPlayerStatus playerStatus = 9;
+
+  GrpcSerialList mobileObjectList = 10;
   GrpcSerialList itemObjectList = 11;
 
-  GrpcPopupMenuList popupMenuList = 13;
+  GrpcPopupMenuList popupMenuList = 12;
 
-  GrpcClilocDataList clilocDataList = 14;
+  GrpcClilocDataList clilocDataList = 13;
 
-  Actions replayActions = 15;
+  Actions replayActions = 14;
 
-  GrpcGameObjectInfoList staticObjectInfoList = 16;
+  GrpcGameObjectInfoList staticObjectInfoList = 15;
 
-  GrpcSkillList playerSkillList = 17;
+  GrpcSkillList playerSkillList = 16;
+
+  GrpcPlayerStatusEtc playerStatusEtc = 17;
 }
 
 message Actions {
