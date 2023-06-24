@@ -102,8 +102,6 @@ def parseItem(itemGrpc):
 def parsePlayerStatus(playerStatusGrpc):
   playerStatusDict = {}
 
-  #print("gold: ", playerStatusGrpc.gold)
-
   playerStatusDict['str'] = playerStatusGrpc.str
   playerStatusDict['dex'] = playerStatusGrpc.dex
   playerStatusDict['intell'] = playerStatusGrpc.intell
@@ -116,8 +114,6 @@ def parsePlayerStatus(playerStatusGrpc):
   playerStatusDict['physicalResistance'] = playerStatusGrpc.physicalResistance
   playerStatusDict['weight'] = playerStatusGrpc.weight
   playerStatusDict['weightMax'] = playerStatusGrpc.weightMax
-  #playerStatusDict['HoldItemSerial'] = playerStatusGrpc.holdItemSerial
-  #playerStatusDict['warMode'] = playerStatusGrpc.warMode
 
   return playerStatusDict
 

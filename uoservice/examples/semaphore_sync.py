@@ -63,14 +63,20 @@ def main():
 
     equipped_item_data = obs['equipped_item_data']
     #print("equipped_item_data: ", equipped_item_data)
-    #print("")
+
+    print("player_status_dict: ", uo_service.player_status_dict)
+
+    #print("player_skills_dict: ", uo_service.player_skills_dict)
+    if 'Swordsmanship' in uo_service.player_skills_dict:
+      swordsmanship_skill = uo_service.player_skills_dict['Swordsmanship']
+      #print("swordsmanship_skill: ", swordsmanship_skill)
 
     gold_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
     #print("gold_serial: ", gold_serial)
 
     if gold_serial in backpack_item_data:
       gold_info = backpack_item_data[gold_serial]
-      print("gold_info: ", gold_info)
+      #print("gold_info: ", gold_info)
     else:
       #print("gold_serial is not in backpack_item_data")
       pass

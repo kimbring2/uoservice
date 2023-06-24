@@ -34,6 +34,7 @@ class UoService:
 		self.world_item_dict = {}
 		self.world_mobile_dict = {}
 		self.player_skills_dict = {}
+		self.player_status_dict = {}
 
 	def _open_grpc(self):
 		# Open the gRPC channel using the port that is same of game client 
@@ -61,15 +62,13 @@ class UoService:
 		obs['bank_item_data'] = obs_raw[3]
 		obs['opened_corpse_list'] = obs_raw[4]
 		obs['popup_menu_data'] = obs_raw[9]
-		obs['player_skills_data'] = obs_raw[11]
 		obs['vendor_item_data'] = obs_raw[6]
 		obs['vendor_data'] = obs_raw[5]
-		obs['corpse_data'] = obs_raw[12]
+		obs['corpse_data'] = obs_raw[11]
 		obs['cliloc_data'] = obs_raw[10]
 		obs['teacher_data'] = obs_raw[8]
-		obs['player_mobile_data'] = obs_raw[13]
-		obs['ground_item_dict'] = obs_raw[14]
-		obs['player_status_dict'] = obs_raw[15]
+		obs['player_mobile_data'] = obs_raw[12]
+		obs['ground_item_dict'] = obs_raw[13]
 		obs['opened_corpse_data'] = obs_raw[4]
 
 		return obs
@@ -115,17 +114,12 @@ class UoService:
 
 		#print("len(world_item_data): ", len(world_item_data))
 		if len(world_item_data) != 0:
-			#print("len(world_item_data): ", len(world_item_data))
-			#print("world_item_data: ", world_item_data)
-			#print("")
 			for obj in world_item_data:
-				#if obj.serial not in self.world_item_dict:
 				self.world_item_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title, obj.layer]
 
 		#print("len(world_mobile_data): ", len(world_mobile_data))
 		if len(world_mobile_data) != 0:
 			for obj in world_mobile_data:
-				#if obj.serial not in self.world_mobile_dict:
 				self.world_mobile_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title, obj.layer]
 
 		#print("self.world_mobile_dict: ", self.world_mobile_dict)
@@ -149,6 +143,13 @@ class UoService:
 				#print("item is not existed: ", item_serial)
 				pass
 
+		if player_status_data.str != 0:
+			#print("player_status_data.str: ", player_status_data.str)
+			self.player_status_dict = utils.parsePlayerStatus(player_status_data)
+
+		#print("player_status_data: ", player_status_data)
+
+		#print("len(player_skills_data): ", len(player_skills_data))
 		for skill in player_skills_data:
 			#player_skills_dict[skill.name] = [skill.index, skill.isClickable, skill.value, skill.base, skill.cap, skill.lock]
 			self.player_skills_dict[skill.name] = [skill.index, skill.isClickable, skill.value, skill.base, skill.cap, skill.lock]
@@ -216,7 +217,7 @@ class UoService:
 		if len(equipped_item_data) == 0:
 			return mobile_dict, equipped_item_dict, backpack_item_dict, bank_item_dict, opened_corpse_list_dict, \
 				vendor_dict, vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_dict, \
-				player_skills_dict, corpse_dict, player_mobile_dict, ground_item_dict, player_status_dict
+				player_skills_dict, corpse_dict, player_mobile_dict, ground_item_dict
 
 		for opened_corpse in opened_corpse_list:
 			corpse_object = opened_corpse.container
@@ -231,8 +232,8 @@ class UoService:
 		#print("backpack_item_dict: ", backpack_item_dict)
 
 		return mobile_dict, equipped_item_dict, backpack_item_dict, bank_item_dict, opened_corpse_list_dict, vendor_dict, \
-					 vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_dict, player_skills_dict, \
-					 corpse_dict, player_mobile_dict, ground_item_dict, player_status_dict
+					 vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_dict, \
+					 corpse_dict, player_mobile_dict, ground_item_dict
 
 	def step(self, action):
 		# Send the action data to game client and receive the state of that action
@@ -266,23 +267,21 @@ class UoService:
 		#print("obs_raw[2]: ", obs_raw[2])
 		
 		#mobile_dict, equipped_item_dict, backpack_item_dict, bank_item_dict, opened_corpse_list_dict, vendor_dict, \
-		#vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_dict, player_skills_dict, \
-		#corpse_dict, player_mobile_dict, ground_item_dict, player_status_dict
+		#vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_dict, \
+		#corpse_dict, player_mobile_dict, ground_item_dict
 		obs['mobile_data'] = obs_raw[0]
 		obs['equipped_item_data'] = obs_raw[1]
 		obs['backpack_item_data'] = obs_raw[2]
 		obs['bank_item_data'] = obs_raw[3]
 		obs['opened_corpse_list'] = obs_raw[4]
 		obs['popup_menu_data'] = obs_raw[9]
-		obs['player_skills_data'] = obs_raw[11]
 		obs['vendor_item_data'] = obs_raw[6]
 		obs['vendor_data'] = obs_raw[5]
-		obs['corpse_data'] = obs_raw[12]
+		obs['corpse_data'] = obs_raw[11]
 		obs['cliloc_data'] = obs_raw[10]
 		obs['teacher_data'] = obs_raw[8]
-		obs['player_mobile_data'] = obs_raw[13]
-		obs['ground_item_data'] = obs_raw[14]
-		obs['player_status_data'] = obs_raw[15]
+		obs['player_mobile_data'] = obs_raw[12]
+		obs['ground_item_data'] = obs_raw[13]
 		obs['opened_corpse_data'] = obs_raw[4]
 
 		self.total_step += 1
