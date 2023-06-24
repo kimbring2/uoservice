@@ -102,8 +102,7 @@ message GrpcItemList {
 }
 
 message Config {
-  string name = 1;
-  string replayName = 2;
+  bool init = 1;
 }
 
 message GrpcSkillList {

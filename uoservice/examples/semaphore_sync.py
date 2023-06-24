@@ -59,7 +59,11 @@ def main():
     action['run'] = False
 
     backpack_item_data = obs['backpack_item_data']
-    #print("backpack_item_data: ", backpack_item_data)
+    print("backpack_item_data: ", backpack_item_data)
+
+    equipped_item_data = obs['equipped_item_data']
+    #print("equipped_item_data: ", equipped_item_data)
+    #print("")
 
     gold_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
     #print("gold_serial: ", gold_serial)
@@ -68,13 +72,14 @@ def main():
       gold_info = backpack_item_data[gold_serial]
       print("gold_info: ", gold_info)
     else:
-      print("gold_serial is not in backpack_item_data")
+      #print("gold_serial is not in backpack_item_data")
+      pass
 
     ## Declare the empty action
     #if step % 50 == 0:
     obs = uo_service.step(action)
 
-    print("")
+    #print("")
 
 
 ## Start the main function

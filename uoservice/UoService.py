@@ -29,8 +29,11 @@ class UoService:
 		self.window_height = window_height
 		self.stub = None
 
+		self.total_step = 0
+
 		self.world_item_dict = {}
 		self.world_mobile_dict = {}
+		self.player_skills_dict = {}
 
 	def _open_grpc(self):
 		# Open the gRPC channel using the port that is same of game client 
@@ -40,14 +43,14 @@ class UoService:
 	def reset(self):
 		print("UoService reset()")
 
-		self.stub.Reset(UoService_pb2.Config(name='reset'))
+		self.stub.Reset(UoService_pb2.Config(init=False))
 
 		# Reset the gRPC server before communcation with it.
 		self.stub.WriteAct(UoService_pb2.Actions(actionType=0, mobileSerial=0, walkDirection=0, index=0, amount=0))
 		self.stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
 
 		self.stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
-		response = self.stub.ReadObs(UoService_pb2.Config(name='readobs'))
+		response = self.stub.ReadObs(UoService_pb2.Config(init=False))
 
 		obs_raw = self.parse_response(response)
 
@@ -94,7 +97,7 @@ class UoService:
 		static_object_screen_y_list = []
 
 		world_item_data = response.WorldItemList.gameObjects
-		world_mobile_data = response.WorldItemList.gameObjects
+		world_mobile_data = response.WorldMobileList.gameObjects
 
 		equipped_item_data = response.equippedItemSerialList.serials
 		backpack_item_data = response.backpackItemSerialList.serials
@@ -113,20 +116,39 @@ class UoService:
 		#print("len(world_item_data): ", len(world_item_data))
 		if len(world_item_data) != 0:
 			for obj in world_item_data:
-				self.world_item_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title, obj.layer]
+				if obj.serial not in self.world_item_dict:
+					self.world_item_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title, obj.layer]
 
-		#print("len(world_item_data): ", len(world_item_data))
+		#print("len(world_mobile_data): ", len(world_mobile_data))
 		if len(world_mobile_data) != 0:
 			for obj in world_mobile_data:
-				self.world_mobile_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title, obj.layer]
+				if obj.serial not in self.world_mobile_dict:
+					self.world_mobile_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title, obj.layer]
 
-		for item in bank_item_data:
-			print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
-						format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
-			#bank_item_dict[item.serial] = [item.name, item.layer, item.amount]
+		#print("self.world_mobile_dict: ", self.world_mobile_dict)
+
+		for item_serial in equipped_item_data:
+			if item_serial in self.world_item_dict:
+				item = self.world_item_dict[item_serial]
+				# [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title, obj.layer]
+				equipped_item_dict[item_serial] = [item[0], item[6], item[2]]
+			else:
+				#print("item is not existed: ", item_serial)
+				pass
+
+		for item_serial in backpack_item_data:
+			#backpack_item_dict[item.serial] = [item.name, item.layer, item.amount]
+			if item_serial in self.world_item_dict:
+				item = self.world_item_dict[item_serial]
+				#print('backpack name: {0}, layer: {1}, serial: {2}:'.format(item[0], item[1], item[2]))
+				backpack_item_dict[item_serial] = [item[0], item[6], item[2]]
+			else:
+				#print("item is not existed: ", item_serial)
+				pass
 
 		for skill in player_skills_data:
-			player_skills_dict[skill.name] = [skill.index, skill.isClickable, skill.value, skill.base, skill.cap, skill.lock]
+			#player_skills_dict[skill.name] = [skill.index, skill.isClickable, skill.value, skill.base, skill.cap, skill.lock]
+			self.player_skills_dict[skill.name] = [skill.index, skill.isClickable, skill.value, skill.base, skill.cap, skill.lock]
 
 		for data in cliloc_data:
 			#print("data: ", data)
@@ -143,41 +165,15 @@ class UoService:
 		player_status_etc = response.playerStatusEtc
 		holdItem_serial = player_status_etc.holdItemSerial
 		war_mode = player_status_etc.warMode
-		print("holdItem_serial: ", holdItem_serial)
-		print("war_mode: ", war_mode)
-		print("\n")
+
+		#print("holdItem_serial: ", holdItem_serial)
+		#print("war_mode: ", war_mode)
 
 		for menu_data in popup_menu_data:
 			popup_menu_list.append(menu_data)
 
-		'''
-		for obj in item_object_data:
-			ground_item_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
-			if obj.isCorpse:
-				corpse_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
-
-		for obj in vendor_item_data:
-			#print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
-			#			format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
-			vendor_item_dict[obj.serial] = [obj.name, obj.type, obj.price, obj.amount, obj.title]
-
-		for obj in mobile_object_data:
-			#print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, is_corpse:{6}, title:{7}'.
-			#		format(obj.type, obj.screenX, obj.screenY, obj.distance, obj.serial, obj.name, obj.isCorpse, obj.title))
-			mobile_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
-
-			vendor_title = utils.isVendor(obj.title)
-			if vendor_title and obj.distance <= 5:
-				vendor_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
-
-			#if obj.distance <= 5:
-			#	print("obj.title: ", obj.title)
-
-			teacher_title = utils.isTeacher(obj.title)
-			if teacher_title and obj.distance <= 5:
-				#print("teacher_title: ", teacher_title)
-				teacher_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, teacher_title]
-		'''
+		for menu_data in popup_menu_data:
+			popup_menu_list.append(menu_data)
 
 		screen_image = np.zeros((172,137,4), dtype=np.uint8)
 		#print("mobile_serial_data: ", mobile_serial_data)
@@ -219,25 +215,6 @@ class UoService:
 				vendor_dict, vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_dict, \
 				player_skills_dict, corpse_dict, player_mobile_dict, ground_item_dict, player_status_dict
 
-		for item_serial in equipped_item_data:
-			if item_serial in self.world_item_dict:
-				item = self.world_item_dict[item_serial]
-				# [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title, obj.layer]
-				equipped_item_dict[item_serial] = [item[0], item[6], item[2]]
-			else:
-				#print("item is not existed: ", item_serial)
-				pass
-
-		for item_serial in backpack_item_data:
-			#backpack_item_dict[item.serial] = [item.name, item.layer, item.amount]
-			if item_serial in self.world_item_dict:
-				item = self.world_item_dict[item_serial]
-				#print('backpack name: {0}, layer: {1}, serial: {2}:'.format(item[0], item[1], item[2]))
-				backpack_item_dict[item_serial] = [item[0], item[6], item[2]]
-			else:
-				#print("item is not existed: ", item_serial)
-				pass
-
 		for opened_corpse in opened_corpse_list:
 			corpse_object = opened_corpse.container
 			#print('type: {0}, x: {1}, y: {2}, distance: {3}, name: {4}'.format(corpse_object.type, corpse_object.screenX, corpse_object.screenY,
@@ -273,7 +250,11 @@ class UoService:
 																						 run=run))
 		self.stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
 		self.stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
-		response = self.stub.ReadObs(UoService_pb2.Config(name='readobs'))
+
+		if self.total_step == 100:
+			response = self.stub.ReadObs(UoService_pb2.Config(init=True))
+		else:
+			response = self.stub.ReadObs(UoService_pb2.Config(init=False))
 
 		obs_raw = self.parse_response(response)
 
@@ -300,5 +281,7 @@ class UoService:
 		obs['ground_item_data'] = obs_raw[14]
 		obs['player_status_data'] = obs_raw[15]
 		obs['opened_corpse_data'] = obs_raw[4]
+
+		self.total_step += 1
 
 		return obs

@@ -53,47 +53,47 @@ namespace Uoservice {
             "PgoRZ2FtZVNpbXBsZU9iamVjdHMYASADKAsyIy51b3NlcnZpY2UuR3JwY0dh",
             "bWVPYmplY3RTaW1wbGVEYXRhIh8KD1NlbWFwaG9yZUFjdGlvbhIMCgRtb2Rl",
             "GAEgASgJIjYKDEdycGNJdGVtTGlzdBImCgVpdGVtcxgBIAMoCzIXLnVvc2Vy",
-            "dmljZS5HcnBjSXRlbURhdGEiKgoGQ29uZmlnEgwKBG5hbWUYASABKAkSEgoK",
-            "cmVwbGF5TmFtZRgCIAEoCSI1Cg1HcnBjU2tpbGxMaXN0EiQKBnNraWxscxgB",
-            "IAMoCzIULnVvc2VydmljZS5HcnBjU2tpbGwiaAoRR3JwY0NvbnRhaW5lckRh",
-            "dGESFwoPY29udGFpbmVyU2VyaWFsGAEgASgNEjoKF2NvbnRhaW5lckl0ZW1T",
-            "ZXJpYWxMaXN0GAIgASgLMhkudW9zZXJ2aWNlLkdycGNTZXJpYWxMaXN0IkkK",
-            "FUdycGNDb250YWluZXJEYXRhTGlzdBIwCgpjb250YWluZXJzGAEgAygLMhwu",
-            "dW9zZXJ2aWNlLkdycGNDb250YWluZXJEYXRhIiEKDkdycGNTZXJpYWxMaXN0",
-            "Eg8KB3NlcmlhbHMYASADKA0isAcKBlN0YXRlcxI3ChBwbGF5ZXJHYW1lT2Jq",
-            "ZWN0GAEgASgLMh0udW9zZXJ2aWNlLkdycGNHYW1lT2JqZWN0RGF0YRI0Cg1X",
-            "b3JsZEl0ZW1MaXN0GAIgASgLMh0udW9zZXJ2aWNlLkdycGNHYW1lT2JqZWN0",
-            "TGlzdBI2Cg9Xb3JsZE1vYmlsZUxpc3QYAyABKAsyHS51b3NlcnZpY2UuR3Jw",
-            "Y0dhbWVPYmplY3RMaXN0EjkKFmVxdWlwcGVkSXRlbVNlcmlhbExpc3QYBCAB",
-            "KAsyGS51b3NlcnZpY2UuR3JwY1NlcmlhbExpc3QSOQoWYmFja3BhY2tJdGVt",
-            "U2VyaWFsTGlzdBgFIAEoCzIZLnVvc2VydmljZS5HcnBjU2VyaWFsTGlzdBI1",
-            "ChJiYW5rSXRlbVNlcmlhbExpc3QYBiABKAsyGS51b3NlcnZpY2UuR3JwY1Nl",
-            "cmlhbExpc3QSNwoUdmVuZG9ySXRlbVNlcmlhbExpc3QYByABKAsyGS51b3Nl",
-            "cnZpY2UuR3JwY1NlcmlhbExpc3QSOgoQb3BlbmVkQ29ycHNlTGlzdBgIIAEo",
-            "CzIgLnVvc2VydmljZS5HcnBjQ29udGFpbmVyRGF0YUxpc3QSMQoMcGxheWVy",
-            "U3RhdHVzGAkgASgLMhsudW9zZXJ2aWNlLkdycGNQbGF5ZXJTdGF0dXMSMwoQ",
-            "bW9iaWxlT2JqZWN0TGlzdBgKIAEoCzIZLnVvc2VydmljZS5HcnBjU2VyaWFs",
-            "TGlzdBIxCg5pdGVtT2JqZWN0TGlzdBgLIAEoCzIZLnVvc2VydmljZS5HcnBj",
-            "U2VyaWFsTGlzdBIzCg1wb3B1cE1lbnVMaXN0GAwgASgLMhwudW9zZXJ2aWNl",
-            "LkdycGNQb3B1cE1lbnVMaXN0EjUKDmNsaWxvY0RhdGFMaXN0GA0gASgLMh0u",
-            "dW9zZXJ2aWNlLkdycGNDbGlsb2NEYXRhTGlzdBIpCg1yZXBsYXlBY3Rpb25z",
-            "GA4gASgLMhIudW9zZXJ2aWNlLkFjdGlvbnMSPwoUc3RhdGljT2JqZWN0SW5m",
-            "b0xpc3QYDyABKAsyIS51b3NlcnZpY2UuR3JwY0dhbWVPYmplY3RJbmZvTGlz",
-            "dBIxCg9wbGF5ZXJTa2lsbExpc3QYECABKAsyGC51b3NlcnZpY2UuR3JwY1Nr",
-            "aWxsTGlzdBI3Cg9wbGF5ZXJTdGF0dXNFdGMYESABKAsyHi51b3NlcnZpY2Uu",
-            "R3JwY1BsYXllclN0YXR1c0V0YyKKAQoHQWN0aW9ucxISCgphY3Rpb25UeXBl",
-            "GAEgASgNEhIKCml0ZW1TZXJpYWwYAiABKA0SFAoMbW9iaWxlU2VyaWFsGAMg",
-            "ASgNEhUKDXdhbGtEaXJlY3Rpb24YBCABKA0SDQoFaW5kZXgYBSABKA0SDgoG",
-            "YW1vdW50GAYgASgNEgsKA3J1bhgHIAEoCDKPAwoJVW9TZXJ2aWNlEi0KBVJl",
-            "c2V0EhEudW9zZXJ2aWNlLkNvbmZpZxoRLnVvc2VydmljZS5TdGF0ZXMSLwoH",
-            "UmVhZE9icxIRLnVvc2VydmljZS5Db25maWcaES51b3NlcnZpY2UuU3RhdGVz",
-            "EjAKCFdyaXRlQWN0EhIudW9zZXJ2aWNlLkFjdGlvbnMaEC51b3NlcnZpY2Uu",
-            "RW1wdHkSQwoTQWN0U2VtYXBob3JlQ29udHJvbBIaLnVvc2VydmljZS5TZW1h",
-            "cGhvcmVBY3Rpb24aEC51b3NlcnZpY2UuRW1wdHkSQwoTT2JzU2VtYXBob3Jl",
-            "Q29udHJvbBIaLnVvc2VydmljZS5TZW1hcGhvcmVBY3Rpb24aEC51b3NlcnZp",
-            "Y2UuRW1wdHkSMgoKUmVhZFJlcGxheRIRLnVvc2VydmljZS5Db25maWcaES51",
-            "b3NlcnZpY2UuU3RhdGVzEjIKC1JlYWRNUFFGaWxlEhEudW9zZXJ2aWNlLkNv",
-            "bmZpZxoQLnVvc2VydmljZS5FbXB0eWIGcHJvdG8z"));
+            "dmljZS5HcnBjSXRlbURhdGEiFgoGQ29uZmlnEgwKBGluaXQYASABKAgiNQoN",
+            "R3JwY1NraWxsTGlzdBIkCgZza2lsbHMYASADKAsyFC51b3NlcnZpY2UuR3Jw",
+            "Y1NraWxsImgKEUdycGNDb250YWluZXJEYXRhEhcKD2NvbnRhaW5lclNlcmlh",
+            "bBgBIAEoDRI6Chdjb250YWluZXJJdGVtU2VyaWFsTGlzdBgCIAEoCzIZLnVv",
+            "c2VydmljZS5HcnBjU2VyaWFsTGlzdCJJChVHcnBjQ29udGFpbmVyRGF0YUxp",
+            "c3QSMAoKY29udGFpbmVycxgBIAMoCzIcLnVvc2VydmljZS5HcnBjQ29udGFp",
+            "bmVyRGF0YSIhCg5HcnBjU2VyaWFsTGlzdBIPCgdzZXJpYWxzGAEgAygNIrAH",
+            "CgZTdGF0ZXMSNwoQcGxheWVyR2FtZU9iamVjdBgBIAEoCzIdLnVvc2Vydmlj",
+            "ZS5HcnBjR2FtZU9iamVjdERhdGESNAoNV29ybGRJdGVtTGlzdBgCIAEoCzId",
+            "LnVvc2VydmljZS5HcnBjR2FtZU9iamVjdExpc3QSNgoPV29ybGRNb2JpbGVM",
+            "aXN0GAMgASgLMh0udW9zZXJ2aWNlLkdycGNHYW1lT2JqZWN0TGlzdBI5ChZl",
+            "cXVpcHBlZEl0ZW1TZXJpYWxMaXN0GAQgASgLMhkudW9zZXJ2aWNlLkdycGNT",
+            "ZXJpYWxMaXN0EjkKFmJhY2twYWNrSXRlbVNlcmlhbExpc3QYBSABKAsyGS51",
+            "b3NlcnZpY2UuR3JwY1NlcmlhbExpc3QSNQoSYmFua0l0ZW1TZXJpYWxMaXN0",
+            "GAYgASgLMhkudW9zZXJ2aWNlLkdycGNTZXJpYWxMaXN0EjcKFHZlbmRvckl0",
+            "ZW1TZXJpYWxMaXN0GAcgASgLMhkudW9zZXJ2aWNlLkdycGNTZXJpYWxMaXN0",
+            "EjoKEG9wZW5lZENvcnBzZUxpc3QYCCABKAsyIC51b3NlcnZpY2UuR3JwY0Nv",
+            "bnRhaW5lckRhdGFMaXN0EjEKDHBsYXllclN0YXR1cxgJIAEoCzIbLnVvc2Vy",
+            "dmljZS5HcnBjUGxheWVyU3RhdHVzEjMKEG1vYmlsZU9iamVjdExpc3QYCiAB",
+            "KAsyGS51b3NlcnZpY2UuR3JwY1NlcmlhbExpc3QSMQoOaXRlbU9iamVjdExp",
+            "c3QYCyABKAsyGS51b3NlcnZpY2UuR3JwY1NlcmlhbExpc3QSMwoNcG9wdXBN",
+            "ZW51TGlzdBgMIAEoCzIcLnVvc2VydmljZS5HcnBjUG9wdXBNZW51TGlzdBI1",
+            "Cg5jbGlsb2NEYXRhTGlzdBgNIAEoCzIdLnVvc2VydmljZS5HcnBjQ2xpbG9j",
+            "RGF0YUxpc3QSKQoNcmVwbGF5QWN0aW9ucxgOIAEoCzISLnVvc2VydmljZS5B",
+            "Y3Rpb25zEj8KFHN0YXRpY09iamVjdEluZm9MaXN0GA8gASgLMiEudW9zZXJ2",
+            "aWNlLkdycGNHYW1lT2JqZWN0SW5mb0xpc3QSMQoPcGxheWVyU2tpbGxMaXN0",
+            "GBAgASgLMhgudW9zZXJ2aWNlLkdycGNTa2lsbExpc3QSNwoPcGxheWVyU3Rh",
+            "dHVzRXRjGBEgASgLMh4udW9zZXJ2aWNlLkdycGNQbGF5ZXJTdGF0dXNFdGMi",
+            "igEKB0FjdGlvbnMSEgoKYWN0aW9uVHlwZRgBIAEoDRISCgppdGVtU2VyaWFs",
+            "GAIgASgNEhQKDG1vYmlsZVNlcmlhbBgDIAEoDRIVCg13YWxrRGlyZWN0aW9u",
+            "GAQgASgNEg0KBWluZGV4GAUgASgNEg4KBmFtb3VudBgGIAEoDRILCgNydW4Y",
+            "ByABKAgyjwMKCVVvU2VydmljZRItCgVSZXNldBIRLnVvc2VydmljZS5Db25m",
+            "aWcaES51b3NlcnZpY2UuU3RhdGVzEi8KB1JlYWRPYnMSES51b3NlcnZpY2Uu",
+            "Q29uZmlnGhEudW9zZXJ2aWNlLlN0YXRlcxIwCghXcml0ZUFjdBISLnVvc2Vy",
+            "dmljZS5BY3Rpb25zGhAudW9zZXJ2aWNlLkVtcHR5EkMKE0FjdFNlbWFwaG9y",
+            "ZUNvbnRyb2wSGi51b3NlcnZpY2UuU2VtYXBob3JlQWN0aW9uGhAudW9zZXJ2",
+            "aWNlLkVtcHR5EkMKE09ic1NlbWFwaG9yZUNvbnRyb2wSGi51b3NlcnZpY2Uu",
+            "U2VtYXBob3JlQWN0aW9uGhAudW9zZXJ2aWNlLkVtcHR5EjIKClJlYWRSZXBs",
+            "YXkSES51b3NlcnZpY2UuQ29uZmlnGhEudW9zZXJ2aWNlLlN0YXRlcxIyCgtS",
+            "ZWFkTVBRRmlsZRIRLnVvc2VydmljZS5Db25maWcaEC51b3NlcnZpY2UuRW1w",
+            "dHliBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -112,7 +112,7 @@ namespace Uoservice {
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcGameObjectSimpleList), global::Uoservice.GrpcGameObjectSimpleList.Parser, new[]{ "GameSimpleObjects" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.SemaphoreAction), global::Uoservice.SemaphoreAction.Parser, new[]{ "Mode" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcItemList), global::Uoservice.GrpcItemList.Parser, new[]{ "Items" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Config), global::Uoservice.Config.Parser, new[]{ "Name", "ReplayName" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Config), global::Uoservice.Config.Parser, new[]{ "Init" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcSkillList), global::Uoservice.GrpcSkillList.Parser, new[]{ "Skills" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcContainerData), global::Uoservice.GrpcContainerData.Parser, new[]{ "ContainerSerial", "ContainerItemSerialList" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcContainerDataList), global::Uoservice.GrpcContainerDataList.Parser, new[]{ "Containers" }, null, null, null),
@@ -3095,8 +3095,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Config(Config other) : this() {
-      name_ = other.name_;
-      replayName_ = other.replayName_;
+      init_ = other.init_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -3105,25 +3104,14 @@ namespace Uoservice {
       return new Config(this);
     }
 
-    /// <summary>Field number for the "name" field.</summary>
-    public const int NameFieldNumber = 1;
-    private string name_ = "";
+    /// <summary>Field number for the "init" field.</summary>
+    public const int InitFieldNumber = 1;
+    private bool init_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Name {
-      get { return name_; }
+    public bool Init {
+      get { return init_; }
       set {
-        name_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "replayName" field.</summary>
-    public const int ReplayNameFieldNumber = 2;
-    private string replayName_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string ReplayName {
-      get { return replayName_; }
-      set {
-        replayName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        init_ = value;
       }
     }
 
@@ -3140,16 +3128,14 @@ namespace Uoservice {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Name != other.Name) return false;
-      if (ReplayName != other.ReplayName) return false;
+      if (Init != other.Init) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (Name.Length != 0) hash ^= Name.GetHashCode();
-      if (ReplayName.Length != 0) hash ^= ReplayName.GetHashCode();
+      if (Init != false) hash ^= Init.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -3163,13 +3149,9 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (Name.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(Name);
-      }
-      if (ReplayName.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(ReplayName);
+      if (Init != false) {
+        output.WriteRawTag(8);
+        output.WriteBool(Init);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -3179,11 +3161,8 @@ namespace Uoservice {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (Name.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
-      }
-      if (ReplayName.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(ReplayName);
+      if (Init != false) {
+        size += 1 + 1;
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -3196,11 +3175,8 @@ namespace Uoservice {
       if (other == null) {
         return;
       }
-      if (other.Name.Length != 0) {
-        Name = other.Name;
-      }
-      if (other.ReplayName.Length != 0) {
-        ReplayName = other.ReplayName;
+      if (other.Init != false) {
+        Init = other.Init;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -3213,12 +3189,8 @@ namespace Uoservice {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 10: {
-            Name = input.ReadString();
-            break;
-          }
-          case 18: {
-            ReplayName = input.ReadString();
+          case 8: {
+            Init = input.ReadBool();
             break;
           }
         }
