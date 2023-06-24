@@ -59,7 +59,7 @@ def main():
     action['run'] = False
 
     backpack_item_data = obs['backpack_item_data']
-    print("backpack_item_data: ", backpack_item_data)
+    #print("backpack_item_data: ", backpack_item_data)
 
     equipped_item_data = obs['equipped_item_data']
     #print("equipped_item_data: ", equipped_item_data)

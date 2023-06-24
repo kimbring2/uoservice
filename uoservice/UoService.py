@@ -115,15 +115,18 @@ class UoService:
 
 		#print("len(world_item_data): ", len(world_item_data))
 		if len(world_item_data) != 0:
+			#print("len(world_item_data): ", len(world_item_data))
+			#print("world_item_data: ", world_item_data)
+			#print("")
 			for obj in world_item_data:
-				if obj.serial not in self.world_item_dict:
-					self.world_item_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title, obj.layer]
+				#if obj.serial not in self.world_item_dict:
+				self.world_item_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title, obj.layer]
 
 		#print("len(world_mobile_data): ", len(world_mobile_data))
 		if len(world_mobile_data) != 0:
 			for obj in world_mobile_data:
-				if obj.serial not in self.world_mobile_dict:
-					self.world_mobile_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title, obj.layer]
+				#if obj.serial not in self.world_mobile_dict:
+				self.world_mobile_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title, obj.layer]
 
 		#print("self.world_mobile_dict: ", self.world_mobile_dict)
 
