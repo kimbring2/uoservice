@@ -92,8 +92,8 @@ class UoService:
 		player_status_dict = {}
 		popup_menu_list = []
 		cliloc_dict = {}
-		static_object_screen_x_list = []
-		static_object_screen_y_list = []
+		static_object_game_x_list = []
+		static_object_game_y_list = []
 
 		world_item_data = response.WorldItemList.gameObjects
 		world_mobile_data = response.WorldMobileList.gameObjects
@@ -105,22 +105,20 @@ class UoService:
 		popup_menu_data = response.popupMenuList.menus
 		player_status_data = response.playerStatus
 		player_skills_data = response.playerSkillList.skills
-		static_object_screen_x_data = response.staticObjectInfoList.screenXs
-		static_object_screen_y_data = response.staticObjectInfoList.screenYs
+		static_object_game_x_data = response.staticObjectInfoList.gameXs
+		static_object_game_y_data = response.staticObjectInfoList.gameYs
 		vendor_item_data = response.vendorItemSerialList.serials
 		cliloc_data = response.clilocDataList.clilocDatas
-		mobile_serial_data = response.mobileObjectList.serials
-		item_serial_data = response.itemObjectList.serials
 
 		#print("len(world_item_data): ", len(world_item_data))
 		if len(world_item_data) != 0:
 			for obj in world_item_data:
-				self.world_item_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title, obj.layer]
+				self.world_item_dict[obj.serial] = [obj.name, obj.type, obj.gameX, obj.gameY, obj.distance, obj.title, obj.layer]
 
 		#print("len(world_mobile_data): ", len(world_mobile_data))
 		if len(world_mobile_data) != 0:
 			for obj in world_mobile_data:
-				self.world_mobile_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title, obj.layer]
+				self.world_mobile_dict[obj.serial] = [obj.name, obj.type, obj.gameX, obj.gameY, obj.distance, obj.title, obj.layer]
 
 		#print("self.world_mobile_dict: ", self.world_mobile_dict)
 
@@ -179,40 +177,31 @@ class UoService:
 		for menu_data in popup_menu_data:
 			popup_menu_list.append(menu_data)
 
-		screen_image = np.zeros((172,137,4), dtype=np.uint8)
-		#print("mobile_serial_data: ", mobile_serial_data)
-		for serial in mobile_serial_data:
-			#print('type:{0}, x:{1}, y:{2}, dis:{3}, serial:{4}, name:{5}, amount:{6}, price:{7}'.
-			#			format(obj.type, obj.gameX, obj.gameY, obj.distance, obj.serial, obj.name, obj.amount, obj.price))
+		screen_image = np.zeros((1500,1350,4), dtype=np.uint8)
 
-			#[obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title, obj.layer]
-			if serial in self.world_mobile_dict:
-				mobile = self.world_mobile_dict[serial]
-
-				mobile_dict[serial] = [mobile[0], mobile[1], mobile[2], mobile[3], mobile[4], mobile[5]]
-
-				try:
-					screen_image[int(mobile[2] / 10), int(mobile[3] / 10), 0] = 255
-					screen_image[int(mobile[2] / 10), int(mobile[3] / 10), 1] = 0
-					screen_image[int(mobile[2] / 10), int(mobile[3] / 10), 2] = 0
-				except:
-					pass
-			else:
-				#print("mobile serial is not existed in world_mobile_dict: ", serial)
-				pass
+		radius = 10
+		thickness = 2
+		screen_width = 1370
+		screen_height = 1280
+		for k, v in self.world_mobile_dict.items():
+				if v[2] < screen_width and v[3] < screen_height:
+					if v[1] == 'Player':
+						screen_image = cv2.circle(screen_image, (v[2], v[3]), radius, (0, 255, 0), thickness)
+					elif v[1] == 'Mobile':
+						screen_image = cv2.circle(screen_image, (v[2], v[3]), radius, (0, 0, 255), thickness)
 
 		vis = True
 		if vis:
-			dim = (1720, 1370)
-			screen_image = cv2.resize(screen_image, dim, interpolation = cv2.INTER_AREA)
+			#dim = (1720, 1370)
+			#screen_image = cv2.resize(screen_image, dim, interpolation = cv2.INTER_AREA)
 			screen_image = cv2.rotate(screen_image, cv2.ROTATE_90_CLOCKWISE)
 			screen_image = cv2.flip(screen_image, 1)
 			cv2.imshow('screen_image_' + str(self.grpc_port), screen_image)
 			cv2.waitKey(1)
-
-		for i in range(0, len(static_object_screen_x_data)):
-			static_object_screen_x_list.append(static_object_screen_x_data[i])
-			static_object_screen_y_list.append(static_object_screen_y_data[i])
+		
+		for i in range(0, len(static_object_game_x_data)):
+			static_object_game_x_list.append(static_object_game_x_data[i])
+			static_object_game_y_list.append(static_object_game_y_data[i])
 
 		if len(equipped_item_data) == 0:
 			return mobile_dict, equipped_item_dict, backpack_item_dict, bank_item_dict, opened_corpse_list_dict, \

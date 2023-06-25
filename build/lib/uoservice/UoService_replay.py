@@ -92,9 +92,6 @@ class UoServiceReplay:
 		self._popupMenuArrayOffset = 0
 		self._clilocDataArrayOffset = 0
 
-		self._sceneMobileObjectSerialArrayOffset = 0
-		self._sceneItemObjectSerialArrayOffset = 0
-
 		self._playerStatusArrayOffset = 0
 		self._playerStatusEtcArrayOffset = 0
 		self._playerSkillListArrayOffset = 0
@@ -122,9 +119,6 @@ class UoServiceReplay:
 		self._popupMenuDataList = []
 		self._openedCorpseList = []
 		self._clilocDataList = []
-
-		self._sceneMobileObjectSerialList = []
-		self._sceneItemObjectSerialList = []
 
 		self._playerStatusList = []
 		self._playerStatusEtcList = []
@@ -205,9 +199,6 @@ class UoServiceReplay:
 		self.popupMenuArrayLengthArr = self._archive.read_file("replay.metadata.popupMenuLen");
 		self.clilocDataArrayLengthArr = self._archive.read_file("replay.metadata.clilocDataLen");
 
-		self.sceneMobileObjectSerialArrayLengthArr = self._archive.read_file("replay.metadata.sceneMobileSerialLen");
-		self.sceneItemObjectSerialArrayLengthArr = self._archive.read_file("replay.metadata.sceneItemSerialLen");
-
 		self.playerStatusArrayLengthArr = self._archive.read_file("replay.metadata.playerStatusLen");
 		self.playerStatusEtcArrayLengthArr = self._archive.read_file("replay.metadata.playerStatusEtcLen");
 		self.playerSkillListArrayLengthArr = self._archive.read_file("replay.metadata.playerSkillListLen");
@@ -226,9 +217,6 @@ class UoServiceReplay:
 		self.openedCorpseArrayLengthList = self.ConvertByteArrayToIntList(self.openedCorpseArrayLengthArr);
 		self.popupMenuArrayLengthList = self.ConvertByteArrayToIntList(self.popupMenuArrayLengthArr);
 		self.clilocDataArrayLengthList = self.ConvertByteArrayToIntList(self.clilocDataArrayLengthArr);
-
-		self.sceneMobileObjectSerialArrayLengthList = self.ConvertByteArrayToIntList(self.sceneMobileObjectSerialArrayLengthArr);
-		self.sceneItemObjectSerialArrayLengthList = self.ConvertByteArrayToIntList(self.sceneItemObjectSerialArrayLengthArr);
 
 		self.playerStatusArrayLengthList = self.ConvertByteArrayToIntList(self.playerStatusArrayLengthArr);
 		self.playerStatusEtcArrayLengthList = self.ConvertByteArrayToIntList(self.playerStatusEtcArrayLengthArr);
@@ -251,9 +239,6 @@ class UoServiceReplay:
 		self.openedCorpseArr = self._archive.read_file("replay.data.openedCorpse");
 		self.popupMenuArr = self._archive.read_file("replay.data.popupMenu");
 		self.clilocDataArr = self._archive.read_file("replay.data.clilocData");
-
-		self.sceneMobileObjectSerialArr = self._archive.read_file("replay.data.sceneMobileObjectSerials");
-		self.sceneItemObjectSerialArr = self._archive.read_file("replay.data.sceneItemObjectSerials");
 
 		self.playerStatusArr = self._archive.read_file("replay.data.playerStatus");
 		self.playerStatusEtcArr = self._archive.read_file("replay.data.playerStatusEtc");
@@ -324,16 +309,6 @@ class UoServiceReplay:
 			print("len(self.clilocDataArr): ", len(self.clilocDataArr))
 		else:
 			print("self.clilocDataArr is None")
-
-		if self.sceneMobileObjectSerialArr:
-			print("len(self.sceneMobileObjectSerialArr): ", len(self.sceneMobileObjectSerialArr))
-		else:
-			print("self.sceneMobileSerialArr is None")
-
-		if self.sceneItemObjectSerialArr:
-			print("len(self.sceneItemObjectSerialArr): ", len(self.sceneItemObjectSerialArr))
-		else:
-			print("self.sceneItemObjectSerialArr is None")
 
 		if self.playerStatusArr:
 			print("len(self.playerStatusArr): ", len(self.playerStatusArr))
@@ -450,26 +425,6 @@ class UoServiceReplay:
 			else:
 				print("clilocDataArr is None")
 
-			if self.sceneMobileObjectSerialArr:
-				sceneMobileObjectSerialSubsetArray, self._sceneMobileObjectSerialArrayOffset = self.GetSubsetArray(step, 
-																				   self.sceneMobileObjectSerialArrayLengthList, 
-																				   self._sceneMobileObjectSerialArrayOffset, self.sceneMobileObjectSerialArr)
-				grpcSceneMobileObjectSerialReplay = UoService_pb2.GrpcSerialList().FromString(sceneMobileObjectSerialSubsetArray)
-				#print("grpcMobileObjectReplay: ", grpcMobileObjectReplay)
-				self._sceneMobileObjectSerialList.append(grpcSceneMobileObjectSerialReplay.serials)
-			else:
-				print("sceneMobileObjectSerialArr is None")
-
-			if self.sceneItemObjectSerialArr:
-				sceneItemObjectSerialSubsetArray, self._sceneItemObjectSerialArrayOffset = self.GetSubsetArray(step, 
-																				   self.sceneItemObjectSerialArrayLengthList, 
-																				   self._sceneItemObjectSerialArrayOffset, self.sceneItemObjectSerialArr)
-				grpcSceneItemObjectSerialReplay = UoService_pb2.GrpcSerialList().FromString(sceneItemObjectSerialSubsetArray)
-				#print("grpcMobileObjectReplay: ", grpcMobileObjectReplay)
-				self._sceneItemObjectSerialList.append(grpcSceneItemObjectSerialReplay.serials)
-			else:
-				print("sceneItemObjectSerialArr is None")
-
 			if self.playerStatusArr:
 				playerStatusSubsetArray, self._playerStatusArrayOffset = self.GetSubsetArray(step, self.playerStatusArrayLengthList, 
 																							 self._playerStatusArrayOffset, 
@@ -584,25 +539,6 @@ class UoServiceReplay:
 						screen_image = cv2.circle(screen_image, (v[2], v[3]), radius, (0, 255, 0), thickness)
 					elif v[1] == 'Mobile':
 						screen_image = cv2.circle(screen_image, (v[2], v[3]), radius, (0, 0, 255), thickness)
-
-
-			mobile_serial_list = self._sceneMobileObjectSerialList[replay_step]
-			#print("mobile_serial_list: ", mobile_serial_list)
-
-			'''
-			for serial in mobile_serial_list:
-				if serial in self.world_mobile_dict:
-					#print("serial: ", serial)
-					mobile = self.world_mobile_dict[serial]
-					#print("mobile: ", mobile)
-
-					#mobile_dict[serial] = [mobile[0], mobile[1], mobile[2], mobile[3], mobile[4], mobile[5]]
-					radius = 20
-					thickness = 2
-					color = (0, 0, 255)
-					screen_image = cv2.circle(screen_image, (mobile[2], mobile[3]), radius, color, thickness)
-			'''
-			#print("")
 
 			# Draw the screen image on the Pygame screen
 			screen_image = cv2.rotate(screen_image, cv2.ROTATE_90_CLOCKWISE)

@@ -64,7 +64,7 @@ def main():
     equipped_item_data = obs['equipped_item_data']
     #print("equipped_item_data: ", equipped_item_data)
 
-    print("player_status_dict: ", uo_service.player_status_dict)
+    #print("player_status_dict: ", uo_service.player_status_dict)
 
     #print("player_skills_dict: ", uo_service.player_skills_dict)
     if 'Swordsmanship' in uo_service.player_skills_dict:
