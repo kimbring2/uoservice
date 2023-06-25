@@ -554,13 +554,9 @@ class UoServiceReplay:
 			screen_image = np.zeros((int((self._screenWidth + 100)), int((self._screenHeight + 100)), 3), dtype=np.uint8)
 
 			if len(self._worldMobileList[replay_step]) != 0:
-				#print("self._worldItemList[replay_step]: ", self._worldItemList[replay_step])
 				for obj in self._worldMobileList[replay_step]:
-					#print("obj: ", obj)
 
 					self.world_mobile_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title, obj.layer]
-
-					#print("")
 
 			# Draw the static object
 			static_object_screen_x_data = self._staticObjectScreenXsList[replay_step]
@@ -576,11 +572,24 @@ class UoServiceReplay:
 				image = cv2.circle(screen_image, (static_object_screen_x_data[i], static_object_screen_y_data[i]), 
 								   radius, color, thickness)
 			
-			#print("self.world_mobile_dict: ", self.world_mobile_dict)
+			print("self.world_mobile_dict: ", self.world_mobile_dict)
+			print("")
+
+			radius = 20
+			thickness = 2
+			for k, v in self.world_mobile_dict.items():
+				#print("v: ", v)
+				if v[2] < self._screenWidth and v[3] < self._screenHeight:
+					if v[1] == 'Player':
+						screen_image = cv2.circle(screen_image, (v[2], v[3]), radius, (0, 255, 0), thickness)
+					elif v[1] == 'Mobile':
+						screen_image = cv2.circle(screen_image, (v[2], v[3]), radius, (0, 0, 255), thickness)
+
 
 			mobile_serial_list = self._sceneMobileObjectSerialList[replay_step]
 			#print("mobile_serial_list: ", mobile_serial_list)
 
+			'''
 			for serial in mobile_serial_list:
 				if serial in self.world_mobile_dict:
 					#print("serial: ", serial)
@@ -592,7 +601,7 @@ class UoServiceReplay:
 					thickness = 2
 					color = (0, 0, 255)
 					screen_image = cv2.circle(screen_image, (mobile[2], mobile[3]), radius, color, thickness)
-
+			'''
 			#print("")
 
 			# Draw the screen image on the Pygame screen
