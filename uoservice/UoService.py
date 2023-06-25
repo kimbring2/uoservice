@@ -36,6 +36,9 @@ class UoService:
 		self.player_skills_dict = {}
 		self.player_status_dict = {}
 
+		self.player_game_x = None
+		self.player_game_y = None
+
 	def _open_grpc(self):
 		# Open the gRPC channel using the port that is same of game client 
 		channel = grpc.insecure_channel('localhost:' + str(self.grpc_port))
@@ -95,30 +98,41 @@ class UoService:
 		static_object_game_x_list = []
 		static_object_game_y_list = []
 
-		world_item_data = response.WorldItemList.gameObjects
-		world_mobile_data = response.WorldMobileList.gameObjects
+		player_object = response.playerObject
+
+		world_item_data = response.WorldItemList.itemObjects
+		world_mobile_data = response.WorldMobileList.mobileObjects
 
 		equipped_item_data = response.equippedItemSerialList.serials
 		backpack_item_data = response.backpackItemSerialList.serials
 		bank_item_data = response.bankItemSerialList.serials
+		vendor_item_data = response.vendorItemSerialList.serials
+
 		opened_corpse_list = response.openedCorpseList.containers
 		popup_menu_data = response.popupMenuList.menus
+		cliloc_data = response.clilocDataList.clilocDatas
+
 		player_status_data = response.playerStatus
 		player_skills_data = response.playerSkillList.skills
+
 		static_object_game_x_data = response.staticObjectInfoList.gameXs
 		static_object_game_y_data = response.staticObjectInfoList.gameYs
-		vendor_item_data = response.vendorItemSerialList.serials
-		cliloc_data = response.clilocDataList.clilocDatas
+
+		#print("player_object: ", player_object)
+
+		if player_object.gameX != 0:
+			self.player_game_x = player_object.gameX
+			self.player_game_y = player_object.gameY
 
 		#print("len(world_item_data): ", len(world_item_data))
 		if len(world_item_data) != 0:
 			for obj in world_item_data:
-				self.world_item_dict[obj.serial] = [obj.name, obj.type, obj.gameX, obj.gameY, obj.distance, obj.title, obj.layer]
+				self.world_item_dict[obj.serial] = [obj.name, obj.gameX, obj.gameY, obj.distance, obj.layer]
 
 		#print("len(world_mobile_data): ", len(world_mobile_data))
 		if len(world_mobile_data) != 0:
 			for obj in world_mobile_data:
-				self.world_mobile_dict[obj.serial] = [obj.name, obj.type, obj.gameX, obj.gameY, obj.distance, obj.title, obj.layer]
+				self.world_mobile_dict[obj.serial] = [obj.name, obj.gameX, obj.gameY, obj.distance, obj.title]
 
 		#print("self.world_mobile_dict: ", self.world_mobile_dict)
 
@@ -126,7 +140,7 @@ class UoService:
 			if item_serial in self.world_item_dict:
 				item = self.world_item_dict[item_serial]
 				# [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title, obj.layer]
-				equipped_item_dict[item_serial] = [item[0], item[6], item[2]]
+				equipped_item_dict[item_serial] = [item[0], item[4], item[2]]
 			else:
 				#print("item is not existed: ", item_serial)
 				pass
@@ -136,7 +150,7 @@ class UoService:
 			if item_serial in self.world_item_dict:
 				item = self.world_item_dict[item_serial]
 				#print('backpack name: {0}, layer: {1}, serial: {2}:'.format(item[0], item[1], item[2]))
-				backpack_item_dict[item_serial] = [item[0], item[6], item[2]]
+				backpack_item_dict[item_serial] = [item[0], item[4], item[2]]
 			else:
 				#print("item is not existed: ", item_serial)
 				pass
@@ -164,9 +178,8 @@ class UoService:
 		#print("self.world_item_dict: ", self.world_item_dict)
 		#print("self.world_mobile_dict: ", self.world_mobile_dict)
 
-		player_status_etc = response.playerStatusEtc
-		holdItem_serial = player_status_etc.holdItemSerial
-		war_mode = player_status_etc.warMode
+		#holdItem_serial = player_status_etc.holdItemSerial
+		#war_mode = player_status_etc.warMode
 
 		#print("holdItem_serial: ", holdItem_serial)
 		#print("war_mode: ", war_mode)
@@ -177,23 +190,24 @@ class UoService:
 		for menu_data in popup_menu_data:
 			popup_menu_list.append(menu_data)
 
-		screen_image = np.zeros((1500,1350,4), dtype=np.uint8)
+		screen_image = np.zeros((5000,5000,4), dtype=np.uint8)
 
-		radius = 10
+		radius = 5
 		thickness = 2
-		screen_width = 1370
-		screen_height = 1280
+		screen_width = 5000
+		screen_height = 5000
 		for k, v in self.world_mobile_dict.items():
-				if v[2] < screen_width and v[3] < screen_height:
-					if v[1] == 'Player':
-						screen_image = cv2.circle(screen_image, (v[2], v[3]), radius, (0, 255, 0), thickness)
-					elif v[1] == 'Mobile':
-						screen_image = cv2.circle(screen_image, (v[2], v[3]), radius, (0, 0, 255), thickness)
+				if v[1] < screen_width and v[2] < screen_height:
+					screen_image = cv2.circle(screen_image, (v[1], v[2]), radius, (0, 0, 255), thickness)
+
+		if self.player_game_x != None:
+			screen_image = cv2.circle(screen_image, (self.player_game_x, self.player_game_y), radius, (0, 255, 0), thickness)
+			screen_image = screen_image[self.player_game_y - 600:self.player_game_y + 600, self.player_game_x - 600:self.player_game_x + 600, :]
 
 		vis = True
 		if vis:
 			#dim = (1720, 1370)
-			#screen_image = cv2.resize(screen_image, dim, interpolation = cv2.INTER_AREA)
+			screen_image = cv2.resize(screen_image, (1200, 1200), interpolation=cv2.INTER_AREA)
 			screen_image = cv2.rotate(screen_image, cv2.ROTATE_90_CLOCKWISE)
 			screen_image = cv2.flip(screen_image, 1)
 			cv2.imshow('screen_image_' + str(self.grpc_port), screen_image)

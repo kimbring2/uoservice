@@ -26,83 +26,91 @@ namespace Uoservice {
           string.Concat(
             "Cg9Vb1NlcnZpY2UucHJvdG8SCXVvc2VydmljZSIHCgVFbXB0eSJLCg5HcnBj",
             "Q2xpbG9jRGF0YRIOCgZzZXJpYWwYASABKA0SDAoEdGV4dBgCIAEoCRINCgVh",
-            "ZmZpeBgDIAEoCRIMCgRuYW1lGAQgASgJIr8BChJHcnBjR2FtZU9iamVjdERh",
-            "dGESDAoEdHlwZRgBIAEoCRIQCghkaXN0YW5jZRgCIAEoDRINCgVnYW1lWBgD",
-            "IAEoDRINCgVnYW1lWRgEIAEoDRIOCgZzZXJpYWwYBSABKA0SDAoEbmFtZRgG",
-            "IAEoCRIQCghpc0NvcnBzZRgHIAEoCBINCgV0aXRsZRgIIAEoCRIOCgZhbW91",
-            "bnQYCSABKA0SDQoFcHJpY2UYCiABKA0SDQoFbGF5ZXIYCyABKA0idQoJR3Jw",
-            "Y1NraWxsEgwKBG5hbWUYASABKAkSDQoFaW5kZXgYAiABKA0SEwoLaXNDbGlj",
-            "a2FibGUYAyABKAgSDQoFdmFsdWUYBCABKA0SDAoEYmFzZRgFIAEoDRILCgNj",
-            "YXAYBiABKA0SDAoEbG9jaxgHIAEoDSLsAQoQR3JwY1BsYXllclN0YXR1cxIL",
-            "CgNzdHIYASABKA0SCwoDZGV4GAIgASgNEg4KBmludGVsbBgDIAEoDRIMCgRo",
-            "aXRzGAQgASgNEg8KB2hpdHNNYXgYBSABKA0SDwoHc3RhbWluYRgGIAEoDRIS",
-            "CgpzdGFtaW5hTWF4GAcgASgNEgwKBG1hbmEYCCABKA0SDwoHbWFuYU1heBgJ",
-            "IAEoDRIMCgRnb2xkGAogASgNEhoKEnBoeXNpY2FsUmVzaXN0YW5jZRgLIAEo",
-            "DRIOCgZ3ZWlnaHQYDCABKA0SEQoJd2VpZ2h0TWF4GA0gASgNIj4KE0dycGNQ",
-            "bGF5ZXJTdGF0dXNFdGMSFgoOaG9sZEl0ZW1TZXJpYWwYASABKA0SDwoHd2Fy",
-            "TW9kZRgCIAEoCCI4ChZHcnBjR2FtZU9iamVjdEluZm9MaXN0Eg4KBmdhbWVY",
+            "ZmZpeBgDIAEoCRIMCgRuYW1lGAQgASgJIoUBChRHcnBjTW9iaWxlT2JqZWN0",
+            "RGF0YRIQCghkaXN0YW5jZRgBIAEoDRINCgVnYW1lWBgCIAEoDRINCgVnYW1l",
+            "WRgDIAEoDRIOCgZzZXJpYWwYBCABKA0SDAoEbmFtZRgFIAEoCRIQCghpc0Nv",
+            "cnBzZRgGIAEoCBINCgV0aXRsZRgHIAEoCSKiAQoSR3JwY0l0ZW1PYmplY3RE",
+            "YXRhEhAKCGRpc3RhbmNlGAEgASgNEg0KBWdhbWVYGAIgASgNEg0KBWdhbWVZ",
+            "GAMgASgNEg4KBnNlcmlhbBgEIAEoDRIMCgRuYW1lGAUgASgJEhAKCGlzQ29y",
+            "cHNlGAYgASgIEg4KBmFtb3VudBgHIAEoDRINCgVwcmljZRgIIAEoDRINCgVs",
+            "YXllchgJIAEoDSJ1CglHcnBjU2tpbGwSDAoEbmFtZRgBIAEoCRINCgVpbmRl",
+            "eBgCIAEoDRITCgtpc0NsaWNrYWJsZRgDIAEoCBINCgV2YWx1ZRgEIAEoDRIM",
+            "CgRiYXNlGAUgASgNEgsKA2NhcBgGIAEoDRIMCgRsb2NrGAcgASgNIuwBChBH",
+            "cnBjUGxheWVyU3RhdHVzEgsKA3N0chgBIAEoDRILCgNkZXgYAiABKA0SDgoG",
+            "aW50ZWxsGAMgASgNEgwKBGhpdHMYBCABKA0SDwoHaGl0c01heBgFIAEoDRIP",
+            "CgdzdGFtaW5hGAYgASgNEhIKCnN0YW1pbmFNYXgYByABKA0SDAoEbWFuYRgI",
+            "IAEoDRIPCgdtYW5hTWF4GAkgASgNEgwKBGdvbGQYCiABKA0SGgoScGh5c2lj",
+            "YWxSZXNpc3RhbmNlGAsgASgNEg4KBndlaWdodBgMIAEoDRIRCgl3ZWlnaHRN",
+            "YXgYDSABKA0ihgEKEEdycGNQbGF5ZXJPYmplY3QSDQoFZ2FtZVgYASABKA0S",
+            "DQoFZ2FtZVkYAiABKA0SDgoGc2VyaWFsGAMgASgNEgwKBG5hbWUYBCABKAkS",
+            "DQoFdGl0bGUYBSABKAkSFgoOaG9sZEl0ZW1TZXJpYWwYBiABKA0SDwoHd2Fy",
+            "TW9kZRgHIAEoCCI4ChZHcnBjR2FtZU9iamVjdEluZm9MaXN0Eg4KBmdhbWVY",
             "cxgBIAMoDRIOCgZnYW1lWXMYAiADKA0iIgoRR3JwY1BvcHVwTWVudUxpc3QS",
             "DQoFbWVudXMYASADKAkiRAoSR3JwY0NsaWxvY0RhdGFMaXN0Ei4KC2NsaWxv",
-            "Y0RhdGFzGAEgAygLMhkudW9zZXJ2aWNlLkdycGNDbGlsb2NEYXRhIkgKEkdy",
-            "cGNHYW1lT2JqZWN0TGlzdBIyCgtnYW1lT2JqZWN0cxgBIAMoCzIdLnVvc2Vy",
-            "dmljZS5HcnBjR2FtZU9iamVjdERhdGEiHwoPU2VtYXBob3JlQWN0aW9uEgwK",
-            "BG1vZGUYASABKAkiFgoGQ29uZmlnEgwKBGluaXQYASABKAgiNQoNR3JwY1Nr",
-            "aWxsTGlzdBIkCgZza2lsbHMYASADKAsyFC51b3NlcnZpY2UuR3JwY1NraWxs",
-            "ImgKEUdycGNDb250YWluZXJEYXRhEhcKD2NvbnRhaW5lclNlcmlhbBgBIAEo",
-            "DRI6Chdjb250YWluZXJJdGVtU2VyaWFsTGlzdBgCIAEoCzIZLnVvc2Vydmlj",
-            "ZS5HcnBjU2VyaWFsTGlzdCJJChVHcnBjQ29udGFpbmVyRGF0YUxpc3QSMAoK",
-            "Y29udGFpbmVycxgBIAMoCzIcLnVvc2VydmljZS5HcnBjQ29udGFpbmVyRGF0",
-            "YSIhCg5HcnBjU2VyaWFsTGlzdBIPCgdzZXJpYWxzGAEgAygNIo8GCgZTdGF0",
-            "ZXMSNAoNV29ybGRJdGVtTGlzdBgBIAEoCzIdLnVvc2VydmljZS5HcnBjR2Ft",
-            "ZU9iamVjdExpc3QSNgoPV29ybGRNb2JpbGVMaXN0GAIgASgLMh0udW9zZXJ2",
-            "aWNlLkdycGNHYW1lT2JqZWN0TGlzdBI5ChZlcXVpcHBlZEl0ZW1TZXJpYWxM",
-            "aXN0GAMgASgLMhkudW9zZXJ2aWNlLkdycGNTZXJpYWxMaXN0EjkKFmJhY2tw",
-            "YWNrSXRlbVNlcmlhbExpc3QYBCABKAsyGS51b3NlcnZpY2UuR3JwY1Nlcmlh",
-            "bExpc3QSNQoSYmFua0l0ZW1TZXJpYWxMaXN0GAUgASgLMhkudW9zZXJ2aWNl",
-            "LkdycGNTZXJpYWxMaXN0EjcKFHZlbmRvckl0ZW1TZXJpYWxMaXN0GAYgASgL",
-            "MhkudW9zZXJ2aWNlLkdycGNTZXJpYWxMaXN0EjoKEG9wZW5lZENvcnBzZUxp",
-            "c3QYByABKAsyIC51b3NlcnZpY2UuR3JwY0NvbnRhaW5lckRhdGFMaXN0EjEK",
-            "DHBsYXllclN0YXR1cxgIIAEoCzIbLnVvc2VydmljZS5HcnBjUGxheWVyU3Rh",
-            "dHVzEjMKDXBvcHVwTWVudUxpc3QYCSABKAsyHC51b3NlcnZpY2UuR3JwY1Bv",
-            "cHVwTWVudUxpc3QSNQoOY2xpbG9jRGF0YUxpc3QYCiABKAsyHS51b3NlcnZp",
-            "Y2UuR3JwY0NsaWxvY0RhdGFMaXN0EikKDXJlcGxheUFjdGlvbnMYCyABKAsy",
-            "Ei51b3NlcnZpY2UuQWN0aW9ucxI/ChRzdGF0aWNPYmplY3RJbmZvTGlzdBgM",
-            "IAEoCzIhLnVvc2VydmljZS5HcnBjR2FtZU9iamVjdEluZm9MaXN0EjEKD3Bs",
-            "YXllclNraWxsTGlzdBgNIAEoCzIYLnVvc2VydmljZS5HcnBjU2tpbGxMaXN0",
-            "EjcKD3BsYXllclN0YXR1c0V0YxgOIAEoCzIeLnVvc2VydmljZS5HcnBjUGxh",
-            "eWVyU3RhdHVzRXRjIooBCgdBY3Rpb25zEhIKCmFjdGlvblR5cGUYASABKA0S",
-            "EgoKaXRlbVNlcmlhbBgCIAEoDRIUCgxtb2JpbGVTZXJpYWwYAyABKA0SFQoN",
-            "d2Fsa0RpcmVjdGlvbhgEIAEoDRINCgVpbmRleBgFIAEoDRIOCgZhbW91bnQY",
-            "BiABKA0SCwoDcnVuGAcgASgIMo8DCglVb1NlcnZpY2USLQoFUmVzZXQSES51",
-            "b3NlcnZpY2UuQ29uZmlnGhEudW9zZXJ2aWNlLlN0YXRlcxIvCgdSZWFkT2Jz",
-            "EhEudW9zZXJ2aWNlLkNvbmZpZxoRLnVvc2VydmljZS5TdGF0ZXMSMAoIV3Jp",
-            "dGVBY3QSEi51b3NlcnZpY2UuQWN0aW9ucxoQLnVvc2VydmljZS5FbXB0eRJD",
-            "ChNBY3RTZW1hcGhvcmVDb250cm9sEhoudW9zZXJ2aWNlLlNlbWFwaG9yZUFj",
-            "dGlvbhoQLnVvc2VydmljZS5FbXB0eRJDChNPYnNTZW1hcGhvcmVDb250cm9s",
-            "EhoudW9zZXJ2aWNlLlNlbWFwaG9yZUFjdGlvbhoQLnVvc2VydmljZS5FbXB0",
-            "eRIyCgpSZWFkUmVwbGF5EhEudW9zZXJ2aWNlLkNvbmZpZxoRLnVvc2Vydmlj",
-            "ZS5TdGF0ZXMSMgoLUmVhZE1QUUZpbGUSES51b3NlcnZpY2UuQ29uZmlnGhAu",
-            "dW9zZXJ2aWNlLkVtcHR5YgZwcm90bzM="));
+            "Y0RhdGFzGAEgAygLMhkudW9zZXJ2aWNlLkdycGNDbGlsb2NEYXRhIk4KFEdy",
+            "cGNNb2JpbGVPYmplY3RMaXN0EjYKDW1vYmlsZU9iamVjdHMYASADKAsyHy51",
+            "b3NlcnZpY2UuR3JwY01vYmlsZU9iamVjdERhdGEiSAoSR3JwY0l0ZW1PYmpl",
+            "Y3RMaXN0EjIKC2l0ZW1PYmplY3RzGAEgAygLMh0udW9zZXJ2aWNlLkdycGNJ",
+            "dGVtT2JqZWN0RGF0YSIfCg9TZW1hcGhvcmVBY3Rpb24SDAoEbW9kZRgBIAEo",
+            "CSIWCgZDb25maWcSDAoEaW5pdBgBIAEoCCI1Cg1HcnBjU2tpbGxMaXN0EiQK",
+            "BnNraWxscxgBIAMoCzIULnVvc2VydmljZS5HcnBjU2tpbGwiaAoRR3JwY0Nv",
+            "bnRhaW5lckRhdGESFwoPY29udGFpbmVyU2VyaWFsGAEgASgNEjoKF2NvbnRh",
+            "aW5lckl0ZW1TZXJpYWxMaXN0GAIgASgLMhkudW9zZXJ2aWNlLkdycGNTZXJp",
+            "YWxMaXN0IkkKFUdycGNDb250YWluZXJEYXRhTGlzdBIwCgpjb250YWluZXJz",
+            "GAEgAygLMhwudW9zZXJ2aWNlLkdycGNDb250YWluZXJEYXRhIiEKDkdycGNT",
+            "ZXJpYWxMaXN0Eg8KB3NlcmlhbHMYASADKA0iiwYKBlN0YXRlcxI0Cg1Xb3Js",
+            "ZEl0ZW1MaXN0GAEgASgLMh0udW9zZXJ2aWNlLkdycGNJdGVtT2JqZWN0TGlz",
+            "dBI4Cg9Xb3JsZE1vYmlsZUxpc3QYAiABKAsyHy51b3NlcnZpY2UuR3JwY01v",
+            "YmlsZU9iamVjdExpc3QSOQoWZXF1aXBwZWRJdGVtU2VyaWFsTGlzdBgDIAEo",
+            "CzIZLnVvc2VydmljZS5HcnBjU2VyaWFsTGlzdBI5ChZiYWNrcGFja0l0ZW1T",
+            "ZXJpYWxMaXN0GAQgASgLMhkudW9zZXJ2aWNlLkdycGNTZXJpYWxMaXN0EjUK",
+            "EmJhbmtJdGVtU2VyaWFsTGlzdBgFIAEoCzIZLnVvc2VydmljZS5HcnBjU2Vy",
+            "aWFsTGlzdBI3ChR2ZW5kb3JJdGVtU2VyaWFsTGlzdBgGIAEoCzIZLnVvc2Vy",
+            "dmljZS5HcnBjU2VyaWFsTGlzdBI6ChBvcGVuZWRDb3Jwc2VMaXN0GAcgASgL",
+            "MiAudW9zZXJ2aWNlLkdycGNDb250YWluZXJEYXRhTGlzdBIxCgxwbGF5ZXJT",
+            "dGF0dXMYCCABKAsyGy51b3NlcnZpY2UuR3JwY1BsYXllclN0YXR1cxIzCg1w",
+            "b3B1cE1lbnVMaXN0GAkgASgLMhwudW9zZXJ2aWNlLkdycGNQb3B1cE1lbnVM",
+            "aXN0EjUKDmNsaWxvY0RhdGFMaXN0GAogASgLMh0udW9zZXJ2aWNlLkdycGND",
+            "bGlsb2NEYXRhTGlzdBIpCg1yZXBsYXlBY3Rpb25zGAsgASgLMhIudW9zZXJ2",
+            "aWNlLkFjdGlvbnMSPwoUc3RhdGljT2JqZWN0SW5mb0xpc3QYDCABKAsyIS51",
+            "b3NlcnZpY2UuR3JwY0dhbWVPYmplY3RJbmZvTGlzdBIxCg9wbGF5ZXJTa2ls",
+            "bExpc3QYDSABKAsyGC51b3NlcnZpY2UuR3JwY1NraWxsTGlzdBIxCgxwbGF5",
+            "ZXJPYmplY3QYDiABKAsyGy51b3NlcnZpY2UuR3JwY1BsYXllck9iamVjdCKK",
+            "AQoHQWN0aW9ucxISCgphY3Rpb25UeXBlGAEgASgNEhIKCml0ZW1TZXJpYWwY",
+            "AiABKA0SFAoMbW9iaWxlU2VyaWFsGAMgASgNEhUKDXdhbGtEaXJlY3Rpb24Y",
+            "BCABKA0SDQoFaW5kZXgYBSABKA0SDgoGYW1vdW50GAYgASgNEgsKA3J1bhgH",
+            "IAEoCDKPAwoJVW9TZXJ2aWNlEi0KBVJlc2V0EhEudW9zZXJ2aWNlLkNvbmZp",
+            "ZxoRLnVvc2VydmljZS5TdGF0ZXMSLwoHUmVhZE9icxIRLnVvc2VydmljZS5D",
+            "b25maWcaES51b3NlcnZpY2UuU3RhdGVzEjAKCFdyaXRlQWN0EhIudW9zZXJ2",
+            "aWNlLkFjdGlvbnMaEC51b3NlcnZpY2UuRW1wdHkSQwoTQWN0U2VtYXBob3Jl",
+            "Q29udHJvbBIaLnVvc2VydmljZS5TZW1hcGhvcmVBY3Rpb24aEC51b3NlcnZp",
+            "Y2UuRW1wdHkSQwoTT2JzU2VtYXBob3JlQ29udHJvbBIaLnVvc2VydmljZS5T",
+            "ZW1hcGhvcmVBY3Rpb24aEC51b3NlcnZpY2UuRW1wdHkSMgoKUmVhZFJlcGxh",
+            "eRIRLnVvc2VydmljZS5Db25maWcaES51b3NlcnZpY2UuU3RhdGVzEjIKC1Jl",
+            "YWRNUFFGaWxlEhEudW9zZXJ2aWNlLkNvbmZpZxoQLnVvc2VydmljZS5FbXB0",
+            "eWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Empty), global::Uoservice.Empty.Parser, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcClilocData), global::Uoservice.GrpcClilocData.Parser, new[]{ "Serial", "Text", "Affix", "Name" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcGameObjectData), global::Uoservice.GrpcGameObjectData.Parser, new[]{ "Type", "Distance", "GameX", "GameY", "Serial", "Name", "IsCorpse", "Title", "Amount", "Price", "Layer" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcMobileObjectData), global::Uoservice.GrpcMobileObjectData.Parser, new[]{ "Distance", "GameX", "GameY", "Serial", "Name", "IsCorpse", "Title" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcItemObjectData), global::Uoservice.GrpcItemObjectData.Parser, new[]{ "Distance", "GameX", "GameY", "Serial", "Name", "IsCorpse", "Amount", "Price", "Layer" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcSkill), global::Uoservice.GrpcSkill.Parser, new[]{ "Name", "Index", "IsClickable", "Value", "Base", "Cap", "Lock" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcPlayerStatus), global::Uoservice.GrpcPlayerStatus.Parser, new[]{ "Str", "Dex", "Intell", "Hits", "HitsMax", "Stamina", "StaminaMax", "Mana", "ManaMax", "Gold", "PhysicalResistance", "Weight", "WeightMax" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcPlayerStatusEtc), global::Uoservice.GrpcPlayerStatusEtc.Parser, new[]{ "HoldItemSerial", "WarMode" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcPlayerObject), global::Uoservice.GrpcPlayerObject.Parser, new[]{ "GameX", "GameY", "Serial", "Name", "Title", "HoldItemSerial", "WarMode" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcGameObjectInfoList), global::Uoservice.GrpcGameObjectInfoList.Parser, new[]{ "GameXs", "GameYs" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcPopupMenuList), global::Uoservice.GrpcPopupMenuList.Parser, new[]{ "Menus" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcClilocDataList), global::Uoservice.GrpcClilocDataList.Parser, new[]{ "ClilocDatas" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcGameObjectList), global::Uoservice.GrpcGameObjectList.Parser, new[]{ "GameObjects" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcMobileObjectList), global::Uoservice.GrpcMobileObjectList.Parser, new[]{ "MobileObjects" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcItemObjectList), global::Uoservice.GrpcItemObjectList.Parser, new[]{ "ItemObjects" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.SemaphoreAction), global::Uoservice.SemaphoreAction.Parser, new[]{ "Mode" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Config), global::Uoservice.Config.Parser, new[]{ "Init" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcSkillList), global::Uoservice.GrpcSkillList.Parser, new[]{ "Skills" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcContainerData), global::Uoservice.GrpcContainerData.Parser, new[]{ "ContainerSerial", "ContainerItemSerialList" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcContainerDataList), global::Uoservice.GrpcContainerDataList.Parser, new[]{ "Containers" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcSerialList), global::Uoservice.GrpcSerialList.Parser, new[]{ "Serials" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.States), global::Uoservice.States.Parser, new[]{ "WorldItemList", "WorldMobileList", "EquippedItemSerialList", "BackpackItemSerialList", "BankItemSerialList", "VendorItemSerialList", "OpenedCorpseList", "PlayerStatus", "PopupMenuList", "ClilocDataList", "ReplayActions", "StaticObjectInfoList", "PlayerSkillList", "PlayerStatusEtc" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.States), global::Uoservice.States.Parser, new[]{ "WorldItemList", "WorldMobileList", "EquippedItemSerialList", "BackpackItemSerialList", "BankItemSerialList", "VendorItemSerialList", "OpenedCorpseList", "PlayerStatus", "PopupMenuList", "ClilocDataList", "ReplayActions", "StaticObjectInfoList", "PlayerSkillList", "PlayerObject" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Actions), global::Uoservice.Actions.Parser, new[]{ "ActionType", "ItemSerial", "MobileSerial", "WalkDirection", "Index", "Amount", "Run" }, null, null, null)
           }));
     }
@@ -424,11 +432,11 @@ namespace Uoservice {
 
   }
 
-  public sealed partial class GrpcGameObjectData : pb::IMessage<GrpcGameObjectData> {
-    private static readonly pb::MessageParser<GrpcGameObjectData> _parser = new pb::MessageParser<GrpcGameObjectData>(() => new GrpcGameObjectData());
+  public sealed partial class GrpcMobileObjectData : pb::IMessage<GrpcMobileObjectData> {
+    private static readonly pb::MessageParser<GrpcMobileObjectData> _parser = new pb::MessageParser<GrpcMobileObjectData>(() => new GrpcMobileObjectData());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<GrpcGameObjectData> Parser { get { return _parser; } }
+    public static pb::MessageParser<GrpcMobileObjectData> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -441,15 +449,14 @@ namespace Uoservice {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GrpcGameObjectData() {
+    public GrpcMobileObjectData() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GrpcGameObjectData(GrpcGameObjectData other) : this() {
-      type_ = other.type_;
+    public GrpcMobileObjectData(GrpcMobileObjectData other) : this() {
       distance_ = other.distance_;
       gameX_ = other.gameX_;
       gameY_ = other.gameY_;
@@ -457,30 +464,16 @@ namespace Uoservice {
       name_ = other.name_;
       isCorpse_ = other.isCorpse_;
       title_ = other.title_;
-      amount_ = other.amount_;
-      price_ = other.price_;
-      layer_ = other.layer_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GrpcGameObjectData Clone() {
-      return new GrpcGameObjectData(this);
-    }
-
-    /// <summary>Field number for the "type" field.</summary>
-    public const int TypeFieldNumber = 1;
-    private string type_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string Type {
-      get { return type_; }
-      set {
-        type_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
+    public GrpcMobileObjectData Clone() {
+      return new GrpcMobileObjectData(this);
     }
 
     /// <summary>Field number for the "distance" field.</summary>
-    public const int DistanceFieldNumber = 2;
+    public const int DistanceFieldNumber = 1;
     private uint distance_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public uint Distance {
@@ -491,7 +484,7 @@ namespace Uoservice {
     }
 
     /// <summary>Field number for the "gameX" field.</summary>
-    public const int GameXFieldNumber = 3;
+    public const int GameXFieldNumber = 2;
     private uint gameX_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public uint GameX {
@@ -502,7 +495,7 @@ namespace Uoservice {
     }
 
     /// <summary>Field number for the "gameY" field.</summary>
-    public const int GameYFieldNumber = 4;
+    public const int GameYFieldNumber = 3;
     private uint gameY_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public uint GameY {
@@ -513,7 +506,7 @@ namespace Uoservice {
     }
 
     /// <summary>Field number for the "serial" field.</summary>
-    public const int SerialFieldNumber = 5;
+    public const int SerialFieldNumber = 4;
     private uint serial_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public uint Serial {
@@ -524,7 +517,7 @@ namespace Uoservice {
     }
 
     /// <summary>Field number for the "name" field.</summary>
-    public const int NameFieldNumber = 6;
+    public const int NameFieldNumber = 5;
     private string name_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Name {
@@ -535,7 +528,7 @@ namespace Uoservice {
     }
 
     /// <summary>Field number for the "isCorpse" field.</summary>
-    public const int IsCorpseFieldNumber = 7;
+    public const int IsCorpseFieldNumber = 6;
     private bool isCorpse_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool IsCorpse {
@@ -546,7 +539,7 @@ namespace Uoservice {
     }
 
     /// <summary>Field number for the "title" field.</summary>
-    public const int TitleFieldNumber = 8;
+    public const int TitleFieldNumber = 7;
     private string title_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Title {
@@ -556,53 +549,19 @@ namespace Uoservice {
       }
     }
 
-    /// <summary>Field number for the "amount" field.</summary>
-    public const int AmountFieldNumber = 9;
-    private uint amount_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Amount {
-      get { return amount_; }
-      set {
-        amount_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "price" field.</summary>
-    public const int PriceFieldNumber = 10;
-    private uint price_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Price {
-      get { return price_; }
-      set {
-        price_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "layer" field.</summary>
-    public const int LayerFieldNumber = 11;
-    private uint layer_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Layer {
-      get { return layer_; }
-      set {
-        layer_ = value;
-      }
-    }
-
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as GrpcGameObjectData);
+      return Equals(other as GrpcMobileObjectData);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(GrpcGameObjectData other) {
+    public bool Equals(GrpcMobileObjectData other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Type != other.Type) return false;
       if (Distance != other.Distance) return false;
       if (GameX != other.GameX) return false;
       if (GameY != other.GameY) return false;
@@ -610,16 +569,12 @@ namespace Uoservice {
       if (Name != other.Name) return false;
       if (IsCorpse != other.IsCorpse) return false;
       if (Title != other.Title) return false;
-      if (Amount != other.Amount) return false;
-      if (Price != other.Price) return false;
-      if (Layer != other.Layer) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (Type.Length != 0) hash ^= Type.GetHashCode();
       if (Distance != 0) hash ^= Distance.GetHashCode();
       if (GameX != 0) hash ^= GameX.GetHashCode();
       if (GameY != 0) hash ^= GameY.GetHashCode();
@@ -627,9 +582,6 @@ namespace Uoservice {
       if (Name.Length != 0) hash ^= Name.GetHashCode();
       if (IsCorpse != false) hash ^= IsCorpse.GetHashCode();
       if (Title.Length != 0) hash ^= Title.GetHashCode();
-      if (Amount != 0) hash ^= Amount.GetHashCode();
-      if (Price != 0) hash ^= Price.GetHashCode();
-      if (Layer != 0) hash ^= Layer.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -643,49 +595,33 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (Type.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(Type);
-      }
       if (Distance != 0) {
-        output.WriteRawTag(16);
+        output.WriteRawTag(8);
         output.WriteUInt32(Distance);
       }
       if (GameX != 0) {
-        output.WriteRawTag(24);
+        output.WriteRawTag(16);
         output.WriteUInt32(GameX);
       }
       if (GameY != 0) {
-        output.WriteRawTag(32);
+        output.WriteRawTag(24);
         output.WriteUInt32(GameY);
       }
       if (Serial != 0) {
-        output.WriteRawTag(40);
+        output.WriteRawTag(32);
         output.WriteUInt32(Serial);
       }
       if (Name.Length != 0) {
-        output.WriteRawTag(50);
+        output.WriteRawTag(42);
         output.WriteString(Name);
       }
       if (IsCorpse != false) {
-        output.WriteRawTag(56);
+        output.WriteRawTag(48);
         output.WriteBool(IsCorpse);
       }
       if (Title.Length != 0) {
-        output.WriteRawTag(66);
+        output.WriteRawTag(58);
         output.WriteString(Title);
-      }
-      if (Amount != 0) {
-        output.WriteRawTag(72);
-        output.WriteUInt32(Amount);
-      }
-      if (Price != 0) {
-        output.WriteRawTag(80);
-        output.WriteUInt32(Price);
-      }
-      if (Layer != 0) {
-        output.WriteRawTag(88);
-        output.WriteUInt32(Layer);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -695,9 +631,6 @@ namespace Uoservice {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      if (Type.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Type);
-      }
       if (Distance != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Distance);
       }
@@ -719,15 +652,6 @@ namespace Uoservice {
       if (Title.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Title);
       }
-      if (Amount != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Amount);
-      }
-      if (Price != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Price);
-      }
-      if (Layer != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Layer);
-      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -735,12 +659,9 @@ namespace Uoservice {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(GrpcGameObjectData other) {
+    public void MergeFrom(GrpcMobileObjectData other) {
       if (other == null) {
         return;
-      }
-      if (other.Type.Length != 0) {
-        Type = other.Type;
       }
       if (other.Distance != 0) {
         Distance = other.Distance;
@@ -763,6 +684,342 @@ namespace Uoservice {
       if (other.Title.Length != 0) {
         Title = other.Title;
       }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            Distance = input.ReadUInt32();
+            break;
+          }
+          case 16: {
+            GameX = input.ReadUInt32();
+            break;
+          }
+          case 24: {
+            GameY = input.ReadUInt32();
+            break;
+          }
+          case 32: {
+            Serial = input.ReadUInt32();
+            break;
+          }
+          case 42: {
+            Name = input.ReadString();
+            break;
+          }
+          case 48: {
+            IsCorpse = input.ReadBool();
+            break;
+          }
+          case 58: {
+            Title = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class GrpcItemObjectData : pb::IMessage<GrpcItemObjectData> {
+    private static readonly pb::MessageParser<GrpcItemObjectData> _parser = new pb::MessageParser<GrpcItemObjectData>(() => new GrpcItemObjectData());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<GrpcItemObjectData> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[3]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GrpcItemObjectData() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GrpcItemObjectData(GrpcItemObjectData other) : this() {
+      distance_ = other.distance_;
+      gameX_ = other.gameX_;
+      gameY_ = other.gameY_;
+      serial_ = other.serial_;
+      name_ = other.name_;
+      isCorpse_ = other.isCorpse_;
+      amount_ = other.amount_;
+      price_ = other.price_;
+      layer_ = other.layer_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GrpcItemObjectData Clone() {
+      return new GrpcItemObjectData(this);
+    }
+
+    /// <summary>Field number for the "distance" field.</summary>
+    public const int DistanceFieldNumber = 1;
+    private uint distance_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Distance {
+      get { return distance_; }
+      set {
+        distance_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "gameX" field.</summary>
+    public const int GameXFieldNumber = 2;
+    private uint gameX_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint GameX {
+      get { return gameX_; }
+      set {
+        gameX_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "gameY" field.</summary>
+    public const int GameYFieldNumber = 3;
+    private uint gameY_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint GameY {
+      get { return gameY_; }
+      set {
+        gameY_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "serial" field.</summary>
+    public const int SerialFieldNumber = 4;
+    private uint serial_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Serial {
+      get { return serial_; }
+      set {
+        serial_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "name" field.</summary>
+    public const int NameFieldNumber = 5;
+    private string name_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Name {
+      get { return name_; }
+      set {
+        name_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "isCorpse" field.</summary>
+    public const int IsCorpseFieldNumber = 6;
+    private bool isCorpse_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool IsCorpse {
+      get { return isCorpse_; }
+      set {
+        isCorpse_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "amount" field.</summary>
+    public const int AmountFieldNumber = 7;
+    private uint amount_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Amount {
+      get { return amount_; }
+      set {
+        amount_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "price" field.</summary>
+    public const int PriceFieldNumber = 8;
+    private uint price_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Price {
+      get { return price_; }
+      set {
+        price_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "layer" field.</summary>
+    public const int LayerFieldNumber = 9;
+    private uint layer_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Layer {
+      get { return layer_; }
+      set {
+        layer_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as GrpcItemObjectData);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(GrpcItemObjectData other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Distance != other.Distance) return false;
+      if (GameX != other.GameX) return false;
+      if (GameY != other.GameY) return false;
+      if (Serial != other.Serial) return false;
+      if (Name != other.Name) return false;
+      if (IsCorpse != other.IsCorpse) return false;
+      if (Amount != other.Amount) return false;
+      if (Price != other.Price) return false;
+      if (Layer != other.Layer) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Distance != 0) hash ^= Distance.GetHashCode();
+      if (GameX != 0) hash ^= GameX.GetHashCode();
+      if (GameY != 0) hash ^= GameY.GetHashCode();
+      if (Serial != 0) hash ^= Serial.GetHashCode();
+      if (Name.Length != 0) hash ^= Name.GetHashCode();
+      if (IsCorpse != false) hash ^= IsCorpse.GetHashCode();
+      if (Amount != 0) hash ^= Amount.GetHashCode();
+      if (Price != 0) hash ^= Price.GetHashCode();
+      if (Layer != 0) hash ^= Layer.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Distance != 0) {
+        output.WriteRawTag(8);
+        output.WriteUInt32(Distance);
+      }
+      if (GameX != 0) {
+        output.WriteRawTag(16);
+        output.WriteUInt32(GameX);
+      }
+      if (GameY != 0) {
+        output.WriteRawTag(24);
+        output.WriteUInt32(GameY);
+      }
+      if (Serial != 0) {
+        output.WriteRawTag(32);
+        output.WriteUInt32(Serial);
+      }
+      if (Name.Length != 0) {
+        output.WriteRawTag(42);
+        output.WriteString(Name);
+      }
+      if (IsCorpse != false) {
+        output.WriteRawTag(48);
+        output.WriteBool(IsCorpse);
+      }
+      if (Amount != 0) {
+        output.WriteRawTag(56);
+        output.WriteUInt32(Amount);
+      }
+      if (Price != 0) {
+        output.WriteRawTag(64);
+        output.WriteUInt32(Price);
+      }
+      if (Layer != 0) {
+        output.WriteRawTag(72);
+        output.WriteUInt32(Layer);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Distance != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Distance);
+      }
+      if (GameX != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(GameX);
+      }
+      if (GameY != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(GameY);
+      }
+      if (Serial != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Serial);
+      }
+      if (Name.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
+      }
+      if (IsCorpse != false) {
+        size += 1 + 1;
+      }
+      if (Amount != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Amount);
+      }
+      if (Price != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Price);
+      }
+      if (Layer != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Layer);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(GrpcItemObjectData other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Distance != 0) {
+        Distance = other.Distance;
+      }
+      if (other.GameX != 0) {
+        GameX = other.GameX;
+      }
+      if (other.GameY != 0) {
+        GameY = other.GameY;
+      }
+      if (other.Serial != 0) {
+        Serial = other.Serial;
+      }
+      if (other.Name.Length != 0) {
+        Name = other.Name;
+      }
+      if (other.IsCorpse != false) {
+        IsCorpse = other.IsCorpse;
+      }
       if (other.Amount != 0) {
         Amount = other.Amount;
       }
@@ -783,47 +1040,39 @@ namespace Uoservice {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 10: {
-            Type = input.ReadString();
-            break;
-          }
-          case 16: {
+          case 8: {
             Distance = input.ReadUInt32();
             break;
           }
-          case 24: {
+          case 16: {
             GameX = input.ReadUInt32();
             break;
           }
-          case 32: {
+          case 24: {
             GameY = input.ReadUInt32();
             break;
           }
-          case 40: {
+          case 32: {
             Serial = input.ReadUInt32();
             break;
           }
-          case 50: {
+          case 42: {
             Name = input.ReadString();
             break;
           }
-          case 56: {
+          case 48: {
             IsCorpse = input.ReadBool();
             break;
           }
-          case 66: {
-            Title = input.ReadString();
-            break;
-          }
-          case 72: {
+          case 56: {
             Amount = input.ReadUInt32();
             break;
           }
-          case 80: {
+          case 64: {
             Price = input.ReadUInt32();
             break;
           }
-          case 88: {
+          case 72: {
             Layer = input.ReadUInt32();
             break;
           }
@@ -841,7 +1090,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[3]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1138,7 +1387,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[4]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1595,15 +1844,15 @@ namespace Uoservice {
 
   }
 
-  public sealed partial class GrpcPlayerStatusEtc : pb::IMessage<GrpcPlayerStatusEtc> {
-    private static readonly pb::MessageParser<GrpcPlayerStatusEtc> _parser = new pb::MessageParser<GrpcPlayerStatusEtc>(() => new GrpcPlayerStatusEtc());
+  public sealed partial class GrpcPlayerObject : pb::IMessage<GrpcPlayerObject> {
+    private static readonly pb::MessageParser<GrpcPlayerObject> _parser = new pb::MessageParser<GrpcPlayerObject>(() => new GrpcPlayerObject());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<GrpcPlayerStatusEtc> Parser { get { return _parser; } }
+    public static pb::MessageParser<GrpcPlayerObject> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[5]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1612,26 +1861,86 @@ namespace Uoservice {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GrpcPlayerStatusEtc() {
+    public GrpcPlayerObject() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GrpcPlayerStatusEtc(GrpcPlayerStatusEtc other) : this() {
+    public GrpcPlayerObject(GrpcPlayerObject other) : this() {
+      gameX_ = other.gameX_;
+      gameY_ = other.gameY_;
+      serial_ = other.serial_;
+      name_ = other.name_;
+      title_ = other.title_;
       holdItemSerial_ = other.holdItemSerial_;
       warMode_ = other.warMode_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GrpcPlayerStatusEtc Clone() {
-      return new GrpcPlayerStatusEtc(this);
+    public GrpcPlayerObject Clone() {
+      return new GrpcPlayerObject(this);
+    }
+
+    /// <summary>Field number for the "gameX" field.</summary>
+    public const int GameXFieldNumber = 1;
+    private uint gameX_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint GameX {
+      get { return gameX_; }
+      set {
+        gameX_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "gameY" field.</summary>
+    public const int GameYFieldNumber = 2;
+    private uint gameY_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint GameY {
+      get { return gameY_; }
+      set {
+        gameY_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "serial" field.</summary>
+    public const int SerialFieldNumber = 3;
+    private uint serial_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Serial {
+      get { return serial_; }
+      set {
+        serial_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "name" field.</summary>
+    public const int NameFieldNumber = 4;
+    private string name_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Name {
+      get { return name_; }
+      set {
+        name_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "title" field.</summary>
+    public const int TitleFieldNumber = 5;
+    private string title_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Title {
+      get { return title_; }
+      set {
+        title_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
     }
 
     /// <summary>Field number for the "holdItemSerial" field.</summary>
-    public const int HoldItemSerialFieldNumber = 1;
+    public const int HoldItemSerialFieldNumber = 6;
     private uint holdItemSerial_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public uint HoldItemSerial {
@@ -1642,7 +1951,7 @@ namespace Uoservice {
     }
 
     /// <summary>Field number for the "warMode" field.</summary>
-    public const int WarModeFieldNumber = 2;
+    public const int WarModeFieldNumber = 7;
     private bool warMode_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool WarMode {
@@ -1654,17 +1963,22 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as GrpcPlayerStatusEtc);
+      return Equals(other as GrpcPlayerObject);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(GrpcPlayerStatusEtc other) {
+    public bool Equals(GrpcPlayerObject other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
       if (ReferenceEquals(other, this)) {
         return true;
       }
+      if (GameX != other.GameX) return false;
+      if (GameY != other.GameY) return false;
+      if (Serial != other.Serial) return false;
+      if (Name != other.Name) return false;
+      if (Title != other.Title) return false;
       if (HoldItemSerial != other.HoldItemSerial) return false;
       if (WarMode != other.WarMode) return false;
       return Equals(_unknownFields, other._unknownFields);
@@ -1673,6 +1987,11 @@ namespace Uoservice {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
+      if (GameX != 0) hash ^= GameX.GetHashCode();
+      if (GameY != 0) hash ^= GameY.GetHashCode();
+      if (Serial != 0) hash ^= Serial.GetHashCode();
+      if (Name.Length != 0) hash ^= Name.GetHashCode();
+      if (Title.Length != 0) hash ^= Title.GetHashCode();
       if (HoldItemSerial != 0) hash ^= HoldItemSerial.GetHashCode();
       if (WarMode != false) hash ^= WarMode.GetHashCode();
       if (_unknownFields != null) {
@@ -1688,12 +2007,32 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (HoldItemSerial != 0) {
+      if (GameX != 0) {
         output.WriteRawTag(8);
+        output.WriteUInt32(GameX);
+      }
+      if (GameY != 0) {
+        output.WriteRawTag(16);
+        output.WriteUInt32(GameY);
+      }
+      if (Serial != 0) {
+        output.WriteRawTag(24);
+        output.WriteUInt32(Serial);
+      }
+      if (Name.Length != 0) {
+        output.WriteRawTag(34);
+        output.WriteString(Name);
+      }
+      if (Title.Length != 0) {
+        output.WriteRawTag(42);
+        output.WriteString(Title);
+      }
+      if (HoldItemSerial != 0) {
+        output.WriteRawTag(48);
         output.WriteUInt32(HoldItemSerial);
       }
       if (WarMode != false) {
-        output.WriteRawTag(16);
+        output.WriteRawTag(56);
         output.WriteBool(WarMode);
       }
       if (_unknownFields != null) {
@@ -1704,6 +2043,21 @@ namespace Uoservice {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
+      if (GameX != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(GameX);
+      }
+      if (GameY != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(GameY);
+      }
+      if (Serial != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Serial);
+      }
+      if (Name.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
+      }
+      if (Title.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Title);
+      }
       if (HoldItemSerial != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(HoldItemSerial);
       }
@@ -1717,9 +2071,24 @@ namespace Uoservice {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(GrpcPlayerStatusEtc other) {
+    public void MergeFrom(GrpcPlayerObject other) {
       if (other == null) {
         return;
+      }
+      if (other.GameX != 0) {
+        GameX = other.GameX;
+      }
+      if (other.GameY != 0) {
+        GameY = other.GameY;
+      }
+      if (other.Serial != 0) {
+        Serial = other.Serial;
+      }
+      if (other.Name.Length != 0) {
+        Name = other.Name;
+      }
+      if (other.Title.Length != 0) {
+        Title = other.Title;
       }
       if (other.HoldItemSerial != 0) {
         HoldItemSerial = other.HoldItemSerial;
@@ -1739,10 +2108,30 @@ namespace Uoservice {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            HoldItemSerial = input.ReadUInt32();
+            GameX = input.ReadUInt32();
             break;
           }
           case 16: {
+            GameY = input.ReadUInt32();
+            break;
+          }
+          case 24: {
+            Serial = input.ReadUInt32();
+            break;
+          }
+          case 34: {
+            Name = input.ReadString();
+            break;
+          }
+          case 42: {
+            Title = input.ReadString();
+            break;
+          }
+          case 48: {
+            HoldItemSerial = input.ReadUInt32();
+            break;
+          }
+          case 56: {
             WarMode = input.ReadBool();
             break;
           }
@@ -1760,7 +2149,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[6]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[7]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1903,7 +2292,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[7]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[8]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2024,7 +2413,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[8]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[9]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2137,15 +2526,15 @@ namespace Uoservice {
 
   }
 
-  public sealed partial class GrpcGameObjectList : pb::IMessage<GrpcGameObjectList> {
-    private static readonly pb::MessageParser<GrpcGameObjectList> _parser = new pb::MessageParser<GrpcGameObjectList>(() => new GrpcGameObjectList());
+  public sealed partial class GrpcMobileObjectList : pb::IMessage<GrpcMobileObjectList> {
+    private static readonly pb::MessageParser<GrpcMobileObjectList> _parser = new pb::MessageParser<GrpcMobileObjectList>(() => new GrpcMobileObjectList());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<GrpcGameObjectList> Parser { get { return _parser; } }
+    public static pb::MessageParser<GrpcMobileObjectList> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[9]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[10]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2154,54 +2543,54 @@ namespace Uoservice {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GrpcGameObjectList() {
+    public GrpcMobileObjectList() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GrpcGameObjectList(GrpcGameObjectList other) : this() {
-      gameObjects_ = other.gameObjects_.Clone();
+    public GrpcMobileObjectList(GrpcMobileObjectList other) : this() {
+      mobileObjects_ = other.mobileObjects_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public GrpcGameObjectList Clone() {
-      return new GrpcGameObjectList(this);
+    public GrpcMobileObjectList Clone() {
+      return new GrpcMobileObjectList(this);
     }
 
-    /// <summary>Field number for the "gameObjects" field.</summary>
-    public const int GameObjectsFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::Uoservice.GrpcGameObjectData> _repeated_gameObjects_codec
-        = pb::FieldCodec.ForMessage(10, global::Uoservice.GrpcGameObjectData.Parser);
-    private readonly pbc::RepeatedField<global::Uoservice.GrpcGameObjectData> gameObjects_ = new pbc::RepeatedField<global::Uoservice.GrpcGameObjectData>();
+    /// <summary>Field number for the "mobileObjects" field.</summary>
+    public const int MobileObjectsFieldNumber = 1;
+    private static readonly pb::FieldCodec<global::Uoservice.GrpcMobileObjectData> _repeated_mobileObjects_codec
+        = pb::FieldCodec.ForMessage(10, global::Uoservice.GrpcMobileObjectData.Parser);
+    private readonly pbc::RepeatedField<global::Uoservice.GrpcMobileObjectData> mobileObjects_ = new pbc::RepeatedField<global::Uoservice.GrpcMobileObjectData>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::Uoservice.GrpcGameObjectData> GameObjects {
-      get { return gameObjects_; }
+    public pbc::RepeatedField<global::Uoservice.GrpcMobileObjectData> MobileObjects {
+      get { return mobileObjects_; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as GrpcGameObjectList);
+      return Equals(other as GrpcMobileObjectList);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(GrpcGameObjectList other) {
+    public bool Equals(GrpcMobileObjectList other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if(!gameObjects_.Equals(other.gameObjects_)) return false;
+      if(!mobileObjects_.Equals(other.mobileObjects_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      hash ^= gameObjects_.GetHashCode();
+      hash ^= mobileObjects_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -2215,7 +2604,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      gameObjects_.WriteTo(output, _repeated_gameObjects_codec);
+      mobileObjects_.WriteTo(output, _repeated_mobileObjects_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -2224,7 +2613,7 @@ namespace Uoservice {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
-      size += gameObjects_.CalculateSize(_repeated_gameObjects_codec);
+      size += mobileObjects_.CalculateSize(_repeated_mobileObjects_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -2232,11 +2621,11 @@ namespace Uoservice {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(GrpcGameObjectList other) {
+    public void MergeFrom(GrpcMobileObjectList other) {
       if (other == null) {
         return;
       }
-      gameObjects_.Add(other.gameObjects_);
+      mobileObjects_.Add(other.mobileObjects_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -2249,7 +2638,128 @@ namespace Uoservice {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
-            gameObjects_.AddEntriesFrom(input, _repeated_gameObjects_codec);
+            mobileObjects_.AddEntriesFrom(input, _repeated_mobileObjects_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class GrpcItemObjectList : pb::IMessage<GrpcItemObjectList> {
+    private static readonly pb::MessageParser<GrpcItemObjectList> _parser = new pb::MessageParser<GrpcItemObjectList>(() => new GrpcItemObjectList());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<GrpcItemObjectList> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[11]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GrpcItemObjectList() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GrpcItemObjectList(GrpcItemObjectList other) : this() {
+      itemObjects_ = other.itemObjects_.Clone();
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GrpcItemObjectList Clone() {
+      return new GrpcItemObjectList(this);
+    }
+
+    /// <summary>Field number for the "itemObjects" field.</summary>
+    public const int ItemObjectsFieldNumber = 1;
+    private static readonly pb::FieldCodec<global::Uoservice.GrpcItemObjectData> _repeated_itemObjects_codec
+        = pb::FieldCodec.ForMessage(10, global::Uoservice.GrpcItemObjectData.Parser);
+    private readonly pbc::RepeatedField<global::Uoservice.GrpcItemObjectData> itemObjects_ = new pbc::RepeatedField<global::Uoservice.GrpcItemObjectData>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::Uoservice.GrpcItemObjectData> ItemObjects {
+      get { return itemObjects_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as GrpcItemObjectList);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(GrpcItemObjectList other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!itemObjects_.Equals(other.itemObjects_)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= itemObjects_.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      itemObjects_.WriteTo(output, _repeated_itemObjects_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      size += itemObjects_.CalculateSize(_repeated_itemObjects_codec);
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(GrpcItemObjectList other) {
+      if (other == null) {
+        return;
+      }
+      itemObjects_.Add(other.itemObjects_);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            itemObjects_.AddEntriesFrom(input, _repeated_itemObjects_codec);
             break;
           }
         }
@@ -2266,7 +2776,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[10]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[12]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2395,7 +2905,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[11]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[13]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2524,7 +3034,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[12]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[14]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2645,7 +3155,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[13]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[15]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2808,7 +3318,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[14]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[16]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2929,7 +3439,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[15]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[17]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3051,7 +3561,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[16]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[18]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3081,7 +3591,7 @@ namespace Uoservice {
       replayActions_ = other.replayActions_ != null ? other.replayActions_.Clone() : null;
       staticObjectInfoList_ = other.staticObjectInfoList_ != null ? other.staticObjectInfoList_.Clone() : null;
       playerSkillList_ = other.playerSkillList_ != null ? other.playerSkillList_.Clone() : null;
-      playerStatusEtc_ = other.playerStatusEtc_ != null ? other.playerStatusEtc_.Clone() : null;
+      playerObject_ = other.playerObject_ != null ? other.playerObject_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -3092,9 +3602,9 @@ namespace Uoservice {
 
     /// <summary>Field number for the "WorldItemList" field.</summary>
     public const int WorldItemListFieldNumber = 1;
-    private global::Uoservice.GrpcGameObjectList worldItemList_;
+    private global::Uoservice.GrpcItemObjectList worldItemList_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Uoservice.GrpcGameObjectList WorldItemList {
+    public global::Uoservice.GrpcItemObjectList WorldItemList {
       get { return worldItemList_; }
       set {
         worldItemList_ = value;
@@ -3103,9 +3613,9 @@ namespace Uoservice {
 
     /// <summary>Field number for the "WorldMobileList" field.</summary>
     public const int WorldMobileListFieldNumber = 2;
-    private global::Uoservice.GrpcGameObjectList worldMobileList_;
+    private global::Uoservice.GrpcMobileObjectList worldMobileList_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Uoservice.GrpcGameObjectList WorldMobileList {
+    public global::Uoservice.GrpcMobileObjectList WorldMobileList {
       get { return worldMobileList_; }
       set {
         worldMobileList_ = value;
@@ -3233,14 +3743,14 @@ namespace Uoservice {
       }
     }
 
-    /// <summary>Field number for the "playerStatusEtc" field.</summary>
-    public const int PlayerStatusEtcFieldNumber = 14;
-    private global::Uoservice.GrpcPlayerStatusEtc playerStatusEtc_;
+    /// <summary>Field number for the "playerObject" field.</summary>
+    public const int PlayerObjectFieldNumber = 14;
+    private global::Uoservice.GrpcPlayerObject playerObject_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Uoservice.GrpcPlayerStatusEtc PlayerStatusEtc {
-      get { return playerStatusEtc_; }
+    public global::Uoservice.GrpcPlayerObject PlayerObject {
+      get { return playerObject_; }
       set {
-        playerStatusEtc_ = value;
+        playerObject_ = value;
       }
     }
 
@@ -3270,7 +3780,7 @@ namespace Uoservice {
       if (!object.Equals(ReplayActions, other.ReplayActions)) return false;
       if (!object.Equals(StaticObjectInfoList, other.StaticObjectInfoList)) return false;
       if (!object.Equals(PlayerSkillList, other.PlayerSkillList)) return false;
-      if (!object.Equals(PlayerStatusEtc, other.PlayerStatusEtc)) return false;
+      if (!object.Equals(PlayerObject, other.PlayerObject)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -3290,7 +3800,7 @@ namespace Uoservice {
       if (replayActions_ != null) hash ^= ReplayActions.GetHashCode();
       if (staticObjectInfoList_ != null) hash ^= StaticObjectInfoList.GetHashCode();
       if (playerSkillList_ != null) hash ^= PlayerSkillList.GetHashCode();
-      if (playerStatusEtc_ != null) hash ^= PlayerStatusEtc.GetHashCode();
+      if (playerObject_ != null) hash ^= PlayerObject.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -3356,9 +3866,9 @@ namespace Uoservice {
         output.WriteRawTag(106);
         output.WriteMessage(PlayerSkillList);
       }
-      if (playerStatusEtc_ != null) {
+      if (playerObject_ != null) {
         output.WriteRawTag(114);
-        output.WriteMessage(PlayerStatusEtc);
+        output.WriteMessage(PlayerObject);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -3407,8 +3917,8 @@ namespace Uoservice {
       if (playerSkillList_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerSkillList);
       }
-      if (playerStatusEtc_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerStatusEtc);
+      if (playerObject_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerObject);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -3423,13 +3933,13 @@ namespace Uoservice {
       }
       if (other.worldItemList_ != null) {
         if (worldItemList_ == null) {
-          worldItemList_ = new global::Uoservice.GrpcGameObjectList();
+          worldItemList_ = new global::Uoservice.GrpcItemObjectList();
         }
         WorldItemList.MergeFrom(other.WorldItemList);
       }
       if (other.worldMobileList_ != null) {
         if (worldMobileList_ == null) {
-          worldMobileList_ = new global::Uoservice.GrpcGameObjectList();
+          worldMobileList_ = new global::Uoservice.GrpcMobileObjectList();
         }
         WorldMobileList.MergeFrom(other.WorldMobileList);
       }
@@ -3499,11 +4009,11 @@ namespace Uoservice {
         }
         PlayerSkillList.MergeFrom(other.PlayerSkillList);
       }
-      if (other.playerStatusEtc_ != null) {
-        if (playerStatusEtc_ == null) {
-          playerStatusEtc_ = new global::Uoservice.GrpcPlayerStatusEtc();
+      if (other.playerObject_ != null) {
+        if (playerObject_ == null) {
+          playerObject_ = new global::Uoservice.GrpcPlayerObject();
         }
-        PlayerStatusEtc.MergeFrom(other.PlayerStatusEtc);
+        PlayerObject.MergeFrom(other.PlayerObject);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -3518,14 +4028,14 @@ namespace Uoservice {
             break;
           case 10: {
             if (worldItemList_ == null) {
-              worldItemList_ = new global::Uoservice.GrpcGameObjectList();
+              worldItemList_ = new global::Uoservice.GrpcItemObjectList();
             }
             input.ReadMessage(worldItemList_);
             break;
           }
           case 18: {
             if (worldMobileList_ == null) {
-              worldMobileList_ = new global::Uoservice.GrpcGameObjectList();
+              worldMobileList_ = new global::Uoservice.GrpcMobileObjectList();
             }
             input.ReadMessage(worldMobileList_);
             break;
@@ -3608,10 +4118,10 @@ namespace Uoservice {
             break;
           }
           case 114: {
-            if (playerStatusEtc_ == null) {
-              playerStatusEtc_ = new global::Uoservice.GrpcPlayerStatusEtc();
+            if (playerObject_ == null) {
+              playerObject_ = new global::Uoservice.GrpcPlayerObject();
             }
-            input.ReadMessage(playerStatusEtc_);
+            input.ReadMessage(playerObject_);
             break;
           }
         }
@@ -3628,7 +4138,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[17]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[19]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

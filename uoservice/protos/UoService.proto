@@ -118,28 +118,25 @@ message GrpcSerialList {
 }
 
 message States {
-  GrpcItemObjectList WorldItemList = 1;
-  GrpcMobileObjectList WorldMobileList = 2;
+  GrpcPlayerObject playerObject = 1;
 
-  GrpcSerialList equippedItemSerialList = 3;
-  GrpcSerialList backpackItemSerialList = 4;
-  GrpcSerialList bankItemSerialList = 5;
-  GrpcSerialList vendorItemSerialList = 6;
+  GrpcItemObjectList WorldItemList = 2;
+  GrpcMobileObjectList WorldMobileList = 3;
 
-  GrpcContainerDataList openedCorpseList = 7;
-  GrpcPlayerStatus playerStatus = 8;
+  GrpcSerialList equippedItemSerialList = 4;
+  GrpcSerialList backpackItemSerialList = 5;
+  GrpcSerialList bankItemSerialList = 6;
+  GrpcSerialList vendorItemSerialList = 7;
 
+  GrpcContainerDataList openedCorpseList = 8;
   GrpcPopupMenuList popupMenuList = 9;
-
   GrpcClilocDataList clilocDataList = 10;
 
-  Actions replayActions = 11;
+  GrpcPlayerStatus playerStatus = 11;
+  GrpcSkillList playerSkillList = 12;
+  GrpcGameObjectInfoList staticObjectInfoList = 13;
 
-  GrpcGameObjectInfoList staticObjectInfoList = 12;
-
-  GrpcSkillList playerSkillList = 13;
-
-  GrpcPlayerObject playerObject = 14;
+  Actions replayActions = 14;
 }
 
 message Actions {
