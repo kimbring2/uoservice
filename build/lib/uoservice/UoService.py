@@ -125,11 +125,12 @@ class UoService:
 
 		#print("len(world_item_data): ", len(world_item_data))
 		if len(world_item_data) != 0:
+			#self.world_item_dict = {}
 			for obj in world_item_data:
-				#print("obj: ", obj)
-				self.world_item_dict[obj.serial] = [obj.name, obj.gameX, obj.gameY, obj.distance, obj.layer, obj.container]
+				print("obj.name: ", obj.name)
+				self.world_item_dict[obj.serial] = [obj.name, obj.gameX, obj.gameY, obj.distance, obj.layer, obj.container, obj.onGround]
 
-			#print("")
+			print("")
 
 		#print("len(world_mobile_data): ", len(world_mobile_data))
 		if len(world_mobile_data) != 0:
@@ -184,10 +185,10 @@ class UoService:
 		if len(self.world_item_dict) != 0:
 			for k, v in self.world_item_dict.items():
 				#if self.world_item_dict[k][-1] != 0: 
-				print("self.world_item_dict[{0}]: {1}".format(k, self.world_item_dict[k]))
-				#pass
+				#print("{0}: {1}".format(k, self.world_item_dict[k]))
+				pass
 
-			print("")
+			#print("")
 
 		#holdItem_serial = player_status_etc.holdItemSerial
 		#war_mode = player_status_etc.warMode
