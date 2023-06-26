@@ -129,6 +129,7 @@ class UoService:
 
 		#print("len(world_item_data): ", len(world_item_data))
 		if len(world_item_data) != 0:
+			self.world_item_dict = {}
 			for obj in world_item_data:
 				#print("obj.name: ", obj.name)
 				self.world_item_dict[obj.serial] = [obj.name, obj.gameX, obj.gameY, obj.distance, obj.layer, obj.container, obj.onGround]
@@ -144,7 +145,7 @@ class UoService:
 			for k, v in self.world_item_dict.items():
 				if 'Gold' in v[0]:
 					print("world item {0}: {1}".format(k, self.world_item_dict[k]))
-					
+
 				if v[5] == self.backpack_serial:
 					self.backpack_item_dict[k] = v
 
