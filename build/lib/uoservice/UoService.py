@@ -8,6 +8,7 @@
 
 ## general package imports
 import numpy as np
+import math
 import grpc
 import subprocess
 import time
@@ -118,8 +119,6 @@ class UoService:
 		static_object_game_x_data = response.staticObjectInfoList.gameXs
 		static_object_game_y_data = response.staticObjectInfoList.gameYs
 
-		#print("player_object: ", player_object)
-
 		if player_object.gameX != 0:
 			self.player_game_x = player_object.gameX
 			self.player_game_y = player_object.gameY
@@ -127,7 +126,10 @@ class UoService:
 		#print("len(world_item_data): ", len(world_item_data))
 		if len(world_item_data) != 0:
 			for obj in world_item_data:
-				self.world_item_dict[obj.serial] = [obj.name, obj.gameX, obj.gameY, obj.distance, obj.layer]
+				#print("obj: ", obj)
+				self.world_item_dict[obj.serial] = [obj.name, obj.gameX, obj.gameY, obj.distance, obj.layer, obj.container]
+
+			#print("")
 
 		#print("len(world_mobile_data): ", len(world_mobile_data))
 		if len(world_mobile_data) != 0:
@@ -149,11 +151,13 @@ class UoService:
 			#backpack_item_dict[item.serial] = [item.name, item.layer, item.amount]
 			if item_serial in self.world_item_dict:
 				item = self.world_item_dict[item_serial]
-				#print('backpack name: {0}, layer: {1}, serial: {2}:'.format(item[0], item[1], item[2]))
-				backpack_item_dict[item_serial] = [item[0], item[4], item[2]]
+				#print('backpack name: {0}, layer: {1}, serial: {2}:'.format(item[0], item[4], item_serial))
+				#backpack_item_dict[item_serial] = [item[0], item[4], item[2]]
 			else:
 				#print("item is not existed: ", item_serial)
 				pass
+
+		#print("")
 
 		if player_status_data.str != 0:
 			#print("player_status_data.str: ", player_status_data.str)
@@ -176,11 +180,17 @@ class UoService:
 		player_status_dict = utils.parsePlayerStatus(player_status_data)
 
 		#print("self.world_item_dict: ", self.world_item_dict)
-		#print("self.world_mobile_dict: ", self.world_mobile_dict)
+		#print("len(self.world_item_dict): ", len(self.world_item_dict))
+		if len(self.world_item_dict) != 0:
+			for k, v in self.world_item_dict.items():
+				#if self.world_item_dict[k][-1] != 0: 
+				print("self.world_item_dict[{0}]: {1}".format(k, self.world_item_dict[k]))
+				#pass
+
+			print("")
 
 		#holdItem_serial = player_status_etc.holdItemSerial
 		#war_mode = player_status_etc.warMode
-
 		#print("holdItem_serial: ", holdItem_serial)
 		#print("war_mode: ", war_mode)
 
@@ -196,9 +206,21 @@ class UoService:
 		thickness = 2
 		screen_width = 5000
 		screen_height = 5000
+
+		far_away_mobile = []
 		for k, v in self.world_mobile_dict.items():
-				if v[1] < screen_width and v[2] < screen_height:
-					screen_image = cv2.circle(screen_image, (v[1], v[2]), radius, (0, 0, 255), thickness)
+			if self.player_game_x != None:
+				dis = math.dist([self.player_game_x, self.player_game_y], [v[1], v[2]])
+				#print("dis: ", dis)
+				if dis >= 30:
+					far_away_mobile.append(k)
+					continue
+				else:
+					if v[1] < screen_width and v[2] < screen_height:
+						screen_image = cv2.circle(screen_image, (v[1], v[2]), radius, (0, 0, 255), thickness)
+
+		#for mobile_key in far_away_mobile:
+			#self.world_mobile_dict.pop(mobile_key)
 
 		if self.player_game_x != None:
 			screen_image = cv2.circle(screen_image, (self.player_game_x, self.player_game_y), radius, (0, 255, 0), thickness)
