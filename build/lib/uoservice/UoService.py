@@ -108,7 +108,6 @@ class UoService:
 		world_item_data = response.WorldItemList.itemObjects
 		world_mobile_data = response.WorldMobileList.mobileObjects
 
-		opened_corpse_list = response.openedCorpseList.containers
 		popup_menu_data = response.popupMenuList.menus
 		cliloc_data = response.clilocDataList.clilocDatas
 
@@ -117,6 +116,8 @@ class UoService:
 
 		static_object_game_x_data = response.staticObjectInfoList.gameXs
 		static_object_game_y_data = response.staticObjectInfoList.gameYs
+
+		#print("response.staticObjectInfoList: ", response.staticObjectInfoList)
 
 		if player_object.gameX != 0:
 			self.player_game_x = player_object.gameX
@@ -144,11 +145,11 @@ class UoService:
 
 				if v[5] == self.backpack_serial:
 					if 'Gold' in v[0]:
-						print("world item {0}: {1}".format(k, self.world_item_dict[k]))
+						#print("world item {0}: {1}".format(k, self.world_item_dict[k]))
+						pass
 
 					self.backpack_item_dict[k] = v
 
-			print("self.backpack_serial: ", self.backpack_serial)
 			print("")
 
 		#print("len(world_mobile_data): ", len(world_mobile_data))
@@ -227,21 +228,11 @@ class UoService:
 			cv2.imshow('screen_image_' + str(self.grpc_port), screen_image)
 			cv2.waitKey(1)
 		
+		print("static_object_game_x_data: ", static_object_game_x_data)
+		print("len(static_object_game_x_data): ", len(static_object_game_x_data))
 		for i in range(0, len(static_object_game_x_data)):
 			static_object_game_x_list.append(static_object_game_x_data[i])
 			static_object_game_y_list.append(static_object_game_y_data[i])
-
-		for opened_corpse in opened_corpse_list:
-			corpse_object = opened_corpse.container
-			#print('type: {0}, x: {1}, y: {2}, distance: {3}, name: {4}'.format(corpse_object.type, corpse_object.screenX, corpse_object.screenY,
-			#																																	 corpse_object.distance, corpse_object.name))
-			corpse_item_list = []
-			for item in opened_corpse.containerItemList.items:
-				corpse_item_list.append([item.serial, item.name, item.layer, item.amount])
-
-			opened_corpse_list_dict[corpse_object.serial] = corpse_item_list
-
-		#print("backpack_item_dict: ", backpack_item_dict)
 
 		return mobile_dict, equipped_item_dict, backpack_item_dict, bank_item_dict, opened_corpse_list_dict, vendor_dict, \
 					 vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_dict, \
