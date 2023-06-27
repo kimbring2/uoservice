@@ -39,6 +39,7 @@ class UoService:
 
 		self.backpack_item_dict = {}
 		self.equipped_item_dict = {}
+		self.corpse_dict = {}
 
 		self.player_game_x = None
 		self.player_game_y = None
@@ -129,7 +130,7 @@ class UoService:
 			self.world_item_dict = {}
 			for obj in world_item_data:
 				#print("obj.name: ", obj.name)
-				self.world_item_dict[obj.serial] = [obj.name, obj.gameX, obj.gameY, obj.distance, obj.layer, obj.container, obj.onGround]
+				self.world_item_dict[obj.serial] = [obj.name, obj.gameX, obj.gameY, obj.distance, obj.layer, obj.container, obj.isCorpse]
 				if obj.layer == 21:
 					self.backpack_serial = obj.serial
 
@@ -144,8 +145,12 @@ class UoService:
 		if len(self.world_item_dict) != 0 and self.backpack_serial != None:
 			self.backpack_item_dict = {}
 			self.equipped_item_dict = {}
+			self.corpse_dict = {}
 			for k, v in self.world_item_dict.items():
-				#print("world item {0}: {1}".format(k, self.world_item_dict[k]))
+				print("world item {0}: {1}".format(k, self.world_item_dict[k]))
+
+				if v[6] == True:
+					self.corpse_dict[k] = v
 
 				if v[5] == self.backpack_serial:
 					if 'Gold' in v[0]:
@@ -154,37 +159,10 @@ class UoService:
 
 					self.backpack_item_dict[k] = v
 
-				'''
-				layer name: Cloak, layer number: 20
-				layer name: Shirt, layer number: 5
-				layer name: Pants, layer number: 4
-				layer name: Shoes, layer number: 3
-				layer name: Legs, layer number: 24
-				layer name: Arms, layer number: 19
-				layer name: Torso, layer number: 13
-				layer name: Tunic, layer number: 17
-				layer name: Ring, layer number: 8
-				layer name: Bracelet, layer number: 14
-				layer name: Face, layer number: 15
-				layer name: Gloves, layer number: 7
-				layer name: Skirt, layer number: 23
-				layer name: Robe, layer number: 22
-				layer name: Waist, layer number: 12
-				layer name: Necklace, layer number: 10
-				layer name: Hair, layer number: 11
-				layer name: Beard, layer number: 16
-				layer name: Earrings, layer number: 18
-				layer name: Helmet, layer number: 6
-				layer name: OneHanded, layer number: 1
-				layer name: TwoHanded, layer number: 2
-				layer name: Talisman, layer number: 9
-				'''
 				if v[4] == 1:
 					self.equipped_item_dict['OneHanded'] = v
 				elif v[4] == 2:
-					print("v[1]: {0}, v[4]: {1}".format(v[1], v[4]))
 					self.equipped_item_dict['TwoHanded'] = v
-					print("self.equipped_item_dict 1: ", self.equipped_item_dict)
 				elif v[4] == 3:
 					self.equipped_item_dict['Shoes'] = v
 				elif v[4] == 4:
@@ -228,8 +206,15 @@ class UoService:
 				elif v[4] == 24:
 					self.equipped_item_dict['Legs'] = v
 
-			print("self.equipped_item_dict 2: ", self.equipped_item_dict)
-			print("")
+		#print("self.corpse_dict: ", self.corpse_dict)
+		#print("self.equipped_item_dict: ", self.equipped_item_dict)
+		#print("")
+
+		for k_corpse, v_corpse in self.corpse_dict.items():
+			for k_world, v_world in self.world_item_dict.items():
+				if k_corpse == v_world[5]:
+					#print("corpse item {0}: {1}".format(k, self.world_item_dict[k_world]))
+					pass
 
 		#print("len(world_mobile_data): ", len(world_mobile_data))
 		if self.backpack_item_dict != 0:
@@ -237,7 +222,6 @@ class UoService:
 			for k, v in self.backpack_item_dict.items():
 				#print("backpack item {0}: {1}".format(k, self.backpack_item_dict[k]))
 				pass
-
 			#print("")
 
 		if player_status_data.str != 0:

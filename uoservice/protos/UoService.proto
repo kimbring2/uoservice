@@ -17,8 +17,7 @@ message GrpcMobileObjectData {
   uint32 gameY = 3;
   uint32 serial = 4;
   string name = 5;
-  bool isCorpse = 6;
-  string title = 7;
+  string title = 6;
 }
 
 message GrpcItemObjectData {
@@ -32,7 +31,6 @@ message GrpcItemObjectData {
   uint32 price = 8;
   uint32 layer = 9;
   uint32 container = 10;
-  bool onGround = 11;
 }
 
 message GrpcSkill {
