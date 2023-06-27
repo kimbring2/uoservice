@@ -108,11 +108,6 @@ class UoService:
 		world_item_data = response.WorldItemList.itemObjects
 		world_mobile_data = response.WorldMobileList.mobileObjects
 
-		equipped_item_data = response.equippedItemSerialList.serials
-		backpack_item_data = response.backpackItemSerialList.serials
-		bank_item_data = response.bankItemSerialList.serials
-		vendor_item_data = response.vendorItemSerialList.serials
-
 		opened_corpse_list = response.openedCorpseList.containers
 		popup_menu_data = response.popupMenuList.menus
 		cliloc_data = response.clilocDataList.clilocDatas
@@ -138,18 +133,23 @@ class UoService:
 
 		#print("len(world_mobile_data): ", len(world_mobile_data))
 		if len(world_mobile_data) != 0:
+			self.world_mobile_dict = {}
 			for obj in world_mobile_data:
 				self.world_mobile_dict[obj.serial] = [obj.name, obj.gameX, obj.gameY, obj.distance, obj.title]
 
 		if len(self.world_item_dict) != 0 and self.backpack_serial != None:
+			self.backpack_item_dict = {}
 			for k, v in self.world_item_dict.items():
-				if 'Gold' in v[0]:
-					print("world item {0}: {1}".format(k, self.world_item_dict[k]))
+				print("world item {0}: {1}".format(k, self.world_item_dict[k]))
 
 				if v[5] == self.backpack_serial:
+					if 'Gold' in v[0]:
+						print("world item {0}: {1}".format(k, self.world_item_dict[k]))
+
 					self.backpack_item_dict[k] = v
 
-			#print("")
+			print("self.backpack_serial: ", self.backpack_serial)
+			print("")
 
 		#print("len(world_mobile_data): ", len(world_mobile_data))
 		if self.backpack_item_dict != 0:
@@ -201,6 +201,9 @@ class UoService:
 		far_away_mobile = []
 		for k, v in self.world_mobile_dict.items():
 			if self.player_game_x != None:
+				if v[1] < screen_width and v[2] < screen_height:
+						screen_image = cv2.circle(screen_image, (v[1], v[2]), radius, (0, 0, 255), thickness)
+				'''
 				dis = math.dist([self.player_game_x, self.player_game_y], [v[1], v[2]])
 				#print("dis: ", dis)
 				if dis >= 30:
@@ -209,6 +212,7 @@ class UoService:
 				else:
 					if v[1] < screen_width and v[2] < screen_height:
 						screen_image = cv2.circle(screen_image, (v[1], v[2]), radius, (0, 0, 255), thickness)
+				'''
 
 		if self.player_game_x != None:
 			screen_image = cv2.circle(screen_image, (self.player_game_x, self.player_game_y), radius, (0, 255, 0), thickness)
@@ -226,11 +230,6 @@ class UoService:
 		for i in range(0, len(static_object_game_x_data)):
 			static_object_game_x_list.append(static_object_game_x_data[i])
 			static_object_game_y_list.append(static_object_game_y_data[i])
-
-		if len(equipped_item_data) == 0:
-			return mobile_dict, equipped_item_dict, backpack_item_dict, bank_item_dict, opened_corpse_list_dict, \
-				vendor_dict, vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_dict, \
-				player_skills_dict, corpse_dict, player_mobile_dict, ground_item_dict
 
 		for opened_corpse in opened_corpse_list:
 			corpse_object = opened_corpse.container

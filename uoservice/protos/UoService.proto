@@ -125,20 +125,15 @@ message States {
   GrpcItemObjectList WorldItemList = 2;
   GrpcMobileObjectList WorldMobileList = 3;
 
-  GrpcSerialList equippedItemSerialList = 4;
-  GrpcSerialList backpackItemSerialList = 5;
-  GrpcSerialList bankItemSerialList = 6;
-  GrpcSerialList vendorItemSerialList = 7;
+  GrpcContainerDataList openedCorpseList = 4;
+  GrpcPopupMenuList popupMenuList = 5;
+  GrpcClilocDataList clilocDataList = 6;
 
-  GrpcContainerDataList openedCorpseList = 8;
-  GrpcPopupMenuList popupMenuList = 9;
-  GrpcClilocDataList clilocDataList = 10;
+  GrpcPlayerStatus playerStatus = 7;
+  GrpcSkillList playerSkillList = 8;
+  GrpcGameObjectInfoList staticObjectInfoList = 9;
 
-  GrpcPlayerStatus playerStatus = 11;
-  GrpcSkillList playerSkillList = 12;
-  GrpcGameObjectInfoList staticObjectInfoList = 13;
-
-  Actions replayActions = 14;
+  Actions replayActions = 10;
 }
 
 message Actions {
