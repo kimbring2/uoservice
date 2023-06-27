@@ -120,7 +120,10 @@ class UoService:
 		static_object_game_x_data = response.staticObjectInfoList.gameXs
 		static_object_game_y_data = response.staticObjectInfoList.gameYs
 
-		#print("response.staticObjectInfoList: ", response.staticObjectInfoList)
+		if len(popup_menu_data):
+			for popup_menu in popup_menu_data:
+				print("popup_menu / text: {0}, active: {1}".format(popup_menu.text, popup_menu.active))
+			print("")
 
 		if player_object.gameX != 0:
 			self.player_game_x = player_object.gameX
@@ -212,8 +215,8 @@ class UoService:
 		#print("self.equipped_item_dict: ", self.equipped_item_dict)
 		#print("")
 
+		self.corpse_item_dict = {}
 		for k_corpse, v_corpse in self.corpse_dict.items():
-			self.corpse_item_dict = {}
 			for k_world, v_world in self.world_item_dict.items():
 				if k_corpse == v_world[5]:
 					#print("corpse item {0}: {1}".format(k, self.world_item_dict[k_world]))

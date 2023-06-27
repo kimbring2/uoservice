@@ -76,8 +76,13 @@ message GrpcGameObjectInfoList {
   repeated uint32 gameYs = 2;
 }
 
+message GrpcPopupMenu {
+  string text = 1;
+  bool active = 2;
+}
+
 message GrpcPopupMenuList {
-  repeated string menus = 1;
+  repeated GrpcPopupMenu menus = 1;
 }
 
 message GrpcClilocDataList {

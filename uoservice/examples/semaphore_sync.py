@@ -68,6 +68,9 @@ def main():
     equipped_item_data = uo_service.equipped_item_dict
     #print("equipped_item_data: ", equipped_item_data)
 
+    corpse_dict = uo_service.corpse_dict
+    #print("corpse_dict: ", corpse_dict)
+
     corpse_item_dict = uo_service.corpse_item_dict
     #print("corpse_item_dict: ", corpse_item_dict)
 
@@ -82,11 +85,11 @@ def main():
 
         if corpse_gold_serial != None:
           #print("corpse_gold_serial: ", corpse_gold_serial)
-          action['action_type'] = 3
-          action['item_serial'] = corpse_gold_serial
-
+          #action['action_type'] = 3
+          #action['item_serial'] = corpse_gold_serial
           #print("v_corpse[corpse_gold_serial][-1]: ", v_corpse[corpse_gold_serial][-1])
           #action['amount'] = corpse_item_dict[corpse_gold_serial][-1]
+          pass
 
     #print("player_skills_dict: ", uo_service.player_skills_dict)
     if 'Swordsmanship' in uo_service.player_skills_dict:
