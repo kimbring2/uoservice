@@ -47,6 +47,10 @@ def main():
 
   ## Event flags to test the scenario manually
   #for step in tqdm(range(100000)):
+
+  corpse_gold_serial = None
+
+  step = 0
   while True:
     ## Declare the empty action
     action = {}
@@ -58,13 +62,31 @@ def main():
     action['amount'] = 0
     action['run'] = False
 
-    backpack_item_data = obs['backpack_item_data']
+    backpack_item_data = uo_service.backpack_item_dict
     #print("backpack_item_data: ", backpack_item_data)
 
-    equipped_item_data = obs['equipped_item_data']
+    equipped_item_data = uo_service.equipped_item_dict
     #print("equipped_item_data: ", equipped_item_data)
 
-    #print("player_status_dict: ", uo_service.player_status_dict)
+    corpse_item_dict = uo_service.corpse_item_dict
+    #print("corpse_item_dict: ", corpse_item_dict)
+
+    for k_corpse, v_corpse in corpse_item_dict.items():
+      #print("corpse {0}: {1}".format(k_corpse, v_corpse))
+      for k_item, v_item in v_corpse.items():
+        #print("corpse item {0}: {1}".format(k_item, v_item))
+
+        if 'Gold' in v_item[0]:
+          #print("corpse gold item {0}: {1}".format(k_item, v_item))
+          corpse_gold_serial = k_item
+
+        if corpse_gold_serial != None:
+          #print("corpse_gold_serial: ", corpse_gold_serial)
+          action['action_type'] = 3
+          action['item_serial'] = corpse_gold_serial
+
+          #print("v_corpse[corpse_gold_serial][-1]: ", v_corpse[corpse_gold_serial][-1])
+          #action['amount'] = corpse_item_dict[corpse_gold_serial][-1]
 
     #print("player_skills_dict: ", uo_service.player_skills_dict)
     if 'Swordsmanship' in uo_service.player_skills_dict:
@@ -82,9 +104,15 @@ def main():
       pass
 
     ## Declare the empty action
-    #if step % 50 == 0:
-    obs = uo_service.step(action)
+    if step % 500 == 0:
+      print("step: ", step)
+      print("action: ", action)
 
+      obs = uo_service.step(action)
+    else:
+      obs = uo_service.step(utils.noop_action)
+
+    step += 1
     #print("")
 
 

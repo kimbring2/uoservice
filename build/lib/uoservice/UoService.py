@@ -40,6 +40,7 @@ class UoService:
 		self.backpack_item_dict = {}
 		self.equipped_item_dict = {}
 		self.corpse_dict = {}
+		self.corpse_item_dict = {}
 
 		self.player_game_x = None
 		self.player_game_y = None
@@ -130,7 +131,8 @@ class UoService:
 			self.world_item_dict = {}
 			for obj in world_item_data:
 				#print("obj.name: ", obj.name)
-				self.world_item_dict[obj.serial] = [obj.name, obj.gameX, obj.gameY, obj.distance, obj.layer, obj.container, obj.isCorpse]
+				self.world_item_dict[obj.serial] = [obj.name, obj.gameX, obj.gameY, obj.distance, obj.layer, 
+																					  obj.container, obj.isCorpse, obj.amount]
 				if obj.layer == 21:
 					self.backpack_serial = obj.serial
 
@@ -147,7 +149,7 @@ class UoService:
 			self.equipped_item_dict = {}
 			self.corpse_dict = {}
 			for k, v in self.world_item_dict.items():
-				print("world item {0}: {1}".format(k, self.world_item_dict[k]))
+				#print("world item {0}: {1}".format(k, self.world_item_dict[k]))
 
 				if v[6] == True:
 					self.corpse_dict[k] = v
@@ -211,12 +213,19 @@ class UoService:
 		#print("")
 
 		for k_corpse, v_corpse in self.corpse_dict.items():
+			self.corpse_item_dict = {}
 			for k_world, v_world in self.world_item_dict.items():
 				if k_corpse == v_world[5]:
 					#print("corpse item {0}: {1}".format(k, self.world_item_dict[k_world]))
+
+					if k_corpse not in self.corpse_item_dict:
+						self.corpse_item_dict[k_corpse] = {}
+						self.corpse_item_dict[k_corpse][k_world] = self.world_item_dict[k_world]
+					else:
+						self.corpse_item_dict[k_corpse][k_world] = self.world_item_dict[k_world]
+
 					pass
 
-		#print("len(world_mobile_data): ", len(world_mobile_data))
 		if self.backpack_item_dict != 0:
 			#print("self.backpack_item_dict: ", self.backpack_item_dict)
 			for k, v in self.backpack_item_dict.items():
@@ -228,9 +237,6 @@ class UoService:
 			#print("player_status_data.str: ", player_status_data.str)
 			self.player_status_dict = utils.parsePlayerStatus(player_status_data)
 
-		#print("player_status_data: ", player_status_data)
-
-		#print("len(player_skills_data): ", len(player_skills_data))
 		for skill in player_skills_data:
 			#player_skills_dict[skill.name] = [skill.index, skill.isClickable, skill.value, skill.base, skill.cap, skill.lock]
 			self.player_skills_dict[skill.name] = [skill.index, skill.isClickable, skill.value, skill.base, skill.cap, skill.lock]

@@ -1,5 +1,15 @@
 import cv2
 
+noop_action = {}
+noop_action['action_type'] = 0
+noop_action['item_serial'] = 0
+noop_action['mobile_serial'] = 0
+noop_action['walk_direction'] = 0
+noop_action['index'] = 0
+noop_action['amount'] = 0
+noop_action['run'] = False
+
+
 warrior_npc_title_list = ['healer', 'armourer', 'banker', 'blacksmith', 'weaponsmith', 'armourer', 'armourer']
 
 def get_serial_by_name(item_dict, name):
