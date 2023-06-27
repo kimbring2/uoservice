@@ -38,6 +38,7 @@ class UoService:
 		self.player_status_dict = {}
 
 		self.backpack_item_dict = {}
+		self.equipped_item_dict = {}
 
 		self.player_game_x = None
 		self.player_game_y = None
@@ -129,8 +130,10 @@ class UoService:
 			for obj in world_item_data:
 				#print("obj.name: ", obj.name)
 				self.world_item_dict[obj.serial] = [obj.name, obj.gameX, obj.gameY, obj.distance, obj.layer, obj.container, obj.onGround]
-				if obj.name == 'Backpack':
+				if obj.layer == 21:
 					self.backpack_serial = obj.serial
+
+				#print("")
 
 		#print("len(world_mobile_data): ", len(world_mobile_data))
 		if len(world_mobile_data) != 0:
@@ -140,8 +143,9 @@ class UoService:
 
 		if len(self.world_item_dict) != 0 and self.backpack_serial != None:
 			self.backpack_item_dict = {}
+			self.equipped_item_dict = {}
 			for k, v in self.world_item_dict.items():
-				print("world item {0}: {1}".format(k, self.world_item_dict[k]))
+				#print("world item {0}: {1}".format(k, self.world_item_dict[k]))
 
 				if v[5] == self.backpack_serial:
 					if 'Gold' in v[0]:
@@ -150,6 +154,81 @@ class UoService:
 
 					self.backpack_item_dict[k] = v
 
+				'''
+				layer name: Cloak, layer number: 20
+				layer name: Shirt, layer number: 5
+				layer name: Pants, layer number: 4
+				layer name: Shoes, layer number: 3
+				layer name: Legs, layer number: 24
+				layer name: Arms, layer number: 19
+				layer name: Torso, layer number: 13
+				layer name: Tunic, layer number: 17
+				layer name: Ring, layer number: 8
+				layer name: Bracelet, layer number: 14
+				layer name: Face, layer number: 15
+				layer name: Gloves, layer number: 7
+				layer name: Skirt, layer number: 23
+				layer name: Robe, layer number: 22
+				layer name: Waist, layer number: 12
+				layer name: Necklace, layer number: 10
+				layer name: Hair, layer number: 11
+				layer name: Beard, layer number: 16
+				layer name: Earrings, layer number: 18
+				layer name: Helmet, layer number: 6
+				layer name: OneHanded, layer number: 1
+				layer name: TwoHanded, layer number: 2
+				layer name: Talisman, layer number: 9
+				'''
+				if v[4] == 1:
+					self.equipped_item_dict['OneHanded'] = v
+				elif v[4] == 2:
+					print("v[1]: {0}, v[4]: {1}".format(v[1], v[4]))
+					self.equipped_item_dict['TwoHanded'] = v
+					print("self.equipped_item_dict 1: ", self.equipped_item_dict)
+				elif v[4] == 3:
+					self.equipped_item_dict['Shoes'] = v
+				elif v[4] == 4:
+					self.equipped_item_dict['Pants'] = v
+				elif v[4] == 5:
+					self.equipped_item_dict['Shirt'] = v
+				elif v[4] == 6:
+					self.equipped_item_dict['Helmet'] = v
+				elif v[4] == 7:
+					self.equipped_item_dict['Gloves'] = v
+				elif v[4] == 8:
+					self.equipped_item_dict['Ring'] = v
+				elif v[4] == 9:
+					self.equipped_item_dict['Talisman'] = v
+				elif v[4] == 10:
+					self.equipped_item_dict['Necklace'] = v
+				elif v[4] == 11:
+					self.equipped_item_dict['Hair'] = v
+				elif v[4] == 12:
+					self.equipped_item_dict['Waist'] = v
+				elif v[4] == 13:
+					self.equipped_item_dict['Torso'] = v
+				elif v[4] == 14:
+					self.equipped_item_dict['Bracelet'] = v
+				elif v[4] == 15:
+					self.equipped_item_dict['Face'] = v
+				elif v[4] == 16:
+					self.equipped_item_dict['Beard'] = v
+				elif v[4] == 17:
+					self.equipped_item_dict['Tunic'] = v
+				elif v[4] == 18:
+					self.equipped_item_dict['Earrings'] = v
+				elif v[4] == 19:
+					self.equipped_item_dict['Arms'] = v
+				elif v[4] == 20:
+					self.equipped_item_dict['Cloak'] = v
+				elif v[4] == 22:
+					self.equipped_item_dict['Robe'] = v
+				elif v[4] == 23:
+					self.equipped_item_dict['Skirt'] = v
+				elif v[4] == 24:
+					self.equipped_item_dict['Legs'] = v
+
+			print("self.equipped_item_dict 2: ", self.equipped_item_dict)
 			print("")
 
 		#print("len(world_mobile_data): ", len(world_mobile_data))
@@ -189,9 +268,6 @@ class UoService:
 		for menu_data in popup_menu_data:
 			popup_menu_list.append(menu_data)
 
-		for menu_data in popup_menu_data:
-			popup_menu_list.append(menu_data)
-
 		screen_image = np.zeros((5000,5000,4), dtype=np.uint8)
 
 		radius = 5
@@ -204,16 +280,6 @@ class UoService:
 			if self.player_game_x != None:
 				if v[1] < screen_width and v[2] < screen_height:
 						screen_image = cv2.circle(screen_image, (v[1], v[2]), radius, (0, 0, 255), thickness)
-				'''
-				dis = math.dist([self.player_game_x, self.player_game_y], [v[1], v[2]])
-				#print("dis: ", dis)
-				if dis >= 30:
-					far_away_mobile.append(k)
-					continue
-				else:
-					if v[1] < screen_width and v[2] < screen_height:
-						screen_image = cv2.circle(screen_image, (v[1], v[2]), radius, (0, 0, 255), thickness)
-				'''
 
 		if self.player_game_x != None:
 			screen_image = cv2.circle(screen_image, (self.player_game_x, self.player_game_y), radius, (0, 255, 0), thickness)
@@ -228,8 +294,6 @@ class UoService:
 			cv2.imshow('screen_image_' + str(self.grpc_port), screen_image)
 			cv2.waitKey(1)
 		
-		print("static_object_game_x_data: ", static_object_game_x_data)
-		print("len(static_object_game_x_data): ", len(static_object_game_x_data))
 		for i in range(0, len(static_object_game_x_data)):
 			static_object_game_x_list.append(static_object_game_x_data[i])
 			static_object_game_y_list.append(static_object_game_y_data[i])
