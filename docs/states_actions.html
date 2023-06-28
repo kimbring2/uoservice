@@ -241,17 +241,16 @@
                 First case are the items of backpack, and equipped of player. These two pieces of information continue to exist from the moment the player connects.
                 <img src="Fig/BaseItem.png" class="rounded mx-auto d-block float-center" alt="Logo" width="280" height="220">
                 The state of the bank, shop, and corpse container items are included only when the player opens the container, and disappears from the information when it is closed
-                <img src="Fig/OpenedItem.png" class="rounded mx-auto d-block float-center" alt="Logo" width="450" height="180">
+                <img src="Fig/OpenedItem.png" class="rounded mx-auto d-block float-center" alt="Logo" width="450" height="190">
                 When a monster in mobile type dies, it changes to an item type. In that case, this state include the inforamtion about dead body.
-                <img src="Fig/CorpseItem.png" class="rounded mx-auto d-block float-center" alt="Logo" width="300" height="150">
+                <img src="Fig/CorpseItem.png" class="rounded mx-auto d-block float-center" alt="Logo" width="300" height="130">
             </div>
         </div>
 
         <div class="row">
             <div class="col", id="states_3">
                 <script>createHeader("states_3", "WorldMobileList", "");</script>
-                Because Ultima Online is a first-person game, everything is player-centric. This state contains a list of all items in the game that are updated as the player moves or acts.
-
+                Similar to WorldItemList, but this state contains a list of all mobiles.
                 <script>
                     generate_table("states_3", 
                                     [
@@ -259,12 +258,16 @@
                                     ]
                                     );
                 </script>
-                First case are the items of backpack, and equipped of player. These two pieces of information continue to exist from the moment the player connects.
-                <img src="Fig/BaseItem.png" class="rounded mx-auto d-block float-center" alt="Logo" width="400" height="320">
-                The state of the bank, shop, and corpse container items are included only when the player opens the container, and disappears from the information when it is closed
-                <img src="Fig/OpenedItem.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="280">
-                When a monster in mobile type dies, it changes to an item type. In that case, this state include the inforamtion about dead body.
-                <img src="Fig/CorpseItem.png" class="rounded mx-auto d-block float-center" alt="Logo" width="500" height="210">
+
+                In Ultima Online, there are various mobiles that players can interact with, and one of them is a vendor that can purchase or sell items for a specific job. In case of these, it must be distinguished by job name included in title information of GrpcMobileObjectData rather than name. 
+
+                <img src="Fig/VendorMobile.png" class="rounded mx-auto d-block float-center" alt="Logo" width="550" height="90">
+
+                
+
+                <img src="Fig/MonsterMobile.png" class="rounded mx-auto d-block float-center" alt="Logo" width="450" height="100">
+
+                
             </div>
 
             <div class="col", id="states_4">

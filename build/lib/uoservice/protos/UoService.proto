@@ -15,13 +15,16 @@ message GrpcPlayerObject {
 }
 
 message GrpcMobileObjectData {
-  uint32 distance = 1;
-  uint32 gameX = 2;
-  uint32 gameY = 3;
-  uint32 serial = 4;
-  string name = 5;
-  string title = 6;
-  uint32 notorietyFlag = 7;
+  uint32 hits = 1;
+  uint32 hitsMax = 2;
+  uint32 race = 3;
+  uint32 distance = 4;
+  uint32 gameX = 5;
+  uint32 gameY = 6;
+  uint32 serial = 7;
+  string name = 8;
+  string title = 9;
+  uint32 notorietyFlag = 10;
 }
 
 message GrpcItemObjectData {
@@ -81,7 +84,6 @@ message GrpcClilocData {
   string affix = 3;
   string name = 4;
 }
-
 
 message GrpcPopupMenuList {
   repeated GrpcPopupMenu menus = 1;

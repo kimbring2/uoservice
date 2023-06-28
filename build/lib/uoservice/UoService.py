@@ -136,8 +136,9 @@ class UoService:
 			self.world_item_dict = {}
 			for obj in world_item_data:
 				#print("obj.name: ", obj.name)
-				self.world_item_dict[obj.serial] = [obj.name, obj.gameX, obj.gameY, obj.distance, obj.layer, 
-																					  obj.container, obj.isCorpse, obj.amount]
+				self.world_item_dict[obj.serial] = { "name": obj.name, "gameX": obj.gameX, "gameY":obj.gameY, 
+																						 "distance": obj.distance, "layer":obj.layer, "container": obj.container, 
+																						 "isCorpse": obj.isCorpse, "amount": obj.amount }
 				if obj.layer == 21:
 					self.backpack_serial = obj.serial
 
@@ -147,7 +148,9 @@ class UoService:
 		if len(world_mobile_data) != 0:
 			self.world_mobile_dict = {}
 			for obj in world_mobile_data:
-				self.world_mobile_dict[obj.serial] = [obj.name, obj.gameX, obj.gameY, obj.distance, obj.title, obj.notorietyFlag]
+				self.world_mobile_dict[obj.serial] = { "name": obj.name, "gameX": obj.gameX, "gameY":obj.gameY, 
+																							 "distance": obj.distance, "title": obj.title, 
+																							 "notorietyFlag": obj.notorietyFlag }
 
 		if len(self.world_item_dict) != 0 and self.backpack_serial != None:
 			self.backpack_item_dict = {}
@@ -156,61 +159,61 @@ class UoService:
 			for k, v in self.world_item_dict.items():
 				#print("world item {0}: {1}".format(k, self.world_item_dict[k]))
 
-				if v[6] == True:
+				if v["isCorpse"] == True:
 					self.corpse_dict[k] = v
 
-				if v[5] == self.backpack_serial:
+				if v["container"] == self.backpack_serial:
 					if 'Gold' in v[0]:
 						#print("world item {0}: {1}".format(k, self.world_item_dict[k]))
 						pass
 
 					self.backpack_item_dict[k] = v
 
-				if v[4] == 1:
+				if v["layer"] == 1:
 					self.equipped_item_dict['OneHanded'] = v
-				elif v[4] == 2:
+				elif v["layer"] == 2:
 					self.equipped_item_dict['TwoHanded'] = v
-				elif v[4] == 3:
+				elif v["layer"] == 3:
 					self.equipped_item_dict['Shoes'] = v
-				elif v[4] == 4:
+				elif v["layer"] == 4:
 					self.equipped_item_dict['Pants'] = v
-				elif v[4] == 5:
+				elif v["layer"] == 5:
 					self.equipped_item_dict['Shirt'] = v
-				elif v[4] == 6:
+				elif v["layer"] == 6:
 					self.equipped_item_dict['Helmet'] = v
-				elif v[4] == 7:
+				elif v["layer"] == 7:
 					self.equipped_item_dict['Gloves'] = v
-				elif v[4] == 8:
+				elif v["layer"] == 8:
 					self.equipped_item_dict['Ring'] = v
-				elif v[4] == 9:
+				elif v["layer"] == 9:
 					self.equipped_item_dict['Talisman'] = v
-				elif v[4] == 10:
+				elif v["layer"] == 10:
 					self.equipped_item_dict['Necklace'] = v
-				elif v[4] == 11:
+				elif v["layer"] == 11:
 					self.equipped_item_dict['Hair'] = v
-				elif v[4] == 12:
+				elif v["layer"] == 12:
 					self.equipped_item_dict['Waist'] = v
-				elif v[4] == 13:
+				elif v["layer"] == 13:
 					self.equipped_item_dict['Torso'] = v
-				elif v[4] == 14:
+				elif v["layer"] == 14:
 					self.equipped_item_dict['Bracelet'] = v
-				elif v[4] == 15:
+				elif v["layer"] == 15:
 					self.equipped_item_dict['Face'] = v
-				elif v[4] == 16:
+				elif v["layer"] == 16:
 					self.equipped_item_dict['Beard'] = v
-				elif v[4] == 17:
+				elif v["layer"] == 17:
 					self.equipped_item_dict['Tunic'] = v
-				elif v[4] == 18:
+				elif v["layer"] == 18:
 					self.equipped_item_dict['Earrings'] = v
-				elif v[4] == 19:
+				elif v["layer"] == 19:
 					self.equipped_item_dict['Arms'] = v
-				elif v[4] == 20:
+				elif v["layer"] == 20:
 					self.equipped_item_dict['Cloak'] = v
-				elif v[4] == 22:
+				elif v["layer"] == 22:
 					self.equipped_item_dict['Robe'] = v
-				elif v[4] == 23:
+				elif v["layer"] == 23:
 					self.equipped_item_dict['Skirt'] = v
-				elif v[4] == 24:
+				elif v["layer"] == 24:
 					self.equipped_item_dict['Legs'] = v
 
 		#print("self.corpse_dict: ", self.corpse_dict)
@@ -220,7 +223,7 @@ class UoService:
 		self.corpse_item_dict = {}
 		for k_corpse, v_corpse in self.corpse_dict.items():
 			for k_world, v_world in self.world_item_dict.items():
-				if k_corpse == v_world[5]:
+				if k_corpse == v_world["container"]:
 					#print("corpse item {0}: {1}".format(k, self.world_item_dict[k_world]))
 
 					if k_corpse not in self.corpse_item_dict:

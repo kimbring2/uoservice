@@ -27,10 +27,11 @@ namespace Uoservice {
             "Cg9Vb1NlcnZpY2UucHJvdG8SCXVvc2VydmljZSIHCgVFbXB0eSKGAQoQR3Jw",
             "Y1BsYXllck9iamVjdBINCgVnYW1lWBgBIAEoDRINCgVnYW1lWRgCIAEoDRIO",
             "CgZzZXJpYWwYAyABKA0SDAoEbmFtZRgEIAEoCRINCgV0aXRsZRgFIAEoCRIW",
-            "Cg5ob2xkSXRlbVNlcmlhbBgGIAEoDRIPCgd3YXJNb2RlGAcgASgIIooBChRH",
-            "cnBjTW9iaWxlT2JqZWN0RGF0YRIQCghkaXN0YW5jZRgBIAEoDRINCgVnYW1l",
-            "WBgCIAEoDRINCgVnYW1lWRgDIAEoDRIOCgZzZXJpYWwYBCABKA0SDAoEbmFt",
-            "ZRgFIAEoCRINCgV0aXRsZRgGIAEoCRIVCg1ub3RvcmlldHlGbGFnGAcgASgN",
+            "Cg5ob2xkSXRlbVNlcmlhbBgGIAEoDRIPCgd3YXJNb2RlGAcgASgIIrcBChRH",
+            "cnBjTW9iaWxlT2JqZWN0RGF0YRIMCgRoaXRzGAEgASgNEg8KB2hpdHNNYXgY",
+            "AiABKA0SDAoEcmFjZRgDIAEoDRIQCghkaXN0YW5jZRgEIAEoDRINCgVnYW1l",
+            "WBgFIAEoDRINCgVnYW1lWRgGIAEoDRIOCgZzZXJpYWwYByABKA0SDAoEbmFt",
+            "ZRgIIAEoCRINCgV0aXRsZRgJIAEoCRIVCg1ub3RvcmlldHlGbGFnGAogASgN",
             "IrUBChJHcnBjSXRlbU9iamVjdERhdGESEAoIZGlzdGFuY2UYASABKA0SDQoF",
             "Z2FtZVgYAiABKA0SDQoFZ2FtZVkYAyABKA0SDgoGc2VyaWFsGAQgASgNEgwK",
             "BG5hbWUYBSABKAkSEAoIaXNDb3Jwc2UYBiABKAgSDgoGYW1vdW50GAcgASgN",
@@ -85,7 +86,7 @@ namespace Uoservice {
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Empty), global::Uoservice.Empty.Parser, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcPlayerObject), global::Uoservice.GrpcPlayerObject.Parser, new[]{ "GameX", "GameY", "Serial", "Name", "Title", "HoldItemSerial", "WarMode" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcMobileObjectData), global::Uoservice.GrpcMobileObjectData.Parser, new[]{ "Distance", "GameX", "GameY", "Serial", "Name", "Title", "NotorietyFlag" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcMobileObjectData), global::Uoservice.GrpcMobileObjectData.Parser, new[]{ "Hits", "HitsMax", "Race", "Distance", "GameX", "GameY", "Serial", "Name", "Title", "NotorietyFlag" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcItemObjectData), global::Uoservice.GrpcItemObjectData.Parser, new[]{ "Distance", "GameX", "GameY", "Serial", "Name", "IsCorpse", "Amount", "Price", "Layer", "Container" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcPlayerStatus), global::Uoservice.GrpcPlayerStatus.Parser, new[]{ "Str", "Dex", "Intell", "Hits", "HitsMax", "Stamina", "StaminaMax", "Mana", "ManaMax", "Gold", "PhysicalResistance", "Weight", "WeightMax" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcSkill), global::Uoservice.GrpcSkill.Parser, new[]{ "Name", "Index", "IsClickable", "Value", "Base", "Cap", "Lock" }, null, null, null),
@@ -530,6 +531,9 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public GrpcMobileObjectData(GrpcMobileObjectData other) : this() {
+      hits_ = other.hits_;
+      hitsMax_ = other.hitsMax_;
+      race_ = other.race_;
       distance_ = other.distance_;
       gameX_ = other.gameX_;
       gameY_ = other.gameY_;
@@ -545,8 +549,41 @@ namespace Uoservice {
       return new GrpcMobileObjectData(this);
     }
 
+    /// <summary>Field number for the "hits" field.</summary>
+    public const int HitsFieldNumber = 1;
+    private uint hits_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Hits {
+      get { return hits_; }
+      set {
+        hits_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "hitsMax" field.</summary>
+    public const int HitsMaxFieldNumber = 2;
+    private uint hitsMax_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint HitsMax {
+      get { return hitsMax_; }
+      set {
+        hitsMax_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "race" field.</summary>
+    public const int RaceFieldNumber = 3;
+    private uint race_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Race {
+      get { return race_; }
+      set {
+        race_ = value;
+      }
+    }
+
     /// <summary>Field number for the "distance" field.</summary>
-    public const int DistanceFieldNumber = 1;
+    public const int DistanceFieldNumber = 4;
     private uint distance_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public uint Distance {
@@ -557,7 +594,7 @@ namespace Uoservice {
     }
 
     /// <summary>Field number for the "gameX" field.</summary>
-    public const int GameXFieldNumber = 2;
+    public const int GameXFieldNumber = 5;
     private uint gameX_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public uint GameX {
@@ -568,7 +605,7 @@ namespace Uoservice {
     }
 
     /// <summary>Field number for the "gameY" field.</summary>
-    public const int GameYFieldNumber = 3;
+    public const int GameYFieldNumber = 6;
     private uint gameY_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public uint GameY {
@@ -579,7 +616,7 @@ namespace Uoservice {
     }
 
     /// <summary>Field number for the "serial" field.</summary>
-    public const int SerialFieldNumber = 4;
+    public const int SerialFieldNumber = 7;
     private uint serial_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public uint Serial {
@@ -590,7 +627,7 @@ namespace Uoservice {
     }
 
     /// <summary>Field number for the "name" field.</summary>
-    public const int NameFieldNumber = 5;
+    public const int NameFieldNumber = 8;
     private string name_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Name {
@@ -601,7 +638,7 @@ namespace Uoservice {
     }
 
     /// <summary>Field number for the "title" field.</summary>
-    public const int TitleFieldNumber = 6;
+    public const int TitleFieldNumber = 9;
     private string title_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Title {
@@ -612,7 +649,7 @@ namespace Uoservice {
     }
 
     /// <summary>Field number for the "notorietyFlag" field.</summary>
-    public const int NotorietyFlagFieldNumber = 7;
+    public const int NotorietyFlagFieldNumber = 10;
     private uint notorietyFlag_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public uint NotorietyFlag {
@@ -635,6 +672,9 @@ namespace Uoservice {
       if (ReferenceEquals(other, this)) {
         return true;
       }
+      if (Hits != other.Hits) return false;
+      if (HitsMax != other.HitsMax) return false;
+      if (Race != other.Race) return false;
       if (Distance != other.Distance) return false;
       if (GameX != other.GameX) return false;
       if (GameY != other.GameY) return false;
@@ -648,6 +688,9 @@ namespace Uoservice {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
+      if (Hits != 0) hash ^= Hits.GetHashCode();
+      if (HitsMax != 0) hash ^= HitsMax.GetHashCode();
+      if (Race != 0) hash ^= Race.GetHashCode();
       if (Distance != 0) hash ^= Distance.GetHashCode();
       if (GameX != 0) hash ^= GameX.GetHashCode();
       if (GameY != 0) hash ^= GameY.GetHashCode();
@@ -668,32 +711,44 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
-      if (Distance != 0) {
+      if (Hits != 0) {
         output.WriteRawTag(8);
+        output.WriteUInt32(Hits);
+      }
+      if (HitsMax != 0) {
+        output.WriteRawTag(16);
+        output.WriteUInt32(HitsMax);
+      }
+      if (Race != 0) {
+        output.WriteRawTag(24);
+        output.WriteUInt32(Race);
+      }
+      if (Distance != 0) {
+        output.WriteRawTag(32);
         output.WriteUInt32(Distance);
       }
       if (GameX != 0) {
-        output.WriteRawTag(16);
+        output.WriteRawTag(40);
         output.WriteUInt32(GameX);
       }
       if (GameY != 0) {
-        output.WriteRawTag(24);
+        output.WriteRawTag(48);
         output.WriteUInt32(GameY);
       }
       if (Serial != 0) {
-        output.WriteRawTag(32);
+        output.WriteRawTag(56);
         output.WriteUInt32(Serial);
       }
       if (Name.Length != 0) {
-        output.WriteRawTag(42);
+        output.WriteRawTag(66);
         output.WriteString(Name);
       }
       if (Title.Length != 0) {
-        output.WriteRawTag(50);
+        output.WriteRawTag(74);
         output.WriteString(Title);
       }
       if (NotorietyFlag != 0) {
-        output.WriteRawTag(56);
+        output.WriteRawTag(80);
         output.WriteUInt32(NotorietyFlag);
       }
       if (_unknownFields != null) {
@@ -704,6 +759,15 @@ namespace Uoservice {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
+      if (Hits != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Hits);
+      }
+      if (HitsMax != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(HitsMax);
+      }
+      if (Race != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Race);
+      }
       if (Distance != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Distance);
       }
@@ -735,6 +799,15 @@ namespace Uoservice {
     public void MergeFrom(GrpcMobileObjectData other) {
       if (other == null) {
         return;
+      }
+      if (other.Hits != 0) {
+        Hits = other.Hits;
+      }
+      if (other.HitsMax != 0) {
+        HitsMax = other.HitsMax;
+      }
+      if (other.Race != 0) {
+        Race = other.Race;
       }
       if (other.Distance != 0) {
         Distance = other.Distance;
@@ -769,30 +842,42 @@ namespace Uoservice {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            Distance = input.ReadUInt32();
+            Hits = input.ReadUInt32();
             break;
           }
           case 16: {
-            GameX = input.ReadUInt32();
+            HitsMax = input.ReadUInt32();
             break;
           }
           case 24: {
-            GameY = input.ReadUInt32();
+            Race = input.ReadUInt32();
             break;
           }
           case 32: {
-            Serial = input.ReadUInt32();
+            Distance = input.ReadUInt32();
             break;
           }
-          case 42: {
-            Name = input.ReadString();
+          case 40: {
+            GameX = input.ReadUInt32();
             break;
           }
-          case 50: {
-            Title = input.ReadString();
+          case 48: {
+            GameY = input.ReadUInt32();
             break;
           }
           case 56: {
+            Serial = input.ReadUInt32();
+            break;
+          }
+          case 66: {
+            Name = input.ReadString();
+            break;
+          }
+          case 74: {
+            Title = input.ReadString();
+            break;
+          }
+          case 80: {
             NotorietyFlag = input.ReadUInt32();
             break;
           }
