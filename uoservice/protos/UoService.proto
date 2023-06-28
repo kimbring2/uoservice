@@ -82,7 +82,6 @@ message GrpcClilocData {
   string name = 4;
 }
 
-
 message GrpcPopupMenuList {
   repeated GrpcPopupMenu menus = 1;
 }

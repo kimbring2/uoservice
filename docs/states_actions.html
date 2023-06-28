@@ -59,26 +59,6 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col" id="1">
-                <script>createHeader("1", "GrpcPlayerObject", "");</script>
-                This data type is usually used to store the item of backpack, equipped by player, corpse of monster. Note that, this is the simpler than GrpcGameObjectData data type. 
-                <img src="Fig/PlayerObject.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="300">
-
-                <script>
-                    generate_table("1", 
-                                    [
-                                        ["gameX", "uint32", "x position of player at the game(not a screen position)"], 
-                                        ["gameY", "uint32", "y position of player at the game(not a screen position)"],
-                                        ["serial", "serial", "unique serial number of player"],
-                                        ["name", "string", "The name of player"],
-                                        ["title", "string", "The title of player"],
-                                        ["holdItemSerial", "uint32", "unique serial number of holded item by player"],
-                                        ["warMode", "bool", "This should be true to attack the monster"]
-                                    ]
-                                    );
-                </script>
-            </div>
-
             <div class="col" id="2">
                 <script>createHeader("2", "GrpcMobileObjectData", "");</script>
                 This type includes the every mobile type object such as monster, npc, aminal, other player, and etc.
@@ -98,59 +78,25 @@
                                     );
                 </script>
             </div>
-        </div>
 
-        <div class="row">
             <div class="col" id="3">
                 <script>createHeader("3", "GrpcItemObjectData", "");</script>
                 This data type is for saving the information of every type of items such as gold, portion, book, and etc. 
-                <img src="Fig/ItemObject.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="220">
-
-                uint32 distance = 1;
-              uint32 gameX = 2;
-              uint32 gameY = 3;
-              uint32 serial = 4;
-              string name = 5;
-              bool isCorpse = 6;
-              uint32 amount = 7;
-              uint32 price = 8;
-              uint32 layer = 9;
-              uint32 container = 10;
+                <img src="Fig/ItemObject.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="210">
 
                 <script>
                     generate_table("3", 
                                     [
-                                        ["gameX", "gameX", "x position of player at the game"], 
-                                        ["gameY", "gameY", "y position of player at the game"],
-                                        ["serial", "serial", "unique serial number of player"],
-                                        ["name", "string", "The name of player"],
-                                        ["title", "string", "The title of player"],
-                                        ["holdItemSerial", "uint32", "The number of item if it can be stacked"],
-                                        ["warMode", "bool", "The number of item if it can be stacked"]
-                                    ]
-                                    );
-                </script>
-            </div>
-
-            <div class="col" id="4">
-                <script>createHeader("4", "GrpcMobileObjectData", "");</script>
-                This includes the every object of game such as item, mobile, tree, rock, etc. This information can be used to find the obstacls that can block the movement of player on the screen.
-                <img src="Fig/GameObject.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="130">
-                <script>
-                    generate_table("4", 
-                                    [
-                                        ["type", "string", "type of object"], 
-                                        ["screenX", "uint32", "x position of mobile in the game screen"],
-                                        ["screenY", "uint32", "y position of mobile in the game screen"],
-                                        ["distance", "uint32", "The distance between the player and object"],
-                                        ["gameX", "uint32", "x position of mobile in the game scene"],
-                                        ["gameY", "uint32", "y position of mobile in the game scene"],
-                                        ["serial", "uint32", "unique serial number of object"],
-                                        ["name", "string", "name of object"],
-                                        ["isCorpse", "bool", "whether the object is corpse"],
-                                        ["title", "string", "title of object"],
+                                        ["distance", "uint32", "distance between the player and item object"],
+                                        ["gameX", "gameX", "x position of item at the game"], 
+                                        ["gameY", "gameY", "y position of item at the game"],
+                                        ["serial", "serial", "unique serial number of item"],
+                                        ["name", "string", "name of item"],
+                                        ["isCorpse", "bool", "wheather the item is corpose of some mobile"],
                                         ["amount", "uint32", "number of item if it can be stacked"],
-                                        ["price", "uint32", "price of item when buying and selling"]
+                                        ["price", "uint32", "price of item when buy or sell"],
+                                        ["layer", "uint32", "category where the item belongs"],
+                                        ["container", "uint32", "serial of the container containing the item"]
                                     ]
                                     );
                 </script>
@@ -158,11 +104,11 @@
         </div>
 
         <div class="row">
-            <div class="col" id="5">
-                <script>createHeader("5", "GrpcPlayerStatus", "");</script>
+            <div class="col" id="4">
+                <script>createHeader("4", "GrpcPlayerStatus", "");</script>
                 <img src="Fig/Status.png" class="rounded mx-auto d-block float-center" alt="Logo" width="420" height="150">
                 <script>
-                    generate_table("5", 
+                    generate_table("4", 
                                     [
                                         ["str", "uint32", "strenthg of player"], 
                                         ["dex", "uint32", "dexterity of player"],
@@ -182,11 +128,11 @@
                 </script>
             </div>
 
-            <div class="col" id="6">
-                <script>createHeader("6", "GrpcSkill", "");</script>
+            <div class="col" id="5">
+                <script>createHeader("5", "GrpcSkill", "");</script>
                 <img src="Fig/Skill.png" class="rounded mx-auto d-block float-center" alt="Logo" width="350" height="300">
                 <script>
-                    generate_table("6", 
+                    generate_table("5", 
                                     [
                                         ["name", "string", "name of skill"], 
                                         ["index", "uint32", "unique index numer of skill"],
@@ -202,25 +148,11 @@
         </div>
 
         <div class="row">
-            <div class="col" id="7">
-                <script>createHeader("7", "GrpcGameObjectSimpleData", "");</script>
-                This is simplied version of the GrpcGameObjectData that is made to reduce the size of data. For specific, it can be used to save the land object around the player to drop the item.
-                <img src="Fig/Land.png" class="rounded mx-auto d-block float-center" alt="Logo" width="100" height="100">
-                <script>
-                    generate_table("7", 
-                                    [
-                                        ["gameX", "uint32", "x position of mobile in the game scene"],
-                                        ["gameY", "uint32", "y position of mobile in the game scene"],
-                                    ]
-                                    );
-                </script>
-            </div>
-
-            <div class="col" id="8">
-                <script>createHeader("8", "GrpcClilocData", "");</script>
+            <div class="col" id="6">
+                <script>createHeader("6", "GrpcClilocData", "");</script>
                 <img src="Fig/Cliloc.png" class="rounded mx-auto d-block float-center" alt="Logo" width="170" height="190">
                 <script>
-                    generate_table("8", 
+                    generate_table("6", 
                                     [
                                         ["serial", "uint32", "serial number of mobile who say this cliloc"],
                                         ["text", "string", "main text body of cliloc"], 
@@ -230,27 +162,29 @@
                                     );
                 </script>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col" id="9">
-                <script>createHeader("9", "GrpcContainerData", "");</script>
-                When the monster is dead, it is transformed from mobile to item type. Then, you can open the dead body of it. You can consider it as the container type. It can have the mutiple items what you can take to your backpack. This data type is for that purpose.
-                <img src="Fig/Container.png" class="rounded mx-auto d-block float-center" alt="Logo" width="230" height="160">
+            <div class="col" id="7">
+                <script>createHeader("7", "GrpcPopupMenu", "");</script>
+                The type is used for saving the text, and active status of single pop up menu.
+                <img src="Fig/PopUpMenu.png" class="rounded mx-auto d-block float-center" alt="Logo" width="130" height="210">
+
                 <script>
-                    generate_table("9", 
+                    generate_table("7", 
                                     [
-                                        ["container", "GrpcGameObjectData", "owner of this container"],
-                                        ["containerItemList", "list of GrpcItemData", "list of items that this container hold"]
+                                        ["text", "string", "text body of pop up"],
+                                        ["active", "bool", "true if this menu can be selected"],
                                     ]
                                     );
                 </script>
             </div>
+        </div>
 
-            <div class="col" id="10">
-                <script>createHeader("10", "Actions", "");</script>
+        <div class="row">
+
+            <div class="col" id="8">
+                <script>createHeader("8", "Actions", "");</script>
                 Due to the huge number of pixels, using the position of screen as action directly is really inefficient. However, we can project the any mouse input into a specific game event by using the multiple action arguments. <script>
-                    generate_table("10", 
+                    generate_table("8", 
                                     [
                                         ["actionType", "uint32", "type of action"],
                                         ["itemSerial", "uint32", "unique item serial what player hold now"], 
@@ -273,45 +207,64 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col", id="states_1">
-                <script>createHeader("states_1", "EquippedItemList", "");</script>
-                There are multiple part in player(Cloak, Shirt, Pants, Shoes, Legs, Arms, Torso, Tunic, Ring, Bracelet, Face, Gloves, Skirt, Robe, Waist, Necklace, Hair, Beard, Earrings, Helmet, OneHanded, TwoHanded, Talisman) where specific type of item can be equipped. This data type stores all equipped item at now.
-                <img src="Fig/EquippedItem.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="300">
+            <div class="col" id="states_1">
+                <script>createHeader("states_1", "GrpcPlayerObject", "");</script>
+                This data type is usually used to store the item of backpack, equipped by player, corpse of monster. Note that, this is the simpler than GrpcGameObjectData data type. 
+                <img src="Fig/PlayerObject.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="300">
+
                 <script>
                     generate_table("states_1", 
                                     [
-                                        ["GrpcItemList", "list of GrpcItemData", "list of item what player equips now"]
+                                        ["gameX", "uint32", "x position of player at the game(not a screen position)"], 
+                                        ["gameY", "uint32", "y position of player at the game(not a screen position)"],
+                                        ["serial", "serial", "unique serial number of player"],
+                                        ["name", "string", "name of player"],
+                                        ["title", "string", "title of player"],
+                                        ["holdItemSerial", "uint32", "unique serial number of holded item by player"],
+                                        ["warMode", "bool", "this should be true to attack the monster"]
                                     ]
                                     );
                 </script>
             </div>
 
             <div class="col", id="states_2">
-                <script>createHeader("states_2", "BackpackItemList", "");</script>
-                Player has the main bag to hold the various items. This data type stors all items of player's backpack of now.
-                <img src="Fig/Backpack.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="210">
+                <script>createHeader("states_2", "WorldItemList", "");</script>
+                Because Ultima Online is a first-person game, everything is player-centric. This state contains a list of all items in the game that are updated as the player moves or acts.
+
                 <script>
                     generate_table("states_2", 
                                     [
-                                        ["GrpcItemList", "list of GrpcItemData", "list of item of player's backpack"]
+                                        ["WorldItemList", "list of GrpcItemObjectData", "list of items related to the player's current game play"],
                                     ]
                                     );
                 </script>
+                First case are the items of backpack, and equipped of player. These two pieces of information continue to exist from the moment the player connects.
+                <img src="Fig/BaseItem.png" class="rounded mx-auto d-block float-center" alt="Logo" width="280" height="220">
+                The state of the bank, shop, and corpse container items are included only when the player opens the container, and disappears from the information when it is closed
+                <img src="Fig/OpenedItem.png" class="rounded mx-auto d-block float-center" alt="Logo" width="450" height="180">
+                When a monster in mobile type dies, it changes to an item type. In that case, this state include the inforamtion about dead body.
+                <img src="Fig/CorpseItem.png" class="rounded mx-auto d-block float-center" alt="Logo" width="300" height="150">
             </div>
         </div>
 
         <div class="row">
             <div class="col", id="states_3">
-                <script>createHeader("states_3", "OpenedCorpseList", "");</script>
-                Opening the multiple corpse together is possible at Ultima Online. This data type can be used for that purpose. 
-                <img src="Fig/Corpses.png" class="rounded mx-auto d-block float-center" alt="Logo" width="300" height="210">
+                <script>createHeader("states_3", "WorldMobileList", "");</script>
+                Because Ultima Online is a first-person game, everything is player-centric. This state contains a list of all items in the game that are updated as the player moves or acts.
+
                 <script>
                     generate_table("states_3", 
                                     [
-                                        ["GrpcContainerDataList", "list of GrpcContainerData", "list of corpse currently opened"],
+                                        ["WorldMobileList", "list of GrpcMobileObjectData", "list of mobiles related to the player's current game play"],
                                     ]
                                     );
                 </script>
+                First case are the items of backpack, and equipped of player. These two pieces of information continue to exist from the moment the player connects.
+                <img src="Fig/BaseItem.png" class="rounded mx-auto d-block float-center" alt="Logo" width="400" height="320">
+                The state of the bank, shop, and corpse container items are included only when the player opens the container, and disappears from the information when it is closed
+                <img src="Fig/OpenedItem.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="280">
+                When a monster in mobile type dies, it changes to an item type. In that case, this state include the inforamtion about dead body.
+                <img src="Fig/CorpseItem.png" class="rounded mx-auto d-block float-center" alt="Logo" width="500" height="210">
             </div>
 
             <div class="col", id="states_4">
