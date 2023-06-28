@@ -4,11 +4,14 @@ package uoservice;
 
 message Empty {}
 
-message GrpcClilocData {
-  uint32 serial = 1;
-  string text = 2;
-  string affix = 3;
+message GrpcPlayerObject {
+  uint32 gameX = 1;
+  uint32 gameY = 2;
+  uint32 serial = 3;
   string name = 4;
+  string title = 5;
+  uint32 holdItemSerial = 6;
+  bool warMode = 7;
 }
 
 message GrpcMobileObjectData {
@@ -33,16 +36,6 @@ message GrpcItemObjectData {
   uint32 container = 10;
 }
 
-message GrpcSkill {
-  string name = 1;
-  uint32 index = 2;
-  bool isClickable = 3;
-  uint32 value = 4;
-  uint32 base = 5;
-  uint32 cap = 6;
-  uint32 lock = 7;
-}
-
 message GrpcPlayerStatus {
   uint32 str = 1;
   uint32 dex = 2;
@@ -61,14 +54,14 @@ message GrpcPlayerStatus {
   uint32 weightMax = 13;
 }
 
-message GrpcPlayerObject {
-  uint32 gameX = 1;
-  uint32 gameY = 2;
-  uint32 serial = 3;
-  string name = 4;
-  string title = 5;
-  uint32 holdItemSerial = 6;
-  bool warMode = 7;
+message GrpcSkill {
+  string name = 1;
+  uint32 index = 2;
+  bool isClickable = 3;
+  uint32 value = 4;
+  uint32 base = 5;
+  uint32 cap = 6;
+  uint32 lock = 7;
 }
 
 message GrpcGameObjectInfoList {
@@ -80,6 +73,14 @@ message GrpcPopupMenu {
   string text = 1;
   bool active = 2;
 }
+
+message GrpcClilocData {
+  uint32 serial = 1;
+  string text = 2;
+  string affix = 3;
+  string name = 4;
+}
+
 
 message GrpcPopupMenuList {
   repeated GrpcPopupMenu menus = 1;

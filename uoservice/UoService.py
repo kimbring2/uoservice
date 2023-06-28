@@ -122,10 +122,12 @@ class UoService:
 
 		if len(popup_menu_data):
 			for popup_menu in popup_menu_data:
-				print("popup_menu / text: {0}, active: {1}".format(popup_menu.text, popup_menu.active))
-			print("")
+				#print("popup_menu / text: {0}, active: {1}".format(popup_menu.text, popup_menu.active))
+				pass
+			#print("")
 
 		if player_object.gameX != 0:
+			print("player_object: ", player_object)
 			self.player_game_x = player_object.gameX
 			self.player_game_y = player_object.gameY
 

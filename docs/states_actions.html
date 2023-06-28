@@ -60,34 +60,52 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col" id="1">
-                <script>createHeader("1", "GrpcItemData", "");</script>
+                <script>createHeader("1", "GrpcPlayerObject", "");</script>
                 This data type is usually used to store the item of backpack, equipped by player, corpse of monster. Note that, this is the simpler than GrpcGameObjectData data type. 
-                <img src="Fig/Item.png" class="rounded mx-auto d-block float-center" alt="Logo" width="220" height="130">
+                <img src="Fig/PlayerObject.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="300">
+
                 <script>
                     generate_table("1", 
                                     [
-                                        ["name", "string", "name of item"], 
-                                        ["layer", "uint32", "which layer the item is included"],
-                                        ["serial", "uint32", "unique serial number of item"],
-                                        ["amount", "uint32", "The number of item if it can be stacked"]
+                                        ["gameX", "uint32", "x position of player at the game(not a screen position)"], 
+                                        ["gameY", "uint32", "y position of player at the game(not a screen position)"],
+                                        ["serial", "serial", "unique serial number of player"],
+                                        ["name", "string", "The name of player"],
+                                        ["title", "string", "The title of player"],
+                                        ["holdItemSerial", "uint32", "unique serial number of holded item by player"],
+                                        ["warMode", "bool", "This should be true to attack the monster"]
                                     ]
                                     );
                 </script>
             </div>
 
             <div class="col" id="2">
-                <script>createHeader("2", "GrpcSkill", "");</script>
-                <img src="Fig/Skill.png" class="rounded mx-auto d-block float-center" alt="Logo" width="350" height="300">
+                <script>createHeader("2", "GrpcMobileObjectData", "");</script>
+                This includes the every object of game such as item, mobile, tree, rock, etc. This information can be used to find the obstacls that can block the movement of player on the screen.
+                <img src="Fig/GameObject.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="130">
+
+                uint32 distance = 1;
+                uint32 gameX = 2;
+                uint32 gameY = 3;
+                uint32 serial = 4;
+                string name = 5;
+                string title = 6;
+
                 <script>
                     generate_table("2", 
                                     [
-                                        ["name", "string", "name of skill"], 
-                                        ["index", "uint32", "unique index numer of skill"],
-                                        ["isClickable", "bool", "whether the skill can be activated by clicking"],
-                                        ["value", "uint32", "current skill level"],
-                                        ["base", "uint32", "base skill level"],
-                                        ["cap", "uint32", "maximum value of skill can be increased"],
-                                        ["lock", "uint32", "skill can be increased if this value is 0"]
+                                        ["distance", "uint32", "The distance between the player and object"],
+                                        ["type", "string", "type of object"], 
+                                        ["screenX", "uint32", "x position of mobile in the game screen"],
+                                        ["screenY", "uint32", "y position of mobile in the game screen"],
+                                        ["gameX", "uint32", "x position of mobile in the game scene"],
+                                        ["gameY", "uint32", "y position of mobile in the game scene"],
+                                        ["serial", "uint32", "unique serial number of object"],
+                                        ["name", "string", "name of object"],
+                                        ["isCorpse", "bool", "whether the object is corpse"],
+                                        ["title", "string", "title of object"],
+                                        ["amount", "uint32", "number of item if it can be stacked"],
+                                        ["price", "uint32", "price of item when buying and selling"]
                                     ]
                                     );
                 </script>
@@ -96,31 +114,27 @@
 
         <div class="row">
             <div class="col" id="3">
-                <script>createHeader("3", "GrpcPlayerStatus", "");</script>
-                <img src="Fig/Status.png" class="rounded mx-auto d-block float-center" alt="Logo" width="420" height="150">
+                <script>createHeader("3", "GrpcItemObjectData", "");</script>
+                This data type is usually used to store the item of backpack, equipped by player, corpse of monster. Note that, this is the simpler than GrpcGameObjectData data type. 
+                <img src="Fig/PlayerObject.png" class="rounded mx-auto d-block float-center" alt="Logo" width="300" height="240">
+
                 <script>
                     generate_table("3", 
                                     [
-                                        ["str", "uint32", "strenthg of player"], 
-                                        ["dex", "uint32", "dexterity of player"],
-                                        ["intell", "uint32", "intelligence of player"],
-                                        ["hits", "uint32", "current hp of player"],
-                                        ["hitsMax", "uint32", "maximum value of HP of player"], 
-                                        ["stamina", "uint32", "stamina of player"],
-                                        ["staminaMax", "uint32", "maximum value of stamina of player"],
-                                        ["mana", "uint32", "mana of player"],
-                                        ["manaMax", "uint32", "maximum value of mana of player"], 
-                                        ["gold", "uint32", "gold the player currently has"],
-                                        ["physicalResistance", "uint32", "the physical resistance of player"],
-                                        ["weightMax", "uint32", "maximum value of weight of player"],
-                                        ["holdItemSerial", "uint32", "serial of item what player current is holding"]
+                                        ["gameX", "gameX", "x position of player at the game"], 
+                                        ["gameY", "gameY", "y position of player at the game"],
+                                        ["serial", "serial", "unique serial number of player"],
+                                        ["name", "string", "The name of player"],
+                                        ["title", "string", "The title of player"],
+                                        ["holdItemSerial", "uint32", "The number of item if it can be stacked"],
+                                        ["warMode", "bool", "The number of item if it can be stacked"]
                                     ]
                                     );
                 </script>
             </div>
 
             <div class="col" id="4">
-                <script>createHeader("4", "GrpcGameObjectData", "");</script>
+                <script>createHeader("4", "GrpcMobileObjectData", "");</script>
                 This includes the every object of game such as item, mobile, tree, rock, etc. This information can be used to find the obstacls that can block the movement of player on the screen.
                 <img src="Fig/GameObject.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="130">
                 <script>
@@ -146,11 +160,55 @@
 
         <div class="row">
             <div class="col" id="5">
-                <script>createHeader("5", "GrpcGameObjectSimpleData", "");</script>
+                <script>createHeader("5", "GrpcPlayerStatus", "");</script>
+                <img src="Fig/Status.png" class="rounded mx-auto d-block float-center" alt="Logo" width="420" height="150">
+                <script>
+                    generate_table("5", 
+                                    [
+                                        ["str", "uint32", "strenthg of player"], 
+                                        ["dex", "uint32", "dexterity of player"],
+                                        ["intell", "uint32", "intelligence of player"],
+                                        ["hits", "uint32", "current hp of player"],
+                                        ["hitsMax", "uint32", "maximum value of HP of player"], 
+                                        ["stamina", "uint32", "stamina of player"],
+                                        ["staminaMax", "uint32", "maximum value of stamina of player"],
+                                        ["mana", "uint32", "mana of player"],
+                                        ["manaMax", "uint32", "maximum value of mana of player"], 
+                                        ["gold", "uint32", "gold the player currently has"],
+                                        ["physicalResistance", "uint32", "the physical resistance of player"],
+                                        ["weightMax", "uint32", "maximum value of weight of player"],
+                                        ["holdItemSerial", "uint32", "serial of item what player current is holding"]
+                                    ]
+                                    );
+                </script>
+            </div>
+
+            <div class="col" id="6">
+                <script>createHeader("6", "GrpcSkill", "");</script>
+                <img src="Fig/Skill.png" class="rounded mx-auto d-block float-center" alt="Logo" width="350" height="300">
+                <script>
+                    generate_table("6", 
+                                    [
+                                        ["name", "string", "name of skill"], 
+                                        ["index", "uint32", "unique index numer of skill"],
+                                        ["isClickable", "bool", "whether the skill can be activated by clicking"],
+                                        ["value", "uint32", "current skill level"],
+                                        ["base", "uint32", "base skill level"],
+                                        ["cap", "uint32", "maximum value of skill can be increased"],
+                                        ["lock", "uint32", "skill can be increased if this value is 0"]
+                                    ]
+                                    );
+                </script>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col" id="7">
+                <script>createHeader("7", "GrpcGameObjectSimpleData", "");</script>
                 This is simplied version of the GrpcGameObjectData that is made to reduce the size of data. For specific, it can be used to save the land object around the player to drop the item.
                 <img src="Fig/Land.png" class="rounded mx-auto d-block float-center" alt="Logo" width="100" height="100">
                 <script>
-                    generate_table("5", 
+                    generate_table("7", 
                                     [
                                         ["gameX", "uint32", "x position of mobile in the game scene"],
                                         ["gameY", "uint32", "y position of mobile in the game scene"],
@@ -159,11 +217,11 @@
                 </script>
             </div>
 
-            <div class="col" id="6">
-                <script>createHeader("6", "GrpcClilocData", "");</script>
+            <div class="col" id="8">
+                <script>createHeader("8", "GrpcClilocData", "");</script>
                 <img src="Fig/Cliloc.png" class="rounded mx-auto d-block float-center" alt="Logo" width="170" height="190">
                 <script>
-                    generate_table("6", 
+                    generate_table("8", 
                                     [
                                         ["serial", "uint32", "serial number of mobile who say this cliloc"],
                                         ["text", "string", "main text body of cliloc"], 
@@ -176,12 +234,12 @@
         </div>
 
         <div class="row">
-            <div class="col" id="7">
-                <script>createHeader("7", "GrpcContainerData", "");</script>
+            <div class="col" id="9">
+                <script>createHeader("9", "GrpcContainerData", "");</script>
                 When the monster is dead, it is transformed from mobile to item type. Then, you can open the dead body of it. You can consider it as the container type. It can have the mutiple items what you can take to your backpack. This data type is for that purpose.
                 <img src="Fig/Container.png" class="rounded mx-auto d-block float-center" alt="Logo" width="230" height="160">
                 <script>
-                    generate_table("7", 
+                    generate_table("9", 
                                     [
                                         ["container", "GrpcGameObjectData", "owner of this container"],
                                         ["containerItemList", "list of GrpcItemData", "list of items that this container hold"]
@@ -190,10 +248,10 @@
                 </script>
             </div>
 
-            <div class="col" id="8">
-                <script>createHeader("8", "Actions", "");</script>
+            <div class="col" id="10">
+                <script>createHeader("10", "Actions", "");</script>
                 Due to the huge number of pixels, using the position of screen as action directly is really inefficient. However, we can project the any mouse input into a specific game event by using the multiple action arguments. <script>
-                    generate_table("8", 
+                    generate_table("10", 
                                     [
                                         ["actionType", "uint32", "type of action"],
                                         ["itemSerial", "uint32", "unique item serial what player hold now"], 

@@ -64,6 +64,11 @@ def main():
 
     backpack_item_data = uo_service.backpack_item_dict
     #print("backpack_item_data: ", backpack_item_data)
+    for k_backpack, v_backpack in backpack_item_data.items():
+      #print("backpack {0}: {1}".format(k_backpack, v_backpack))
+      pass
+
+    #print("")
 
     equipped_item_data = uo_service.equipped_item_dict
     #print("equipped_item_data: ", equipped_item_data)
