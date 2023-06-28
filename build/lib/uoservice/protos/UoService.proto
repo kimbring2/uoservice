@@ -21,6 +21,7 @@ message GrpcMobileObjectData {
   uint32 serial = 4;
   string name = 5;
   string title = 6;
+  uint32 notorietyFlag = 7;
 }
 
 message GrpcItemObjectData {

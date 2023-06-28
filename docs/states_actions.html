@@ -81,31 +81,19 @@
 
             <div class="col" id="2">
                 <script>createHeader("2", "GrpcMobileObjectData", "");</script>
-                This includes the every object of game such as item, mobile, tree, rock, etc. This information can be used to find the obstacls that can block the movement of player on the screen.
-                <img src="Fig/GameObject.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="130">
-
-                uint32 distance = 1;
-                uint32 gameX = 2;
-                uint32 gameY = 3;
-                uint32 serial = 4;
-                string name = 5;
-                string title = 6;
+                This type includes the every mobile type object such as monster, npc, aminal, other player, and etc.
+                <img src="Fig/MobileObject.png" class="rounded mx-auto d-block float-center" alt="Logo" width="500" height="130">
 
                 <script>
                     generate_table("2", 
                                     [
-                                        ["distance", "uint32", "The distance between the player and object"],
-                                        ["type", "string", "type of object"], 
-                                        ["screenX", "uint32", "x position of mobile in the game screen"],
-                                        ["screenY", "uint32", "y position of mobile in the game screen"],
-                                        ["gameX", "uint32", "x position of mobile in the game scene"],
-                                        ["gameY", "uint32", "y position of mobile in the game scene"],
+                                        ["distance", "uint32", "distance between the player and mobile object"],
+                                        ["gameX", "uint32", "x position of mobile in the game"],
+                                        ["gameY", "uint32", "y position of mobile in the game"],
                                         ["serial", "uint32", "unique serial number of object"],
-                                        ["name", "string", "name of object"],
-                                        ["isCorpse", "bool", "whether the object is corpse"],
-                                        ["title", "string", "title of object"],
-                                        ["amount", "uint32", "number of item if it can be stacked"],
-                                        ["price", "uint32", "price of item when buying and selling"]
+                                        ["name", "string", "name of mobile object"],
+                                        ["title", "string", "title of mobile object"],
+                                        ["notorietyFlag", "uint32", "Unknown(0), Innocent(1), Ally(2), Gray(3), Criminal(4), Enemy(5), Murderer(6), Invulnerable(7)"]
                                     ]
                                     );
                 </script>
@@ -115,8 +103,19 @@
         <div class="row">
             <div class="col" id="3">
                 <script>createHeader("3", "GrpcItemObjectData", "");</script>
-                This data type is usually used to store the item of backpack, equipped by player, corpse of monster. Note that, this is the simpler than GrpcGameObjectData data type. 
-                <img src="Fig/PlayerObject.png" class="rounded mx-auto d-block float-center" alt="Logo" width="300" height="240">
+                This data type is for saving the information of every type of items such as gold, portion, book, and etc. 
+                <img src="Fig/ItemObject.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="220">
+
+                uint32 distance = 1;
+              uint32 gameX = 2;
+              uint32 gameY = 3;
+              uint32 serial = 4;
+              string name = 5;
+              bool isCorpse = 6;
+              uint32 amount = 7;
+              uint32 price = 8;
+              uint32 layer = 9;
+              uint32 container = 10;
 
                 <script>
                     generate_table("3", 

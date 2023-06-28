@@ -127,7 +127,7 @@ class UoService:
 			#print("")
 
 		if player_object.gameX != 0:
-			print("player_object: ", player_object)
+			#print("player_object: ", player_object)
 			self.player_game_x = player_object.gameX
 			self.player_game_y = player_object.gameY
 
@@ -147,7 +147,7 @@ class UoService:
 		if len(world_mobile_data) != 0:
 			self.world_mobile_dict = {}
 			for obj in world_mobile_data:
-				self.world_mobile_dict[obj.serial] = [obj.name, obj.gameX, obj.gameY, obj.distance, obj.title]
+				self.world_mobile_dict[obj.serial] = [obj.name, obj.gameX, obj.gameY, obj.distance, obj.title, obj.notorietyFlag]
 
 		if len(self.world_item_dict) != 0 and self.backpack_serial != None:
 			self.backpack_item_dict = {}
