@@ -57,12 +57,27 @@
                 <h2>MPQ (MoPaQ) archive format</h2>
                 When the action is complex like Ultima Online, it is necessary to record the game play of human experts and use it for training the AI agent. In a real-time game, the amount of data generated at each second is excessively large. To solve such a problem, UoService used the same method used by Blizzard to store replay data of Starcraft game. 
 
-                The code for the MQP is already open-sourced for the <a href="https://github.com/robpaveza/stormlibsharp">C#</a> and <a href="https://github.com/eagleflo/mpyq">Python</a>. Therefore, they could be applied into UoService easily.
+                The code for the MQP is already open-sourced for the <a href="https://github.com/robpaveza/stormlibsharp">C#</a> and <a href="https://github.com/eagleflo/mpyq">Python</a>. Therefore, they could be applied into UoService easily. 
             </div>
 
             <div class="col">
                 <h5>Figure1: Replay File.</h5>
                 <img src="Fig/ReplayFile.png" class="rounded mx-auto d-block" alt="Training process" width="500" height="40" align="left">
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <hr>
+                    <h2>Replay file composition </h2>
+                    
+                    Because game information does not always change, it is very inefficient to store state data for every tick.
+                </div>
+
+                <div class="col">
+                    <hr>
+                    <h5>Figure2: Replay File Composition.</h5>
+                    <img src="Fig/ReplayComposition.png" class="rounded mx-auto d-block float-center" alt="Training process" width=80%>
+                </div>
             </div>
 
             <div class="col">
@@ -92,67 +107,7 @@ clilocDataArr = archive.read_file("replay.data.clilocData");
 playerStatusArr = archive.read_file("replay.data.playerStatus");
 playerSkillListArr = archive.read_file("replay.data.playerSkillList");
 staticObjectInfoListArr = archive.read_file("replay.data.staticObjectInfoList");
-
-actionTypeArr = archive.read_file("replay.action.type");
-walkDirectionArr = archive.read_file("replay.action.walkDirection");
-mobileSerialArr = archive.read_file("replay.action.mobileSerial");
-itemSerialArr = archive.read_file("replay.action.itemSerial");
-indexArr = archive.read_file("replay.action.index");
-amountArr = archive.read_file("replay.action.amount");
-runArr = archive.read_file("replay.action.run");
                 </code></pre>
-            </div>
-
-            <div class="col">
-                <h5>Code 2: Parse the data from MPQ file.</h5>
-                <pre class="pre"><code class="python">
-from mpyq import MPQArchive
-
-archive = MPQArchive("kimbring2-2023-6-29-17-35-47.uoreplay")
-
-## The length byte array for data array
-playerObjectArrayLengthArr = archive.read_file("replay.metadata.playerObjectLen");
-worldItemArrayLengthArr = archive.read_file("replay.metadata.worldItemLen");
-worldMobileArrayLengthArr = archive.read_file("replay.metadata.worldMobileLen");
-popupMenuArrayLengthArr = archive.read_file("replay.metadata.popupMenuLen");
-clilocDataArrayLengthArr = archive.read_file("replay.metadata.clilocDataLen");
-playerStatusArrayLengthArr = archive.read_file("replay.metadata.playerStatusLen");
-playerSkillListArrayLengthArr = archive.read_file("replay.metadata.playerSkillListLen");
-staticObjectInfoListLengthArr = archive.read_file("replay.metadata.staticObjectInfoListArraysLen");
-
-## The actual data as byte array
-playerObjectArr = archive.read_file("replay.data.playerObject");
-worldItemArr = archive.read_file("replay.data.worldItems");
-worldMobileArr = archive.read_file("replay.data.worldMobiles");
-popupMenuArr = archive.read_file("replay.data.popupMenu");
-clilocDataArr = archive.read_file("replay.data.clilocData");
-playerStatusArr = archive.read_file("replay.data.playerStatus");
-playerSkillListArr = archive.read_file("replay.data.playerSkillList");
-staticObjectInfoListArr = archive.read_file("replay.data.staticObjectInfoList");
-
-actionTypeArr = archive.read_file("replay.action.type");
-walkDirectionArr = archive.read_file("replay.action.walkDirection");
-mobileSerialArr = archive.read_file("replay.action.mobileSerial");
-itemSerialArr = archive.read_file("replay.action.itemSerial");
-indexArr = archive.read_file("replay.action.index");
-amountArr = archive.read_file("replay.action.amount");
-runArr = archive.read_file("replay.action.run");
-                </code></pre>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <h5>Figure2: Server export templates.</h5>
-                <img src="Fig/ServerTemplates.png" class="rounded mx-auto d-block float-center" alt="Training process" width=80%>
-            </div>
-            <div class="col">
-                <h2>Server export</h2>
-                When one debugs the environment, there's usually no need for rendering during the training. Using server export presets can 
-                speed up the execution of the environment. When the installation script runs, it also compiles this preset, so you only need
-                to export the project using them.<br><br><br><br>
-            </div>
-            <div class="col">
             </div>
         </div>
 
