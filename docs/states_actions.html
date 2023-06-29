@@ -273,13 +273,16 @@
             </div>
 
             <div class="col", id="states_4">
-                Players must click the NPC of around player to buy or sell items or learn skills. At the moment of clicking, a pop up menu data is included in the state.
                 <script>createHeader("states_4", "GrpcPopupMenuList", "");</script>
+                Players must click the NPC of around player to buy or sell items or learn skills. At the moment of clicking, a pop up menu data is included in the state.
+
                 <img src="Fig/PopUpMenu.png" class="rounded mx-auto d-block float-center" alt="Logo" width="170" height="250">
+
+                If the menu can be selected, the active data of GrpcPopupMenu is displayed as true.
                 <script>
                     generate_table("states_4", 
                                     [
-                                        ["menus", "list of string", "list of pop up menu text"],
+                                        ["menus", "list of GrpcPopupMenu", "list of pop up menu data"],
                                     ]
                                     );
                 </script>
@@ -301,18 +304,7 @@
                 </script>
             </div>
 
-            <div class="col", id="states_6">
-                <script>createHeader("states_6", "ItemDropableLandList", "");</script>
-                    This data type only stores the position of game object as list type. It is mainly used to store the Stactic object such as tree and rock that is not really important for player's decision.
-                    <img src="Fig/ItemDropableLand.png" class="rounded mx-auto d-block float-center" alt="Logo" width="100" height="100">
-                    <script>
-                        generate_table("states_6", 
-                                        [
-                                            ["gameSimpleObjects", "list of GrpcGameObjectSimpleData", "list of x position"],
-                                        ]
-                                        );
-                </script>
-            </div>
+            
         </div>
 
         <div class="row">

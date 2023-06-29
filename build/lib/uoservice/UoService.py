@@ -47,6 +47,9 @@ class UoService:
 
 		self.backpack_serial = None
 
+		self.static_object_game_x_data = None
+		self.static_object_game_y_data = None
+
 	def _open_grpc(self):
 		# Open the gRPC channel using the port that is same of game client 
 		channel = grpc.insecure_channel('localhost:' + str(self.grpc_port))
@@ -152,6 +155,11 @@ class UoService:
 																							 "distance": obj.distance, "title": obj.title, "hits": obj.hits,
 																							 "notorietyFlag": obj.notorietyFlag, "hitsMax": obj.hitsMax,
 																							 "race": obj.race }
+
+
+		if len(static_object_game_x_data) != 0:
+			self.static_object_game_x_data = static_object_game_x_data
+			self.static_object_game_y_data = static_object_game_y_data
 
 		if len(self.world_item_dict) != 0 and self.backpack_serial != None:
 			self.backpack_item_dict = {}
@@ -271,14 +279,30 @@ class UoService:
 
 		radius = 5
 		thickness = 2
+
 		screen_width = 5000
 		screen_height = 5000
-
-		far_away_mobile = []
 		for k, v in self.world_mobile_dict.items():
 			if self.player_game_x != None:
-				if v[1] < screen_width and v[2] < screen_height:
-						screen_image = cv2.circle(screen_image, (v[1], v[2]), radius, (0, 0, 255), thickness)
+				if v["gameX"] < screen_width and v["gameY"] < screen_height:
+						screen_image = cv2.circle(screen_image, (v["gameX"], v["gameY"]), radius, (0, 0, 255), thickness)
+
+		radius = 1
+		color = (120, 120, 120)
+		thickness = 2
+		if self.static_object_game_x_data != None:
+			#print("len(self.static_object_game_x_data): ", len(self.static_object_game_x_data))
+
+			for i in range(0, len(self.static_object_game_x_data)):
+					#if self.static_object_game_x_data[i] >= 1400 or self.static_object_game_y_data[i] >= 1280:
+					#	continue
+					#print("self.static_object_game_x_data[{0}]: {1}".format(i, self.static_object_game_x_data[i]))
+					#print("self.static_object_game_y_data[{0}]: {1}".format(i, self.static_object_game_y_data[i]))
+
+					screen_image = cv2.circle(screen_image, (self.static_object_game_x_data[i], self.static_object_game_y_data[i]), 
+									   				 		    radius, color, thickness)
+
+			#print("")
 
 		if self.player_game_x != None:
 			screen_image = cv2.circle(screen_image, (self.player_game_x, self.player_game_y), radius, (0, 255, 0), thickness)
