@@ -66,7 +66,10 @@
 
                 <script>
                     generate_table("2", 
-                                    [
+                                    [   
+                                        ["hits", "uint32", "current HP of mobile"],
+                                        ["hitsMax", "uint32", "maximum value of HP of mobile"],
+                                        ["race", "uint32", "human(1), elf(2), Gargoyle(3), etc(0)"],
                                         ["distance", "uint32", "distance between the player and mobile object"],
                                         ["gameX", "uint32", "x position of mobile in the game"],
                                         ["gameY", "uint32", "y position of mobile in the game"],
@@ -113,7 +116,7 @@
                                         ["str", "uint32", "strenthg of player"], 
                                         ["dex", "uint32", "dexterity of player"],
                                         ["intell", "uint32", "intelligence of player"],
-                                        ["hits", "uint32", "current hp of player"],
+                                        ["hits", "uint32", "current HP of player"],
                                         ["hitsMax", "uint32", "maximum value of HP of player"], 
                                         ["stamina", "uint32", "stamina of player"],
                                         ["staminaMax", "uint32", "maximum value of stamina of player"],
@@ -260,17 +263,17 @@
                 </script>
 
                 In Ultima Online, there are various mobiles that players can interact with, and one of them is a vendor that can purchase or sell items for a specific job. In case of these, it must be distinguished by job name included in title information of GrpcMobileObjectData rather than name. 
-
                 <img src="Fig/VendorMobile.png" class="rounded mx-auto d-block float-center" alt="Logo" width="550" height="90">
 
-                
-
+                Another type of mobile is a monster that the player battles to obtain XP or items. Unlike NPCs in town, the notorietyFlag of GrpcMobileObjectData basically starts from 3(grey).
                 <img src="Fig/MonsterMobile.png" class="rounded mx-auto d-block float-center" alt="Logo" width="450" height="100">
 
-                
+                The player can learn various types of skills up to a total of 700, and must interact with certain NPCs in the village.
+                <img src="Fig/TeacherMobile.png" class="rounded mx-auto d-block float-center" alt="Logo" width="500" height="100">
             </div>
 
             <div class="col", id="states_4">
+                Players must click the NPC of around player to buy or sell items or learn skills. At the moment of clicking, a pop up menu data is included in the state.
                 <script>createHeader("states_4", "GrpcPopupMenuList", "");</script>
                 <img src="Fig/PopUpMenu.png" class="rounded mx-auto d-block float-center" alt="Logo" width="170" height="250">
                 <script>

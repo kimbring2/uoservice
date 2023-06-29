@@ -15,7 +15,7 @@ warrior_npc_title_list = ['healer', 'armourer', 'banker', 'blacksmith', 'weapons
 def get_serial_by_name(item_dict, name):
   keys = list(item_dict.keys())
   for k, v in item_dict.items():
-    if name in v[0]:
+    if name in v["name"]:
       return k, keys.index(k)
 
   return None, None

@@ -89,7 +89,7 @@ def main():
       for k_item, v_item in v_corpse.items():
         #print("corpse item {0}: {1}".format(k_item, v_item))
 
-        if 'Gold' in v_item[0]:
+        if 'Gold' in v_item["name"]:
           #print("corpse gold item {0}: {1}".format(k_item, v_item))
           corpse_gold_serial = k_item
 

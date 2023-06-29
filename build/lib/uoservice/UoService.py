@@ -149,8 +149,9 @@ class UoService:
 			self.world_mobile_dict = {}
 			for obj in world_mobile_data:
 				self.world_mobile_dict[obj.serial] = { "name": obj.name, "gameX": obj.gameX, "gameY":obj.gameY, 
-																							 "distance": obj.distance, "title": obj.title, 
-																							 "notorietyFlag": obj.notorietyFlag }
+																							 "distance": obj.distance, "title": obj.title, "hits": obj.hits,
+																							 "notorietyFlag": obj.notorietyFlag, "hitsMax": obj.hitsMax,
+																							 "race": obj.race }
 
 		if len(self.world_item_dict) != 0 and self.backpack_serial != None:
 			self.backpack_item_dict = {}
@@ -163,7 +164,7 @@ class UoService:
 					self.corpse_dict[k] = v
 
 				if v["container"] == self.backpack_serial:
-					if 'Gold' in v[0]:
+					if 'Gold' in v["name"]:
 						#print("world item {0}: {1}".format(k, self.world_item_dict[k]))
 						pass
 
