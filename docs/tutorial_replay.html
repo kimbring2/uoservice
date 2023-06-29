@@ -54,54 +54,89 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col">
-                <h5>Figure1: Project settings.</h5>
-                <img src="Fig/VsyncSettings.png" class="rounded mx-auto d-block float-center" alt="Training process" width=80%>
-                <img src="Fig/PhysicsSettings.png" class="rounded mx-auto d-block float-center" alt="Training process" width=80%>
-            </div>
-            <div class="col">
-                <h2>Internal clock</h2>
-                Imagine, that you want to simulate phyics in godot engine with the timestep <b>target_delta</b>. Normally it should be 
-                smaller than <b>deltat</b>, that we used in the previous tutorial. In this case we perform <b>deltat</b>/<b>target_delta</b>
-                physics iterations between getting an action and returning the observation. The engine usually assumes that <b>target_delta</b> and 
-                <b>deltat</b> correspond to the real time. However, we want to set the scale to the fastest possible, that you can get set 
-                using <b>Engine.set_time_scale</b>. The time scale corresponding to the real clock is 1, but we want each frame to perform physics 
-                step with <b>target_delta</b> time step. In this case we have to set the time scale to FPS*<b>target_delta</b>.<br><br>
-                Measuring FPS is a tricky part, because when we are waiting for the next action, the system clock does not stop and the engine 
-                thinks that the frame takes the time spent in python script. <br><br>
-                Code 1 shows how to mitigate this problem. First we measure the time it takes to free <b>sem_action</b> semaphore. 
-                We also measure FPS manually in the <b>_process</b> function and remove the semaphore time from our FPS estimate. Then 
-                we set engine iterations per second to our estimate and adjust time scale correspondingly. After this we have to zero the 
-                <b>sem_time</b>, so that it does not affect the frames where there's no communication between godot and python.<br><br>
-                We designed two unit tests to check that the resulting time scaling does not affect the result of the physics simulation. 
-                One can find them here: <a href="https://github.com/lupoglaz/GodotGymAI/tree/master/UnitTests">Tests</a>. <br><br>
-                Finally, you need to set Vsync off and physics timestep to fixed (Figure1).
+                <h2>MPQ (MoPaQ) archive format</h2>
+                When the action is complex like Ultima Online, it is necessary to record the game play of human experts and use it for training the AI agent. In a real-time game, the amount of data generated at each second is excessively large. To solve such a problem, UoService used the same method used by Blizzard to store replay data of Starcraft game. 
 
+                The code for the MQP is already open-sourced for the <a href="https://github.com/robpaveza/stormlibsharp">C#</a> and <a href="https://github.com/eagleflo/mpyq">Python</a>. Therefore, they could be applied into UoService easily.
             </div>
+
             <div class="col">
-                <h5>Code 1: Example of time scaling.</h5>
+                <h5>Figure1: Replay File.</h5>
+                <img src="Fig/ReplayFile.png" class="rounded mx-auto d-block" alt="Training process" width="500" height="40" align="left">
+            </div>
+
+            <div class="col">
+                <hr>
+                <h5>Code 1: Read the data from MPQ file.</h5>
                 <pre class="pre"><code class="python">
-var deltat = 0.05
-var prev_time = 0.0
-var sem_delta = 0.0
-var target_delta = 0.025
+from mpyq import MPQArchive
 
-func _physics_process(delta):
-    if timeout:
-        if mem.exists():
-            var time_start = OS.get_ticks_usec()
-            sem_action.wait()
-            var time_end = OS.get_ticks_usec()
-            sem_delta = time_end - time_start
-            ...
+archive = MPQArchive("kimbring2-2023-6-29-17-35-47.uoreplay")
 
-func _process(delta):
-    if mem.exists():
-        var cur_time = OS.get_ticks_usec()
-        var fps_est = 1000000.0/(cur_time - prev_time - sem_delta)
-        Engine.set_iterations_per_second(fps_est)
-        Engine.set_time_scale(Engine.get_iterations_per_second()*target_delta)
-        sem_delta = 0.0
-        prev_time = cur_time
+## The length byte array for data array
+playerObjectArrayLengthArr = archive.read_file("replay.metadata.playerObjectLen");
+worldItemArrayLengthArr = archive.read_file("replay.metadata.worldItemLen");
+worldMobileArrayLengthArr = archive.read_file("replay.metadata.worldMobileLen");
+popupMenuArrayLengthArr = archive.read_file("replay.metadata.popupMenuLen");
+clilocDataArrayLengthArr = archive.read_file("replay.metadata.clilocDataLen");
+playerStatusArrayLengthArr = archive.read_file("replay.metadata.playerStatusLen");
+playerSkillListArrayLengthArr = archive.read_file("replay.metadata.playerSkillListLen");
+staticObjectInfoListLengthArr = archive.read_file("replay.metadata.staticObjectInfoListArraysLen");
+
+## The actual data as byte array
+playerObjectArr = archive.read_file("replay.data.playerObject");
+worldItemArr = archive.read_file("replay.data.worldItems");
+worldMobileArr = archive.read_file("replay.data.worldMobiles");
+popupMenuArr = archive.read_file("replay.data.popupMenu");
+clilocDataArr = archive.read_file("replay.data.clilocData");
+playerStatusArr = archive.read_file("replay.data.playerStatus");
+playerSkillListArr = archive.read_file("replay.data.playerSkillList");
+staticObjectInfoListArr = archive.read_file("replay.data.staticObjectInfoList");
+
+actionTypeArr = archive.read_file("replay.action.type");
+walkDirectionArr = archive.read_file("replay.action.walkDirection");
+mobileSerialArr = archive.read_file("replay.action.mobileSerial");
+itemSerialArr = archive.read_file("replay.action.itemSerial");
+indexArr = archive.read_file("replay.action.index");
+amountArr = archive.read_file("replay.action.amount");
+runArr = archive.read_file("replay.action.run");
+                </code></pre>
+            </div>
+
+            <div class="col">
+                <h5>Code 2: Parse the data from MPQ file.</h5>
+                <pre class="pre"><code class="python">
+from mpyq import MPQArchive
+
+archive = MPQArchive("kimbring2-2023-6-29-17-35-47.uoreplay")
+
+## The length byte array for data array
+playerObjectArrayLengthArr = archive.read_file("replay.metadata.playerObjectLen");
+worldItemArrayLengthArr = archive.read_file("replay.metadata.worldItemLen");
+worldMobileArrayLengthArr = archive.read_file("replay.metadata.worldMobileLen");
+popupMenuArrayLengthArr = archive.read_file("replay.metadata.popupMenuLen");
+clilocDataArrayLengthArr = archive.read_file("replay.metadata.clilocDataLen");
+playerStatusArrayLengthArr = archive.read_file("replay.metadata.playerStatusLen");
+playerSkillListArrayLengthArr = archive.read_file("replay.metadata.playerSkillListLen");
+staticObjectInfoListLengthArr = archive.read_file("replay.metadata.staticObjectInfoListArraysLen");
+
+## The actual data as byte array
+playerObjectArr = archive.read_file("replay.data.playerObject");
+worldItemArr = archive.read_file("replay.data.worldItems");
+worldMobileArr = archive.read_file("replay.data.worldMobiles");
+popupMenuArr = archive.read_file("replay.data.popupMenu");
+clilocDataArr = archive.read_file("replay.data.clilocData");
+playerStatusArr = archive.read_file("replay.data.playerStatus");
+playerSkillListArr = archive.read_file("replay.data.playerSkillList");
+staticObjectInfoListArr = archive.read_file("replay.data.staticObjectInfoList");
+
+actionTypeArr = archive.read_file("replay.action.type");
+walkDirectionArr = archive.read_file("replay.action.walkDirection");
+mobileSerialArr = archive.read_file("replay.action.mobileSerial");
+itemSerialArr = archive.read_file("replay.action.itemSerial");
+indexArr = archive.read_file("replay.action.index");
+amountArr = archive.read_file("replay.action.amount");
+runArr = archive.read_file("replay.action.run");
                 </code></pre>
             </div>
         </div>

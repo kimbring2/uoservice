@@ -189,7 +189,7 @@ class UoServiceReplay:
 		#  the original data files and length metadata files for them from MPQ file
 		self._archive = MPQArchive(self._rootPath + '/' + fileName + ".uoreplay")
 
-		##  the length byte array for data array
+		## The length byte array for data array
 		self.playerObjectArrayLengthArr = self._archive.read_file("replay.metadata.playerObjectLen");
 
 		self.worldItemArrayLengthArr = self._archive.read_file("replay.metadata.worldItemLen");
@@ -220,7 +220,7 @@ class UoServiceReplay:
 		## Find the total length of replay
 		self._replayLength = len(self.playerObjectArrayLengthList)
 
-		##  the actual data as byte array
+		## The actual data as byte array
 		self.playerObjectArr = self._archive.read_file("replay.data.playerObject");
 
 		self.worldItemArr = self._archive.read_file("replay.data.worldItems");
@@ -234,7 +234,7 @@ class UoServiceReplay:
 
 		self.staticObjectInfoListArr = self._archive.read_file("replay.data.staticObjectInfoList");
 
-		##  the action data as byte array
+		## The action data as byte array
 		self.actionTypeArr = self._archive.read_file("replay.action.type");
 		self.walkDirectionArr = self._archive.read_file("replay.action.walkDirection");
 		self.mobileSerialArr = self._archive.read_file("replay.action.mobileSerial");
