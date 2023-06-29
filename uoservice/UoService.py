@@ -308,7 +308,7 @@ class UoService:
 			screen_image = cv2.circle(screen_image, (self.player_game_x, self.player_game_y), radius, (0, 255, 0), thickness)
 			screen_image = screen_image[self.player_game_y - 600:self.player_game_y + 600, self.player_game_x - 600:self.player_game_x + 600, :]
 
-		vis = True
+		vis = False
 		if vis:
 			#dim = (1720, 1370)
 			screen_image = cv2.resize(screen_image, (1200, 1200), interpolation=cv2.INTER_AREA)

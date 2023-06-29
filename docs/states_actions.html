@@ -183,7 +183,6 @@
         </div>
 
         <div class="row">
-
             <div class="col" id="8">
                 <script>createHeader("8", "Actions", "");</script>
                 Due to the huge number of pixels, using the position of screen as action directly is really inefficient. However, we can project the any mouse input into a specific game event by using the multiple action arguments. <script>
@@ -199,6 +198,9 @@
                                     ]
                                     );
                 </script>
+            </div>
+
+            <div class="col" id="9">
             </div>
         </div>
     </div>
@@ -276,7 +278,7 @@
                 <script>createHeader("states_4", "GrpcPopupMenuList", "");</script>
                 Players must click the NPC of around player to buy or sell items or learn skills. At the moment of clicking, a pop up menu data is included in the state.
 
-                <img src="Fig/PopUpMenu.png" class="rounded mx-auto d-block float-center" alt="Logo" width="170" height="250">
+                <img src="Fig/PopUpMenu.png" class="rounded mx-auto d-block float-center" alt="Logo" width="140" height="200">
 
                 If the menu can be selected, the active data of GrpcPopupMenu is displayed as true.
                 <script>
@@ -304,33 +306,16 @@
                 </script>
             </div>
 
-            
-        </div>
-
-        <div class="row">
-            <div class="col", id="states_7">
-                <script>createHeader("states_7", "ClilocDataList", "");</script>
+            <div class="col", id="states_6">
+                <script>createHeader("states_6", "ClilocDataList", "");</script>
                     The speech of NPC consists of multiple sentence even if it looks like a one sentence in game. Therefore, old cliloc text should be kept for a certain period of time(50 is default length)
                     <img src="Fig/Clilocs.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="130">
                     <script>
-                        generate_table("states_7", 
+                        generate_table("states_6", 
                                         [
                                             ["GrpcClilocDataList", "list of GrpcClilocData", "list of cliloc text"]
                                         ]
                                         );
-                </script>
-            </div>
-
-            <div class="col", id="states_8">
-                <script>createHeader("states_8", "BankItemList", "");</script>
-                It is possible to save the gold and item in bank. This state type stores the list of items when player open it.
-                <img src="Fig/Bank.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="300">
-                <script>
-                    generate_table("states_8", 
-                                    [
-                                        ["GrpcItemList", "list of GrpcItemData", "Show the list of bank items"]
-                                    ]
-                                    );
                 </script>
             </div>
         </div>
