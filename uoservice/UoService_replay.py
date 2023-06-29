@@ -79,26 +79,21 @@ class UoServiceReplay:
 		self._tickScale = 10
 		self._previousControl = 0
 
-		## 
+		## Initialize the offset for the start position of byte array read
+		self._playerObjectArrayOffset = 0
+
 		self._worldItemArrayOffset = 0
 		self._worldMobileArrayOffset = 0
 
-		self._equippedItemSerialArrayOffset = 0
-		self._backpackItemSerialArrayOffset = 0
-		self._bankItemSerialArrayOffset = 0
-		self._vendorItemSerialArrayOffset = 0
-
-		self._openedCorpseArrayOffset = 0
 		self._popupMenuArrayOffset = 0
 		self._clilocDataArrayOffset = 0
 
 		self._playerStatusArrayOffset = 0
-		self._playerStatusEtcArrayOffset = 0
 		self._playerSkillListArrayOffset = 0
 
 		self._staticObjectInfoListArrayOffset = 0
 
-		## 
+		## Initialize the list to save the replay action data
 		self._actionTypeList = []
 		self._walkDirectionList = []
 		self._mobileSerialList = []
@@ -107,43 +102,46 @@ class UoServiceReplay:
 		self._amountList = []
 		self._runList = []
 
-		## 
+		## Initialize the list to save the replay state data
+		self._playerObjectList = []
+
 		self._worldItemList = []
 		self._worldMobileList = []
 
-		self._equippedItemSerialList = []
-		self._backpackItemSerialList = []
-		self._bankItemSerialList = []
-		self._vendorItemSerialList = []
-
 		self._popupMenuDataList = []
-		self._openedCorpseList = []
 		self._clilocDataList = []
 
 		self._playerStatusList = []
-		self._playerStatusEtcList = []
 		self._playerSkillListList = []
 
 		self._staticObjectScreenXsList = []
 		self._staticObjectScreenYsList = []
 
-		## 
+		## Initialize the witdh, height of replay file
 		self._screenWidth = screenWidth
 		self._screenHeight = screenHeight
 
+		## PyGame related variables
 		self._mainSurface = pygame.display.set_mode([500 + self._screenWidth + 500, self._screenHeight + 350])
 		self._screenSurface = pygame.Surface((self._screenWidth, self._screenHeight))
 		self._equipItemSurface = pygame.Surface((500, self._screenHeight))
 		self._npcSurface = pygame.Surface((self._screenWidth, 350))
 		self._statusSurface = pygame.Surface((500, self._screenHeight))
-
 		self._clock = pygame.time.Clock()
 
-		## Global replay data
+		## Dict to keep the replay data
 		self.world_item_dict = {}
 		self.world_mobile_dict = {}
 		self.player_skills_dict = {}
 		self.player_status_dict = {}
+
+		self.player_game_x = None
+		self.player_game_y = None
+
+		self.backpack_serial = None
+
+		self.static_object_game_x_data = None
+		self.static_object_game_y_data = None
 
 	def ConvertByteArrayToIntList(self, byteArray):
 		# Convert byte array of MQP file to int list
@@ -187,61 +185,46 @@ class UoServiceReplay:
 		self._archive = MPQArchive(self._rootPath + '/' + fileName + ".uoreplay")
 
 		##  the length byte array for data array
+		self.playerObjectArrayLengthArr = self._archive.read_file("replay.metadata.playerObjectLen");
+
 		self.worldItemArrayLengthArr = self._archive.read_file("replay.metadata.worldItemLen");
 		self.worldMobileArrayLengthArr = self._archive.read_file("replay.metadata.worldMobileLen");
 
-		self.equippedItemSerialArrayLengthArr = self._archive.read_file("replay.metadata.equippedItemSerialLen");
-		self.backpackItemSerialArrayLengthArr = self._archive.read_file("replay.metadata.backpackitemSerialLen");
-		self.bankItemSerialArrayLengthArr = self._archive.read_file("replay.metadata.bankitemSerialLen");
-		self.vendorItemSerialArrayLengthArr = self._archive.read_file("replay.metadata.vendorItemSerialLen");
-
-		self.openedCorpseArrayLengthArr = self._archive.read_file("replay.metadata.openedCorpseLen");
 		self.popupMenuArrayLengthArr = self._archive.read_file("replay.metadata.popupMenuLen");
 		self.clilocDataArrayLengthArr = self._archive.read_file("replay.metadata.clilocDataLen");
 
 		self.playerStatusArrayLengthArr = self._archive.read_file("replay.metadata.playerStatusLen");
-		self.playerStatusEtcArrayLengthArr = self._archive.read_file("replay.metadata.playerStatusEtcLen");
 		self.playerSkillListArrayLengthArr = self._archive.read_file("replay.metadata.playerSkillListLen");
 
 		self.staticObjectInfoListLengthArr = self._archive.read_file("replay.metadata.staticObjectInfoListArraysLen");
 
 		## Convert the byte array to int array
+		self.playerObjectArrayLengthList = self.ConvertByteArrayToIntList(self.playerObjectArrayLengthArr);
+
 		self.worldItemArrayLengthList = self.ConvertByteArrayToIntList(self.worldItemArrayLengthArr);
 		self.worldMobileArrayLengthList = self.ConvertByteArrayToIntList(self.worldMobileArrayLengthArr);
 
-		self.equippedItemSerialArrayLengthList = self.ConvertByteArrayToIntList(self.equippedItemSerialArrayLengthArr);
-		self.backpackItemSerialArrayLengthList = self.ConvertByteArrayToIntList(self.backpackItemSerialArrayLengthArr);
-		self.bankItemSerialArrayLengthList = self.ConvertByteArrayToIntList(self.bankItemSerialArrayLengthArr);
-		self.vendorItemSerialArrayLengthList = self.ConvertByteArrayToIntList(self.vendorItemSerialArrayLengthArr);
-
-		self.openedCorpseArrayLengthList = self.ConvertByteArrayToIntList(self.openedCorpseArrayLengthArr);
 		self.popupMenuArrayLengthList = self.ConvertByteArrayToIntList(self.popupMenuArrayLengthArr);
 		self.clilocDataArrayLengthList = self.ConvertByteArrayToIntList(self.clilocDataArrayLengthArr);
 
 		self.playerStatusArrayLengthList = self.ConvertByteArrayToIntList(self.playerStatusArrayLengthArr);
-		self.playerStatusEtcArrayLengthList = self.ConvertByteArrayToIntList(self.playerStatusEtcArrayLengthArr);
 		self.playerSkillListArrayLengthList = self.ConvertByteArrayToIntList(self.playerSkillListArrayLengthArr);
 
 		self.staticObjectInfoListLengthList = self.ConvertByteArrayToIntList(self.staticObjectInfoListLengthArr);
 
 		## Find the total length of replay
-		self._replayLength = len(self.equippedItemSerialArrayLengthList)
+		self._replayLength = len(self.playerObjectArrayLengthList)
 
 		##  the actual data as byte array
+		self.playerObjectArr = self._archive.read_file("replay.data.playerObject");
+
 		self.worldItemArr = self._archive.read_file("replay.data.worldItems");
 		self.worldMobileArr = self._archive.read_file("replay.data.worldMobiles");
 
-		self.equippedItemSerialArr = self._archive.read_file("replay.data.equippedItemSerials");
-		self.backpackItemSerialArr = self._archive.read_file("replay.data.backpackItemSerials");
-		self.bankItemSerialArr = self._archive.read_file("replay.data.bankItemSerials");
-		self.vendorItemSerialArr = self._archive.read_file("replay.data.vendorItemSerials");
-
-		self.openedCorpseArr = self._archive.read_file("replay.data.openedCorpse");
 		self.popupMenuArr = self._archive.read_file("replay.data.popupMenu");
 		self.clilocDataArr = self._archive.read_file("replay.data.clilocData");
 
 		self.playerStatusArr = self._archive.read_file("replay.data.playerStatus");
-		self.playerStatusEtcArr = self._archive.read_file("replay.data.playerStatusEtc");
 		self.playerSkillListArr = self._archive.read_file("replay.data.playerSkillList");
 
 		self.staticObjectInfoListArr = self._archive.read_file("replay.data.staticObjectInfoList");
@@ -265,6 +248,11 @@ class UoServiceReplay:
 		self.runList = self.ConvertByteArrayToBoolList(self.runArr);
 
 		## Check the data array is existed
+		if self.playerObjectArr:
+			print("len(self.playerObjectArr): ", len(self.playerObjectArr))
+		else:
+			print("self.playerObjectArr is None")
+
 		if self.worldItemArr:
 			print("len(self.worldItemArr): ", len(self.worldItemArr))
 		else:
@@ -274,31 +262,6 @@ class UoServiceReplay:
 			print("len(self.worldMobileArr): ", len(self.worldMobileArr))
 		else:
 			print("self.worldMobileArr is None")
-
-		if self.equippedItemSerialArr:
-			print("len(self.equippedItemSerialArr): ", len(self.equippedItemSerialArr))
-		else:
-			print("self.equippedItemSerialArr is None")
-
-		if self.backpackItemSerialArr:
-			print("len(backpackItemSerialArr): ", len(self.backpackItemSerialArr))
-		else:
-			print("backpackItemSerialArr is None")
-
-		if self.bankItemSerialArr:
-			print("len(bankItemSerialArr): ", len(self.bankItemSerialArr))
-		else:
-			print("bankItemSerialArr is None")
-
-		if self.vendorItemSerialArr:
-			print("len(self.vendorItemSerialArr): ", len(self.vendorItemSerialArr))
-		else:
-			print("self.vendorItemSerialArr is None")
-
-		if self.openedCorpseArr:
-			print("len(openedCorpseArr): ", len(self.openedCorpseArr))
-		else:
-			print("openedCorpseArr is None")
 
 		if self.popupMenuArr:
 			print("len(popupMenuArr): ", len(self.popupMenuArr))
@@ -315,11 +278,6 @@ class UoServiceReplay:
 		else:
 			print("self.playerStatusArr is None")
 
-		if self.playerStatusEtcArr:
-			print("len(self.playerStatusEtcArr): ", len(self.playerStatusEtcArr))
-		else:
-			print("self.playerStatusEtcArr is None")
-
 		if self.playerSkillListArr:
 			print("len(self.playerSkillListArr): ", len(self.playerSkillListArr))
 		else:
@@ -333,7 +291,7 @@ class UoServiceReplay:
 	def ParseReplay(self):
 		# Saves the loaded replay data into Python list to visualize them one by one
 		for step in range(0, self._replayLength):
-			print("step: ", step)
+			#print("step: ", step)
 
 			self._actionTypeList.append(self.actionTypeList[step])
 			self._walkDirectionList.append(self.walkDirectionList[step])
@@ -343,130 +301,109 @@ class UoServiceReplay:
 			self._amountList.append(self.amountList[step])
 			self._runList.append(self.runList[step])
 
+			if self.playerObjectArr:
+				playerObjectSubsetArray, self._playerObjectArrayOffset = self.GetSubsetArray(step, self.playerObjectArrayLengthList, 
+																				             self._playerObjectArrayOffset, 
+																				             self.playerObjectArr)
+				grpcPlayerObjectReplay = UoService_pb2.GrpcPlayerObject().FromString(playerObjectSubsetArray)
+				self._playerObjectList.append(grpcPlayerObjectReplay)
+			else:
+				#print("playerObjectArr is None")
+				pass
+
 			if self.worldItemArr:
 				worldItemSubsetArray, self._worldItemArrayOffset = self.GetSubsetArray(step, self.worldItemArrayLengthList, 
 																				       self._worldItemArrayOffset, self.worldItemArr)
-				grpcWorldItemReplay = UoService_pb2.GrpcGameObjectList().FromString(worldItemSubsetArray)
-				#print("grpcEquippedItemReplay: ", grpcEquippedItemReplay)
-				self._worldItemList.append(grpcWorldItemReplay.gameObjects)
+				grpcWorldItemReplay = UoService_pb2.GrpcItemObjectList().FromString(worldItemSubsetArray)
+				self._worldItemList.append(grpcWorldItemReplay.itemObjects)
 			else:
-				print("worldItemArr is None")
+				#print("worldItemArr is None")
+				pass
 
 			if self.worldMobileArr:
 				worldMobileSubsetArray, self._worldMobileArrayOffset = self.GetSubsetArray(step, self.worldMobileArrayLengthList, 
 																				           self._worldMobileArrayOffset, self.worldMobileArr)
-				grpcWorldMobileReplay = UoService_pb2.GrpcGameObjectList().FromString(worldMobileSubsetArray)
-				#print("grpcEquippedItemReplay: ", grpcEquippedItemReplay)
-				self._worldMobileList.append(grpcWorldMobileReplay.gameObjects)
+				grpcWorldMobileReplay = UoService_pb2.GrpcMobileObjectList().FromString(worldMobileSubsetArray)
+				self._worldMobileList.append(grpcWorldMobileReplay.mobileObjects)
 			else:
-				print("worldMobileArr is None")
-
-			if self.equippedItemSerialArr:
-				equippedItemSerialSubsetArray, self._equippedItemSerialArrayOffset = self.GetSubsetArray(step, self.equippedItemSerialArrayLengthList, 
-																				   self._equippedItemSerialArrayOffset, self.equippedItemSerialArr)
-				grpcEquippedItemSerialReplay = UoService_pb2.GrpcSerialList().FromString(equippedItemSerialSubsetArray)
-				#print("grpcEquippedItemReplay: ", grpcEquippedItemReplay)
-				self._equippedItemSerialList.append(grpcEquippedItemSerialReplay.serials)
-			else:
-				print("equippedItemSerialArr is None")
-
-			if self.backpackItemSerialArr:
-				backpackItemSerialSubsetArray, self._backpackItemSerialArrayOffset = self.GetSubsetArray(step, self.backpackItemSerialArrayLengthList, 
-																				  self._backpackItemSerialArrayOffset, self.backpackItemSerialArr)
-				grpcBackpackItemSerialReplay = UoService_pb2.GrpcSerialList().FromString(backpackItemSerialSubsetArray)
-				#print("grpcBackpackItemReplay: ", grpcBackpackItemReplay)
-				self._backpackItemSerialList.append(grpcBackpackItemSerialReplay.serials)
-			else:
-				print("backpackItemSerialArr is None")
-
-			if self.bankItemSerialArr:
-				bankItemSerialSubsetArray, self._bankItemSerialArrayOffset = self.GetSubsetArray(step, self.bankItemSerialArrayLengthList, 
-																				  self._bankItemSerialArrayOffset, self.bankItemSerialArr)
-				grpcBankItemSerialReplay = UoService_pb2.GrpcSerialList().FromString(bankItemSerialSubsetArray)
-				#print("grpcBackpackItemReplay: ", grpcBackpackItemReplay)
-				self._bankItemSerialList.append(grpcBankItemSerialReplay.serials)
-			else:
-				print("bankItemSerialArr is None")
-
-			if self.vendorItemSerialArr:
-				vendorItemSerialSubsetArray, self._vendorItemSerialArrayOffset = self.GetSubsetArray(step, self.vendorItemSerialArrayLengthList, 
-																			 			   			 self._vendorItemSerialArrayOffset, 
-																			 			   			 self.vendorItemSerialArr)
-				grpcVendorItemSerialReplay = UoService_pb2.GrpcSerialList().FromString(vendorItemSerialSubsetArray)
-				#print("grpcVendorItemObjectReplay: ", grpcVendorItemObjectReplay)
-				self._vendorItemSerialsList.append(grpcVendorItemSerialReplay.serials)
-			else:
-				print("vendorItemSerialsArr is None")
-
-			if self.openedCorpseArr:
-				openedCorpseSubsetArray, self._openedCorpseArrayOffset = self.GetSubsetArray(step, self.openedCorpseArrayLengthList, 
-																			   				 self._openedCorpseArrayOffset, self.openedCorpseArr)
-				grpcOpenedCorpseReplay = UoService_pb2.GrpcContainerDataList().FromString(openedCorpseSubsetArray)
-				#print("grpcOpenedCorpseReplay: ", grpcOpenedCorpseReplay)
-				self._openedCorpseList.append(grpcOpenedCorpseReplay.containers)
-			else:
-				print("openedCorpseArr is None")
+				#print("worldMobileArr is None")
+				pass
 
 			if self.popupMenuArr:
 				popupMenuSubsetArray, self._popupMenuArrayOffset = self.GetSubsetArray(step, self.popupMenuArrayLengthList, 
 																			 		   self._popupMenuArrayOffset, self.popupMenuArr)
 				grpcPopupMenuReplay = UoService_pb2.GrpcPopupMenuList().FromString(popupMenuSubsetArray)
-				#print("grpcPopupMenuReplay: ", grpcPopupMenuReplay)
 				self._popupMenuDataList.append(grpcPopupMenuReplay.menus)
 			else:
-				print("popupMenuArr is None")
+				#print("popupMenuArr is None")
+				pass
 
 			if self.clilocDataArr:
 				clilocDataSubsetArray, self._clilocDataArrayOffset = self.GetSubsetArray(step, self.clilocDataArrayLengthList, 
 																			   			 self._clilocDataArrayOffset, self.clilocDataArr)
 				grpcClilocDataReplay = UoService_pb2.GrpcClilocDataList().FromString(clilocDataSubsetArray)
-				#print("grpcClilocDataReplay: ", grpcClilocDataReplay)
 				self._clilocDataList.append(grpcClilocDataReplay.clilocDatas)
 			else:
-				print("clilocDataArr is None")
+				pass
+				#print("clilocDataArr is None")
 
 			if self.playerStatusArr:
 				playerStatusSubsetArray, self._playerStatusArrayOffset = self.GetSubsetArray(step, self.playerStatusArrayLengthList, 
 																							 self._playerStatusArrayOffset, 
 																							 self.playerStatusArr)
 				grpcPlayerStatusReplay = UoService_pb2.GrpcPlayerStatus().FromString(playerStatusSubsetArray)
-				#print("grpcPlayerStatusReplay: ", grpcPlayerStatusReplay)
 				self._playerStatusList.append(grpcPlayerStatusReplay)
 			else:
-				print("playerStatusArr is None")
-
-			if self.playerStatusEtcArr:
-				playerStatusEtcSubsetArray, self._playerStatusEtcArrayOffset = self.GetSubsetArray(step, self.playerStatusArrayLengthList, 
-																								   self._playerStatusArrayOffset, 
-																							 	   self.playerStatusEtcArr)
-				grpcPlayerStatusEtcReplay = UoService_pb2.GrpcPlayerStatus().FromString(playerStatusSubsetArray)
-				#print("grpcPlayerStatusReplay: ", grpcPlayerStatusReplay)
-				self._playerStatusList.append(grpcPlayerStatusReplay)
-			else:
-				print("playerStatusEtcArr is None")
+				pass
+				#print("playerStatusArr is None")
 
 			if self.playerSkillListArr:
 				playerSkillListSubsetArray, self._playerSkillListArrayOffset = self.GetSubsetArray(step, self.playerSkillListArrayLengthList, 
 																				   		 		   self._playerSkillListArrayOffset, 
 																				   		 		   self.playerSkillListArr)
 				grpcPlayerSkillListReplay = UoService_pb2.GrpcSkillList().FromString(playerSkillListSubsetArray)
-				#print("grpcPlayerSkillListReplay: ", grpcPlayerSkillListReplay)
 				self._playerSkillListList.append(grpcPlayerSkillListReplay.skills)
 			else:
-				print("playerSkillListArr is None")
+				pass
+				#print("playerSkillListArr is None")
 
 			if self.staticObjectInfoListArr:
 				staticObjectInfoListSubsetArrays, self._staticObjectInfoListArrayOffset = self.GetSubsetArray(step, self.staticObjectInfoListLengthList, 
 																				   		   					  self._staticObjectInfoListArrayOffset, 
 																				   		   					  self.staticObjectInfoListArr)
 				grpcStaticObjectInfoListReplay = UoService_pb2.GrpcGameObjectInfoList().FromString(staticObjectInfoListSubsetArrays)
-				#print("grpcStaticObjectInfoListReplay.screenXs: ", grpcStaticObjectInfoListReplay.screenXs)
-				#print("grpcStaticObjectInfoListReplay.screenYs: ", grpcStaticObjectInfoListReplay.screenYs)
-				self._staticObjectScreenXsList.append(grpcStaticObjectInfoListReplay.screenXs)
-				self._staticObjectScreenYsList.append(grpcStaticObjectInfoListReplay.screenYs)
-
+				self._staticObjectScreenXsList.append(grpcStaticObjectInfoListReplay.gameXs)
+				self._staticObjectScreenYsList.append(grpcStaticObjectInfoListReplay.gameYs)
 			else:
-				print("staticObjectInfoListArr is None")
+				pass
+				#print("staticObjectInfoListArr is None")
+
+		if len(self._playerObjectList) == 0:
+			print("No playerObjectList")
+
+		if len(self._worldItemList) == 0:
+			print("No worldItemList")
+
+		if len(self._worldMobileList) == 0:
+			print("No worldMobileList")
+
+		if len(self._popupMenuDataList) == 0:
+			print("No popupMenuDataList")
+
+		if len(self._clilocDataList) == 0:
+			print("No clilocDataList")
+
+		if len(self._playerStatusList) == 0:
+			print("No playerStatusList")
+
+		if len(self._playerSkillListList) == 0:
+			print("No playerSkillListList")
+
+		if len(self._staticObjectScreenXsList) == 0:
+			print("No staticObjectScreenXsList")
+
+		if len(self._staticObjectScreenYsList) == 0:
+			print("No staticObjectScreenYsList")
 
 
 	def InteractWithReplay(self):
@@ -506,41 +443,54 @@ class UoServiceReplay:
 				self._tickScale = 10
 
 			# Create the downscaled array for bigger mobile object drawing
-			screen_image = np.zeros((int((self._screenWidth + 100)), int((self._screenHeight + 100)), 3), dtype=np.uint8)
+			#screen_image = np.zeros((int((self._screenWidth + 100)), int((self._screenHeight + 100)), 3), dtype=np.uint8)
+			screen_image = np.zeros((int((5000)), int((5000)), 3), dtype=np.uint8)
+
+			if self._playerObjectList[replay_step].gameX != 0:
+				#print("player_object: ", player_object)
+				self.player_game_x = self._playerObjectList[replay_step].gameX
+				self.player_game_y = self._playerObjectList[replay_step].gameY
 
 			if len(self._worldMobileList[replay_step]) != 0:
+				self.world_mobile_dict = {}
 				for obj in self._worldMobileList[replay_step]:
-
-					self.world_mobile_dict[obj.serial] = [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title, obj.layer]
+					self.world_mobile_dict[obj.serial] = { "name": obj.name, "gameX": obj.gameX, "gameY":obj.gameY, 
+														   "distance": obj.distance, "title": obj.title, "hits": obj.hits,
+														   "notorietyFlag": obj.notorietyFlag, "hitsMax": obj.hitsMax,
+														   "race": obj.race }
 
 			# Draw the static object
-			static_object_screen_x_data = self._staticObjectScreenXsList[replay_step]
-			static_object_screen_y_data = self._staticObjectScreenYsList[replay_step]
+			if len(self._staticObjectScreenXsList[replay_step]) != 0:
+				self.static_object_game_x_data = self._staticObjectScreenXsList[replay_step]
+				self.static_object_game_y_data = self._staticObjectScreenYsList[replay_step]
 
-			radius = 1
+			radius = 2
 			color = (120, 120, 120)
 			thickness = 2
-			for i in range(0, len(static_object_screen_x_data)):
-				if static_object_screen_x_data[i] >= 1400 or static_object_screen_y_data[i] >= 1280:
-					continue
+			if self.static_object_game_x_data != None:
+				for i in range(0, len(self.static_object_game_x_data)):
+					if self.static_object_game_x_data[i] >= 1400 or self.static_object_game_y_data[i] >= 1280:
+						continue
 
-				image = cv2.circle(screen_image, (static_object_screen_x_data[i], static_object_screen_y_data[i]), 
-								   radius, color, thickness)
+					image = cv2.circle(screen_image, (self.static_object_game_x_data[i], self.static_object_game_y_data[i]), 
+									   radius, color, thickness)
 			
-			print("self.world_mobile_dict: ", self.world_mobile_dict)
-			print("")
+			print("self.player_game_x: {0}, self.player_game_y: {1}".format(self.player_game_x, self.player_game_y))
+			#print("")
 
 			radius = 20
 			thickness = 2
+
 			for k, v in self.world_mobile_dict.items():
-				#print("v: ", v)
-				if v[2] < self._screenWidth and v[3] < self._screenHeight:
-					if v[1] == 'Player':
-						screen_image = cv2.circle(screen_image, (v[2], v[3]), radius, (0, 255, 0), thickness)
-					elif v[1] == 'Mobile':
-						screen_image = cv2.circle(screen_image, (v[2], v[3]), radius, (0, 0, 255), thickness)
+				#if v["gameX"] < self._screenWidth and v["gameY"] < self._screenHeight:
+				screen_image = cv2.circle(screen_image, (v["gameX"], v["gameY"]), radius, (0, 0, 255), thickness)
+
+			if self.player_game_x != None:
+				screen_image = cv2.circle(screen_image, (self.player_game_x, self.player_game_y), radius, (0, 255, 0), thickness)
+				screen_image = screen_image[self.player_game_y - 600:self.player_game_y + 600, self.player_game_x - 600:self.player_game_x + 600, :]
 
 			# Draw the screen image on the Pygame screen
+			screen_image = cv2.resize(screen_image, (1200, 1200), interpolation=cv2.INTER_AREA)
 			screen_image = cv2.rotate(screen_image, cv2.ROTATE_90_CLOCKWISE)
 			screen_image = cv2.flip(screen_image, 1)
 
