@@ -23,7 +23,7 @@ Since UoService does not have the function to create an account on its own, you 
 
 Finally, some values ​​inside ```settings.json``` must be changed according to the location where ServeUO and Ultima Online game are installed with Ubuntu [Wine](https://wiki.winehq.org/Ubuntu).
 
-<img src="images/server_settings" width="800">
+<img src="images/server_settings.png" width="800">
 
 # Run an agent 
 Make sure to run the ServeUO before running the client.
@@ -34,20 +34,20 @@ $ mono ServUO.exe
 Unlike the original client, the client for UoService must operate most of the operations through argument setting.
 
 ## 1. Execution without communication with Python and saving replay. You must enter the ID and pwd of the previously created account as parameters. Login, shard selection, and character selection windows are omitted.
-- Run the C# Client
+Run the C# Client
 ```
 $ ./ClassicUO -username [Account ID] -password [Account PWD] -human_play -window_width [Screen Width] -window_height [Screen Height]
 e.g. $ ./ClassicUO -username kimbring2 -password kimbring2 -human_play -window_width 1370 -window_height 1280
 ```
 
 ## 2. Execution with communication with Python and no replay saving. Here, you need to enter the port for gRPC communication with Python.  
-- Run the C# Client
+Run the C# Client
 ```
 $ ./ClassicUO -username [Account ID] -password [Account PWD] -grpc_port [Port Number]
 e.g.  $ ./ClassicUO -username kimbring2 -password kimbring2 -human_play -window_width 1370 -window_height 1280
 ```
 
-- Run the Python Application
+Run the Python Application
 ```
 $ python examples/semaphore_sync.py --grpc_port 60051
 ```
