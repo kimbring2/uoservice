@@ -95,15 +95,6 @@ class UoServiceReplay:
 
 		self._actionArrayOffset = 0
 
-		## Initialize the list to save the replay action data
-		#self._actionTypeList = []
-		#self._walkDirectionList = []
-		#self._mobileSerialList = []
-		#self._itemSerialList = []
-		#self._indexList = []
-		#self._amountList = []
-		#self._runList = []
-
 		## Initialize the list to save the replay state data
 		self._playerObjectList = []
 
@@ -244,26 +235,6 @@ class UoServiceReplay:
 
 		self.actionArr = self._archive.read_file("replay.data.actionArrays");
 
-		'''
-		## The action data as byte array
-		self.actionTypeArr = self._archive.read_file("replay.action.type");
-		self.walkDirectionArr = self._archive.read_file("replay.action.walkDirection");
-		self.mobileSerialArr = self._archive.read_file("replay.action.mobileSerial");
-		self.itemSerialArr = self._archive.read_file("replay.action.itemSerial");
-		self.indexArr = self._archive.read_file("replay.action.index");
-		self.amountArr = self._archive.read_file("replay.action.amount");
-		self.runArr = self._archive.read_file("replay.action.run");
-
-		## Convert the byte array to int array
-		self.actionTypeList = self.ConvertByteArrayToIntList(self.actionTypeArr);
-		self.walkDirectionList = self.ConvertByteArrayToIntList(self.walkDirectionArr);
-		self.mobileSerialList = self.ConvertByteArrayToIntList(self.mobileSerialArr);
-		self.itemSerialList = self.ConvertByteArrayToIntList(self.itemSerialArr);
-		self.indexList = self.ConvertByteArrayToIntList(self.indexArr);
-		self.amountList = self.ConvertByteArrayToIntList(self.amountArr);
-		self.runList = self.ConvertByteArrayToBoolList(self.runArr);
-		'''
-
 		## Check the data array is existed
 		if self.playerObjectArr:
 			print("len(self.playerObjectArr): ", len(self.playerObjectArr))
@@ -314,14 +285,6 @@ class UoServiceReplay:
 		# Saves the loaded replay data into Python list to visualize them one by one
 		for step in range(0, self._replayLength):
 			#print("step: ", step)
-
-			#self._actionTypeList.append(self.actionTypeList[step])
-			#self._walkDirectionList.append(self.walkDirectionList[step])
-			#self._mobileSerialList.append(self.mobileSerialList[step])
-			#self._itemSerialList.append(self.itemSerialList[step])
-			#self._indexList.append(self.indexList[step])
-			#self._amountList.append(self.amountList[step])
-			#self._runList.append(self.runList[step])
 
 			if self.playerObjectArr:
 				playerObjectSubsetArray, self._playerObjectArrayOffset = self.GetSubsetArray(step, self.playerObjectArrayLengthList, 
@@ -478,7 +441,6 @@ class UoServiceReplay:
 			# Create the downscaled array for bigger mobile object drawing
 			#screen_image = np.zeros((int((self._screenWidth + 100)), int((self._screenHeight + 100)), 3), dtype=np.uint8)
 			screen_image = np.zeros((int((5000)), int((5000)), 3), dtype=np.uint8)
-
 			if self._playerObjectList[replay_step].name != '':
 				self.player_game_name = self._playerObjectList[replay_step].name
 
@@ -600,9 +562,6 @@ class UoServiceReplay:
 				self.static_object_game_x_data = self._staticObjectScreenXsList[replay_step]
 				self.static_object_game_y_data = self._staticObjectScreenYsList[replay_step]
 
-			action = self._staticObjectScreenXsList[replay_step]
-			print("action: ", action)
-
 			radius = 2
 			color = (120, 120, 120)
 			thickness = 2
@@ -632,6 +591,23 @@ class UoServiceReplay:
 			surf = pygame.surfarray.make_surface(screen_image)
 			self._screenSurface.blit(surf, (0, 0))
 
+			# Draw the action info on the Pygame screen
+			font = pygame.font.Font('freesansbold.ttf', 16)
+			text_surface = font.render("action type: " + str(self._actionList[replay_step].actionType), True, (255, 255, 255))
+			self._screenSurface.blit(text_surface, (5, 40))
+			text_surface = font.render("item serial: " + str(self._actionList[replay_step].itemSerial), True, (255, 255, 255))
+			self._screenSurface.blit(text_surface, (5, 60))
+			text_surface = font.render("mobile serial: " + str(self._actionList[replay_step].mobileSerial), True, (255, 255, 255))
+			self._screenSurface.blit(text_surface, (5, 80))
+			text_surface = font.render("walk direction: " + str(self._actionList[replay_step].walkDirection), True, (255, 255, 255))
+			self._screenSurface.blit(text_surface, (5, 100))
+			text_surface = font.render("index: " + str(self._actionList[replay_step].index), True, (255, 255, 255))
+			self._screenSurface.blit(text_surface, (5, 120))
+			text_surface = font.render("amount: " + str(self._actionList[replay_step].amount), True, (255, 255, 255))
+			self._screenSurface.blit(text_surface, (5, 140))
+			text_surface = font.render("run: " + str(self._actionList[replay_step].run), True, (255, 255, 255))
+			self._screenSurface.blit(text_surface, (5, 160))
+
 			# Draw the boundary line
 			pygame.draw.line(self._screenSurface, (255, 255, 255), (1, 0), (1, self._screenHeight))
 			pygame.draw.line(self._screenSurface, (255, 255, 255), (self._screenWidth - 1, 0), (self._screenWidth - 1, self._screenHeight))
@@ -654,7 +630,7 @@ class UoServiceReplay:
 			for i, k in enumerate(self.player_skills_dict):
 				font = pygame.font.Font('freesansbold.ttf', 16)
 				skill = self.player_skills_dict[k]
-				print("k: {0}, skill: {1}".format(k, skill))
+				#print("k: {0}, skill: {1}".format(k, skill))
 				text_surface = font.render(str(skill["index"]) + '. ' + str(k) + ": " + str(skill["value"]), 
 										   True, (255, 255, 255))
 				self._statusSurface.blit(text_surface, (0, 20 * (i + 1) + 520))
