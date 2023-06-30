@@ -12,7 +12,7 @@ $ cd uoservice
 $ pip install .
 ```
 
-That will install the UoService package along with all the required dependencies. Virtualenv can help manage your dependencies. You may also need to upgrade pip: pip install --upgrade pip for the UoService installs to work.
+That will install the UoService package along with all the required dependencies. Virtualenv can help manage your dependencies. You may also need to upgrade pip: ```pip install --upgrade pip``` for the UoService installs to work.
 
 # Get Server and gRPC client of Ultima Online
 Because Ultime Online is an MMORPG game, there is basically a central server. To run UoService, a server must be installed as well. Please visit the [ServUO site](https://github.com/ServUO/ServUO) and set up the server.
@@ -21,15 +21,33 @@ Next, you need to download a modified [ClassicUO client](https://github.com/Clas
 
 Since UoService does not have the function to create an account on its own, you must create an account using the original ClassicUO before using the modified client.
 
+Finally, some values ​​inside ```settings.json``` must be changed according to the location where ServeUO and Ultima Online game are installed with Ubuntu [Wine](https://wiki.winehq.org/Ubuntu).
 
+<img src="images/server_settings" width="800">
 
 # Run an agent 
-Make sure you run the ServeUO.
-
+Make sure to run the ServeUO before running the client.
 ```
 $ mono ServUO.exe
 ```
 
+Unlike the original client, the client for UoService must operate most of the operations through argument setting.
+
+## 1. Execution without communication with Python and saving replay. You must enter the ID and pwd of the previously created account as parameters. Login, shard selection, and character selection windows are omitted.
+- Run the C# Client
 ```
-$ ./ClassicUO -username kimbring2 -password kimbring2 -grpc_port 60051 -human_play -window_width 1370 -window_height 1280
+$ ./ClassicUO -username [Account ID] -password [Account PWD] -human_play -window_width [Screen Width] -window_height [Screen Height]
+e.g. $ ./ClassicUO -username kimbring2 -password kimbring2 -human_play -window_width 1370 -window_height 1280
+```
+
+## 2. Execution with communication with Python and no replay saving. Here, you need to enter the port for gRPC communication with Python.  
+- Run the C# Client
+```
+$ ./ClassicUO -username [Account ID] -password [Account PWD] -grpc_port [Port Number]
+e.g.  $ ./ClassicUO -username kimbring2 -password kimbring2 -human_play -window_width 1370 -window_height 1280
+```
+
+- Run the Python Application
+```
+$ python examples/semaphore_sync.py --grpc_port 60051
 ```
