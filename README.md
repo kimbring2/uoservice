@@ -47,7 +47,7 @@ $ ./ClassicUO -username [Account ID] -password [Account PWD] -grpc_port [Port Nu
 e.g.  $ ./ClassicUO -username kimbring2 -password kimbring2 -human_play -window_width 1370 -window_height 1280
 ```
 
-Run the [sample Python Application]((https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/semaphore_sync.py).
+Run the [sample Python Application](https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/semaphore_sync.py).
 ```
 $ python examples/semaphore_sync.py --grpc_port 60051
 ```
