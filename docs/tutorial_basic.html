@@ -112,10 +112,13 @@ class UoService:
             </div>
             <div class="col">
                 <h2>First Walk</h2>
-                The first task what the Python application need to know is probably walking. Let's see how to use the states and actions of the UoService to do that.<br> 
-                The first information we need to know is position of player and target. Position of them can be extracted from the <b>obs['player_mobile_data']</b>.<br> 
-                For example, the player mobile data looks like a <b>120: ['masterkim', 'PlayerMobile', 778, 618, 0, 'None']</b>. The key of data if serial number assigned to player mobile and each body column means <b>[obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]</b>. Monster data can be taken similar way as player data. Please the code for more detail.<br>
-                How can we make up the arguments <b>actionType, itemSerial, mobileSerial, walkDirection, index, amount, run</b> of action for walk. First, we just know that the actionType should be 1. Next, the value for the walkDirection can be calculated from the x and y position of player and monster by using the <a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/utils.py">simple planning algorithm</a>. If you need to move fast based on the situation, set the run arguemnt as True. 
+                The most basic action in an MMORPG game would be walking close to a specific monster. Let's see how to use the states and actions of the UoService to do that through Python code.<br> 
+
+                The pre-work before interacting with game client is to declare the UoService class seen above, connect gRPC communication, and call the reset() function. 
+
+                First infomation we need to know might be position of player. That can be obtained from the <b>player_game_x, player_game_y</b> of the <b>uo_service</b>. Next, we need to know information of monsters around the player, which is included in <b>world_mobile_dict</b>. There can be various types and multiple numbers of mobiles in the same space as the player. Here, only one mobile named <b>Skeleton</b> near the player is selected using the <b>name</b> and <b>distance</b> value of mobile state.
+
+                How can we make up the arguments <b>actionType, itemSerial, mobileSerial, walkDirection, index, amount, run</b> of action for walk. First, we just know that the actionType should be 1. Next, the value for the walkDirection can be calculated from the x and y position of player and monster by using the <a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/utils.py">simple planning algorithm</a>. If you need to approach quickly to monster, set the run arguemnt of action as True. 
 
                 <video width="400" height="200" controls>
                     <source src="Fig/WalkResult.mkv" type="video/mp4">
