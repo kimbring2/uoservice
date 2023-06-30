@@ -67,7 +67,7 @@
                 red, blocking python process while waiting for C# to send the observation.<br>
             </div>
             <div class="col">
-                <h5>Code 1: Introducing semaphores.</h5>
+                <h5><a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/UoService.py">Code 1: Introducing semaphores</a></h5>
                 <pre class="pre"><code class="python">
 class UoService:
     '''UoService class including gRPC client'''
@@ -126,56 +126,51 @@ class UoService:
             </div>
 
             <div class="col">
-                <h5>Code 2: Rule-based walking example code.</h5>
+                <h5><a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/walk_to_monster.py">Code 2: Rule-based walking example code</a></h5>
                 <pre class="pre"><code class="python">
+uo_service = UoService(grpc_port, window_width, window_height)
+uo_service._open_grpc()
+obs = uo_service.reset()
 
-def main():
-  for step in tqdm(range(100000)):
-    ## Obtain the serial of random mobile around the player
-    if len(obs["mobile_data"]) != 0 and target_mobile_serial == None:
-      ## 16852: ['a zombie', 'Mobile', 646, 22, 16, ' a zombie ']
-      ## Obtain the serial list of mobiles in current game screen 
-      mobile_serial_list = list(obs["mobile_data"].keys())
+target_serial = None
 
-      ## Obtain the serial list of mobiles in current game screen
-      target_mobile_serial = random.choice(mobile_serial_list)
+for step in tqdm(range(100000)):
+    player_game_x = uo_service.player_game_x
+    player_game_y = uo_service.player_game_y
 
-    ## Declare the empty action
+    if len(uo_service.world_mobile_dict) != 0 and target_serial == None:
+      serial_list = [k for k, v in uo_service.world_mobile_dict.items() \
+                     v['name'] == ' A Skeleton ' and v['distance'] <= 15 \
+                     and v['distance'] > 5]
+
+      target_serial = random.choice(serial_list)
+
     action = {}
+    action['action_type'] = 0
+    action['item_serial'] = 0
+    action['mobile_serial'] = 0
+    action['walk_direction'] = 0
+    action['index'] = 0
+    action['amount'] = 0
+    action['run'] = False
 
-    ## Declare the empty action
-    if step % 200 == 0:
-      if target_mobile_serial != None:
-        # 120: ['masterkim', 'PlayerMobile', 778, 618, 0, 'None']
-        player_mobile_serial = list(obs['player_mobile_data'].keys())[0]
-        player_mobile = obs['player_mobile_data'][player_mobile_serial]
+    if step % 50 == 0:
+      if target_serial != None and player_game_x != None:
+        if target_serial in uo_service.world_mobile_dict:
+          target_skeleton = uo_service.world_mobile_dict[target_serial]
 
-        ## finally, we can acquire the target mobile data
-        if target_mobile_serial in obs["mobile_data"]:
-          target_mobile = obs["mobile_data"][target_mobile_serial]
-        else:
-          target_mobile_serial = None
-          continue
+        target_game_x = target_skeleton["gameX"]
+        target_game_y = target_skeleton["gameY"]
 
-        ## Parse the x and y position of player 
-        player_x = player_mobile[2]
-        player_y = player_mobile[3]
+        direction = utils.get_walk_direction_to_target([player_game_x, player_game_y], 
+                                                       [target_game_x, target_game_y])
 
-        ## Parse x and y position of target mobile
-        target_mobile_x = target_mobile[2]
-        target_mobile_y = target_mobile[3]
+        if direction != -1:
+          action['action_type'] = 1
+          action['walk_direction'] = direction
+          action['run'] = True
 
-        ## Calculate the directons to move toward the target mobile
-        direction = utils.get_walk_direction_to_target([player_x, player_y], 
-                                         [target_mobile_x, target_mobile_y])
-
-        # Walk action
-        action['action_type'] = 1
-        action['walk_direction'] = direction
-        action['run'] = True
-
-        obs = uo_service.step(action)
-
+    uo_service.step(action)
                 </code></pre>
             </div>
         </div>

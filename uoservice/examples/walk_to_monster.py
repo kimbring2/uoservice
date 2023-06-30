@@ -46,27 +46,21 @@ def main():
   obs = uo_service.reset()
 
   ## Event flags to test the scenario manually
-  target_mobile_serial = None
+  target_skeleton_serial = None
 
   ## Event flags to test the scenario manually
   for step in tqdm(range(100000)):
-    ## Obtain the serial of random mobile around the player
-    #print("player_game_x: {0}, player_game_y: {1}".format(uo_service.player_game_x, uo_service.player_game_y))
-    #for k_mobile, v_mobile in uo_service.world_mobile_dict.items():
-    #  print("mobile item {0}: {1}".format(k_mobile, uo_service.world_mobile_dict[k_mobile]))
-
-    #print("len(uo_service.world_mobile_dict): ", len(uo_service.world_mobile_dict))
-
     ## Parse the x and y position of player 
     player_game_x = uo_service.player_game_x
     player_game_y = uo_service.player_game_y
 
-    if len(uo_service.world_mobile_dict) != 0 and target_mobile_serial == None:
-      ## Obtain the serial list of mobiles in current game screen 
-      mobile_serial_list = list(uo_service.world_mobile_dict.keys())
+    if len(uo_service.world_mobile_dict) != 0 and target_skeleton_serial == None:
+      ## Obtain the serial number list of skeleton around the player
+      skeleton_serial_list = [k for k, v in uo_service.world_mobile_dict.items() \
+                        if v['name'] == ' A Skeleton ' and v['distance'] <= 15 and v['distance'] > 5]
 
-      ## Obtain the serial list of mobiles in current game screen
-      target_mobile_serial = random.choice(mobile_serial_list)
+      ## Select of skeleton
+      target_skeleton_serial = random.choice(skeleton_serial_list)
 
     ## Declare the empty action
     action = {}
@@ -81,27 +75,22 @@ def main():
     ## Declare the empty action
     if step % 50 == 0:
       print("step: ", step)
-      #print("target_mobile_serial: ", target_mobile_serial)
-
-      if target_mobile_serial != None and player_game_x != None:
+      if target_skeleton_serial != None and player_game_x != None:
         ## finally, we can acquire the target mobile data
-        if target_mobile_serial in uo_service.world_mobile_dict:
-          target_mobile = uo_service.world_mobile_dict[target_mobile_serial]
+        if target_skeleton_serial in uo_service.world_mobile_dict:
+          target_skeleton = uo_service.world_mobile_dict[target_skeleton_serial]
         else:
-          target_mobile_serial = None
+          target_skeleton_serial = None
           continue
 
-        print("target_mobile: ", target_mobile)
-
         ## Parse x and y position of target mobile
-        target_mobile_game_x = target_mobile["gameX"]
-        target_mobile_game_y = target_mobile["gameY"]
+        target_skeleton_game_x = target_skeleton["gameX"]
+        target_skeleton_game_y = target_skeleton["gameY"]
 
         ## Calculate the directons to move toward the target mobile
         direction = utils.get_walk_direction_to_target([player_game_x, player_game_y], 
-                                                       [target_mobile_game_x, target_mobile_game_y])
+                                                       [target_skeleton_game_x, target_skeleton_game_y])
 
-        #print("direction: ", direction)
         if direction != -1:
           # Walk action
           action['action_type'] = 1
