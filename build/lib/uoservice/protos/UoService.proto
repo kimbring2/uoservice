@@ -113,7 +113,7 @@ message GrpcSkillList {
   repeated GrpcSkill skills = 1;
 }
 
-message States {
+message GrpcStates {
   GrpcPlayerObject playerObject = 1;
 
   GrpcItemObjectList WorldItemList = 2;
@@ -125,11 +125,9 @@ message States {
   GrpcPlayerStatus playerStatus = 6;
   GrpcSkillList playerSkillList = 7;
   GrpcGameObjectInfoList staticObjectInfoList = 8;
-
-  Actions replayActions = 9;
 }
 
-message Actions {
+message GrpcAction {
   uint32 actionType = 1;
   uint32 itemSerial = 2;
   uint32 mobileSerial = 3;
@@ -140,12 +138,12 @@ message Actions {
 }
 
 service UoService {
-  rpc Reset (Config) returns (States);
-  rpc ReadObs (Config) returns (States);
-  rpc WriteAct (Actions) returns (Empty);
+  rpc Reset (Config) returns (GrpcStates);
+  rpc ReadObs (Config) returns (GrpcStates);
+  rpc WriteAct (GrpcAction) returns (Empty);
   rpc ActSemaphoreControl (SemaphoreAction) returns (Empty);
   rpc ObsSemaphoreControl (SemaphoreAction) returns (Empty);
 
-  rpc ReadReplay (Config) returns (States);
+  rpc ReadReplay (Config) returns (GrpcStates);
   rpc ReadMPQFile (Config) returns (Empty);
 }

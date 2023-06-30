@@ -61,7 +61,7 @@ class UoService:
 		self.stub.Reset(UoService_pb2.Config(init=False))
 
 		# Reset the gRPC server before communcation with it.
-		self.stub.WriteAct(UoService_pb2.Actions(actionType=0, mobileSerial=0, walkDirection=0, index=0, amount=0))
+		self.stub.WriteAct(UoService_pb2.GrpcAction(actionType=0, mobileSerial=0, walkDirection=0, index=0, amount=0))
 		self.stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
 
 		self.stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
@@ -335,13 +335,13 @@ class UoService:
 		amount = action['amount']
 		run = action['run']
 
-		self.stub.WriteAct(UoService_pb2.Actions(actionType=action_type, 
-																						 itemSerial=item_serial,
-																						 mobileSerial=mobile_serial,
-																						 walkDirection=walk_direction,
-																						 index=index, 
-																						 amount=amount,
-																						 run=run))
+		self.stub.WriteAct(UoService_pb2.GrpcAction(actionType=action_type, 
+																						    itemSerial=item_serial,
+																						    mobileSerial=mobile_serial,
+																						    walkDirection=walk_direction,
+																						    index=index, 
+																						    amount=amount,
+																						    run=run))
 		self.stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
 		self.stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
 

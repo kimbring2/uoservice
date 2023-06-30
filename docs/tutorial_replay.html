@@ -70,7 +70,7 @@
                     <hr>
                     <h2>Replay file composition </h2>
                     
-                    Because game information does not always change, it is very inefficient to store state data for every tick.
+                    Because game information does not always change, it is inefficient to store state data of every game tick. For example,if there will be no need to receive GrpcPlayerObject data if the player does not move. Of course, this method requires another array to store the length of the data. However, this method has an advantage than saving the main data array because a single int value is enough to store the length. 
                 </div>
 
                 <div class="col">
@@ -113,16 +113,42 @@ staticObjectInfoListArr = archive.read_file("replay.data.staticObjectInfoList");
 
         <div class="row">
             <div class="col">
+                <hr>
+                <h5>Code 2: Parse the main data using length array.</h5>
+                <pre class="pre"><code class="python">
+_playerObjectArrayOffset = 0
+_playerObjectList = []
+
+def GetSubsetArray(index, lengthList, offset, arr):
+    # Crop the part of array when the length is variable. Return the modifed offset value for next cropping.
+    item = lengthList[index]
+    startIndex = offset
+    subsetArray = arr[startIndex:startIndex + item]
+    offset += item
+
+    return subsetArray, offset
+
+playerObjectSubsetArray, _playerObjectArrayOffset = GetSubsetArray(step, playerObjectArrayLengthList, 
+                                                                   _playerObjectArrayOffset, 
+                                                                   self.playerObjectArr)
+grpcPlayerObjectReplay = UoService_pb2.GrpcPlayerObject().FromString(playerObjectSubsetArray)
+_playerObjectList.append(grpcPlayerObjectReplay)
+                </code></pre>
             </div>
+        </div>
+
+        <div class="row">
             <div class="col">
-                <h2>Parallelization in Python</h2>
-                For some algorithms, like PPO we can use one policy to get multiple samples of the environment. In this case 
-                it's useful to do it in parallel. There are two options: implementing parallelism in the engine, by spawning 
-                several copies of the environment scene or launching several godot processes from python. However, we haven't yet
-                tested it: you might encounter the problem with semaphore or shared memory handle naming problem. In particular when 
-                multiple processes use the same shared memory and semaphores.<br><br><br><br>
-            </div>
-            <div class="col">
+                <hr>
+                <h5>Code 3: Obtain the player object information from replay data.</h5>
+                <pre class="pre"><code class="python">
+if _playerObjectList[replay_step].gameX != 0:
+    player_game_x = _playerObjectList[replay_step].gameX
+    player_game_y = _playerObjectList[replay_step].gameY
+
+
+
+                </code></pre>
             </div>
         </div>
         

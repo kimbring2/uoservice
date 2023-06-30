@@ -93,14 +93,16 @@ class UoServiceReplay:
 
 		self._staticObjectInfoListArrayOffset = 0
 
+		self._actionArrayOffset = 0
+
 		## Initialize the list to save the replay action data
-		self._actionTypeList = []
-		self._walkDirectionList = []
-		self._mobileSerialList = []
-		self._itemSerialList = []
-		self._indexList = []
-		self._amountList = []
-		self._runList = []
+		#self._actionTypeList = []
+		#self._walkDirectionList = []
+		#self._mobileSerialList = []
+		#self._itemSerialList = []
+		#self._indexList = []
+		#self._amountList = []
+		#self._runList = []
 
 		## Initialize the list to save the replay state data
 		self._playerObjectList = []
@@ -116,6 +118,8 @@ class UoServiceReplay:
 
 		self._staticObjectScreenXsList = []
 		self._staticObjectScreenYsList = []
+
+		self._actionList = []
 
 		## Initialize the witdh, height of replay file
 		self._screenWidth = screenWidth
@@ -189,7 +193,7 @@ class UoServiceReplay:
 		#  the original data files and length metadata files for them from MPQ file
 		self._archive = MPQArchive(self._rootPath + '/' + fileName + ".uoreplay")
 
-		##  the length byte array for data array
+		## The length byte array for data array
 		self.playerObjectArrayLengthArr = self._archive.read_file("replay.metadata.playerObjectLen");
 
 		self.worldItemArrayLengthArr = self._archive.read_file("replay.metadata.worldItemLen");
@@ -202,6 +206,8 @@ class UoServiceReplay:
 		self.playerSkillListArrayLengthArr = self._archive.read_file("replay.metadata.playerSkillListLen");
 
 		self.staticObjectInfoListLengthArr = self._archive.read_file("replay.metadata.staticObjectInfoListArraysLen");
+
+		self.actionArrayLengthArr = self._archive.read_file("replay.metadata.actionArraysLen");
 
 		## Convert the byte array to int array
 		self.playerObjectArrayLengthList = self.ConvertByteArrayToIntList(self.playerObjectArrayLengthArr);
@@ -217,10 +223,12 @@ class UoServiceReplay:
 
 		self.staticObjectInfoListLengthList = self.ConvertByteArrayToIntList(self.staticObjectInfoListLengthArr);
 
+		self.actionArrayLengthList = self.ConvertByteArrayToIntList(self.actionArrayLengthArr);
+
 		## Find the total length of replay
 		self._replayLength = len(self.playerObjectArrayLengthList)
 
-		##  the actual data as byte array
+		## The actual data as byte array
 		self.playerObjectArr = self._archive.read_file("replay.data.playerObject");
 
 		self.worldItemArr = self._archive.read_file("replay.data.worldItems");
@@ -234,7 +242,10 @@ class UoServiceReplay:
 
 		self.staticObjectInfoListArr = self._archive.read_file("replay.data.staticObjectInfoList");
 
-		##  the action data as byte array
+		self.actionArr = self._archive.read_file("replay.data.actionArrays");
+
+		'''
+		## The action data as byte array
 		self.actionTypeArr = self._archive.read_file("replay.action.type");
 		self.walkDirectionArr = self._archive.read_file("replay.action.walkDirection");
 		self.mobileSerialArr = self._archive.read_file("replay.action.mobileSerial");
@@ -251,6 +262,7 @@ class UoServiceReplay:
 		self.indexList = self.ConvertByteArrayToIntList(self.indexArr);
 		self.amountList = self.ConvertByteArrayToIntList(self.amountArr);
 		self.runList = self.ConvertByteArrayToBoolList(self.runArr);
+		'''
 
 		## Check the data array is existed
 		if self.playerObjectArr:
@@ -293,18 +305,23 @@ class UoServiceReplay:
 		else:
 			print("self.staticObjectInfoListArr is None")
 
+		if self.actionArr:
+			print("len(self.actionArr): ", len(self.actionArr))
+		else:
+			print("self.actionArr is None")
+
 	def ParseReplay(self):
 		# Saves the loaded replay data into Python list to visualize them one by one
 		for step in range(0, self._replayLength):
 			#print("step: ", step)
 
-			self._actionTypeList.append(self.actionTypeList[step])
-			self._walkDirectionList.append(self.walkDirectionList[step])
-			self._mobileSerialList.append(self.mobileSerialList[step])
-			self._itemSerialList.append(self.itemSerialList[step])
-			self._indexList.append(self.indexList[step])
-			self._amountList.append(self.amountList[step])
-			self._runList.append(self.runList[step])
+			#self._actionTypeList.append(self.actionTypeList[step])
+			#self._walkDirectionList.append(self.walkDirectionList[step])
+			#self._mobileSerialList.append(self.mobileSerialList[step])
+			#self._itemSerialList.append(self.itemSerialList[step])
+			#self._indexList.append(self.indexList[step])
+			#self._amountList.append(self.amountList[step])
+			#self._runList.append(self.runList[step])
 
 			if self.playerObjectArr:
 				playerObjectSubsetArray, self._playerObjectArrayOffset = self.GetSubsetArray(step, self.playerObjectArrayLengthList, 
@@ -383,6 +400,15 @@ class UoServiceReplay:
 				pass
 				#print("staticObjectInfoListArr is None")
 
+			if self.actionArr:
+				actionSubsetArrays, self._actionArrayOffset = self.GetSubsetArray(step, self.actionArrayLengthList, self._actionArrayOffset, 
+																				  self.actionArr)
+				actionReplay = UoService_pb2.GrpcAction().FromString(actionSubsetArrays)
+				self._actionList.append(actionReplay)
+			else:
+				pass
+				#print("actionArr is None")
+
 		if len(self._playerObjectList) == 0:
 			print("No playerObjectList")
 
@@ -410,6 +436,8 @@ class UoServiceReplay:
 		if len(self._staticObjectScreenYsList) == 0:
 			print("No staticObjectScreenYsList")
 
+		if len(self._actionList) == 0:
+			print("No _actionList")
 
 	def InteractWithReplay(self):
 		# Viewers can Forward and rewind the saved replay data by left and right arrow key
@@ -571,6 +599,9 @@ class UoServiceReplay:
 			if len(self._staticObjectScreenXsList[replay_step]) != 0:
 				self.static_object_game_x_data = self._staticObjectScreenXsList[replay_step]
 				self.static_object_game_y_data = self._staticObjectScreenYsList[replay_step]
+
+			action = self._staticObjectScreenXsList[replay_step]
+			print("action: ", action)
 
 			radius = 2
 			color = (120, 120, 120)

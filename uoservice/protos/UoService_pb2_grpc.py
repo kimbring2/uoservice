@@ -17,16 +17,16 @@ class UoServiceStub(object):
         self.Reset = channel.unary_unary(
                 '/uoservice.UoService/Reset',
                 request_serializer=UoService__pb2.Config.SerializeToString,
-                response_deserializer=UoService__pb2.States.FromString,
+                response_deserializer=UoService__pb2.GrpcStates.FromString,
                 )
         self.ReadObs = channel.unary_unary(
                 '/uoservice.UoService/ReadObs',
                 request_serializer=UoService__pb2.Config.SerializeToString,
-                response_deserializer=UoService__pb2.States.FromString,
+                response_deserializer=UoService__pb2.GrpcStates.FromString,
                 )
         self.WriteAct = channel.unary_unary(
                 '/uoservice.UoService/WriteAct',
-                request_serializer=UoService__pb2.Actions.SerializeToString,
+                request_serializer=UoService__pb2.GrpcAction.SerializeToString,
                 response_deserializer=UoService__pb2.Empty.FromString,
                 )
         self.ActSemaphoreControl = channel.unary_unary(
@@ -42,7 +42,7 @@ class UoServiceStub(object):
         self.ReadReplay = channel.unary_unary(
                 '/uoservice.UoService/ReadReplay',
                 request_serializer=UoService__pb2.Config.SerializeToString,
-                response_deserializer=UoService__pb2.States.FromString,
+                response_deserializer=UoService__pb2.GrpcStates.FromString,
                 )
         self.ReadMPQFile = channel.unary_unary(
                 '/uoservice.UoService/ReadMPQFile',
@@ -102,16 +102,16 @@ def add_UoServiceServicer_to_server(servicer, server):
             'Reset': grpc.unary_unary_rpc_method_handler(
                     servicer.Reset,
                     request_deserializer=UoService__pb2.Config.FromString,
-                    response_serializer=UoService__pb2.States.SerializeToString,
+                    response_serializer=UoService__pb2.GrpcStates.SerializeToString,
             ),
             'ReadObs': grpc.unary_unary_rpc_method_handler(
                     servicer.ReadObs,
                     request_deserializer=UoService__pb2.Config.FromString,
-                    response_serializer=UoService__pb2.States.SerializeToString,
+                    response_serializer=UoService__pb2.GrpcStates.SerializeToString,
             ),
             'WriteAct': grpc.unary_unary_rpc_method_handler(
                     servicer.WriteAct,
-                    request_deserializer=UoService__pb2.Actions.FromString,
+                    request_deserializer=UoService__pb2.GrpcAction.FromString,
                     response_serializer=UoService__pb2.Empty.SerializeToString,
             ),
             'ActSemaphoreControl': grpc.unary_unary_rpc_method_handler(
@@ -127,7 +127,7 @@ def add_UoServiceServicer_to_server(servicer, server):
             'ReadReplay': grpc.unary_unary_rpc_method_handler(
                     servicer.ReadReplay,
                     request_deserializer=UoService__pb2.Config.FromString,
-                    response_serializer=UoService__pb2.States.SerializeToString,
+                    response_serializer=UoService__pb2.GrpcStates.SerializeToString,
             ),
             'ReadMPQFile': grpc.unary_unary_rpc_method_handler(
                     servicer.ReadMPQFile,
@@ -157,7 +157,7 @@ class UoService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/uoservice.UoService/Reset',
             UoService__pb2.Config.SerializeToString,
-            UoService__pb2.States.FromString,
+            UoService__pb2.GrpcStates.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -174,7 +174,7 @@ class UoService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/uoservice.UoService/ReadObs',
             UoService__pb2.Config.SerializeToString,
-            UoService__pb2.States.FromString,
+            UoService__pb2.GrpcStates.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -190,7 +190,7 @@ class UoService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/uoservice.UoService/WriteAct',
-            UoService__pb2.Actions.SerializeToString,
+            UoService__pb2.GrpcAction.SerializeToString,
             UoService__pb2.Empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -242,7 +242,7 @@ class UoService(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/uoservice.UoService/ReadReplay',
             UoService__pb2.Config.SerializeToString,
-            UoService__pb2.States.FromString,
+            UoService__pb2.GrpcStates.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
