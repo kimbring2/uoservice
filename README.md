@@ -57,5 +57,5 @@ $ python examples/semaphore_sync.py --grpc_port 60051
 ## 3.No gRPC communication with Python, Replay saving
 ```
 $ ./ClassicUO -username [Account ID] -password [Account PWD] -window_width [Screen Width] -window_height [Screen Height] -replay
-e.g. /ClassicUO -username kimbring2 -password kimbring2 -human_play -window_width 1370 -window_height 1280 -replay
+e.g. ./ClassicUO -username kimbring2 -password kimbring2 -human_play -window_width 1370 -window_height 1280 -replay
 ```
