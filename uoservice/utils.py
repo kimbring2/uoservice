@@ -30,6 +30,10 @@ def get_serial_amount_from_corpse_item_list(corpse_item_list, name):
 
 
 def get_walk_direction_to_target(player_position, target_position):
+  print("player_position: ", player_position)
+  print("target_position: ", target_position)
+  print("")
+
   # UpRight = 0, Right = 1, DownRight = 2, Down = 3, DownLeft = 4, Left = 5, UpLeft = 6, Up = 7
   left = False
   right = False

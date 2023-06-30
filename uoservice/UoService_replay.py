@@ -81,35 +81,25 @@ class UoServiceReplay:
 
 		## Initialize the offset for the start position of byte array read
 		self._playerObjectArrayOffset = 0
-
 		self._worldItemArrayOffset = 0
 		self._worldMobileArrayOffset = 0
-
 		self._popupMenuArrayOffset = 0
 		self._clilocDataArrayOffset = 0
-
 		self._playerStatusArrayOffset = 0
 		self._playerSkillListArrayOffset = 0
-
 		self._staticObjectInfoListArrayOffset = 0
-
 		self._actionArrayOffset = 0
 
 		## Initialize the list to save the replay state data
 		self._playerObjectList = []
-
 		self._worldItemList = []
 		self._worldMobileList = []
-
 		self._popupMenuDataList = []
 		self._clilocDataList = []
-
 		self._playerStatusList = []
 		self._playerSkillListList = []
-
 		self._staticObjectScreenXsList = []
 		self._staticObjectScreenYsList = []
-
 		self._actionList = []
 
 		## Initialize the witdh, height of replay file
@@ -186,34 +176,24 @@ class UoServiceReplay:
 
 		## The length byte array for data array
 		self.playerObjectArrayLengthArr = self._archive.read_file("replay.metadata.playerObjectLen");
-
 		self.worldItemArrayLengthArr = self._archive.read_file("replay.metadata.worldItemLen");
 		self.worldMobileArrayLengthArr = self._archive.read_file("replay.metadata.worldMobileLen");
-
 		self.popupMenuArrayLengthArr = self._archive.read_file("replay.metadata.popupMenuLen");
 		self.clilocDataArrayLengthArr = self._archive.read_file("replay.metadata.clilocDataLen");
-
 		self.playerStatusArrayLengthArr = self._archive.read_file("replay.metadata.playerStatusLen");
 		self.playerSkillListArrayLengthArr = self._archive.read_file("replay.metadata.playerSkillListLen");
-
 		self.staticObjectInfoListLengthArr = self._archive.read_file("replay.metadata.staticObjectInfoListArraysLen");
-
 		self.actionArrayLengthArr = self._archive.read_file("replay.metadata.actionArraysLen");
 
 		## Convert the byte array to int array
 		self.playerObjectArrayLengthList = self.ConvertByteArrayToIntList(self.playerObjectArrayLengthArr);
-
 		self.worldItemArrayLengthList = self.ConvertByteArrayToIntList(self.worldItemArrayLengthArr);
 		self.worldMobileArrayLengthList = self.ConvertByteArrayToIntList(self.worldMobileArrayLengthArr);
-
 		self.popupMenuArrayLengthList = self.ConvertByteArrayToIntList(self.popupMenuArrayLengthArr);
 		self.clilocDataArrayLengthList = self.ConvertByteArrayToIntList(self.clilocDataArrayLengthArr);
-
 		self.playerStatusArrayLengthList = self.ConvertByteArrayToIntList(self.playerStatusArrayLengthArr);
 		self.playerSkillListArrayLengthList = self.ConvertByteArrayToIntList(self.playerSkillListArrayLengthArr);
-
 		self.staticObjectInfoListLengthList = self.ConvertByteArrayToIntList(self.staticObjectInfoListLengthArr);
-
 		self.actionArrayLengthList = self.ConvertByteArrayToIntList(self.actionArrayLengthArr);
 
 		## Find the total length of replay
@@ -221,18 +201,13 @@ class UoServiceReplay:
 
 		## The actual data as byte array
 		self.playerObjectArr = self._archive.read_file("replay.data.playerObject");
-
 		self.worldItemArr = self._archive.read_file("replay.data.worldItems");
 		self.worldMobileArr = self._archive.read_file("replay.data.worldMobiles");
-
 		self.popupMenuArr = self._archive.read_file("replay.data.popupMenu");
 		self.clilocDataArr = self._archive.read_file("replay.data.clilocData");
-
 		self.playerStatusArr = self._archive.read_file("replay.data.playerStatus");
 		self.playerSkillListArr = self._archive.read_file("replay.data.playerSkillList");
-
 		self.staticObjectInfoListArr = self._archive.read_file("replay.data.staticObjectInfoList");
-
 		self.actionArr = self._archive.read_file("replay.data.actionArrays");
 
 		## Check the data array is existed

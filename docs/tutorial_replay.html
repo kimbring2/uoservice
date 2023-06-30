@@ -97,6 +97,7 @@ clilocDataArrayLengthArr = archive.read_file("replay.metadata.clilocDataLen");
 playerStatusArrayLengthArr = archive.read_file("replay.metadata.playerStatusLen");
 playerSkillListArrayLengthArr = archive.read_file("replay.metadata.playerSkillListLen");
 staticObjectInfoListLengthArr = archive.read_file("replay.metadata.staticObjectInfoListArraysLen");
+actionArrayLengthArr = archive.read_file("replay.metadata.actionArraysLen");
 
 ## The actual data as byte array
 playerObjectArr = archive.read_file("replay.data.playerObject");
@@ -107,6 +108,7 @@ clilocDataArr = archive.read_file("replay.data.clilocData");
 playerStatusArr = archive.read_file("replay.data.playerStatus");
 playerSkillListArr = archive.read_file("replay.data.playerSkillList");
 staticObjectInfoListArr = archive.read_file("replay.data.staticObjectInfoList");
+actionArr = archive.read_file("replay.data.actionArrays");
                 </code></pre>
             </div>
         </div>

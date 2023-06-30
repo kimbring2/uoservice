@@ -41,6 +41,8 @@ class UoService:
 		self.equipped_item_dict = {}
 		self.corpse_dict = {}
 		self.corpse_item_dict = {}
+		self.cliloc_dict = {}
+		self.popup_menu_list = []
 
 		self.player_game_x = None
 		self.player_game_y = None
@@ -67,48 +69,10 @@ class UoService:
 		self.stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
 		response = self.stub.ReadObs(UoService_pb2.Config(init=False))
 
-		obs_raw = self.parse_response(response)
-
-		obs = {}
-		obs['mobile_data'] = obs_raw[0]
-		obs['equipped_item_data'] = obs_raw[1]
-		obs['backpack_item_data'] = obs_raw[2]
-		obs['bank_item_data'] = obs_raw[3]
-		obs['opened_corpse_list'] = obs_raw[4]
-		obs['popup_menu_data'] = obs_raw[9]
-		obs['vendor_item_data'] = obs_raw[6]
-		obs['vendor_data'] = obs_raw[5]
-		obs['corpse_data'] = obs_raw[11]
-		obs['cliloc_data'] = obs_raw[10]
-		obs['teacher_data'] = obs_raw[8]
-		obs['player_mobile_data'] = obs_raw[12]
-		obs['ground_item_dict'] = obs_raw[13]
-		obs['opened_corpse_data'] = obs_raw[4]
-
-		return obs
+		self.parse_response(response)
 
 	def parse_response(self, response):
 		# Preprocess the gRPC response format to Python friendly type
-		player_skills_dict = {}
-		mobile_dict = {}
-		corpse_dict = {}
-		player_mobile_dict = {}
-		mountable_mobile_dict = {}
-		ground_item_dict = {}
-		equipped_item_dict = {}
-		backpack_item_dict = {}
-		bank_item_dict = {}
-		opened_corpse_list_dict = {}
-		vendor_dict = {}
-		vendor_item_dict = {}
-		teacher_dict = {}
-		player_skill_dict = {}
-		player_status_dict = {}
-		popup_menu_list = []
-		cliloc_dict = {}
-		static_object_game_x_list = []
-		static_object_game_y_list = []
-
 		player_object = response.playerObject
 
 		world_item_data = response.WorldItemList.itemObjects
@@ -255,15 +219,15 @@ class UoService:
 			self.player_status_dict = utils.parsePlayerStatus(player_status_data)
 
 		for skill in player_skills_data:
-			#player_skills_dict[skill.name] = [skill.index, skill.isClickable, skill.value, skill.base, skill.cap, skill.lock]
-			self.player_skills_dict[skill.name] = [skill.index, skill.isClickable, skill.value, skill.base, skill.cap, skill.lock]
+			self.player_skills_dict[skill.name] = {"index": skill.index, "isClickable": skill.isClickable, "value": skill.value, 
+														   							 "base: ": skill.base, "cap": skill.cap, "lock": skill.lock}
 
 		for data in cliloc_data:
 			#print("data: ", data)
-			if data.serial not in cliloc_dict:
-				cliloc_dict[data.serial] = [[data.text, data.affix, data.name]]
+			if data.serial not in self.cliloc_dict:
+				self.cliloc_dict[data.serial] = [{"text": data.text, "affix": data.affix, "name": data.name}]
 			else:
-				cliloc_dict[data.serial].append([[data.text, data.affix, data.name]])
+				self.cliloc_dict[data.serial].append({"text": data.text, "affix": data.affix, "name": data.name})
 
 		player_status_dict = utils.parsePlayerStatus(player_status_data)
 
@@ -273,7 +237,7 @@ class UoService:
 		#print("war_mode: ", war_mode)
 
 		for menu_data in popup_menu_data:
-			popup_menu_list.append(menu_data)
+			self.popup_menu_list.append(menu_data)
 
 		screen_image = np.zeros((5000,5000,4), dtype=np.uint8)
 
@@ -317,13 +281,11 @@ class UoService:
 			cv2.imshow('screen_image_' + str(self.grpc_port), screen_image)
 			cv2.waitKey(1)
 		
+		self.static_object_game_x_list = []
+		self.static_object_game_y_list = []
 		for i in range(0, len(static_object_game_x_data)):
-			static_object_game_x_list.append(static_object_game_x_data[i])
-			static_object_game_y_list.append(static_object_game_y_data[i])
-
-		return mobile_dict, equipped_item_dict, backpack_item_dict, bank_item_dict, opened_corpse_list_dict, vendor_dict, \
-					 vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_dict, \
-					 corpse_dict, player_mobile_dict, ground_item_dict
+			self.static_object_game_x_list.append(static_object_game_x_data[i])
+			self.static_object_game_y_list.append(static_object_game_y_data[i])
 
 	def step(self, action):
 		# Send the action data to game client and receive the state of that action
@@ -350,30 +312,6 @@ class UoService:
 		else:
 			response = self.stub.ReadObs(UoService_pb2.Config(init=False))
 
-		obs_raw = self.parse_response(response)
-
-		obs = {}
-
-		#print("obs_raw[2]: ", obs_raw[2])
-		
-		#mobile_dict, equipped_item_dict, backpack_item_dict, bank_item_dict, opened_corpse_list_dict, vendor_dict, \
-		#vendor_item_dict, mountable_mobile_dict, teacher_dict, popup_menu_list, cliloc_dict, \
-		#corpse_dict, player_mobile_dict, ground_item_dict
-		obs['mobile_data'] = obs_raw[0]
-		obs['equipped_item_data'] = obs_raw[1]
-		obs['backpack_item_data'] = obs_raw[2]
-		obs['bank_item_data'] = obs_raw[3]
-		obs['opened_corpse_list'] = obs_raw[4]
-		obs['popup_menu_data'] = obs_raw[9]
-		obs['vendor_item_data'] = obs_raw[6]
-		obs['vendor_data'] = obs_raw[5]
-		obs['corpse_data'] = obs_raw[11]
-		obs['cliloc_data'] = obs_raw[10]
-		obs['teacher_data'] = obs_raw[8]
-		obs['player_mobile_data'] = obs_raw[12]
-		obs['ground_item_data'] = obs_raw[13]
-		obs['opened_corpse_data'] = obs_raw[4]
+		self.parse_response(response)
 
 		self.total_step += 1
-
-		return obs

@@ -92,13 +92,13 @@ class UoService:
         amount = action['amount']
         run = action['run']
 
-        self.stub.WriteAct(UoService_pb2.Actions(actionType=action_type, 
-                                                 itemSerial=item_serial,
-                                                 mobileSerial=mobile_serial,
-                                                 walkDirection=walk_direction,
-                                                 index=index, 
-                                                 amount=amount,
-                                                 run=run))
+        self.stub.WriteAct(UoService_pb2.GrpcAction(actionType=action_type, 
+                                                    itemSerial=item_serial,
+                                                    mobileSerial=mobile_serial,
+                                                    walkDirection=walk_direction,
+                                                    index=index, 
+                                                    amount=amount,
+                                                    run=run))
         self.stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
 
         self.stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
