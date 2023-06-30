@@ -49,5 +49,5 @@ e.g.  $ ./ClassicUO -username kimbring2 -password kimbring2 -human_play -window_
 
 Run the Python Application
 ```
-$ python examples/semaphore_sync.py --grpc_port 60051
+$ python [examples/semaphore_sync.py](https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/semaphore_sync.py) --grpc_port 60051
 ```
