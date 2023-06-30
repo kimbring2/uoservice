@@ -33,15 +33,15 @@ $ mono ServUO.exe
 
 Unlike the original client, the client for UoService must operate most of the operations through argument setting.
 
-## 1. Execution without communication with Python and saving replay. You must enter the ID and pwd of the previously created account as parameters. Login, shard selection, and character selection windows are omitted.
-Run the C# Client
+## 1. Communication with Python, saving replay
+Run the C# Client. You must enter the ID and pwd of the previously created account as parameters. Login, shard selection, and character selection windows are omitted.
 ```
 $ ./ClassicUO -username [Account ID] -password [Account PWD] -human_play -window_width [Screen Width] -window_height [Screen Height]
 e.g. $ ./ClassicUO -username kimbring2 -password kimbring2 -human_play -window_width 1370 -window_height 1280
 ```
 
-## 2. Execution with communication with Python and no replay saving. Here, you need to enter the port for gRPC communication with Python.  
-Run the C# Client
+## 2. Execution with communication with Python and no replay saving.  
+Run the C# Client. Here, you need to enter the port for gRPC communication with Python.
 ```
 $ ./ClassicUO -username [Account ID] -password [Account PWD] -grpc_port [Port Number]
 e.g.  $ ./ClassicUO -username kimbring2 -password kimbring2 -human_play -window_width 1370 -window_height 1280
