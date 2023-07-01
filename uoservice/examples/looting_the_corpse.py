@@ -46,23 +46,32 @@ def main():
   obs = uo_service.reset()
 
   ## Event flags to test the scenario manually
-  target_mobile_serial = None
+  target_skeleton_serial = None
+  corpse_dict = {}
   corpse_serial = None
   hold_item_serial = 0
 
+  corpse_item_dict = {}
+
   ## Event flags to test the scenario manually
   for step in tqdm(range(100000)):
-    ## Obtain the serial of random mobile around the player
-    if len(obs["mobile_data"]) != 0 and target_mobile_serial == None:
-      ## Format of mobile data
-      ## [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
-      ## 16852: ['a zombie', 'Mobile', 646, 22, 16, ' a zombie ']
+    ## Parse the x and y position of player 
+    player_game_x = uo_service.player_game_x
+    player_game_y = uo_service.player_game_y
 
-      ## Obtain the serial list of mobiles in current game screen 
-      mobile_serial_list = list(obs["mobile_data"].keys())
+    if len(uo_service.world_mobile_dict) != 0 and target_skeleton_serial == None:
+      ## Obtain the serial number list of skeleton around the player
+      skeleton_serial_list = [k for k, v in uo_service.world_mobile_dict.items() \
+                        if v['name'] == ' A Skeleton ' and v['distance'] <= 15 and v['distance'] > 5]
 
-      ## Obtain the serial list of mobiles in current game screen
-      target_mobile_serial = random.choice(mobile_serial_list)
+      ## Select of skeleton
+      target_skeleton_serial = random.choice(skeleton_serial_list)
+
+    corpse_dict = {}
+    for k, v in uo_service.world_item_dict.items():
+      if v["isCorpse"] == True:
+        corpse_dict[k] = v
+        #print("corpse item {0}: {1}".format(k, uo_service.world_item_dict[k]))
 
     ## Declare the empty action
     action = {}
@@ -78,49 +87,38 @@ def main():
     if step % 150 == 0:
       print("step: ", step)
 
-      ## [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
-      ## {1074164822: ['A Skeletal Corpse', 'Item', 734, 662, 2, 'None']}
-      
-      if len(obs['corpse_data']) != 0:
-        corpse_serial_list = list(obs['corpse_data'].keys())
+      if len(corpse_dict) != 0:
+        corpse_serial_list = list(corpse_dict.keys())
         corpse_serial_data = random.choice(corpse_serial_list)
         if corpse_serial == None:
           corpse_serial = corpse_serial_data
       
-      if target_mobile_serial != None:
-        ## format of player mobile data 
-        ## [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
-        ## 120: ['masterkim', 'PlayerMobile', 778, 618, 0, 'None']
-        player_mobile_serial = list(obs['player_mobile_data'].keys())[0]
-        player_mobile = obs['player_mobile_data'][player_mobile_serial]
-
+      if target_skeleton_serial != None and player_game_x != None:
         ## finally, we can acquire the target mobile data
-        if target_mobile_serial in obs["mobile_data"]:
-          target_mobile = obs["mobile_data"][target_mobile_serial]
+        if target_skeleton_serial in uo_service.world_mobile_dict:
+          target_skeleton = uo_service.world_mobile_dict[target_skeleton_serial]
         else:
-          target_mobile_serial = None
+          target_skeleton_serial = None
           continue
 
-        ## Parse the x and y position of player 
-        player_screen_x = player_mobile[2]
-        player_screen_y = player_mobile[3]
-
         ## Parse x and y position of target mobile
-        target_mobile_screen_x = target_mobile[2]
-        target_mobile_screen_y = target_mobile[3]
+        target_skeleton_game_x = target_skeleton["gameX"]
+        target_skeleton_game_y = target_skeleton["gameY"]
 
         ## Calculate the directons to move toward the target mobile
-        direction = utils.get_walk_direction_to_target([player_screen_x, player_screen_y], 
-                                                       [target_mobile_screen_x, target_mobile_screen_y])
+        direction = utils.get_walk_direction_to_target([player_game_x, player_game_y], 
+                                                       [target_skeleton_game_x, target_skeleton_game_y])
 
         ## Distance between the player and target mobile
-        distance = target_mobile[4]
+        distance = target_skeleton['distance']
+
+        ## Player war mode
+        war_mode = uo_service.war_mode
+
+        ## Player holded item
+        hold_item_serial = uo_service.holdItemSerial
 
         ## Format of player status
-        '''player_status_dict:  {'str': 100, 'dex': 62, 'intell': 133, 'hits': 121, 'hitsMax': 121, 
-                                 'stamina': 70, 'staminaMax': 70, 'mana': 148, 'gold': 46739, 
-                                 'physicalResistance': 88, 'weight': 654, 'weightMax': 450, 
-                                 'HoldItemSerial': 0, 'warMode': True}'''
         if 'player_status_data' in obs:
           war_mode = obs['player_status_data']['warMode']
           hold_item_serial = obs['player_status_data']['HoldItemSerial']
@@ -128,7 +126,18 @@ def main():
         #print("obs['corpse_data']: ", obs['corpse_data'])
         #print("opened_corpse_data: ", obs['opened_corpse_data'])
 
-        if len(obs['corpse_data']) == 0:
+        for k_corpse, v_corpse in corpse_dict.items():
+          for k_world, v_world in uo_service.world_item_dict.items():
+            if k_corpse == v_world["container"]:
+              print("corpse item {0}: {1}".format(k, uo_service.world_item_dict[k_world]))
+
+              if k_corpse not in corpse_item_dict:
+                corpse_item_dict[k_corpse] = {}
+                corpse_item_dict[k_corpse][k_world] = uo_service.world_item_dict[k_world]
+              else:
+                corpse_item_dict[k_corpse][k_world] = uo_service.world_item_dict[k_world]
+
+        if len(corpse_dict) == 0:
           if distance >= 2:
             ## Target mobile is far away from the player
             if direction == -1:
@@ -148,11 +157,11 @@ def main():
               else:
                 ## Attack the target mobile
                 action['action_type'] = 2
-                action['mobile_serial'] = target_mobile_serial
+                action['mobile_serial'] = target_skeleton_serial
         else:
-          if len(obs['opened_corpse_data']) == 0:
+          if len(corpse_item_dict) == 0:
             ## Open the corpse container
-            corpse_serial_list = list(obs['corpse_data'].keys())
+            corpse_serial_list = list(corpse_dict.keys())
             corpse_serial_data = random.choice(corpse_serial_list)
             if corpse_serial == None:
               corpse_serial = corpse_serial_data
@@ -163,15 +172,15 @@ def main():
             if hold_item_serial == 0:
               print("action['action_type'] = 3")
 
-              opened_corpse_serial_list = list(obs['opened_corpse_data'].keys())
-              opened_corpse_serial = random.choice(opened_corpse_serial_list)
-              opened_corpse_item_list = obs['opened_corpse_data'][opened_corpse_serial]
-              gold_item_serial, gold_item_max = \
-                utils.get_serial_amount_from_corpse_item_list(opened_corpse_item_list, 'Gold')
+              #opened_corpse_serial_list = list(obs['opened_corpse_data'].keys())
+              #opened_corpse_serial = random.choice(opened_corpse_serial_list)
+              #opened_corpse_item_list = obs['opened_corpse_data'][opened_corpse_serial]
+              #gold_item_serial, gold_item_max = \
+              #  utils.get_serial_amount_from_corpse_item_list(opened_corpse_item_list, 'Gold')
 
-              action['action_type'] = 3
-              action['item_serial'] = gold_item_serial
-              action['amount'] = gold_item_max
+              #action['action_type'] = 3
+              #action['item_serial'] = gold_item_serial
+              #action['amount'] = gold_item_max
             else:
               print("action['action_type'] = 4")
               print("distance: ", distance)
@@ -181,8 +190,6 @@ def main():
 
         print("action_type: ", action['action_type'])
         obs = uo_service.step(action)
-        #break
-
         print("")
     else:
       obs = uo_service.step(action)

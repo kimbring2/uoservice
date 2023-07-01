@@ -46,6 +46,8 @@ class UoService:
 
 		self.player_game_x = None
 		self.player_game_y = None
+		self.war_mode = False
+		self.hold_item_serial = None
 
 		self.backpack_serial = None
 
@@ -97,6 +99,8 @@ class UoService:
 			#print("player_object: ", player_object)
 			self.player_game_x = player_object.gameX
 			self.player_game_y = player_object.gameY
+
+		self.war_mode = player_object.warMode
 
 		#print("len(world_item_data): ", len(world_item_data))
 		if len(world_item_data) != 0:

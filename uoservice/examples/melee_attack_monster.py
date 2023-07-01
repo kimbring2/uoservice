@@ -46,21 +46,21 @@ def main():
   obs = uo_service.reset()
 
   ## Event flags to test the scenario manually
-  target_mobile_serial = None
+  target_skeleton_serial = None
 
   ## Event flags to test the scenario manually
   for step in tqdm(range(100000)):
-    ## Obtain the serial of random mobile around the player
-    if len(obs["mobile_data"]) != 0 and target_mobile_serial == None:
-      ## Format of mobile data
-      ## [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
-      ## 16852: ['a zombie', 'Mobile', 646, 22, 16, ' a zombie ']
+    ## Parse the x and y position of player 
+    player_game_x = uo_service.player_game_x
+    player_game_y = uo_service.player_game_y
 
-      ## Obtain the serial list of mobiles in current game screen 
-      mobile_serial_list = list(obs["mobile_data"].keys())
+    if len(uo_service.world_mobile_dict) != 0 and target_skeleton_serial == None:
+      ## Obtain the serial number list of skeleton around the player
+      skeleton_serial_list = [k for k, v in uo_service.world_mobile_dict.items() \
+                        if v['name'] == ' A Skeleton ' and v['distance'] <= 15 and v['distance'] > 5]
 
-      ## Obtain the serial list of mobiles in current game screen
-      target_mobile_serial = random.choice(mobile_serial_list)
+      ## Select of skeleton
+      target_skeleton_serial = random.choice(skeleton_serial_list)
 
     ## Declare the empty action
     action = {}
@@ -76,40 +76,27 @@ def main():
     if step % 50 == 0:
       print("step: ", step)
 
-      if target_mobile_serial != None:
-        ## format of player mobile data 
-        ## [obj.name, obj.type, obj.screenX, obj.screenY, obj.distance, obj.title]
-        ## 120: ['masterkim', 'PlayerMobile', 778, 618, 0, 'None']
-        player_mobile_serial = list(obs['player_mobile_data'].keys())[0]
-        player_mobile = obs['player_mobile_data'][player_mobile_serial]
-
+      if target_skeleton_serial != None and player_game_x != None:
         ## finally, we can acquire the target mobile data
-        if target_mobile_serial in obs["mobile_data"]:
-          target_mobile = obs["mobile_data"][target_mobile_serial]
+        if target_skeleton_serial in uo_service.world_mobile_dict:
+          target_skeleton = uo_service.world_mobile_dict[target_skeleton_serial]
         else:
-          target_mobile_serial = None
+          target_skeleton_serial = None
           continue
 
-        ## Parse the x and y position of player 
-        player_screen_x = player_mobile[2]
-        player_screen_y = player_mobile[3]
-
         ## Parse x and y position of target mobile
-        target_mobile_screen_x = target_mobile[2]
-        target_mobile_screen_y = target_mobile[3]
+        target_skeleton_game_x = target_skeleton["gameX"]
+        target_skeleton_game_y = target_skeleton["gameY"]
 
         ## Calculate the directons to move toward the target mobile
-        direction = utils.get_walk_direction_to_target([player_screen_x, player_screen_y], 
-                                                       [target_mobile_screen_x, target_mobile_screen_y])
+        direction = utils.get_walk_direction_to_target([player_game_x, player_game_y], 
+                                                       [target_skeleton_game_x, target_skeleton_game_y])
 
         ## Distance between the player and target mobile
-        distance = target_mobile[4]
+        distance = target_skeleton['distance']
 
-        ## Format of player status
-        '''player_status_dict:  {'str': 100, 'dex': 62, 'intell': 133, 'hits': 121, 'hitsMax': 121, 'stamina': 70, 'staminaMax': 70, 
-                                 'mana': 148, 'gold': 46739, 'physicalResistance': 88, 'weight': 654, 'weightMax': 450, 
-                                 'HoldItemSerial': 0, 'warMode': True}'''
-        war_mode = obs['player_status_dict']['warMode']
+        ## Player war mode
+        war_mode = uo_service.war_mode
 
         if distance >= 2:
           ## Target mobile is far away from the player
@@ -130,8 +117,8 @@ def main():
             else:
               ## Attack the target mobile
               action['action_type'] = 2
-              action['mobile_serial'] = target_mobile_serial
-
+              action['mobile_serial'] = target_skeleton_serial
+        
         obs = uo_service.step(action)
     else:
       obs = uo_service.step(action)
