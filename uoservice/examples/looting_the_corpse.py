@@ -88,12 +88,6 @@ def main():
         player_gold = uo_service.player_status_dict['gold']
         print("player_gold: ", player_gold)
 
-      if len(corpse_dict) != 0:
-        corpse_serial_list = list(corpse_dict.keys())
-        corpse_serial_data = random.choice(corpse_serial_list)
-        if corpse_serial == None:
-          corpse_serial = corpse_serial_data
-      
       if target_skeleton_serial != None and player_game_x != None:
         ## finally, we can acquire the target mobile data
         if target_skeleton_serial in uo_service.world_mobile_dict:
