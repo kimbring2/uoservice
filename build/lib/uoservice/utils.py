@@ -21,10 +21,12 @@ def get_serial_by_name(item_dict, name):
   return None, None
 
 
-def get_serial_amount_from_corpse_item_list(corpse_item_list, name):
-  for corpse_item in corpse_item_list:
-    if name in corpse_item[1]:
-      return corpse_item[0], corpse_item[3]
+def get_serial_amount_from_corpse_item_list(corpse_item_dict, name):
+  print("corpse_item_dict: ", corpse_item_dict)
+  for k, v in corpse_item_dict.items():
+    print("corpse item {0}: {1}".format(k, v))
+    if name in v["name"]:
+      return k, v["amount"]
 
   return None, 0
 

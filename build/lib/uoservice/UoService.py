@@ -48,6 +48,7 @@ class UoService:
 		self.player_game_y = None
 		self.war_mode = False
 		self.hold_item_serial = None
+		self.player_gold = None
 
 		self.backpack_serial = None
 
@@ -101,6 +102,7 @@ class UoService:
 			self.player_game_y = player_object.gameY
 
 		self.war_mode = player_object.warMode
+		self.hold_item_serial = player_object.holdItemSerial
 
 		#print("len(world_item_data): ", len(world_item_data))
 		if len(world_item_data) != 0:
@@ -235,11 +237,6 @@ class UoService:
 
 		player_status_dict = utils.parsePlayerStatus(player_status_data)
 
-		#holdItem_serial = player_status_etc.holdItemSerial
-		#war_mode = player_status_etc.warMode
-		#print("holdItem_serial: ", holdItem_serial)
-		#print("war_mode: ", war_mode)
-
 		for menu_data in popup_menu_data:
 			self.popup_menu_list.append(menu_data)
 
@@ -247,7 +244,6 @@ class UoService:
 
 		radius = 5
 		thickness = 2
-
 		screen_width = 5000
 		screen_height = 5000
 		for k, v in self.world_mobile_dict.items():

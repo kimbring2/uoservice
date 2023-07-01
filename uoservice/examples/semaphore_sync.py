@@ -70,10 +70,10 @@ def main():
 
     #print("")
 
-    for k_mobile, v_mobile in uo_service.world_mobile_dict.items():
-      print("world_mobile {0}: {1}".format(k_mobile, v_mobile))
+    #for k_mobile, v_mobile in uo_service.world_mobile_dict.items():
+    #  print("world_mobile {0}: {1}".format(k_mobile, v_mobile))
 
-    print("")
+    #print("")
 
     equipped_item_data = uo_service.equipped_item_dict
     #print("equipped_item_data: ", equipped_item_data)
@@ -83,6 +83,9 @@ def main():
 
     corpse_item_dict = uo_service.corpse_item_dict
     #print("corpse_item_dict: ", corpse_item_dict)
+
+    player_status_dict = uo_service.player_status_dict
+    print("player_status_dict: ", player_status_dict)
 
     for k_corpse, v_corpse in corpse_item_dict.items():
       #print("corpse {0}: {1}".format(k_corpse, v_corpse))

@@ -135,7 +135,7 @@ obs = uo_service.reset()
 
 target_serial = None
 
-for step in tqdm(range(100000)):
+for step in range(100000):
     player_game_x = uo_service.player_game_x
     player_game_y = uo_service.player_game_y
 
@@ -202,7 +202,7 @@ uo_service._open_grpc()
 obs = uo_service.reset()
 
 target_serial = None
-for step in tqdm(range(100000)):
+for step in range(100000):
     player_game_x = uo_service.player_game_x
     player_game_y = uo_service.player_game_y
     if len(uo_service.world_mobile_dict) != 0 and target_serial == None:
@@ -258,59 +258,80 @@ for step in tqdm(range(100000)):
             <div class="col">
             </div>
             <div class="col">
-                <h2>Looting the corpse</h2>
+                <h2>First corpse looting</h2>
+                After attacking and killing a monster, player can acquire various items including gold from the corpse. To do this with python code, first you need to check <b>world_mobile_dict</b> of the <b>uo_service</b> if there is a corpse around the player. The monster that was mobile type is transformed to an item when it dies.<br>
 
                 <video width="400" height="200" controls>
                     <source src="Fig/LootingCorpseResult.mkv" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
-
-                In the demo video, player approach and attack the nearby monster randomly. The full code for that video is available from <a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/looting_the_corpse.py">looting_the_corpse.py</a> file.
             </div>
             <div class="col">
-                <h5>Code 4: Rule-based looting the corpse example code.</h5>
+                <h5><a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/looting_the_corpse.py">Code 4: Rule-based looting the corpse example code</a>.</h5>
                 <pre class="pre"><code class="python">
   target_mobile_serial = None
+  corpse_dict = {}
   corpse_serial = None
+  hold_item_serial = 0
+  corpse_item_dict = {}
 
-  for step in tqdm(range(100000)):
-    if len(obs["mobile_data"]) != 0 and target_mobile_serial == None:
-      mobile_serial_list = list(obs["mobile_data"].keys())
-      target_mobile_serial = random.choice(mobile_serial_list)
+  for step in range(100000):
+    player_game_x = uo_service.player_game_x
+    player_game_y = uo_service.player_game_y
+
+    if len(uo_service.world_mobile_dict) != 0 and target_mobile_serial == None:
+      skeleton_serial_list = [k for k, v in uo_service.world_mobile_dict.items() \
+               if v['name'] == ' A Skeleton ' and v['distance'] <= 15 and v['distance'] > 5]
+      target_mobile_serial = random.choice(skeleton_serial_list)
+
+    corpse_dict = {}
+    for k, v in uo_service.world_item_dict.items():
+      if v["isCorpse"] == True:
+        corpse_dict[k] = v
 
     action = {}
+    action['action_type'] = 0
+    action['item_serial'] = 0
+    action['mobile_serial'] = 0
+    action['walk_direction'] = 0
+    action['index'] = 0
+    action['amount'] = 0
+    action['run'] = False
     if step % 150 == 0:
-      if len(obs['corpse_data']) != 0:
-        corpse_serial_list = list(obs['corpse_data'].keys())
+      if len(uo_service.player_status_dict) != 0:
+        player_gold = uo_service.player_status_dict['gold']
+
+      if len(corpse_dict) != 0:
+        corpse_serial_list = list(corpse_dict.keys())
         corpse_serial_data = random.choice(corpse_serial_list)
         if corpse_serial == None:
           corpse_serial = corpse_serial_data
       
-      if target_mobile_serial != None:
-        player_mobile_serial = list(obs['player_mobile_data'].keys())[0]
-        player_mobile = obs['player_mobile_data'][player_mobile_serial]
-
-        if target_mobile_serial in obs["mobile_data"]:
-          target_mobile = obs["mobile_data"][target_mobile_serial]
+      if target_mobile_serial != None and player_game_x != None:
+        if target_mobile_serial in uo_service.world_mobile_dict:
+          target_mobile = uo_service.world_mobile_dict[target_skeleton_serial]
         else:
           target_mobile_serial = None
           continue
 
-        player_x = player_mobile[2]
-        player_y = player_mobile[3]
+        target_mobile_game_x = target_mobile["gameX"]
+        target_mobile_game_y = target_mobile["gameY"]
 
-        target_mobile_x = target_mobile[2]
-        target_mobile_y = target_mobile[3]
+        direction = utils.get_walk_direction_to_target([player_game_x, player_game_y], 
+                                         [target_mobile_game_x, target_mobile_game_y])
+        distance = target_mobile['distance']
+        war_mode = uo_service.war_mode
+        hold_item_serial = uo_service.hold_item_serial
 
-        direction = utils.get_walk_direction_to_target([player_x, player_y], 
-                                         [target_mobile_x, target_mobile_y])
+        for k_corpse, v_corpse in corpse_dict.items():
+          for k_world, v_world in uo_service.world_item_dict.items():
+            if k_corpse == v_world["container"]:
+              if k_world not in corpse_item_dict:
+                corpse_item_dict[k_world] = uo_service.world_item_dict[k_world]
+              else:
+                corpse_item_dict[k_world] = uo_service.world_item_dict[k_world]
 
-        distance = target_mobile[4]
-
-        war_mode = obs['player_status_data']['warMode']
-        hold_item_serial = obs['player_status_data']['HoldItemSerial']
-
-        if len(obs['corpse_data']) == 0:
+        if len(corpse_dict) == 0:
           if distance >= 2:
             if direction == -1:
               action['action_type'] = 0
@@ -326,9 +347,8 @@ for step in tqdm(range(100000)):
                 action['action_type'] = 2
                 action['mobile_serial'] = target_mobile_serial
         else:
-          if len(obs['opened_corpse_data']) == 0:
-            ## Open the corpse container
-            corpse_serial_list = list(obs['corpse_data'].keys())
+          if len(corpse_item_dict) == 0:
+            corpse_serial_list = list(corpse_dict.keys())
             corpse_serial_data = random.choice(corpse_serial_list)
             if corpse_serial == None:
               corpse_serial = corpse_serial_data
@@ -337,22 +357,13 @@ for step in tqdm(range(100000)):
             action['item_serial'] = corpse_serial
           else:
             if hold_item_serial == 0:
-              print("action['action_type'] = 3")
-
-              opened_corpse_serial_list = list(obs['opened_corpse_data'].keys())
-              opened_corpse_serial = random.choice(opened_corpse_serial_list)
-              opened_corpse_item_list = obs['opened_corpse_data'][opened_corpse_serial]
               gold_item_serial, gold_item_max = \
-                utils.get_serial_amount_from_corpse_item_list(opened_corpse_item_list, 'Gold')
+                utils.get_serial_amount_from_corpse_item_list(corpse_item_dict, 'Gold')
 
               action['action_type'] = 3
               action['item_serial'] = gold_item_serial
               action['amount'] = gold_item_max
             else:
-              print("action['action_type'] = 4")
-              print("distance: ", distance)
-
-              ## Item loot action
               action['action_type'] = 4
 
         obs = uo_service.step(action)

@@ -50,11 +50,10 @@ def main():
   corpse_dict = {}
   corpse_serial = None
   hold_item_serial = 0
-
   corpse_item_dict = {}
 
   ## Event flags to test the scenario manually
-  for step in tqdm(range(100000)):
+  for step in range(100000):
     ## Parse the x and y position of player 
     player_game_x = uo_service.player_game_x
     player_game_y = uo_service.player_game_y
@@ -71,7 +70,6 @@ def main():
     for k, v in uo_service.world_item_dict.items():
       if v["isCorpse"] == True:
         corpse_dict[k] = v
-        #print("corpse item {0}: {1}".format(k, uo_service.world_item_dict[k]))
 
     ## Declare the empty action
     action = {}
@@ -85,7 +83,10 @@ def main():
 
     ## Declare the empty action
     if step % 150 == 0:
-      print("step: ", step)
+      #print("step: ", step)
+      if len(uo_service.player_status_dict) != 0:
+        player_gold = uo_service.player_status_dict['gold']
+        print("player_gold: ", player_gold)
 
       if len(corpse_dict) != 0:
         corpse_serial_list = list(corpse_dict.keys())
@@ -116,26 +117,15 @@ def main():
         war_mode = uo_service.war_mode
 
         ## Player holded item
-        hold_item_serial = uo_service.holdItemSerial
-
-        ## Format of player status
-        if 'player_status_data' in obs:
-          war_mode = obs['player_status_data']['warMode']
-          hold_item_serial = obs['player_status_data']['HoldItemSerial']
-
-        #print("obs['corpse_data']: ", obs['corpse_data'])
-        #print("opened_corpse_data: ", obs['opened_corpse_data'])
+        hold_item_serial = uo_service.hold_item_serial
 
         for k_corpse, v_corpse in corpse_dict.items():
           for k_world, v_world in uo_service.world_item_dict.items():
             if k_corpse == v_world["container"]:
-              print("corpse item {0}: {1}".format(k, uo_service.world_item_dict[k_world]))
-
-              if k_corpse not in corpse_item_dict:
-                corpse_item_dict[k_corpse] = {}
-                corpse_item_dict[k_corpse][k_world] = uo_service.world_item_dict[k_world]
+              if k_world not in corpse_item_dict:
+                corpse_item_dict[k_world] = uo_service.world_item_dict[k_world]
               else:
-                corpse_item_dict[k_corpse][k_world] = uo_service.world_item_dict[k_world]
+                corpse_item_dict[k_world] = uo_service.world_item_dict[k_world]
 
         if len(corpse_dict) == 0:
           if distance >= 2:
@@ -170,27 +160,18 @@ def main():
             action['item_serial'] = corpse_serial
           else:
             if hold_item_serial == 0:
-              print("action['action_type'] = 3")
+              gold_item_serial, gold_item_max = \
+                utils.get_serial_amount_from_corpse_item_list(corpse_item_dict, 'Gold')
 
-              #opened_corpse_serial_list = list(obs['opened_corpse_data'].keys())
-              #opened_corpse_serial = random.choice(opened_corpse_serial_list)
-              #opened_corpse_item_list = obs['opened_corpse_data'][opened_corpse_serial]
-              #gold_item_serial, gold_item_max = \
-              #  utils.get_serial_amount_from_corpse_item_list(opened_corpse_item_list, 'Gold')
-
-              #action['action_type'] = 3
-              #action['item_serial'] = gold_item_serial
-              #action['amount'] = gold_item_max
+              action['action_type'] = 3
+              action['item_serial'] = gold_item_serial
+              action['amount'] = gold_item_max
             else:
-              print("action['action_type'] = 4")
-              print("distance: ", distance)
-
-              ## Item loot action
+              ## Item looting action
               action['action_type'] = 4
 
-        print("action_type: ", action['action_type'])
+        #print("action_type: ", action['action_type'])
         obs = uo_service.step(action)
-        print("")
     else:
       obs = uo_service.step(action)
 
