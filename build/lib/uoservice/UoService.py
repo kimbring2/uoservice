@@ -55,6 +55,8 @@ class UoService:
 		self.static_object_game_x_data = None
 		self.static_object_game_y_data = None
 
+		self.static_object_list = []
+
 	def _open_grpc(self):
 		# Open the gRPC channel using the port that is same of game client 
 		channel = grpc.insecure_channel('localhost:' + str(self.grpc_port))
@@ -130,6 +132,13 @@ class UoService:
 		if len(static_object_game_x_data) != 0:
 			self.static_object_game_x_data = static_object_game_x_data
 			self.static_object_game_y_data = static_object_game_y_data
+
+		static_object_data = response.staticObjectList.staticObjects
+		#print("static_object_data: ", static_object_data)
+		if len(static_object_data) != 0:
+			self.static_object_list = []
+			for obj in static_object_data:
+				self.static_object_list.append({"name": obj.name, "gameX": obj.gameX, "gameY":obj.gameY})
 
 		if len(self.world_item_dict) != 0 and self.backpack_serial != None:
 			self.backpack_item_dict = {}
@@ -263,24 +272,57 @@ class UoService:
 					#print("self.static_object_game_x_data[{0}]: {1}".format(i, self.static_object_game_x_data[i]))
 					#print("self.static_object_game_y_data[{0}]: {1}".format(i, self.static_object_game_y_data[i]))
 
-					screen_image = cv2.circle(screen_image, (self.static_object_game_x_data[i], self.static_object_game_y_data[i]), 
-									   				 		    radius, color, thickness)
-
+					#screen_image = cv2.circle(screen_image, (self.static_object_game_x_data[i], self.static_object_game_y_data[i]), 
+					#				   				 		    radius, color, thickness)
+					pass
 			#print("")
 
-		if self.player_game_x != None:
-			screen_image = cv2.circle(screen_image, (self.player_game_x, self.player_game_y), radius, (0, 255, 0), thickness)
-			screen_image = screen_image[self.player_game_y - 600:self.player_game_y + 600, self.player_game_x - 600:self.player_game_x + 600, :]
+		if len(self.static_object_list) != 0:
+			#print("len(self.static_object_game_x_data): ", len(self.static_object_game_x_data))
+			for static_object in self.static_object_list:
+				#print("static_object[\"name\"]: ", static_object["name"])
 
-		vis = False
+				if static_object["name"] == "water":
+					color = (0, 0, 255)
+					#screen_image = cv2.circle(screen_image, (static_object["gameX"], static_object["gameY"]), 
+					#				   				 		  	radius, color, thickness)
+		#print("")
+
+		if self.player_game_x != None:
+			#print("player_game_x: {0}, player_game_y: {1}".format(self.player_game_x, self.player_game_y))
+
+			radius = 5
+			screen_image = cv2.circle(screen_image, (self.player_game_x, self.player_game_y), radius, (0, 255, 0), thickness)
+			if self.player_game_y > 600 and self.player_game_x > 600:
+				screen_image = screen_image[self.player_game_y - 600:self.player_game_y + 600, 
+																	  self.player_game_x - 600:self.player_game_x + 600, :]
+			elif self.player_game_y < 600 and self.player_game_x > 600:
+				#print("self.player_game_y < 600 and self.player_game_x > 600")
+				screen_image = screen_image[0:self.player_game_y + 600, 
+																		self.player_game_x - 600:self.player_game_x + 600, :]
+			elif self.player_game_y > 600 and self.player_game_x < 600:
+				#print("self.player_game_y > 600 and self.player_game_x < 600")
+				screen_image = screen_image[self.player_game_y - 600:self.player_game_y + 600, 
+																		0:self.player_game_x + 600, :]
+			else:
+				#print("else")
+				screen_image = screen_image[0:self.player_game_y + 600, 
+																		0:self.player_game_x + 600, :]
+
+		vis = True
 		if vis:
 			#dim = (1720, 1370)
-			screen_image = cv2.resize(screen_image, (1200, 1200), interpolation=cv2.INTER_AREA)
-			screen_image = cv2.rotate(screen_image, cv2.ROTATE_90_CLOCKWISE)
-			screen_image = cv2.flip(screen_image, 1)
-			cv2.imshow('screen_image_' + str(self.grpc_port), screen_image)
-			cv2.waitKey(1)
-		
+
+			try:
+				screen_image = cv2.resize(screen_image, (1200, 1200), interpolation=cv2.INTER_AREA)
+				screen_image = cv2.rotate(screen_image, cv2.ROTATE_90_CLOCKWISE)
+				screen_image = cv2.flip(screen_image, 1)
+				cv2.imshow('screen_image_' + str(self.grpc_port), screen_image)
+				cv2.waitKey(1)
+			except Exception as e:
+				print("e: ", e)
+				print("screen_image.shape: \n", screen_image.shape)
+
 		self.static_object_game_x_list = []
 		self.static_object_game_y_list = []
 		for i in range(0, len(static_object_game_x_data)):

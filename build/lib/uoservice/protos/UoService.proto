@@ -40,6 +40,12 @@ message GrpcItemObjectData {
   uint32 container = 10;
 }
 
+message GrpcStaticObjectData {
+  uint32 gameX = 1;
+  uint32 gameY = 2;
+  string name = 3;
+}
+
 message GrpcPlayerStatus {
   uint32 str = 1;
   uint32 dex = 2;
@@ -68,7 +74,7 @@ message GrpcSkill {
   uint32 lock = 7;
 }
 
-message GrpcGameObjectInfoList {
+message GrpcStaticObjectInfoList {
   repeated uint32 gameXs = 1;
   repeated uint32 gameYs = 2;
 }
@@ -101,6 +107,10 @@ message GrpcItemObjectList {
   repeated GrpcItemObjectData itemObjects = 1;
 }
 
+message GrpcStaticObjectList {
+  repeated GrpcStaticObjectData staticObjects = 1;
+}
+
 message SemaphoreAction {
   string mode = 1;
 }
@@ -124,7 +134,9 @@ message GrpcStates {
 
   GrpcPlayerStatus playerStatus = 6;
   GrpcSkillList playerSkillList = 7;
-  GrpcGameObjectInfoList staticObjectInfoList = 8;
+  GrpcStaticObjectInfoList staticObjectInfoList = 8;
+
+  GrpcStaticObjectList staticObjectList = 9;
 }
 
 message GrpcAction {

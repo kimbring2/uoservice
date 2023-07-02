@@ -85,7 +85,7 @@ def main():
     #print("corpse_item_dict: ", corpse_item_dict)
 
     player_status_dict = uo_service.player_status_dict
-    print("player_status_dict: ", player_status_dict)
+    #print("player_status_dict: ", player_status_dict)
 
     for k_corpse, v_corpse in corpse_item_dict.items():
       #print("corpse {0}: {1}".format(k_corpse, v_corpse))
