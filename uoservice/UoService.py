@@ -280,12 +280,22 @@ class UoService:
 		if len(self.static_object_list) != 0:
 			#print("len(self.static_object_game_x_data): ", len(self.static_object_game_x_data))
 			for static_object in self.static_object_list:
-				#print("static_object[\"name\"]: ", static_object["name"])
+				print("static_object[\"name\"]: ", static_object["name"])
 
 				if static_object["name"] == "water":
-					color = (0, 0, 255)
-					#screen_image = cv2.circle(screen_image, (static_object["gameX"], static_object["gameY"]), 
-					#				   				 		  	radius, color, thickness)
+					color = (255, 0, 0)
+					screen_image = cv2.circle(screen_image, (static_object["gameX"], static_object["gameY"]), 
+									   				 		  	radius, color, thickness)
+					pass
+				elif static_object["name"] == "cave floor":
+					color = (128, 128, 128)
+					screen_image = cv2.circle(screen_image, (static_object["gameX"], static_object["gameY"]), 
+									   				 		  	radius, color, thickness)
+				elif static_object["name"] == "wooden plank":
+					color = (150, 75, 0)
+					screen_image = cv2.circle(screen_image, (static_object["gameX"], static_object["gameY"]), 
+									   				 		  	radius, color, thickness)
+
 		#print("")
 
 		if self.player_game_x != None:
@@ -315,8 +325,9 @@ class UoService:
 
 			try:
 				screen_image = cv2.resize(screen_image, (1200, 1200), interpolation=cv2.INTER_AREA)
-				screen_image = cv2.rotate(screen_image, cv2.ROTATE_90_CLOCKWISE)
-				screen_image = cv2.flip(screen_image, 1)
+				screen_image = utils.rotate_image(screen_image, -45)
+				#screen_image = cv2.rotate(screen_image, cv2.ROTATE_90_CLOCKWISE)
+				#screen_image = cv2.flip(screen_image, 1)
 				cv2.imshow('screen_image_' + str(self.grpc_port), screen_image)
 				cv2.waitKey(1)
 			except Exception as e:

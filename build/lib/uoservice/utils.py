@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 
 noop_action = {}
 noop_action['action_type'] = 0
@@ -140,3 +141,11 @@ def visObject(screenImage, ObjectData, color):
       print("screenX: {0}, screenY: {1}", obj.screenX, obj.screenY)
 
   return screenImage
+
+
+def rotate_image(image, angle):
+  image_center = tuple(np.array(image.shape[1::-1]) / 2)
+  rot_mat = cv2.getRotationMatrix2D(image_center, angle, 1.0)
+  result = cv2.warpAffine(image, rot_mat, image.shape[1::-1], flags=cv2.INTER_LINEAR)
+
+  return result
