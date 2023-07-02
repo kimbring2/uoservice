@@ -55,6 +55,9 @@ class UoService:
 		self.static_object_game_x_data = None
 		self.static_object_game_y_data = None
 
+		self.rock_object_game_x_data = None
+		self.rock_object_game_y_data = None
+
 		self.static_object_list = []
 
 	def _open_grpc(self):
@@ -91,6 +94,9 @@ class UoService:
 
 		static_object_game_x_data = response.staticObjectInfoList.gameXs
 		static_object_game_y_data = response.staticObjectInfoList.gameYs
+
+		rock_object_game_x_data = response.landRockObjectInfoList.gameXs
+		rock_object_game_y_data = response.landRockObjectInfoList.gameYs
 
 		if len(popup_menu_data):
 			for popup_menu in popup_menu_data:
@@ -133,12 +139,9 @@ class UoService:
 			self.static_object_game_x_data = static_object_game_x_data
 			self.static_object_game_y_data = static_object_game_y_data
 
-		static_object_data = response.staticObjectList.staticObjects
-		#print("static_object_data: ", static_object_data)
-		if len(static_object_data) != 0:
-			self.static_object_list = []
-			for obj in static_object_data:
-				self.static_object_list.append({"name": obj.name, "gameX": obj.gameX, "gameY":obj.gameY})
+		if len(rock_object_game_x_data) != 0:
+			self.rock_object_game_x_data = rock_object_game_x_data
+			self.rock_object_game_y_data = rock_object_game_y_data
 
 		if len(self.world_item_dict) != 0 and self.backpack_serial != None:
 			self.backpack_item_dict = {}
@@ -260,23 +263,26 @@ class UoService:
 				if v["gameX"] < screen_width and v["gameY"] < screen_height:
 						screen_image = cv2.circle(screen_image, (v["gameX"], v["gameY"]), radius, (0, 0, 255), thickness)
 
-		radius = 1
-		color = (120, 120, 120)
-		thickness = 2
 		if self.static_object_game_x_data != None:
 			#print("len(self.static_object_game_x_data): ", len(self.static_object_game_x_data))
-
 			for i in range(0, len(self.static_object_game_x_data)):
 					#if self.static_object_game_x_data[i] >= 1400 or self.static_object_game_y_data[i] >= 1280:
 					#	continue
 					#print("self.static_object_game_x_data[{0}]: {1}".format(i, self.static_object_game_x_data[i]))
 					#print("self.static_object_game_y_data[{0}]: {1}".format(i, self.static_object_game_y_data[i]))
+					screen_image = cv2.circle(screen_image, (self.static_object_game_x_data[i], self.static_object_game_y_data[i]), 
+									   				 		    1, (120, 120, 120), 1)
 
-					#screen_image = cv2.circle(screen_image, (self.static_object_game_x_data[i], self.static_object_game_y_data[i]), 
-					#				   				 		    radius, color, thickness)
-					pass
-			#print("")
-
+		if self.rock_object_game_x_data != None:
+			#print("len(self.rock_object_game_x_data): ", len(self.rock_object_game_x_data))
+			for i in range(0, len(self.rock_object_game_x_data)):
+					#if self.static_object_game_x_data[i] >= 1400 or self.static_object_game_y_data[i] >= 1280:
+					#	continue
+					#print("self.static_object_game_x_data[{0}]: {1}".format(i, self.static_object_game_x_data[i]))
+					#print("self.static_object_game_y_data[{0}]: {1}".format(i, self.static_object_game_y_data[i]))
+					screen_image = cv2.circle(screen_image, (self.rock_object_game_x_data[i], self.rock_object_game_y_data[i]), 
+									   				 		    1, (0, 0, 255), 1)
+		'''
 		if len(self.static_object_list) != 0:
 			#print("len(self.static_object_game_x_data): ", len(self.static_object_game_x_data))
 			for static_object in self.static_object_list:
@@ -295,7 +301,16 @@ class UoService:
 					color = (150, 75, 0)
 					screen_image = cv2.circle(screen_image, (static_object["gameX"], static_object["gameY"]), 
 									   				 		  	radius, color, thickness)
-
+				elif static_object["name"] == "Rock":
+					color = (0, 0, 255)
+					screen_image = cv2.circle(screen_image, (static_object["gameX"], static_object["gameY"]), 
+									   				 		  	radius, color, thickness)
+				else:
+					color = (255, 255, 0)
+					thickness = 1
+					screen_image = cv2.circle(screen_image, (static_object["gameX"], static_object["gameY"]), 
+									   				 		  	radius, color, thickness)
+		'''
 		#print("")
 
 		if self.player_game_x != None:
