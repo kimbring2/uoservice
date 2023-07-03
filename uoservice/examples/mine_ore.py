@@ -45,10 +45,8 @@ def main():
   ## Send the reset signal to gRPC server
   obs = uo_service.reset()
 
-  ## Event flags to test the scenario manually
-  #for step in tqdm(range(100000)):
-
-  corpse_gold_serial = None
+  pickaxe_serial = None
+  unequip_item_serial = None
 
   step = 0
   while True:
@@ -65,42 +63,54 @@ def main():
     backpack_item_data = uo_service.backpack_item_dict
     #print("backpack_item_data: ", backpack_item_data)
     for k_backpack, v_backpack in backpack_item_data.items():
-      #print("backpack {0}: {1}".format(k_backpack, v_backpack))
+      #print("{0}: {1}".format(k_backpack, v_backpack["name"]))
       pass
 
     #for k_mobile, v_mobile in uo_service.world_mobile_dict.items():
     #  print("world_mobile {0}: {1}".format(k_mobile, v_mobile))
 
-    equipped_item_data = uo_service.equipped_item_dict
-    #print("equipped_item_data: ", equipped_item_data)
+    equipped_item_dict = uo_service.equipped_item_dict
+    #print("equipped_item_dict: ", equipped_item_dict)
+
+    #for k_equip, v_equip in equipped_item_dict.items():
+    #  print("equipped item {0}: {1}".format(k_equip, v_equip))
+
+    #print("")
+
+    unequip_item_serial = None
+    if "OneHanded" in equipped_item_dict:
+      #print("OneHanded equip item {0}", equipped_item_dict["OneHanded"])
+      unequip_item_serial = equipped_item_dict["OneHanded"]["serial"]
 
     player_status_dict = uo_service.player_status_dict
     #print("player_status_dict: ", player_status_dict)
 
     cliloc_dict = uo_service.cliloc_dict
-    print("cliloc_dict: ", cliloc_dict)
+    #print("cliloc_dict: ", cliloc_dict)
 
-    #print("player_skills_dict: ", uo_service.player_skills_dict)
-    if 'Swordsmanship' in uo_service.player_skills_dict:
-      swordsmanship_skill = uo_service.player_skills_dict['Swordsmanship']
-      #print("swordsmanship_skill: ", swordsmanship_skill)
-
-    gold_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
+    pickaxe_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
     #print("gold_serial: ", gold_serial)
 
-    if gold_serial in backpack_item_data:
-      gold_info = backpack_item_data[gold_serial]
+    if pickaxe_serial in backpack_item_data:
+      pickaxe_serial = backpack_item_data[pickaxe_serial]
       #print("gold_info: ", gold_info)
     else:
       #print("gold_serial is not in backpack_item_data")
       pass
 
     ## Declare the empty action
-    if step % 500 == 0:
+    if step % 100 == 0:
       print("step: ", step)
-      print("action: ", action)
+      if unequip_item_serial != None:
+        print("unequip_item_serial: ", unequip_item_serial)
+        unequip_item = uo_service.world_item_dict[unequip_item_serial]
+        print("unequip_item: ", unequip_item)
 
-      obs = uo_service.step(action)
+        action['action_type'] = 3
+        action['item_serial'] = unequip_item_serial
+        obs = uo_service.step(action)
+      else:
+        obs = uo_service.step(utils.noop_action)
     else:
       obs = uo_service.step(utils.noop_action)
 

@@ -117,7 +117,7 @@ class UoService:
 			self.world_item_dict = {}
 			for obj in world_item_data:
 				#print("obj.name: ", obj.name)
-				self.world_item_dict[obj.serial] = { "name": obj.name, "gameX": obj.gameX, "gameY":obj.gameY, 
+				self.world_item_dict[obj.serial] = { "name": obj.name, "gameX": obj.gameX, "gameY":obj.gameY, "serial": obj.serial,
 																						 "distance": obj.distance, "layer":obj.layer, "container": obj.container, 
 																						 "isCorpse": obj.isCorpse, "amount": obj.amount }
 				if obj.layer == 21:
@@ -132,7 +132,7 @@ class UoService:
 				self.world_mobile_dict[obj.serial] = { "name": obj.name, "gameX": obj.gameX, "gameY":obj.gameY, 
 																							 "distance": obj.distance, "title": obj.title, "hits": obj.hits,
 																							 "notorietyFlag": obj.notorietyFlag, "hitsMax": obj.hitsMax,
-																							 "race": obj.race }
+																							 "race": obj.race}
 
 
 		if len(static_object_game_x_data) != 0:
@@ -282,35 +282,6 @@ class UoService:
 					#print("self.static_object_game_y_data[{0}]: {1}".format(i, self.static_object_game_y_data[i]))
 					screen_image = cv2.circle(screen_image, (self.rock_object_game_x_data[i], self.rock_object_game_y_data[i]), 
 									   				 		    1, (0, 0, 255), 1)
-		'''
-		if len(self.static_object_list) != 0:
-			#print("len(self.static_object_game_x_data): ", len(self.static_object_game_x_data))
-			for static_object in self.static_object_list:
-				print("static_object[\"name\"]: ", static_object["name"])
-
-				if static_object["name"] == "water":
-					color = (255, 0, 0)
-					screen_image = cv2.circle(screen_image, (static_object["gameX"], static_object["gameY"]), 
-									   				 		  	radius, color, thickness)
-					pass
-				elif static_object["name"] == "cave floor":
-					color = (128, 128, 128)
-					screen_image = cv2.circle(screen_image, (static_object["gameX"], static_object["gameY"]), 
-									   				 		  	radius, color, thickness)
-				elif static_object["name"] == "wooden plank":
-					color = (150, 75, 0)
-					screen_image = cv2.circle(screen_image, (static_object["gameX"], static_object["gameY"]), 
-									   				 		  	radius, color, thickness)
-				elif static_object["name"] == "Rock":
-					color = (0, 0, 255)
-					screen_image = cv2.circle(screen_image, (static_object["gameX"], static_object["gameY"]), 
-									   				 		  	radius, color, thickness)
-				else:
-					color = (255, 255, 0)
-					thickness = 1
-					screen_image = cv2.circle(screen_image, (static_object["gameX"], static_object["gameY"]), 
-									   				 		  	radius, color, thickness)
-		'''
 		#print("")
 
 		if self.player_game_x != None:

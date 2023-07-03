@@ -154,6 +154,7 @@ def main():
             action['item_serial'] = corpse_serial
           else:
             if hold_item_serial == 0:
+              ## Pick up the gold from corpse
               gold_item_serial, gold_item_max = \
                 utils.get_serial_amount_from_corpse_item_list(corpse_item_dict, 'Gold')
 
