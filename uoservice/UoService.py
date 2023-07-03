@@ -38,6 +38,7 @@ class UoService:
 		self.player_status_dict = {}
 
 		self.backpack_item_dict = {}
+		self.bank_item_dict = {}
 		self.equipped_item_dict = {}
 		self.corpse_dict = {}
 		self.corpse_item_dict = {}
@@ -47,10 +48,11 @@ class UoService:
 		self.player_game_x = None
 		self.player_game_y = None
 		self.war_mode = False
-		self.hold_item_serial = None
+		self.hold_item_serial = 0
 		self.player_gold = None
 
 		self.backpack_serial = None
+		self.bank_serial = None
 
 		self.static_object_game_x_data = None
 		self.static_object_game_y_data = None
@@ -59,6 +61,8 @@ class UoService:
 		self.rock_object_game_y_data = None
 
 		self.static_object_list = []
+
+		self.picked_up_item = {}
 
 	def _open_grpc(self):
 		# Open the gRPC channel using the port that is same of game client 
@@ -106,7 +110,7 @@ class UoService:
 
 		if player_object.gameX != 0:
 			#print("player_object.gameX != 0")
-			print("player_object.holdItemSerial: ", player_object.holdItemSerial)
+			#print("player_object.holdItemSerial: ", player_object.holdItemSerial)
 			self.player_game_x = player_object.gameX
 			self.player_game_y = player_object.gameY
 			self.war_mode = player_object.warMode
@@ -116,18 +120,19 @@ class UoService:
 		#if player_object.holdItemSerial != 0:
 		#	self.hold_item_serial = player_object.holdItemSerial
 
-		#print("len(world_item_data): ", len(world_item_data))
+		print("len(world_item_data): ", len(world_item_data))
 		if len(world_item_data) != 0:
 			self.world_item_dict = {}
 			for obj in world_item_data:
-				#print("obj.name: ", obj.name)
+				print("name: {0}, layer: {1}", obj.name, obj.layer)
 				self.world_item_dict[obj.serial] = { "name": obj.name, "gameX": obj.gameX, "gameY":obj.gameY, "serial": obj.serial,
 																						 "distance": obj.distance, "layer":obj.layer, "container": obj.container, 
 																						 "isCorpse": obj.isCorpse, "amount": obj.amount }
 				if obj.layer == 21:
 					self.backpack_serial = obj.serial
 
-				#print("")
+				if obj.layer == 29:
+					self.bank_serial = obj.serial
 
 		#print("len(world_mobile_data): ", len(world_mobile_data))
 		if len(world_mobile_data) != 0:
@@ -138,6 +143,7 @@ class UoService:
 																							 "notorietyFlag": obj.notorietyFlag, "hitsMax": obj.hitsMax,
 																							 "race": obj.race}
 
+		#print("self.bank_serial: ", self.bank_serial)
 
 		if len(static_object_game_x_data) != 0:
 			self.static_object_game_x_data = static_object_game_x_data
@@ -151,18 +157,19 @@ class UoService:
 			self.backpack_item_dict = {}
 			self.equipped_item_dict = {}
 			self.corpse_dict = {}
+
+			#print("")
 			for k, v in self.world_item_dict.items():
-				#print("world item {0}: {1}".format(k, self.world_item_dict[k]))
+				#print("{0}".format(self.world_item_dict[k]['name']))
 
 				if v["isCorpse"] == True:
 					self.corpse_dict[k] = v
 
 				if v["container"] == self.backpack_serial:
-					if 'Gold' in v["name"]:
-						#print("world item {0}: {1}".format(k, self.world_item_dict[k]))
-						pass
-
 					self.backpack_item_dict[k] = v
+
+				if v["container"] == self.bank_serial:
+					self.bank_item_dict[k] = v
 
 				if v["layer"] == 1:
 					self.equipped_item_dict['OneHanded'] = v
@@ -213,7 +220,6 @@ class UoService:
 
 		#print("self.corpse_dict: ", self.corpse_dict)
 		#print("self.equipped_item_dict: ", self.equipped_item_dict)
-		#print("")
 
 		self.corpse_item_dict = {}
 		for k_corpse, v_corpse in self.corpse_dict.items():
@@ -234,6 +240,13 @@ class UoService:
 			for k, v in self.backpack_item_dict.items():
 				#print("backpack item {0}: {1}".format(k, self.backpack_item_dict[k]))
 				pass
+
+		if len(self.bank_item_dict) != 0:
+			#print("self.backpack_item_dict: ", self.backpack_item_dict)
+			for k, v in self.bank_item_dict.items():
+				print("bank_item_dict item {0}: {1}".format(k, self.bank_item_dict[k]))
+				pass
+
 			#print("")
 
 		if player_status_data.str != 0:
@@ -309,10 +322,9 @@ class UoService:
 				screen_image = screen_image[0:self.player_game_y + 600, 
 																		0:self.player_game_x + 600, :]
 
-		vis = True
+		vis = False
 		if vis:
 			#dim = (1720, 1370)
-
 			try:
 				screen_image = cv2.resize(screen_image, (1200, 1200), interpolation=cv2.INTER_AREA)
 				screen_image = utils.rotate_image(screen_image, -45)

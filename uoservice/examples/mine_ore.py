@@ -47,19 +47,10 @@ def main():
 
   pickaxe_serial = None
   unequip_item_serial = None
+  drop_item_serial = None
 
   step = 0
   while True:
-    ## Declare the empty action
-    action = {}
-    action['action_type'] = 0
-    action['item_serial'] = 0
-    action['mobile_serial'] = 0
-    action['walk_direction'] = 0
-    action['index'] = 0
-    action['amount'] = 0
-    action['run'] = False
-
     backpack_item_data = uo_service.backpack_item_dict
     #print("backpack_item_data: ", backpack_item_data)
     for k_backpack, v_backpack in backpack_item_data.items():
@@ -69,13 +60,20 @@ def main():
     #for k_mobile, v_mobile in uo_service.world_mobile_dict.items():
     #  print("world_mobile {0}: {1}".format(k_mobile, v_mobile))
 
+    #for k_item, v_item in uo_service.world_item_dict.items():
+    #  print("world_item {0}: {1}".format(k_item, v_item))
+
     equipped_item_dict = uo_service.equipped_item_dict
     #print("equipped_item_dict: ", equipped_item_dict)
 
     #for k_equip, v_equip in equipped_item_dict.items():
     #  print("equipped item {0}: {1}".format(k_equip, v_equip))
 
-    #print("")
+    ## Player holded item
+    hold_item_serial = uo_service.hold_item_serial
+    #print("hold_item_serial: ", hold_item_serial)
+
+    #print("uo_service.picked_up_item: ", uo_service.picked_up_item)
 
     unequip_item_serial = None
     if "OneHanded" in equipped_item_dict:
@@ -91,10 +89,6 @@ def main():
     pickaxe_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
     #print("gold_serial: ", gold_serial)
 
-    ## Player holded item
-    hold_item_serial = uo_service.hold_item_serial
-    #print("hold_item_serial: ", hold_item_serial)
-
     if pickaxe_serial in backpack_item_data:
       pickaxe_serial = backpack_item_data[pickaxe_serial]
       #print("gold_info: ", gold_info)
@@ -103,23 +97,35 @@ def main():
       pass
 
     ## Declare the empty action
+    action = {}
+    action['action_type'] = 0
+    action['item_serial'] = 0
+    action['mobile_serial'] = 0
+    action['walk_direction'] = 0
+    action['index'] = 0
+    action['amount'] = 0
+    action['run'] = False
+
     if step % 100 == 0:
       print("step: ", step)
       if unequip_item_serial != None:
         #print("unequip_item_serial: ", unequip_item_serial)
-        unequip_item = uo_service.world_item_dict[unequip_item_serial]
         #print("unequip_item: ", unequip_item)
 
-        #action['action_type'] = 3
-        #action['item_serial'] = unequip_item_serial
-        action['action_type'] = 0
-        #action['item_serial'] = unequip_item_serial
+        action['action_type'] = 3
+        action['item_serial'] = unequip_item_serial
 
-        obs = uo_service.step(action)
-      else:
-        obs = uo_service.step(utils.noop_action)
-    else:
-      obs = uo_service.step(utils.noop_action)
+        unequip_item = uo_service.world_item_dict[unequip_item_serial]
+        uo_service.picked_up_item = unequip_item
+
+        drop_item_serial = unequip_item_serial
+        unequip_item_serial = None
+      elif drop_item_serial != None:
+        action['action_type'] = 3
+        action['item_serial'] = unequip_item_serial
+
+    #obs = uo_service.step(action)
+    obs = uo_service.step(utils.noop_action)
 
     step += 1
     #print("")
