@@ -105,12 +105,16 @@ class UoService:
 			#print("")
 
 		if player_object.gameX != 0:
-			#print("player_object: ", player_object)
+			#print("player_object.gameX != 0")
+			print("player_object.holdItemSerial: ", player_object.holdItemSerial)
 			self.player_game_x = player_object.gameX
 			self.player_game_y = player_object.gameY
+			self.war_mode = player_object.warMode
+			self.hold_item_serial = player_object.holdItemSerial
 
-		self.war_mode = player_object.warMode
-		self.hold_item_serial = player_object.holdItemSerial
+		#print("self.hold_item_serial: ", self.hold_item_serial)
+		#if player_object.holdItemSerial != 0:
+		#	self.hold_item_serial = player_object.holdItemSerial
 
 		#print("len(world_item_data): ", len(world_item_data))
 		if len(world_item_data) != 0:

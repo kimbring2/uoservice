@@ -91,6 +91,10 @@ def main():
     pickaxe_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
     #print("gold_serial: ", gold_serial)
 
+    ## Player holded item
+    hold_item_serial = uo_service.hold_item_serial
+    #print("hold_item_serial: ", hold_item_serial)
+
     if pickaxe_serial in backpack_item_data:
       pickaxe_serial = backpack_item_data[pickaxe_serial]
       #print("gold_info: ", gold_info)
@@ -102,12 +106,15 @@ def main():
     if step % 100 == 0:
       print("step: ", step)
       if unequip_item_serial != None:
-        print("unequip_item_serial: ", unequip_item_serial)
+        #print("unequip_item_serial: ", unequip_item_serial)
         unequip_item = uo_service.world_item_dict[unequip_item_serial]
-        print("unequip_item: ", unequip_item)
+        #print("unequip_item: ", unequip_item)
 
-        action['action_type'] = 3
-        action['item_serial'] = unequip_item_serial
+        #action['action_type'] = 3
+        #action['item_serial'] = unequip_item_serial
+        action['action_type'] = 0
+        #action['item_serial'] = unequip_item_serial
+
         obs = uo_service.step(action)
       else:
         obs = uo_service.step(utils.noop_action)
