@@ -81,7 +81,7 @@ def main():
     unequip_item_serial = None
     if "OneHanded" in equipped_item_dict:
       #print("OneHanded equip item {0}", equipped_item_dict["OneHanded"])
-      #unequip_item_serial = equipped_item_dict["OneHanded"]["serial"]
+      unequip_item_serial = equipped_item_dict["OneHanded"]["serial"]
       pass
 
     player_status_dict = uo_service.player_status_dict
@@ -103,8 +103,8 @@ def main():
     ## Declare the empty action
     action = {}
     action['action_type'] = 0
-    action['item_serial'] = 0
-    action['mobile_serial'] = 0
+    action['source_serial'] = 0
+    action['target_serial'] = 0
     action['walk_direction'] = 0
     action['index'] = 0
     action['amount'] = 0
@@ -131,8 +131,8 @@ def main():
         drop_item_serial = None
       elif uo_service.bank_serial != 0:
         #print("Drop item into backpack")
-        action['action_type'] = 2
-        action['item_serial'] = uo_service.bank_serial
+        action['action_type'] = 4
+        #action['item_serial'] = uo_service.bank_serial
 
       obs = uo_service.step(action)
 

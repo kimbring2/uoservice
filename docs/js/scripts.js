@@ -186,7 +186,7 @@ function createHeaderAction(container, type, description) {
     var module_text = document.createTextNode(description + '');
     module_obj.style.color = 'black';
     module_obj.style.backgroundColor = 'None';
-    module_obj.style.fontSize = '18px';
+    module_obj.style.fontSize = '20px';
     module_obj.appendChild(module_text);
 
     header_obj.appendChild(type_obj);
