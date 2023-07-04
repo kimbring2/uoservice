@@ -47,6 +47,7 @@ class UoService:
 
 		self.player_game_x = None
 		self.player_game_y = None
+		self.player_serial = None
 		self.war_mode = False
 		self.hold_item_serial = 0
 		self.player_gold = None
@@ -75,7 +76,8 @@ class UoService:
 		self.stub.Reset(UoService_pb2.Config(init=False))
 
 		# Reset the gRPC server before communcation with it.
-		self.stub.WriteAct(UoService_pb2.GrpcAction(actionType=0, mobileSerial=0, walkDirection=0, index=0, amount=0))
+		self.stub.WriteAct(UoService_pb2.GrpcAction(actionType=0, sourceSerial=0, targetSerial=0, 
+																								walkDirection=0, index=0, amount=0, run=False))
 		self.stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
 
 		self.stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
@@ -108,6 +110,8 @@ class UoService:
 				pass
 			#print("")
 
+		#print("player_object: ", player_object)
+
 		if player_object.gameX != 0:
 			#print("player_object.gameX != 0")
 			#print("player_object.holdItemSerial: ", player_object.holdItemSerial)
@@ -137,6 +141,7 @@ class UoService:
 					self.backpack_serial = obj.serial
 
 				if obj.layer == 29:
+					#print("bank item distance: ", obj.distance)
 					self.bank_serial = obj.serial
 
 			#print("")
@@ -151,6 +156,8 @@ class UoService:
 																							 "race": obj.race}
 
 		#print("self.bank_serial: ", self.bank_serial)
+		if self.bank_serial != None:
+			bank_box = self.world_item_dict[self.bank_serial]
 
 		if len(static_object_game_x_data) != 0:
 			self.static_object_game_x_data = static_object_game_x_data
@@ -350,18 +357,20 @@ class UoService:
 			self.static_object_game_y_list.append(static_object_game_y_data[i])
 
 	def step(self, action):
+		#print("action: ", action)
+
 		# Send the action data to game client and receive the state of that action
 		action_type = action['action_type']
-		item_serial = action['item_serial']
-		mobile_serial = action['mobile_serial']
+		source_serial = action['source_serial']
+		target_serial = action['target_serial']
 		walk_direction = action['walk_direction']
 		index = action['index']
 		amount = action['amount']
 		run = action['run']
 
 		self.stub.WriteAct(UoService_pb2.GrpcAction(actionType=action_type, 
-																						    itemSerial=item_serial,
-																						    mobileSerial=mobile_serial,
+																						    sourceSerial=source_serial,
+																						    targetSerial=target_serial,
 																						    walkDirection=walk_direction,
 																						    index=index, 
 																						    amount=amount,

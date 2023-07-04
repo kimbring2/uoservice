@@ -82,6 +82,7 @@ def main():
     if "OneHanded" in equipped_item_dict:
       #print("OneHanded equip item {0}", equipped_item_dict["OneHanded"])
       #unequip_item_serial = equipped_item_dict["OneHanded"]["serial"]
+      pass
 
     player_status_dict = uo_service.player_status_dict
     #print("player_status_dict: ", player_status_dict)
@@ -129,7 +130,7 @@ def main():
         action['item_serial'] = unequip_item_serial
         drop_item_serial = None
       elif uo_service.bank_serial != 0:
-        print("Drop item into backpack")
+        #print("Drop item into backpack")
         action['action_type'] = 2
         action['item_serial'] = uo_service.bank_serial
 

@@ -57,24 +57,29 @@ def main():
     if len(uo_service.world_mobile_dict) != 0 and target_skeleton_serial == None:
       ## Obtain the serial number list of skeleton around the player
       skeleton_serial_list = [k for k, v in uo_service.world_mobile_dict.items() \
-                        if v['name'] == ' A Skeleton ' and v['distance'] <= 15 and v['distance'] > 5]
+                        if v['name'] == ' A Skeleton ' and v['distance'] <= 10 and v['distance'] > 1]
 
       ## Select of skeleton
-      target_skeleton_serial = random.choice(skeleton_serial_list)
+      if len(skeleton_serial_list) != 0:
+        target_skeleton_serial = random.choice(skeleton_serial_list)
 
     ## Declare the empty action
     action = {}
     action['action_type'] = 0
-    action['item_serial'] = 0
-    action['mobile_serial'] = 0
+    action['source_serial'] = 0
+    action['target_serial'] = 0
     action['walk_direction'] = 0
     action['index'] = 0
     action['amount'] = 0
     action['run'] = False
 
+    #print("player_game_x: {0}, player_game_y: {1}".format(player_game_x, player_game_x))
+
     ## Declare the empty action
     if step % 50 == 0:
       print("step: ", step)
+
+      print("player_game_x: {0}, player_game_y: {1}".format(player_game_x, player_game_x))
 
       if target_skeleton_serial != None and player_game_x != None:
         ## finally, we can acquire the target mobile data
@@ -82,7 +87,12 @@ def main():
           target_skeleton = uo_service.world_mobile_dict[target_skeleton_serial]
         else:
           target_skeleton_serial = None
-          continue
+          #continue
+
+        print("player_game_x: {0}, player_game_y: {1}".format(player_game_x, player_game_x))
+        print("target_skeleton: ", target_skeleton)
+        print("target_skeleton_serial: ", target_skeleton_serial)
+        print("")
 
         ## Parse x and y position of target mobile
         target_skeleton_game_x = target_skeleton["gameX"]
@@ -117,8 +127,14 @@ def main():
             else:
               ## Attack the target mobile
               action['action_type'] = 2
-              action['mobile_serial'] = target_skeleton_serial
+              action['target_serial'] = target_skeleton_serial
         
+        obs = uo_service.step(action)
+      else:
+        action['action_type'] = 1
+        action['walk_direction'] = 2
+        action['run'] = True
+
         obs = uo_service.step(action)
     else:
       obs = uo_service.step(action)
