@@ -49,14 +49,15 @@ def main():
   #for step in tqdm(range(100000)):
 
   corpse_gold_serial = None
+  player_gold = None
 
   step = 0
   while True:
     ## Declare the empty action
     action = {}
     action['action_type'] = 0
-    action['item_serial'] = 0
-    action['mobile_serial'] = 0
+    action['source_serial'] = 0
+    action['target_serial'] = 0
     action['walk_direction'] = 0
     action['index'] = 0
     action['amount'] = 0
@@ -68,12 +69,8 @@ def main():
       #print("backpack {0}: {1}".format(k_backpack, v_backpack))
       pass
 
-    #print("")
-
     #for k_mobile, v_mobile in uo_service.world_mobile_dict.items():
     #  print("world_mobile {0}: {1}".format(k_mobile, v_mobile))
-
-    #print("")
 
     equipped_item_data = uo_service.equipped_item_dict
     #print("equipped_item_data: ", equipped_item_data)
@@ -119,10 +116,15 @@ def main():
       #print("gold_serial is not in backpack_item_data")
       pass
 
+    if len(uo_service.player_status_dict) != 0:
+        player_gold = uo_service.player_status_dict['gold']
+        print("player_gold: ", player_gold)
+
     ## Declare the empty action
-    if step % 500 == 0:
+    if step % 150 == 0:
       print("step: ", step)
       print("action: ", action)
+      print("player_gold: ", player_gold)
 
       obs = uo_service.step(action)
     else:

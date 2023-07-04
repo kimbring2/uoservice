@@ -61,10 +61,11 @@ def main():
     if len(uo_service.world_mobile_dict) != 0 and target_skeleton_serial == None:
       ## Obtain the serial number list of skeleton around the player
       skeleton_serial_list = [k for k, v in uo_service.world_mobile_dict.items() \
-                        if v['name'] == ' A Skeleton ' and v['distance'] <= 15 and v['distance'] > 5]
+                        if v['name'] == ' A Skeleton ' and v['distance'] <= 10 and v['distance'] > 1]
 
       ## Select of skeleton
-      target_skeleton_serial = random.choice(skeleton_serial_list)
+      if len(skeleton_serial_list) != 0:
+        target_skeleton_serial = random.choice(skeleton_serial_list)
 
     corpse_dict = {}
     for k, v in uo_service.world_item_dict.items():
@@ -74,8 +75,8 @@ def main():
     ## Declare the empty action
     action = {}
     action['action_type'] = 0
-    action['item_serial'] = 0
-    action['mobile_serial'] = 0
+    action['source_serial'] = 0
+    action['target_serial'] = 0
     action['walk_direction'] = 0
     action['index'] = 0
     action['amount'] = 0
@@ -113,6 +114,9 @@ def main():
         ## Player holded item
         hold_item_serial = uo_service.hold_item_serial
 
+        backpack_serial = uo_service.backpack_serial
+        #print("backpack_serial: ", backpack_serial)
+
         for k_corpse, v_corpse in corpse_dict.items():
           for k_world, v_world in uo_service.world_item_dict.items():
             if k_corpse == v_world["container"]:
@@ -141,7 +145,7 @@ def main():
               else:
                 ## Attack the target mobile
                 action['action_type'] = 2
-                action['mobile_serial'] = target_skeleton_serial
+                action['target_serial'] = target_skeleton_serial
         else:
           if len(corpse_item_dict) == 0:
             ## Open the corpse container
@@ -151,7 +155,7 @@ def main():
               corpse_serial = corpse_serial_data
 
             action['action_type'] = 7
-            action['item_serial'] = corpse_serial
+            action['target_serial'] = corpse_serial
           else:
             if hold_item_serial == 0:
               ## Pick up the gold from corpse
@@ -159,11 +163,12 @@ def main():
                 utils.get_serial_amount_from_corpse_item_list(corpse_item_dict, 'Gold')
 
               action['action_type'] = 3
-              action['item_serial'] = gold_item_serial
+              action['target_serial'] = gold_item_serial
               action['amount'] = gold_item_max
             else:
-              ## Item looting action
+              ## Drop item into backpack
               action['action_type'] = 4
+              action['target_serial'] = backpack_serial
 
         #print("action_type: ", action['action_type'])
         obs = uo_service.step(action)

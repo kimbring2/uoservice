@@ -79,7 +79,7 @@ def main():
     if step % 50 == 0:
       print("step: ", step)
 
-      print("player_game_x: {0}, player_game_y: {1}".format(player_game_x, player_game_x))
+      #print("player_game_x: {0}, player_game_y: {1}".format(player_game_x, player_game_x))
 
       if target_skeleton_serial != None and player_game_x != None:
         ## finally, we can acquire the target mobile data
@@ -131,10 +131,6 @@ def main():
         
         obs = uo_service.step(action)
       else:
-        action['action_type'] = 1
-        action['walk_direction'] = 2
-        action['run'] = True
-
         obs = uo_service.step(action)
     else:
       obs = uo_service.step(action)

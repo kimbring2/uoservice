@@ -85,16 +85,16 @@ class UoService:
     def step(self, action):
         # Send the action data to game client and receive the state of that action
         action_type = action['action_type']
-        item_serial = action['item_serial']
-        mobile_serial = action['mobile_serial']
+        source_serial = action['source_serial']
+        target_serial = action['target_serial']
         walk_direction = action['walk_direction']
         index = action['index']
         amount = action['amount']
         run = action['run']
 
         self.stub.WriteAct(UoService_pb2.GrpcAction(actionType=action_type, 
-                                                    itemSerial=item_serial,
-                                                    mobileSerial=mobile_serial,
+                                                    sourceSerial=source_serial,
+                                                    targetSerial=target_serial,
                                                     walkDirection=walk_direction,
                                                     index=index, 
                                                     amount=amount,
@@ -118,7 +118,7 @@ class UoService:
 
                 First infomation we need to know might be position of player. That can be obtained from the <b>player_game_x, player_game_y</b> of the <b>uo_service</b>. Next, we need to know information of monsters around the player, which is included in <b>world_mobile_dict</b>. There can be various types and multiple numbers of mobiles in the same space as the player. Here, only one mobile named <b>Skeleton</b> near the player is selected using the <b>name</b> and <b>distance</b> value of mobile state.
 
-                How can we make up the arguments <b>actionType, itemSerial, mobileSerial, walkDirection, index, amount, run</b> of action for walk. First, we just know that the actionType should be 1. Next, the value for the walkDirection can be calculated from the x and y position of player and monster by using the <a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/utils.py">simple planning algorithm</a>. If you need to approach quickly to monster, set the run arguemnt of action as True. 
+                How can we make up the arguments <b>actionType, sourceSerial, targetSerial, walkDirection, index, amount, run</b> of action for walk. First, we just know that the actionType should be 1. Next, the value for the walkDirection can be calculated from the x and y position of player and monster by using the <a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/utils.py">simple planning algorithm</a>. If you need to approach quickly to monster, set the run arguemnt of action as True. 
 
                 <video width="400" height="200" controls>
                     <source src="Fig/WalkResult.mkv" type="video/mp4">
@@ -141,15 +141,15 @@ for step in range(100000):
 
     if len(uo_service.world_mobile_dict) != 0 and target_serial == None:
       serial_list = [k for k, v in uo_service.world_mobile_dict.items() \
-                     v['name'] == ' A Skeleton ' and v['distance'] <= 15 \
-                     and v['distance'] > 5]
+                     v['name'] == ' A Skeleton ' and v['distance'] <= 10 \
+                     and v['distance'] > 1]
 
       target_serial = random.choice(serial_list)
 
     action = {}
     action['action_type'] = 0
-    action['item_serial'] = 0
-    action['mobile_serial'] = 0
+    action['source_serial'] = 0
+    action['target_serial'] = 0
     action['walk_direction'] = 0
     action['index'] = 0
     action['amount'] = 0
@@ -186,7 +186,7 @@ for step in range(100000):
                 
                 Next, the player must be in the war mode to attack enemie in Ultima Online. You must check the current status of mode by using the <b>war_mode</b> value of UoService class like a <b>uo_service.war_mode</b> If it is false, set the <b>action_type</b> and <b>index</b> argument of action to 19 and 1 respectively to set the player as war mode. <br> 
 
-                Finally, if the player approach close to the monster and war mode is true, you can set the <b>action_type</b> as 2. Additionally, the <b>mobile_serial</b> argument is needed to be set as the serial of target mobile.
+                Finally, if the player approach close to the monster and war mode is true, you can set the <b>action_type</b> as 2. Additionally, the <b>target_serial</b> argument is needed to be set as the serial of target mobile.
 
                 <video width="400" height="200" controls>
                     <source src="Fig/MeleeAttackResult.mkv" type="video/mp4">
@@ -206,19 +206,20 @@ for step in range(100000):
     player_game_x = uo_service.player_game_x
     player_game_y = uo_service.player_game_y
     if len(uo_service.world_mobile_dict) != 0 and target_serial == None:
-      serial_list = [k for k, v in uo_service.world_mobile_dict.items() \
-                     v['name'] == ' A Skeleton ' and v['distance'] <= 15 \
-                     and v['distance'] > 5]
-      target_serial = random.choice(serial_list)
+      mobile_serial_list = [k for k, v in uo_service.world_mobile_dict.items() \
+                     v['name'] == ' A Skeleton ' and v['distance'] <= 10 \
+                     and v['distance'] > 1]
+      target_serial = random.choice(mobile_serial_list)
 
     action = {}
     action['action_type'] = 0
-    action['item_serial'] = 0
-    action['mobile_serial'] = 0
+    action['source_serial'] = 0
+    action['target_serial'] = 0
     action['walk_direction'] = 0
     action['index'] = 0
     action['amount'] = 0
     action['run'] = False
+
     if step % 50 == 0:
       if target_serial != None and player_game_x != None:
         if target_serial in uo_service.world_mobile_dict:
@@ -246,7 +247,7 @@ for step in range(100000):
               action['index'] = 1
             else:
               action['action_type'] = 2
-              action['mobile_serial'] = target_serial
+              action['target_serial'] = target_serial
         
         obs = uo_service.step(action)
                 </code></pre>
@@ -261,15 +262,15 @@ for step in range(100000):
                 <h2>First corpse looting</h2>
                 After attacking and killing a monster, player can acquire various items including gold from the corpse. To do this with python code, first you need to check <b>world_item_dict</b> of the <b>uo_service</b> instead of the <b>world_mobile_dict</b> because the monster that was mobile type is transformed to an item when it dies. For the reason that the corresponding Dict has information on all items of the world, you should filter it using the <b>isCorpse</b> value.<br>
 
-                Having secured the serial number of the corpse that exists around the player, the next step is to open it. The corresponding action can be composed by setting the <b>action_type</b> as 7 and <b>item_serial</b> as the serial number of the corpse item.<br>
+                Having secured the serial number of the corpse that exists around the player, the next step is to open it. The corresponding action can be composed by setting the <b>action_type</b> as 7 and <b>target_serial</b> as the serial number of the corpse item.<br>
 
                 From the moment the corpse is opened, world_item_dict start to include the items of that corpse. To determine which item is inside the corpse, the <b>container</b> part of item information can be used <b>item["container"]</b>. If you want to select only gold among the identified items inside the corpse, you can use the <b>name</b> information of item like a <b>if "gold" in item["name"]</b>.<br>
 
-                Having obtained a serial of the gold item of opened corpse, that item should be picked up before putting it in the player backpack. This can be done by setting the <b>action_type</b> as 3, <b>item_serial</b> to the serial of the gold item, and <b>amount</b> to the total number of gold.<br>
+                Having obtained a serial of the gold item of opened corpse, that item should be picked up before putting it in the player backpack. This can be done by setting the <b>action_type</b> as 3, <b>target_serial</b> to the serial of the gold item, and <b>amount</b> to the total number of gold.<br>
 
                 When picking up an item, <b>hold_item_serial</b> of <b>uo_service</b> is changed to the serial number of the item. Finally, player can drop the currently held item onto the backpack by setting <b>action_type</b> to 4 causes the.<br>
 
-                In order to check whether the player looted gold well, you can check the <b>gold part</b> of <b>player_status_dictt</b> of uo_service like <b>player_status_dict['gold']</b>.
+                In order to check whether the player looted gold well, you can check the <b>gold part</b> of <b>player_status_dict</b> of the <b>uo_service</b> like <b>player_status_dict['gold']</b>.
 
                 <video width="400" height="200" controls>
                     <source src="Fig/LootingCorpseResult.mkv" type="video/mp4">
@@ -291,7 +292,7 @@ for step in range(100000):
 
     if len(uo_service.world_mobile_dict) != 0 and target_mobile_serial == None:
       skeleton_serial_list = [k for k, v in uo_service.world_mobile_dict.items() \
-               if v['name'] == ' A Skeleton ' and v['distance'] <= 15 and v['distance'] > 5]
+               if v['name'] == ' A Skeleton ' and v['distance'] <= 10 and v['distance'] > 1]
       target_mobile_serial = random.choice(skeleton_serial_list)
 
     corpse_dict = {}
@@ -301,12 +302,13 @@ for step in range(100000):
 
     action = {}
     action['action_type'] = 0
-    action['item_serial'] = 0
-    action['mobile_serial'] = 0
+    action['source_serial'] = 0
+    action['target_serial'] = 0
     action['walk_direction'] = 0
     action['index'] = 0
     action['amount'] = 0
     action['run'] = False
+
     if step % 150 == 0:
       if len(uo_service.player_status_dict) != 0:
         player_gold = uo_service.player_status_dict['gold']
@@ -349,7 +351,7 @@ for step in range(100000):
                 action['index'] = 1
               else:
                 action['action_type'] = 2
-                action['mobile_serial'] = target_mobile_serial
+                action['target_serial'] = target_mobile_serial
         else:
           if len(corpse_item_dict) == 0:
             corpse_serial_list = list(corpse_dict.keys())
@@ -358,17 +360,18 @@ for step in range(100000):
               corpse_serial = corpse_serial_data
 
             action['action_type'] = 7
-            action['item_serial'] = corpse_serial
+            action['target_serial'] = corpse_serial
           else:
             if hold_item_serial == 0:
               gold_item_serial, gold_item_max = \
                 utils.get_serial_amount_from_corpse_item_list(corpse_item_dict, 'Gold')
 
               action['action_type'] = 3
-              action['item_serial'] = gold_item_serial
+              action['target_serial'] = gold_item_serial
               action['amount'] = gold_item_max
             else:
               action['action_type'] = 4
+              action['target_serial'] = backpack_serial
 
         obs = uo_service.step(action)
                 </code></pre>

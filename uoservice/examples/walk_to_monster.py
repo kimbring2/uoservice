@@ -65,8 +65,8 @@ def main():
     ## Declare the empty action
     action = {}
     action['action_type'] = 0
-    action['item_serial'] = 0
-    action['mobile_serial'] = 0
+    action['source_serial'] = 0
+    action['target_serial'] = 0
     action['walk_direction'] = 0
     action['index'] = 0
     action['amount'] = 0
