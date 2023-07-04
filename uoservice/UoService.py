@@ -120,11 +120,16 @@ class UoService:
 		#if player_object.holdItemSerial != 0:
 		#	self.hold_item_serial = player_object.holdItemSerial
 
-		print("len(world_item_data): ", len(world_item_data))
+		#if len(world_item_data) != 0:
+			#print("len(world_item_data): ", len(world_item_data))
+
 		if len(world_item_data) != 0:
 			self.world_item_dict = {}
+			self.bank_item_dict = {}
+			self.bank_serial = None
+
 			for obj in world_item_data:
-				print("name: {0}, layer: {1}", obj.name, obj.layer)
+				#print("name: {0}, layer: {1}".format(obj.name, obj.layer))
 				self.world_item_dict[obj.serial] = { "name": obj.name, "gameX": obj.gameX, "gameY":obj.gameY, "serial": obj.serial,
 																						 "distance": obj.distance, "layer":obj.layer, "container": obj.container, 
 																						 "isCorpse": obj.isCorpse, "amount": obj.amount }
@@ -132,7 +137,10 @@ class UoService:
 					self.backpack_serial = obj.serial
 
 				if obj.layer == 29:
+
 					self.bank_serial = obj.serial
+
+			#print("")
 
 		#print("len(world_mobile_data): ", len(world_mobile_data))
 		if len(world_mobile_data) != 0:
@@ -144,6 +152,8 @@ class UoService:
 																							 "race": obj.race}
 
 		#print("self.bank_serial: ", self.bank_serial)
+		if self.bank_serial != None:
+			bank_box = self.world_item_dict[obj.serial]
 
 		if len(static_object_game_x_data) != 0:
 			self.static_object_game_x_data = static_object_game_x_data
@@ -244,7 +254,7 @@ class UoService:
 		if len(self.bank_item_dict) != 0:
 			#print("self.backpack_item_dict: ", self.backpack_item_dict)
 			for k, v in self.bank_item_dict.items():
-				print("bank_item_dict item {0}: {1}".format(k, self.bank_item_dict[k]))
+				#print("{0}: {1}".format(self.bank_item_dict[k]["name"], k))
 				pass
 
 			#print("")

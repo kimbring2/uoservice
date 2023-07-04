@@ -48,6 +48,7 @@ def main():
   pickaxe_serial = None
   unequip_item_serial = None
   drop_item_serial = None
+  picked_up_item_serial = None
 
   step = 0
   while True:
@@ -74,11 +75,13 @@ def main():
     #print("hold_item_serial: ", hold_item_serial)
 
     #print("uo_service.picked_up_item: ", uo_service.picked_up_item)
+    #print("uo_service.bank_serial: ", uo_service.bank_serial)
+    #print("uo_service.backpack_serial: ", uo_service.backpack_serial)
 
     unequip_item_serial = None
     if "OneHanded" in equipped_item_dict:
       #print("OneHanded equip item {0}", equipped_item_dict["OneHanded"])
-      unequip_item_serial = equipped_item_dict["OneHanded"]["serial"]
+      #unequip_item_serial = equipped_item_dict["OneHanded"]["serial"]
 
     player_status_dict = uo_service.player_status_dict
     #print("player_status_dict: ", player_status_dict)
@@ -107,7 +110,7 @@ def main():
     action['run'] = False
 
     if step % 100 == 0:
-      print("step: ", step)
+      #print("step: ", step)
       if unequip_item_serial != None:
         #print("unequip_item_serial: ", unequip_item_serial)
         #print("unequip_item: ", unequip_item)
@@ -121,8 +124,16 @@ def main():
         drop_item_serial = unequip_item_serial
         unequip_item_serial = None
       elif drop_item_serial != None:
+        print("Pick up equipped item from player")
         action['action_type'] = 3
         action['item_serial'] = unequip_item_serial
+        drop_item_serial = None
+      elif uo_service.bank_serial != 0:
+        print("Drop item into backpack")
+        action['action_type'] = 2
+        action['item_serial'] = uo_service.bank_serial
+
+      obs = uo_service.step(action)
 
     #obs = uo_service.step(action)
     obs = uo_service.step(utils.noop_action)
