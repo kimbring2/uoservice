@@ -46,7 +46,7 @@ e.g. $ ./ClassicUO -username kimbring2 -password kimbring2 -human_play -window_w
 Run the C# Client. Here, you need to enter the port for gRPC communication with Python.
 ```
 $ ./ClassicUO -username [Account ID] -password [Account PWD] -grpc_port [Port Number]
-e.g.  $ ./ClassicUO -username kimbring2 -password kimbring2 -human_play -window_width 1370 -window_height 1280
+e.g.  $ ./ClassicUO -username kimbring2 -password kimbring2 -human_play -window_width 1370 -window_height 1280 -grpc_port 60051
 ```
 
 Run the [sample Python Application](https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/semaphore_sync.py).
