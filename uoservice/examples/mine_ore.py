@@ -49,8 +49,14 @@ def main():
   equip_item_flag = False
   unequip_item_serial = None
   pickaxe_item_serial = None
+  onehanded_item_serial = None
   drop_item_serial = None
   picked_up_item_serial = None
+
+  mining_prepare_flag = False
+  mining_ready_flag = False
+
+  targeting_type = None
 
   step = 0
   while True:
@@ -67,6 +73,7 @@ def main():
 
     ## Player holded item
     hold_item_serial = uo_service.hold_item_serial
+    targeting_state = uo_service.targeting_state
 
     unequip_item_serial = None
     pickaxe_item_serial = None
@@ -75,6 +82,10 @@ def main():
 
       if equipped_item_dict["OneHanded"]["name"] != "Pickaxe":
         unequip_item_serial = equipped_item_dict["OneHanded"]["serial"]
+      elif equipped_item_dict["OneHanded"]["name"] == "Pickaxe":
+        onehanded_item_serial = equipped_item_dict["OneHanded"]["serial"]
+        if mining_ready_flag == False:
+          mining_prepare_flag = True
     else:
       for k_backpack, v_backpack in backpack_item_data.items():
         #print("{0}: {1}".format(k_backpack, v_backpack["name"]))
@@ -109,6 +120,8 @@ def main():
 
     if step % 100 == 0:
       #print("step: ", step)
+      print("targeting_state: ", targeting_state)
+
       if unequip_item_serial != None:
         print("Pick up the equipped item from player")
 
@@ -135,6 +148,17 @@ def main():
         print("Equip the holded item")
         action['action_type'] = 6
         equip_item_flag = False
+      elif mining_prepare_flag == True:
+        print("Double click the Pickaxe item")
+        action['action_type'] = 6
+        mining_prepare_flag = False
+        mining_ready_flag = True
+      elif mining_ready_flag == True:
+        print("Double click the onhanded item")
+        print("onehanded_item_serial: ", onehanded_item_serial)
+        #action['action_type'] = 2
+        action['target_serial'] = onehanded_item_serial
+        #mining_ready_flag = True
 
       obs = uo_service.step(action)
 

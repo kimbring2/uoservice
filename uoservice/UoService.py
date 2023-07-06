@@ -51,6 +51,7 @@ class UoService:
 		self.war_mode = False
 		self.hold_item_serial = 0
 		self.player_gold = None
+		self.targeting_state = None
 
 		self.backpack_serial = None
 		self.bank_serial = None
@@ -119,6 +120,7 @@ class UoService:
 			self.player_game_y = player_object.gameY
 			self.war_mode = player_object.warMode
 			self.hold_item_serial = player_object.holdItemSerial
+			self.targeting_state = player_object.targetingState
 
 		#print("self.hold_item_serial: ", self.hold_item_serial)
 		#if player_object.holdItemSerial != 0:

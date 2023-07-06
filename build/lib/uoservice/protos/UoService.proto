@@ -12,6 +12,7 @@ message GrpcPlayerObject {
   string title = 5;
   uint32 holdItemSerial = 6;
   bool warMode = 7;
+  uint32 targetingState = 8;
 }
 
 message GrpcMobileObjectData {
