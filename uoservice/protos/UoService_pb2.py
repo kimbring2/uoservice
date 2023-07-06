@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fUoService.proto\x12\tuoservice\"\x07\n\x05\x45mpty\"\x9e\x01\n\x10GrpcPlayerObject\x12\r\n\x05gameX\x18\x01 \x01(\r\x12\r\n\x05gameY\x18\x02 \x01(\r\x12\x0e\n\x06serial\x18\x03 \x01(\r\x12\x0c\n\x04name\x18\x04 \x01(\t\x12\r\n\x05title\x18\x05 \x01(\t\x12\x16\n\x0eholdItemSerial\x18\x06 \x01(\r\x12\x0f\n\x07warMode\x18\x07 \x01(\x08\x12\x16\n\x0etargetingState\x18\x08 \x01(\r\"\xb7\x01\n\x14GrpcMobileObjectData\x12\x0c\n\x04hits\x18\x01 \x01(\r\x12\x0f\n\x07hitsMax\x18\x02 \x01(\r\x12\x0c\n\x04race\x18\x03 \x01(\r\x12\x10\n\x08\x64istance\x18\x04 \x01(\r\x12\r\n\x05gameX\x18\x05 \x01(\r\x12\r\n\x05gameY\x18\x06 \x01(\r\x12\x0e\n\x06serial\x18\x07 \x01(\r\x12\x0c\n\x04name\x18\x08 \x01(\t\x12\r\n\x05title\x18\t \x01(\t\x12\x15\n\rnotorietyFlag\x18\n \x01(\r\"\xb5\x01\n\x12GrpcItemObjectData\x12\x10\n\x08\x64istance\x18\x01 \x01(\r\x12\r\n\x05gameX\x18\x02 \x01(\r\x12\r\n\x05gameY\x18\x03 \x01(\r\x12\x0e\n\x06serial\x18\x04 \x01(\r\x12\x0c\n\x04name\x18\x05 \x01(\t\x12\x10\n\x08isCorpse\x18\x06 \x01(\x08\x12\x0e\n\x06\x61mount\x18\x07 \x01(\r\x12\r\n\x05price\x18\x08 \x01(\r\x12\r\n\x05layer\x18\t \x01(\r\x12\x11\n\tcontainer\x18\n \x01(\r\"4\n\x14GrpcSimpleObjectData\x12\r\n\x05gameX\x18\x01 \x01(\r\x12\r\n\x05gameY\x18\x02 \x01(\r\"\xec\x01\n\x10GrpcPlayerStatus\x12\x0b\n\x03str\x18\x01 \x01(\r\x12\x0b\n\x03\x64\x65x\x18\x02 \x01(\r\x12\x0e\n\x06intell\x18\x03 \x01(\r\x12\x0c\n\x04hits\x18\x04 \x01(\r\x12\x0f\n\x07hitsMax\x18\x05 \x01(\r\x12\x0f\n\x07stamina\x18\x06 \x01(\r\x12\x12\n\nstaminaMax\x18\x07 \x01(\r\x12\x0c\n\x04mana\x18\x08 \x01(\r\x12\x0f\n\x07manaMax\x18\t \x01(\r\x12\x0c\n\x04gold\x18\n \x01(\r\x12\x1a\n\x12physicalResistance\x18\x0b \x01(\r\x12\x0e\n\x06weight\x18\x0c \x01(\r\x12\x11\n\tweightMax\x18\r \x01(\r\"u\n\tGrpcSkill\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\r\n\x05index\x18\x02 \x01(\r\x12\x13\n\x0bisClickable\x18\x03 \x01(\x08\x12\r\n\x05value\x18\x04 \x01(\r\x12\x0c\n\x04\x62\x61se\x18\x05 \x01(\r\x12\x0b\n\x03\x63\x61p\x18\x06 \x01(\r\x12\x0c\n\x04lock\x18\x07 \x01(\r\"J\n\x18GrpcSimpleObjectInfoList\x12\x0e\n\x06gameXs\x18\x01 \x03(\r\x12\x0e\n\x06gameYs\x18\x02 \x03(\r\x12\x0e\n\x06gameZs\x18\x03 \x03(\r\"-\n\rGrpcPopupMenu\x12\x0c\n\x04text\x18\x01 \x01(\t\x12\x0e\n\x06\x61\x63tive\x18\x02 \x01(\x08\"K\n\x0eGrpcClilocData\x12\x0e\n\x06serial\x18\x01 \x01(\r\x12\x0c\n\x04text\x18\x02 \x01(\t\x12\r\n\x05\x61\x66\x66ix\x18\x03 \x01(\t\x12\x0c\n\x04name\x18\x04 \x01(\t\"<\n\x11GrpcPopupMenuList\x12\'\n\x05menus\x18\x01 \x03(\x0b\x32\x18.uoservice.GrpcPopupMenu\"D\n\x12GrpcClilocDataList\x12.\n\x0b\x63lilocDatas\x18\x01 \x03(\x0b\x32\x19.uoservice.GrpcClilocData\"N\n\x14GrpcMobileObjectList\x12\x36\n\rmobileObjects\x18\x01 \x03(\x0b\x32\x1f.uoservice.GrpcMobileObjectData\"H\n\x12GrpcItemObjectList\x12\x32\n\x0bitemObjects\x18\x01 \x03(\x0b\x32\x1d.uoservice.GrpcItemObjectData\"\x1f\n\x0fSemaphoreAction\x12\x0c\n\x04mode\x18\x01 \x01(\t\"\x16\n\x06\x43onfig\x12\x0c\n\x04init\x18\x01 \x01(\x08\"5\n\rGrpcSkillList\x12$\n\x06skills\x18\x01 \x03(\x0b\x32\x14.uoservice.GrpcSkill\"\xca\x04\n\nGrpcStates\x12\x31\n\x0cplayerObject\x18\x01 \x01(\x0b\x32\x1b.uoservice.GrpcPlayerObject\x12\x34\n\rWorldItemList\x18\x02 \x01(\x0b\x32\x1d.uoservice.GrpcItemObjectList\x12\x38\n\x0fWorldMobileList\x18\x03 \x01(\x0b\x32\x1f.uoservice.GrpcMobileObjectList\x12\x33\n\rpopupMenuList\x18\x04 \x01(\x0b\x32\x1c.uoservice.GrpcPopupMenuList\x12\x35\n\x0e\x63lilocDataList\x18\x05 \x01(\x0b\x32\x1d.uoservice.GrpcClilocDataList\x12\x31\n\x0cplayerStatus\x18\x06 \x01(\x0b\x32\x1b.uoservice.GrpcPlayerStatus\x12\x31\n\x0fplayerSkillList\x18\x07 \x01(\x0b\x32\x18.uoservice.GrpcSkillList\x12?\n\x12landObjectInfoList\x18\x08 \x01(\x0b\x32#.uoservice.GrpcSimpleObjectInfoList\x12\x41\n\x14staticObjectInfoList\x18\t \x01(\x0b\x32#.uoservice.GrpcSimpleObjectInfoList\x12\x43\n\x16landRockObjectInfoList\x18\n \x01(\x0b\x32#.uoservice.GrpcSimpleObjectInfoList\"\x8f\x01\n\nGrpcAction\x12\x12\n\nactionType\x18\x01 \x01(\r\x12\x14\n\x0csourceSerial\x18\x02 \x01(\r\x12\x14\n\x0ctargetSerial\x18\x03 \x01(\r\x12\x15\n\rwalkDirection\x18\x04 \x01(\r\x12\r\n\x05index\x18\x05 \x01(\r\x12\x0e\n\x06\x61mount\x18\x06 \x01(\r\x12\x0b\n\x03run\x18\x07 \x01(\x08\x32\x9e\x03\n\tUoService\x12\x31\n\x05Reset\x12\x11.uoservice.Config\x1a\x15.uoservice.GrpcStates\x12\x33\n\x07ReadObs\x12\x11.uoservice.Config\x1a\x15.uoservice.GrpcStates\x12\x33\n\x08WriteAct\x12\x15.uoservice.GrpcAction\x1a\x10.uoservice.Empty\x12\x43\n\x13\x41\x63tSemaphoreControl\x12\x1a.uoservice.SemaphoreAction\x1a\x10.uoservice.Empty\x12\x43\n\x13ObsSemaphoreControl\x12\x1a.uoservice.SemaphoreAction\x1a\x10.uoservice.Empty\x12\x36\n\nReadReplay\x12\x11.uoservice.Config\x1a\x15.uoservice.GrpcStates\x12\x32\n\x0bReadMPQFile\x12\x11.uoservice.Config\x1a\x10.uoservice.Emptyb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fUoService.proto\x12\tuoservice\"\x07\n\x05\x45mpty\"\x9e\x01\n\x10GrpcPlayerObject\x12\r\n\x05gameX\x18\x01 \x01(\r\x12\r\n\x05gameY\x18\x02 \x01(\r\x12\x0e\n\x06serial\x18\x03 \x01(\r\x12\x0c\n\x04name\x18\x04 \x01(\t\x12\r\n\x05title\x18\x05 \x01(\t\x12\x16\n\x0eholdItemSerial\x18\x06 \x01(\r\x12\x0f\n\x07warMode\x18\x07 \x01(\x08\x12\x16\n\x0etargetingState\x18\x08 \x01(\r\"\xb7\x01\n\x14GrpcMobileObjectData\x12\x0c\n\x04hits\x18\x01 \x01(\r\x12\x0f\n\x07hitsMax\x18\x02 \x01(\r\x12\x0c\n\x04race\x18\x03 \x01(\r\x12\x10\n\x08\x64istance\x18\x04 \x01(\r\x12\r\n\x05gameX\x18\x05 \x01(\r\x12\r\n\x05gameY\x18\x06 \x01(\r\x12\x0e\n\x06serial\x18\x07 \x01(\r\x12\x0c\n\x04name\x18\x08 \x01(\t\x12\r\n\x05title\x18\t \x01(\t\x12\x15\n\rnotorietyFlag\x18\n \x01(\r\"\xb5\x01\n\x12GrpcItemObjectData\x12\x10\n\x08\x64istance\x18\x01 \x01(\r\x12\r\n\x05gameX\x18\x02 \x01(\r\x12\r\n\x05gameY\x18\x03 \x01(\r\x12\x0e\n\x06serial\x18\x04 \x01(\r\x12\x0c\n\x04name\x18\x05 \x01(\t\x12\x10\n\x08isCorpse\x18\x06 \x01(\x08\x12\x0e\n\x06\x61mount\x18\x07 \x01(\r\x12\r\n\x05price\x18\x08 \x01(\r\x12\r\n\x05layer\x18\t \x01(\r\x12\x11\n\tcontainer\x18\n \x01(\r\"S\n\x12GrpcLandObjectData\x12\r\n\x05index\x18\x01 \x01(\r\x12\r\n\x05gameX\x18\x02 \x01(\r\x12\r\n\x05gameY\x18\x03 \x01(\r\x12\x10\n\x08\x64istance\x18\x04 \x01(\r\"\xec\x01\n\x10GrpcPlayerStatus\x12\x0b\n\x03str\x18\x01 \x01(\r\x12\x0b\n\x03\x64\x65x\x18\x02 \x01(\r\x12\x0e\n\x06intell\x18\x03 \x01(\r\x12\x0c\n\x04hits\x18\x04 \x01(\r\x12\x0f\n\x07hitsMax\x18\x05 \x01(\r\x12\x0f\n\x07stamina\x18\x06 \x01(\r\x12\x12\n\nstaminaMax\x18\x07 \x01(\r\x12\x0c\n\x04mana\x18\x08 \x01(\r\x12\x0f\n\x07manaMax\x18\t \x01(\r\x12\x0c\n\x04gold\x18\n \x01(\r\x12\x1a\n\x12physicalResistance\x18\x0b \x01(\r\x12\x0e\n\x06weight\x18\x0c \x01(\r\x12\x11\n\tweightMax\x18\r \x01(\r\"u\n\tGrpcSkill\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\r\n\x05index\x18\x02 \x01(\r\x12\x13\n\x0bisClickable\x18\x03 \x01(\x08\x12\r\n\x05value\x18\x04 \x01(\r\x12\x0c\n\x04\x62\x61se\x18\x05 \x01(\r\x12\x0b\n\x03\x63\x61p\x18\x06 \x01(\r\x12\x0c\n\x04lock\x18\x07 \x01(\r\":\n\x18GrpcSimpleObjectInfoList\x12\x0e\n\x06gameXs\x18\x01 \x03(\r\x12\x0e\n\x06gameYs\x18\x02 \x03(\r\"-\n\rGrpcPopupMenu\x12\x0c\n\x04text\x18\x01 \x01(\t\x12\x0e\n\x06\x61\x63tive\x18\x02 \x01(\x08\"K\n\x0eGrpcClilocData\x12\x0e\n\x06serial\x18\x01 \x01(\r\x12\x0c\n\x04text\x18\x02 \x01(\t\x12\r\n\x05\x61\x66\x66ix\x18\x03 \x01(\t\x12\x0c\n\x04name\x18\x04 \x01(\t\"<\n\x11GrpcPopupMenuList\x12\'\n\x05menus\x18\x01 \x03(\x0b\x32\x18.uoservice.GrpcPopupMenu\"D\n\x12GrpcClilocDataList\x12.\n\x0b\x63lilocDatas\x18\x01 \x03(\x0b\x32\x19.uoservice.GrpcClilocData\"N\n\x14GrpcMobileObjectList\x12\x36\n\rmobileObjects\x18\x01 \x03(\x0b\x32\x1f.uoservice.GrpcMobileObjectData\"H\n\x12GrpcItemObjectList\x12\x32\n\x0bitemObjects\x18\x01 \x03(\x0b\x32\x1d.uoservice.GrpcItemObjectData\"H\n\x12GrpcLandObjectList\x12\x32\n\x0blandObjects\x18\x01 \x03(\x0b\x32\x1d.uoservice.GrpcLandObjectData\"\x1f\n\x0fSemaphoreAction\x12\x0c\n\x04mode\x18\x01 \x01(\t\"\x16\n\x06\x43onfig\x12\x0c\n\x04init\x18\x01 \x01(\x08\"5\n\rGrpcSkillList\x12$\n\x06skills\x18\x01 \x03(\x0b\x32\x14.uoservice.GrpcSkill\"\xc0\x04\n\nGrpcStates\x12\x31\n\x0cplayerObject\x18\x01 \x01(\x0b\x32\x1b.uoservice.GrpcPlayerObject\x12\x34\n\rWorldItemList\x18\x02 \x01(\x0b\x32\x1d.uoservice.GrpcItemObjectList\x12\x38\n\x0fWorldMobileList\x18\x03 \x01(\x0b\x32\x1f.uoservice.GrpcMobileObjectList\x12\x33\n\rpopupMenuList\x18\x04 \x01(\x0b\x32\x1c.uoservice.GrpcPopupMenuList\x12\x35\n\x0e\x63lilocDataList\x18\x05 \x01(\x0b\x32\x1d.uoservice.GrpcClilocDataList\x12\x31\n\x0cplayerStatus\x18\x06 \x01(\x0b\x32\x1b.uoservice.GrpcPlayerStatus\x12\x31\n\x0fplayerSkillList\x18\x07 \x01(\x0b\x32\x18.uoservice.GrpcSkillList\x12\x35\n\x0elandObjectList\x18\x08 \x01(\x0b\x32\x1d.uoservice.GrpcLandObjectList\x12\x41\n\x14staticObjectInfoList\x18\t \x01(\x0b\x32#.uoservice.GrpcSimpleObjectInfoList\x12\x43\n\x16landRockObjectInfoList\x18\n \x01(\x0b\x32#.uoservice.GrpcSimpleObjectInfoList\"\x8f\x01\n\nGrpcAction\x12\x12\n\nactionType\x18\x01 \x01(\r\x12\x14\n\x0csourceSerial\x18\x02 \x01(\r\x12\x14\n\x0ctargetSerial\x18\x03 \x01(\r\x12\x15\n\rwalkDirection\x18\x04 \x01(\r\x12\r\n\x05index\x18\x05 \x01(\r\x12\x0e\n\x06\x61mount\x18\x06 \x01(\r\x12\x0b\n\x03run\x18\x07 \x01(\x08\x32\x9e\x03\n\tUoService\x12\x31\n\x05Reset\x12\x11.uoservice.Config\x1a\x15.uoservice.GrpcStates\x12\x33\n\x07ReadObs\x12\x11.uoservice.Config\x1a\x15.uoservice.GrpcStates\x12\x33\n\x08WriteAct\x12\x15.uoservice.GrpcAction\x1a\x10.uoservice.Empty\x12\x43\n\x13\x41\x63tSemaphoreControl\x12\x1a.uoservice.SemaphoreAction\x1a\x10.uoservice.Empty\x12\x43\n\x13ObsSemaphoreControl\x12\x1a.uoservice.SemaphoreAction\x1a\x10.uoservice.Empty\x12\x36\n\nReadReplay\x12\x11.uoservice.Config\x1a\x15.uoservice.GrpcStates\x12\x32\n\x0bReadMPQFile\x12\x11.uoservice.Config\x1a\x10.uoservice.Emptyb\x06proto3')
 
 
 
@@ -22,7 +22,7 @@ _EMPTY = DESCRIPTOR.message_types_by_name['Empty']
 _GRPCPLAYEROBJECT = DESCRIPTOR.message_types_by_name['GrpcPlayerObject']
 _GRPCMOBILEOBJECTDATA = DESCRIPTOR.message_types_by_name['GrpcMobileObjectData']
 _GRPCITEMOBJECTDATA = DESCRIPTOR.message_types_by_name['GrpcItemObjectData']
-_GRPCSIMPLEOBJECTDATA = DESCRIPTOR.message_types_by_name['GrpcSimpleObjectData']
+_GRPCLANDOBJECTDATA = DESCRIPTOR.message_types_by_name['GrpcLandObjectData']
 _GRPCPLAYERSTATUS = DESCRIPTOR.message_types_by_name['GrpcPlayerStatus']
 _GRPCSKILL = DESCRIPTOR.message_types_by_name['GrpcSkill']
 _GRPCSIMPLEOBJECTINFOLIST = DESCRIPTOR.message_types_by_name['GrpcSimpleObjectInfoList']
@@ -32,6 +32,7 @@ _GRPCPOPUPMENULIST = DESCRIPTOR.message_types_by_name['GrpcPopupMenuList']
 _GRPCCLILOCDATALIST = DESCRIPTOR.message_types_by_name['GrpcClilocDataList']
 _GRPCMOBILEOBJECTLIST = DESCRIPTOR.message_types_by_name['GrpcMobileObjectList']
 _GRPCITEMOBJECTLIST = DESCRIPTOR.message_types_by_name['GrpcItemObjectList']
+_GRPCLANDOBJECTLIST = DESCRIPTOR.message_types_by_name['GrpcLandObjectList']
 _SEMAPHOREACTION = DESCRIPTOR.message_types_by_name['SemaphoreAction']
 _CONFIG = DESCRIPTOR.message_types_by_name['Config']
 _GRPCSKILLLIST = DESCRIPTOR.message_types_by_name['GrpcSkillList']
@@ -65,12 +66,12 @@ GrpcItemObjectData = _reflection.GeneratedProtocolMessageType('GrpcItemObjectDat
   })
 _sym_db.RegisterMessage(GrpcItemObjectData)
 
-GrpcSimpleObjectData = _reflection.GeneratedProtocolMessageType('GrpcSimpleObjectData', (_message.Message,), {
-  'DESCRIPTOR' : _GRPCSIMPLEOBJECTDATA,
+GrpcLandObjectData = _reflection.GeneratedProtocolMessageType('GrpcLandObjectData', (_message.Message,), {
+  'DESCRIPTOR' : _GRPCLANDOBJECTDATA,
   '__module__' : 'UoService_pb2'
-  # @@protoc_insertion_point(class_scope:uoservice.GrpcSimpleObjectData)
+  # @@protoc_insertion_point(class_scope:uoservice.GrpcLandObjectData)
   })
-_sym_db.RegisterMessage(GrpcSimpleObjectData)
+_sym_db.RegisterMessage(GrpcLandObjectData)
 
 GrpcPlayerStatus = _reflection.GeneratedProtocolMessageType('GrpcPlayerStatus', (_message.Message,), {
   'DESCRIPTOR' : _GRPCPLAYERSTATUS,
@@ -135,6 +136,13 @@ GrpcItemObjectList = _reflection.GeneratedProtocolMessageType('GrpcItemObjectLis
   })
 _sym_db.RegisterMessage(GrpcItemObjectList)
 
+GrpcLandObjectList = _reflection.GeneratedProtocolMessageType('GrpcLandObjectList', (_message.Message,), {
+  'DESCRIPTOR' : _GRPCLANDOBJECTLIST,
+  '__module__' : 'UoService_pb2'
+  # @@protoc_insertion_point(class_scope:uoservice.GrpcLandObjectList)
+  })
+_sym_db.RegisterMessage(GrpcLandObjectList)
+
 SemaphoreAction = _reflection.GeneratedProtocolMessageType('SemaphoreAction', (_message.Message,), {
   'DESCRIPTOR' : _SEMAPHOREACTION,
   '__module__' : 'UoService_pb2'
@@ -182,36 +190,38 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _GRPCMOBILEOBJECTDATA._serialized_end=384
   _GRPCITEMOBJECTDATA._serialized_start=387
   _GRPCITEMOBJECTDATA._serialized_end=568
-  _GRPCSIMPLEOBJECTDATA._serialized_start=570
-  _GRPCSIMPLEOBJECTDATA._serialized_end=622
-  _GRPCPLAYERSTATUS._serialized_start=625
-  _GRPCPLAYERSTATUS._serialized_end=861
-  _GRPCSKILL._serialized_start=863
-  _GRPCSKILL._serialized_end=980
-  _GRPCSIMPLEOBJECTINFOLIST._serialized_start=982
-  _GRPCSIMPLEOBJECTINFOLIST._serialized_end=1056
-  _GRPCPOPUPMENU._serialized_start=1058
-  _GRPCPOPUPMENU._serialized_end=1103
-  _GRPCCLILOCDATA._serialized_start=1105
-  _GRPCCLILOCDATA._serialized_end=1180
-  _GRPCPOPUPMENULIST._serialized_start=1182
-  _GRPCPOPUPMENULIST._serialized_end=1242
-  _GRPCCLILOCDATALIST._serialized_start=1244
-  _GRPCCLILOCDATALIST._serialized_end=1312
-  _GRPCMOBILEOBJECTLIST._serialized_start=1314
-  _GRPCMOBILEOBJECTLIST._serialized_end=1392
-  _GRPCITEMOBJECTLIST._serialized_start=1394
-  _GRPCITEMOBJECTLIST._serialized_end=1466
-  _SEMAPHOREACTION._serialized_start=1468
-  _SEMAPHOREACTION._serialized_end=1499
-  _CONFIG._serialized_start=1501
-  _CONFIG._serialized_end=1523
-  _GRPCSKILLLIST._serialized_start=1525
-  _GRPCSKILLLIST._serialized_end=1578
-  _GRPCSTATES._serialized_start=1581
-  _GRPCSTATES._serialized_end=2167
-  _GRPCACTION._serialized_start=2170
-  _GRPCACTION._serialized_end=2313
-  _UOSERVICE._serialized_start=2316
-  _UOSERVICE._serialized_end=2730
+  _GRPCLANDOBJECTDATA._serialized_start=570
+  _GRPCLANDOBJECTDATA._serialized_end=653
+  _GRPCPLAYERSTATUS._serialized_start=656
+  _GRPCPLAYERSTATUS._serialized_end=892
+  _GRPCSKILL._serialized_start=894
+  _GRPCSKILL._serialized_end=1011
+  _GRPCSIMPLEOBJECTINFOLIST._serialized_start=1013
+  _GRPCSIMPLEOBJECTINFOLIST._serialized_end=1071
+  _GRPCPOPUPMENU._serialized_start=1073
+  _GRPCPOPUPMENU._serialized_end=1118
+  _GRPCCLILOCDATA._serialized_start=1120
+  _GRPCCLILOCDATA._serialized_end=1195
+  _GRPCPOPUPMENULIST._serialized_start=1197
+  _GRPCPOPUPMENULIST._serialized_end=1257
+  _GRPCCLILOCDATALIST._serialized_start=1259
+  _GRPCCLILOCDATALIST._serialized_end=1327
+  _GRPCMOBILEOBJECTLIST._serialized_start=1329
+  _GRPCMOBILEOBJECTLIST._serialized_end=1407
+  _GRPCITEMOBJECTLIST._serialized_start=1409
+  _GRPCITEMOBJECTLIST._serialized_end=1481
+  _GRPCLANDOBJECTLIST._serialized_start=1483
+  _GRPCLANDOBJECTLIST._serialized_end=1555
+  _SEMAPHOREACTION._serialized_start=1557
+  _SEMAPHOREACTION._serialized_end=1588
+  _CONFIG._serialized_start=1590
+  _CONFIG._serialized_end=1612
+  _GRPCSKILLLIST._serialized_start=1614
+  _GRPCSKILLLIST._serialized_end=1667
+  _GRPCSTATES._serialized_start=1670
+  _GRPCSTATES._serialized_end=2246
+  _GRPCACTION._serialized_start=2249
+  _GRPCACTION._serialized_end=2392
+  _UOSERVICE._serialized_start=2395
+  _UOSERVICE._serialized_end=2809
 # @@protoc_insertion_point(module_scope)

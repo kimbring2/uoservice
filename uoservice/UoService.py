@@ -56,13 +56,11 @@ class UoService:
 		self.backpack_serial = None
 		self.bank_serial = None
 
+		self.near_land_object_dict = []
 		self.static_object_game_x_data = None
 		self.static_object_game_y_data = None
-
 		self.rock_object_game_x_data = None
 		self.rock_object_game_y_data = None
-
-		self.static_object_list = []
 
 		self.picked_up_item = {}
 
@@ -99,8 +97,7 @@ class UoService:
 		player_status_data = response.playerStatus
 		player_skills_data = response.playerSkillList.skills
 
-		land_object_game_x_data = response.landObjectInfoList.gameXs
-		land_object_game_y_data = response.landObjectInfoList.gameYs
+		land_object_data = response.landObjectList.landObjects
 
 		static_object_game_x_data = response.staticObjectInfoList.gameXs
 		static_object_game_y_data = response.staticObjectInfoList.gameYs
@@ -114,7 +111,7 @@ class UoService:
 				pass
 			#print("")
 
-		print("land_object_game_x_data: ", land_object_game_x_data)
+		#print("len(land_object_data): ", len(land_object_data))
 
 		if player_object.gameX != 0:
 			#print("player_object.gameX != 0")
@@ -163,6 +160,12 @@ class UoService:
 		#print("self.bank_serial: ", self.bank_serial)
 		if self.bank_serial != None:
 			bank_box = self.world_item_dict[self.bank_serial]
+
+		#print("len(land_object_data): ", len(land_object_data))
+		if len(land_object_data) != 0:
+			self.near_land_object_dict = {}
+			for obj in land_object_data:
+				self.near_land_object_dict[obj.index] = { "gameX": obj.gameX, "gameY":obj.gameY, "distance": obj.distance }
 
 		if len(static_object_game_x_data) != 0:
 			self.static_object_game_x_data = static_object_game_x_data
@@ -299,6 +302,12 @@ class UoService:
 				if v["gameX"] < screen_width and v["gameY"] < screen_height:
 						screen_image = cv2.circle(screen_image, (v["gameX"], v["gameY"]), radius, (0, 0, 255), thickness)
 
+		if len(self.near_land_object_dict) != 0:
+			for k, v in self.near_land_object_dict.items():
+				#print("Near land {0}: {1}".format(k, self.near_land_object_dict[k]))
+				screen_image = cv2.circle(screen_image, (v["gameX"], v["gameY"]), 5, (128, 0, 128), 1)
+			#print("")
+
 		if self.static_object_game_x_data != None:
 			#print("len(self.static_object_game_x_data): ", len(self.static_object_game_x_data))
 			for i in range(0, len(self.static_object_game_x_data)):
@@ -306,8 +315,9 @@ class UoService:
 					#	continue
 					#print("self.static_object_game_x_data[{0}]: {1}".format(i, self.static_object_game_x_data[i]))
 					#print("self.static_object_game_y_data[{0}]: {1}".format(i, self.static_object_game_y_data[i]))
-					screen_image = cv2.circle(screen_image, (self.static_object_game_x_data[i], self.static_object_game_y_data[i]), 
-									   				 		    1, (120, 120, 120), 1)
+					#screen_image = cv2.circle(screen_image, (self.static_object_game_x_data[i], self.static_object_game_y_data[i]), 
+					#				   				 		    1, (120, 120, 120), 1)
+					pass
 
 		if self.rock_object_game_x_data != None:
 			#print("len(self.rock_object_game_x_data): ", len(self.rock_object_game_x_data))
@@ -316,8 +326,9 @@ class UoService:
 					#	continue
 					#print("self.static_object_game_x_data[{0}]: {1}".format(i, self.static_object_game_x_data[i]))
 					#print("self.static_object_game_y_data[{0}]: {1}".format(i, self.static_object_game_y_data[i]))
-					screen_image = cv2.circle(screen_image, (self.rock_object_game_x_data[i], self.rock_object_game_y_data[i]), 
-									   				 		    1, (0, 0, 255), 1)
+					#screen_image = cv2.circle(screen_image, (self.rock_object_game_x_data[i], self.rock_object_game_y_data[i]), 
+					#				   				 		    1, (0, 0, 255), 1)
+					pass
 		#print("")
 
 		if self.player_game_x != None:
@@ -341,7 +352,7 @@ class UoService:
 				screen_image = screen_image[0:self.player_game_y + 600, 
 																		0:self.player_game_x + 600, :]
 
-		vis = False
+		vis = True
 		if vis:
 			#dim = (1720, 1370)
 			try:
