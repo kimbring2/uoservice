@@ -77,6 +77,7 @@ message GrpcSkill {
 message GrpcSimpleObjectInfoList {
   repeated uint32 gameXs = 1;
   repeated uint32 gameYs = 2;
+  repeated uint32 gameZs = 3;
 }
 
 message GrpcPopupMenu {
@@ -130,8 +131,10 @@ message GrpcStates {
 
   GrpcPlayerStatus playerStatus = 6;
   GrpcSkillList playerSkillList = 7;
-  GrpcSimpleObjectInfoList staticObjectInfoList = 8;
-  GrpcSimpleObjectInfoList landRockObjectInfoList = 9;
+
+  GrpcSimpleObjectInfoList landObjectInfoList = 8;
+  GrpcSimpleObjectInfoList staticObjectInfoList = 9;
+  GrpcSimpleObjectInfoList landRockObjectInfoList = 10;
 }
 
 message GrpcAction {

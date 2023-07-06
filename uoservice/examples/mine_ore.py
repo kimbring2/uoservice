@@ -159,6 +159,8 @@ def main():
         #action['action_type'] = 2
         action['target_serial'] = onehanded_item_serial
         #mining_ready_flag = True
+      
+
 
       obs = uo_service.step(action)
 

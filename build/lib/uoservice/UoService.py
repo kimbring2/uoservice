@@ -99,6 +99,9 @@ class UoService:
 		player_status_data = response.playerStatus
 		player_skills_data = response.playerSkillList.skills
 
+		land_object_game_x_data = response.landObjectInfoList.gameXs
+		land_object_game_y_data = response.landObjectInfoList.gameYs
+
 		static_object_game_x_data = response.staticObjectInfoList.gameXs
 		static_object_game_y_data = response.staticObjectInfoList.gameYs
 
@@ -111,7 +114,7 @@ class UoService:
 				pass
 			#print("")
 
-		#print("player_object: ", player_object)
+		print("land_object_game_x_data: ", land_object_game_x_data)
 
 		if player_object.gameX != 0:
 			#print("player_object.gameX != 0")
