@@ -45,11 +45,9 @@ def main():
   ## Send the reset signal to gRPC server
   obs = uo_service.reset()
 
-  ## Event flags to test the scenario manually
-  #for step in tqdm(range(100000)):
-
-  corpse_gold_serial = None
   player_gold = None
+  pick_up_flag = True
+  drop_flag = False
 
   step = 0
   while True:
@@ -75,36 +73,8 @@ def main():
     equipped_item_data = uo_service.equipped_item_dict
     #print("equipped_item_data: ", equipped_item_data)
 
-    corpse_dict = uo_service.corpse_dict
-    #print("corpse_dict: ", corpse_dict)
-
-    corpse_item_dict = uo_service.corpse_item_dict
-    #print("corpse_item_dict: ", corpse_item_dict)
-
     player_status_dict = uo_service.player_status_dict
     #print("player_status_dict: ", player_status_dict)
-
-    for k_corpse, v_corpse in corpse_item_dict.items():
-      #print("corpse {0}: {1}".format(k_corpse, v_corpse))
-      for k_item, v_item in v_corpse.items():
-        #print("corpse item {0}: {1}".format(k_item, v_item))
-
-        if 'Gold' in v_item["name"]:
-          #print("corpse gold item {0}: {1}".format(k_item, v_item))
-          corpse_gold_serial = k_item
-
-        if corpse_gold_serial != None:
-          #print("corpse_gold_serial: ", corpse_gold_serial)
-          #action['action_type'] = 3
-          #action['item_serial'] = corpse_gold_serial
-          #print("v_corpse[corpse_gold_serial][-1]: ", v_corpse[corpse_gold_serial][-1])
-          #action['amount'] = corpse_item_dict[corpse_gold_serial][-1]
-          pass
-
-    #print("player_skills_dict: ", uo_service.player_skills_dict)
-    if 'Swordsmanship' in uo_service.player_skills_dict:
-      swordsmanship_skill = uo_service.player_skills_dict['Swordsmanship']
-      #print("swordsmanship_skill: ", swordsmanship_skill)
 
     gold_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
     #print("gold_serial: ", gold_serial)
@@ -117,14 +87,28 @@ def main():
       pass
 
     if len(uo_service.player_status_dict) != 0:
-        player_gold = uo_service.player_status_dict['gold']
-        print("player_gold: ", player_gold)
+      player_gold = uo_service.player_status_dict['gold']
+      #print("player_gold: ", player_gold)
+
+    if len(uo_service.near_land_object_dict) != 0:
+      for k, v in uo_service.near_land_object_dict.items():
+        print("Near land {0}: {1}".format(k, uo_service.near_land_object_dict[k]))
+      print("")
 
     ## Declare the empty action
     if step % 150 == 0:
       print("step: ", step)
-      print("action: ", action)
-      print("player_gold: ", player_gold)
+      #print("gold_serial: ", gold_serial)
+      if gold_serial != None and pick_up_flag == True:
+        action['action_type'] = 3
+        action['target_serial'] = gold_serial
+        action['amount'] = 100
+        pick_up_flag = False
+        drop_flag = True
+      elif drop_flag == True:
+        action['action_type'] = 4
+        action['index'] = 0
+        drop_flag = False
 
       obs = uo_service.step(action)
     else:

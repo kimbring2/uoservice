@@ -291,21 +291,24 @@ class UoService:
 		for menu_data in popup_menu_data:
 			self.popup_menu_list.append(menu_data)
 
-		screen_image = np.zeros((5000,5000,4), dtype=np.uint8)
+		screen_image = np.zeros((4000,4000,4), dtype=np.uint8)
 
 		radius = 5
 		thickness = 2
-		screen_width = 5000
-		screen_height = 5000
+		screen_width = 4000
+		screen_height = 4000
 		for k, v in self.world_mobile_dict.items():
 			if self.player_game_x != None:
 				if v["gameX"] < screen_width and v["gameY"] < screen_height:
-						screen_image = cv2.circle(screen_image, (v["gameX"], v["gameY"]), radius, (0, 0, 255), thickness)
+						#screen_image = cv2.circle(screen_image, (v["gameX"], v["gameY"]), radius, (0, 0, 255), thickness)
+						pass
 
 		if len(self.near_land_object_dict) != 0:
 			for k, v in self.near_land_object_dict.items():
 				#print("Near land {0}: {1}".format(k, self.near_land_object_dict[k]))
-				screen_image = cv2.circle(screen_image, (v["gameX"], v["gameY"]), 5, (128, 0, 128), 1)
+				screen_image = cv2.circle(screen_image, (v["gameX"], v["gameY"]), 1, (128, 0, 128), 1)
+				pass
+
 			#print("")
 
 		if self.static_object_game_x_data != None:
@@ -313,10 +316,8 @@ class UoService:
 			for i in range(0, len(self.static_object_game_x_data)):
 					#if self.static_object_game_x_data[i] >= 1400 or self.static_object_game_y_data[i] >= 1280:
 					#	continue
-					#print("self.static_object_game_x_data[{0}]: {1}".format(i, self.static_object_game_x_data[i]))
-					#print("self.static_object_game_y_data[{0}]: {1}".format(i, self.static_object_game_y_data[i]))
-					#screen_image = cv2.circle(screen_image, (self.static_object_game_x_data[i], self.static_object_game_y_data[i]), 
-					#				   				 		    1, (120, 120, 120), 1)
+					screen_image = cv2.circle(screen_image, (self.static_object_game_x_data[i], self.static_object_game_y_data[i]), 
+									   				 		    1, (120, 120, 120), 1)
 					pass
 
 		if self.rock_object_game_x_data != None:
@@ -324,39 +325,37 @@ class UoService:
 			for i in range(0, len(self.rock_object_game_x_data)):
 					#if self.static_object_game_x_data[i] >= 1400 or self.static_object_game_y_data[i] >= 1280:
 					#	continue
-					#print("self.static_object_game_x_data[{0}]: {1}".format(i, self.static_object_game_x_data[i]))
-					#print("self.static_object_game_y_data[{0}]: {1}".format(i, self.static_object_game_y_data[i]))
-					#screen_image = cv2.circle(screen_image, (self.rock_object_game_x_data[i], self.rock_object_game_y_data[i]), 
-					#				   				 		    1, (0, 0, 255), 1)
+					screen_image = cv2.circle(screen_image, (self.rock_object_game_x_data[i], self.rock_object_game_y_data[i]), 
+									   				 		    1, (0, 0, 255), 1)
 					pass
 		#print("")
 
+		boundary = 50
 		if self.player_game_x != None:
 			#print("player_game_x: {0}, player_game_y: {1}".format(self.player_game_x, self.player_game_y))
 
-			radius = 5
+			radius = 1
 			screen_image = cv2.circle(screen_image, (self.player_game_x, self.player_game_y), radius, (0, 255, 0), thickness)
-			if self.player_game_y > 600 and self.player_game_x > 600:
-				screen_image = screen_image[self.player_game_y - 600:self.player_game_y + 600, 
-																	  self.player_game_x - 600:self.player_game_x + 600, :]
-			elif self.player_game_y < 600 and self.player_game_x > 600:
+			if self.player_game_y > boundary and self.player_game_x > boundary:
+				screen_image = screen_image[self.player_game_y - boundary:self.player_game_y + boundary, 
+																		self.player_game_x - boundary:self.player_game_x + boundary, :]
+			elif self.player_game_y < boundary and self.player_game_x > boundary:
 				#print("self.player_game_y < 600 and self.player_game_x > 600")
-				screen_image = screen_image[0:self.player_game_y + 600, 
-																		self.player_game_x - 600:self.player_game_x + 600, :]
-			elif self.player_game_y > 600 and self.player_game_x < 600:
+				screen_image = screen_image[0:self.player_game_y + boundary, 
+																		self.player_game_x - boundary:self.player_game_x + boundary, :]
+			elif self.player_game_y > boundary and self.player_game_x < boundary:
 				#print("self.player_game_y > 600 and self.player_game_x < 600")
-				screen_image = screen_image[self.player_game_y - 600:self.player_game_y + 600, 
-																		0:self.player_game_x + 600, :]
+				screen_image = screen_image[self.player_game_y - boundary:self.player_game_y + boundary, 
+																	  0:self.player_game_x + boundary, :]
 			else:
 				#print("else")
-				screen_image = screen_image[0:self.player_game_y + 600, 
-																		0:self.player_game_x + 600, :]
+				screen_image = screen_image[0:self.player_game_y + boundary, 0:self.player_game_x + boundary, :]
 
 		vis = True
 		if vis:
 			#dim = (1720, 1370)
 			try:
-				screen_image = cv2.resize(screen_image, (1200, 1200), interpolation=cv2.INTER_AREA)
+				screen_image = cv2.resize(screen_image, (boundary * 4, boundary * 4), interpolation=cv2.INTER_AREA)
 				screen_image = utils.rotate_image(screen_image, -45)
 				#screen_image = cv2.rotate(screen_image, cv2.ROTATE_90_CLOCKWISE)
 				#screen_image = cv2.flip(screen_image, 1)
