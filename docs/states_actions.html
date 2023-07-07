@@ -116,22 +116,15 @@
             <div class="col" id="3">
                 <script>createHeader("3", "GrpcLandObjectData", "");</script>
                 This type includes the every mobile type object such as monster, npc, aminal, other player, and etc.
-                <img src="Fig/MobileObject.png" class="rounded mx-auto d-block float-center" alt="Logo" width="500" height="130">
+                <img src="Fig/LandObject.png" class="rounded mx-auto d-block float-center" alt="Logo" width="300" height="100">
 
                 <script>
                     generate_table("3", 
                                     [   
-                                        ["hits", "uint32", "current HP of mobile"],
-                                        ["hitsMax", "uint32", "maximum value of HP of mobile"],
-                                        ["race", "uint32", "human(1), elf(2), Gargoyle(3), etc(0)"],
-                                        ["distance", "uint32", "distance between the player and mobile object"],
+                                        ["index", "uint32", "order number among multiple land objects"],
                                         ["gameX", "uint32", "x position of mobile in the game"],
                                         ["gameY", "uint32", "y position of mobile in the game"],
-                                        ["serial", "uint32", "unique serial number of object"],
-                                        ["name", "string", "name of mobile object"],
-                                        ["title", "string", "title of mobile object"],
-                                        ["notorietyFlag", "uint32", "Unknown(0), Innocent(1), Ally(2), Gray(3), Criminal(4), Enemy(5), Murderer(6), Invulnerable(7)"]
-                                    ]
+                                        ["distance", "uint32", "distance between the player and item object"]
                                     );
                 </script>
             </div>
