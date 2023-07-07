@@ -16,7 +16,24 @@
     <link href="css/tmp.css" rel="stylesheet">
 
     <script src="js/highlight.pack.js"></script>
-	<script>hljs.initHighlightingOnLoad();</script>
+	  <script>hljs.initHighlightingOnLoad();</script>
+
+    <style>
+        body {
+          background-image: url('http://i.stack.imgur.com/kx8MT.gif');
+          background-size: cover;
+          
+          height: 100vh;
+          padding:0;
+          margin:0;
+        }
+    </style>
+
+    <script>
+      window.onload = function() {
+        var context = new AudioContext();
+      }
+    </script>
   </head>
 
   <body>
@@ -98,5 +115,11 @@
 <script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
 <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script>
 <script src="https://getbootstrap.com/docs/4.1/dist/js/bootstrap.min.js"></script>
+
+<audio controls autoplay >
+  <source src="musics/stones2.mp3" allow="autoplay" type="audio/mpeg">
+Your browser does not support the audio element.
+</audio>
+
 </body>
 </html>

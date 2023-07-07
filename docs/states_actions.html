@@ -18,6 +18,12 @@
 
     <script src="js/highlight.pack.js"></script>
 	<script>hljs.initHighlightingOnLoad();</script>
+
+    <style>
+        body {
+            padding-top: 5rem;
+        }
+    </style>
   </head>
 
   <body>
@@ -59,13 +65,13 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col" id="2">
-                <script>createHeader("2", "GrpcMobileObjectData", "");</script>
+            <div class="col" id="1">
+                <script>createHeader("1", "GrpcMobileObjectData", "");</script>
                 This type includes the every mobile type object such as monster, npc, aminal, other player, and etc.
                 <img src="Fig/MobileObject.png" class="rounded mx-auto d-block float-center" alt="Logo" width="500" height="130">
 
                 <script>
-                    generate_table("2", 
+                    generate_table("1", 
                                     [   
                                         ["hits", "uint32", "current HP of mobile"],
                                         ["hitsMax", "uint32", "maximum value of HP of mobile"],
@@ -82,13 +88,13 @@
                 </script>
             </div>
 
-            <div class="col" id="3">
-                <script>createHeader("3", "GrpcItemObjectData", "");</script>
+            <div class="col" id="2">
+                <script>createHeader("2", "GrpcItemObjectData", "");</script>
                 This data type is for saving the information of every type of items such as gold, portion, book, and etc. 
                 <img src="Fig/ItemObject.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="210">
 
                 <script>
-                    generate_table("3", 
+                    generate_table("2", 
                                     [
                                         ["distance", "uint32", "distance between the player and item object"],
                                         ["gameX", "gameX", "x position of item at the game"], 
@@ -107,6 +113,29 @@
         </div>
 
         <div class="row">
+            <div class="col" id="3">
+                <script>createHeader("3", "GrpcLandObjectData", "");</script>
+                This type includes the every mobile type object such as monster, npc, aminal, other player, and etc.
+                <img src="Fig/MobileObject.png" class="rounded mx-auto d-block float-center" alt="Logo" width="500" height="130">
+
+                <script>
+                    generate_table("3", 
+                                    [   
+                                        ["hits", "uint32", "current HP of mobile"],
+                                        ["hitsMax", "uint32", "maximum value of HP of mobile"],
+                                        ["race", "uint32", "human(1), elf(2), Gargoyle(3), etc(0)"],
+                                        ["distance", "uint32", "distance between the player and mobile object"],
+                                        ["gameX", "uint32", "x position of mobile in the game"],
+                                        ["gameY", "uint32", "y position of mobile in the game"],
+                                        ["serial", "uint32", "unique serial number of object"],
+                                        ["name", "string", "name of mobile object"],
+                                        ["title", "string", "title of mobile object"],
+                                        ["notorietyFlag", "uint32", "Unknown(0), Innocent(1), Ally(2), Gray(3), Criminal(4), Enemy(5), Murderer(6), Invulnerable(7)"]
+                                    ]
+                                    );
+                </script>
+            </div>
+
             <div class="col" id="4">
                 <script>createHeader("4", "GrpcPlayerStatus", "");</script>
                 <img src="Fig/Status.png" class="rounded mx-auto d-block float-center" alt="Logo" width="420" height="150">
@@ -129,8 +158,11 @@
                                     ]
                                     );
                 </script>
-            </div>
 
+            </div>
+        </div>
+
+        <div class="row">
             <div class="col" id="5">
                 <script>createHeader("5", "GrpcSkill", "");</script>
                 <img src="Fig/Skill.png" class="rounded mx-auto d-block float-center" alt="Logo" width="350" height="300">
@@ -148,9 +180,7 @@
                                     );
                 </script>
             </div>
-        </div>
 
-        <div class="row">
             <div class="col" id="6">
                 <script>createHeader("6", "GrpcClilocData", "");</script>
                 <img src="Fig/Cliloc.png" class="rounded mx-auto d-block float-center" alt="Logo" width="170" height="170">
@@ -165,7 +195,9 @@
                                     );
                 </script>
             </div>
+        </div>
 
+        <div class="row">
             <div class="col" id="7">
                 <script>createHeader("7", "GrpcPopupMenu", "");</script>
                 The type is used for saving the text, and active status of single pop up menu.
@@ -180,9 +212,7 @@
                                     );
                 </script>
             </div>
-        </div>
 
-        <div class="row">
             <div class="col" id="8">
                 <script>createHeader("8", "Actions", "");</script>
                 Due to the huge number of pixels, using the position of screen as action directly is really inefficient. However, we can project the any mouse input into a specific game event by using the multiple action arguments. <script>
@@ -198,9 +228,7 @@
                                     ]
                                     );
                 </script>
-            </div>
 
-            <div class="col" id="9">
             </div>
         </div>
     </div>
