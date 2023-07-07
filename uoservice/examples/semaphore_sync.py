@@ -91,6 +91,7 @@ def main():
       #print("player_gold: ", player_gold)
 
     if len(uo_service.near_land_object_dict) != 0:
+      #print("len(uo_service.near_land_object_dict): ", len(uo_service.near_land_object_dict))
       for k, v in uo_service.near_land_object_dict.items():
         print("Near land {0}: {1}".format(k, uo_service.near_land_object_dict[k]))
       print("")
@@ -106,9 +107,16 @@ def main():
         pick_up_flag = False
         drop_flag = True
       elif drop_flag == True:
-        action['action_type'] = 4
-        action['index'] = 0
-        drop_flag = False
+        if len(uo_service.near_land_object_dict) != 0:
+          action['action_type'] = 4
+
+          near_land_object_dict = uo_service.near_land_object_dict
+          print("len(near_land_object_dict): ", len(near_land_object_dict))
+          #GameX: 3522, GameY: 2752, index:16
+
+          drop_index = random.randint(0, len(near_land_object_dict))
+          action['index'] = drop_index
+          drop_flag = False
 
       obs = uo_service.step(action)
     else:
