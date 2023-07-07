@@ -58,6 +58,8 @@ def main():
 
   targeting_type = None
 
+  one_time_trial = True
+
   step = 0
   while True:
     backpack_item_data = uo_service.backpack_item_dict
@@ -96,7 +98,7 @@ def main():
     #print("player_status_dict: ", player_status_dict)
 
     cliloc_dict = uo_service.cliloc_dict
-    #print("cliloc_dict: ", cliloc_dict)
+    print("cliloc_dict: ", cliloc_dict)
 
     pickaxe_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
     #print("gold_serial: ", gold_serial)
@@ -148,17 +150,27 @@ def main():
         print("Equip the holded item")
         action['action_type'] = 6
         equip_item_flag = False
-      elif mining_prepare_flag == True:
+      elif mining_prepare_flag == True and one_time_trial == True:
         print("Double click the Pickaxe item")
-        action['action_type'] = 6
+        action['action_type'] = 2
+        action['target_serial'] = onehanded_item_serial
+
         mining_prepare_flag = False
         mining_ready_flag = True
+        one_time_trial = False
       elif mining_ready_flag == True:
-        print("Double click the onhanded item")
-        print("onehanded_item_serial: ", onehanded_item_serial)
-        #action['action_type'] = 2
-        action['target_serial'] = onehanded_item_serial
-        #mining_ready_flag = True
+        print("Mining the land target")
+
+        # GameX: 3527, GameY: 2753, index:8
+        if len(uo_service.near_land_object_dict) != 0:
+          #print("len(uo_service.near_land_object_dict): ", len(uo_service.near_land_object_dict))
+          for k, v in uo_service.near_land_object_dict.items():
+            #print("Near land {0}: {1}".format(k, uo_service.near_land_object_dict[k]))
+            if v['gameX'] == 3527 and v['gameY'] == 2753:
+              print("Near land {0}: {1}".format(k, uo_service.near_land_object_dict[k]))
+              action['action_type'] = 5
+              action['index'] = k
+              mining_ready_flag = False
 
       obs = uo_service.step(action)
 
