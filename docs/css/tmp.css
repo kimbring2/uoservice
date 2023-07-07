@@ -1,6 +1,7 @@
 .starter-template {
     padding: 3rem 1.5rem;
     text-align: center;
+    background-image: url('/home/kimbring2/uoservice/docs/Fig/MainBackground.gif');
 }
 
 .text {
@@ -15,9 +16,7 @@
     background: #F0F0F0;
   }
   
-  
   /* Base color: saturation 0; */
-  
   .hljs,
   .hljs-subst {
     color: #444;
