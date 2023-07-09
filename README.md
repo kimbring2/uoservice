@@ -3,6 +3,9 @@
 
 UoService is a service to play Ultima Online through gRPC. There are first-class Python bindings and examples, so you can play Ultima Online as you would use the OpenAI gym API.
 
+# Code Architecture
+<img src="images/CodeArchitecture.png" width="800">
+
 # Quick Start Guide
 ## Get UoService
 
