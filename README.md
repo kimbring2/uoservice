@@ -22,7 +22,7 @@ That will install the UoService package along with all the required dependencies
 # Get Server and gRPC client of Ultima Online
 Because Ultime Online is an MMORPG game, there is basically a central server. To run UoService, a server must be installed as well. Please visit the [ServUO site](https://github.com/ServUO/ServUO) and set up the server.
 
-Next, you need to download a modified [ClassicUO client](https://github.com/ClassicUO/ClassicUO) in which the gRPC part is added to the original form [Google Drive](https://drive.google.com/drive/folders/1TmCqpcy5JBNN3zS5C5gE6nSCr_-vv23q?usp=sharing).
+Next, you need to download a modified ClassicUO client in which the gRPC part is added to the original form [Google Drive](https://drive.google.com/drive/folders/1TmCqpcy5JBNN3zS5C5gE6nSCr_-vv23q?usp=sharing).
 
 Since UoService does not have the function to create an account on its own, you must create an account using the original ClassicUO before using the modified client.
 
