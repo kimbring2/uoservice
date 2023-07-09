@@ -7,7 +7,7 @@ UoService is a service to play Ultima Online through gRPC. There are first-class
 <img src="images/CodeArchitecture.png" width="600">
 
 # System requirement
-Currnelly, I test this project in Ubuntu linux only.
+Currently, I test this project in Ubuntu linux only.
 
 # Quick Start Guide
 ## Get UoService
