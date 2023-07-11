@@ -351,7 +351,7 @@ class UoService:
 				#print("else")
 				screen_image = screen_image[0:self.player_game_y + boundary, 0:self.player_game_x + boundary, :]
 
-		vis = True
+		vis = False
 		if vis:
 			#dim = (1720, 1370)
 			try:

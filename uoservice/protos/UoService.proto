@@ -126,6 +126,11 @@ message GrpcStaticObjectList {
   repeated GrpcStaticObjectData staticObjects = 1;
 }
 
+message GrpcGameObjectInfoList {
+  repeated uint32 gameXs = 1;
+  repeated uint32 gameYs = 2;
+}
+
 message SemaphoreAction {
   string mode = 1;
 }
@@ -154,6 +159,8 @@ message GrpcStates {
   GrpcStaticObjectList staticObjectList = 9;
 
   GrpcObstacleInfoList obstacleInfoList = 10;
+
+  GrpcGameObjectInfoList staticObjectInfoList = 11;
 }
 
 message GrpcAction {
