@@ -1,4 +1,5 @@
 import struct
+from numpy import int8
 
 
 class FileReader(object):
@@ -27,7 +28,13 @@ class FileReader(object):
     def read_byte(self):
         self.nibble(1)
 
-        return ord(self.stream.read(1))
+        value = self.stream.read(1)
+        #print("value: ", value)
+
+        value = int.from_bytes(value, "little")
+        return value
+
+        #return float(self.stream.read(1))
 
     def read(self, length=None):
         if length is None:
