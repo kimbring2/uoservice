@@ -1,5 +1,5 @@
 import struct
-from numpy import int8
+import ctypes
 
 
 class FileReader(object):
@@ -105,35 +105,114 @@ class FileReader(object):
         
         return x
 
-'''
-StartAddress,
-(uint) Length,
-offset + 8,
-compressedLength - 8,
-decompressedLength,
-extra1,
-extra2
-'''
 
 class UOFileIndex():
-    def __init__(self, address, fileSize, offset, length, decompressed, width=0, height=0, hue=0):
-        '''
-        IntPtr address,
-        uint fileSize,
-        long offset,
-        int length,
-        int decompressed,
-        short width = 0,
-        short height = 0,
-        ushort hue = 0
-        '''
+    def __init__(self, file_size, offset, compressed_length, decompressed_length, 
+                 width=0, height=0, hue=0):
+        self.file_size = file_size;
+        self.offset = offset;
+        self.compressed_length = compressed_length;
+        self.decompressed_length = decompressed_length;
+        self.width = width;
+        self.height = height;
+        self.hue = hue;
+        self.anim_offset = 0;
 
-        self.Address = address;
-        self.FileSize = fileSize;
-        self.Offset = offset;
-        self.Length = length;
-        self.DecompressedLength = offset;
-        self.Width = width;
-        self.Height = height;
-        self.Hue = hue;
-        self.AnimOffset = 0;
+
+def int32_to_uint32(i):
+    return ctypes.c_uint32(i).value
+
+
+def CreateHash(s):
+    eax = ecx = edx = ebx = esi = edi = 0
+    ebx = edi = esi = int32_to_uint32(len(s) + 0xDEADBEEF)
+
+    # ebx: 3735928591
+    if s == "build/map1legacymul/00000104.dat":
+        print("edi: ", edi)
+        print("len(s): ", len(s))
+
+    i = 0
+
+    s_ord = []
+    for char in s:
+        #print("char: ", char)
+        s_ord.append(ord(char))
+
+    while True:
+        edi = ((s_ord[i + 7] << 24) | (s_ord[i + 6] << 16) | (s_ord[i + 5] << 8) | s_ord[i + 4]) + edi;
+        edi = int32_to_uint32(edi)
+
+        #print("type(edi): ", type(edi))
+        if s == "build/map1legacymul/00000104.dat":
+            print("i: {0}, edi: {1}".format(i, edi))
+
+        esi = ((s_ord[i + 11] << 24) | (s_ord[i + 10] << 16) | (s_ord[i + 9] << 8) | s_ord[i + 8]) + esi;
+        esi = int32_to_uint32(esi)
+
+        edx = ((s_ord[i + 3] << 24) | (s_ord[i + 2] << 16) | (s_ord[i + 1] << 8) | s_ord[i]) - esi;
+        edx = int32_to_uint32(edx)
+
+        edx = (edx + ebx) ^ (esi >> 28) ^ (esi << 4);
+        esi += edi;
+        edi = (edi - edx) ^ (edx >> 26) ^ (edx << 6);
+        edx += esi;
+        esi = (esi - edi) ^ (edi >> 24) ^ (edi << 8);
+        edi += edx;
+        ebx = (edx - esi) ^ (esi >> 16) ^ (esi << 16);
+        esi += edi;
+        edi = (edi - ebx) ^ (ebx >> 13) ^ (ebx << 19);
+        ebx += esi;
+        esi = (esi - edi) ^ (edi >> 28) ^ (edi << 4);
+        edi += ebx;
+
+        i += 12
+
+        if i + 12 >= len(s):
+            #i += 12
+            break
+
+    #eax: 0
+    #ecx: 0
+    #edx: 2016057418
+    #ebx: 3029140339
+    #esi: 3187656610
+    #edi: 1094223076
+    if s == "build/map1legacymul/00000104.dat":
+        print("eax: ", eax)
+        print("ecx: ", ecx)
+        print("edx: ", edx)
+        print("ebx: ", ebx)
+        print("esi: ", esi)
+        print("edi: ", edi)
+
+    switch_value = len(s) - i
+    #print("switch_value: ", switch_value)
+
+    # switch_value == 8
+    #esi += s_ord[i + 11] << 24
+    #esi += s_ord[i + 10] << 16
+    #esi += s_ord[i + 9] << 8
+    #esi += s_ord[i + 8]
+    edi += int32_to_uint32(s_ord[i + 7] << 24)
+    edi += int32_to_uint32(s_ord[i + 6] << 16)
+    edi += int32_to_uint32(s_ord[i + 5] << 8)
+    edi += s_ord[i + 4]
+    ebx += int32_to_uint32(s_ord[i + 3] << 24)
+    ebx += int32_to_uint32(s_ord[i + 2] << 16)
+    ebx += int32_to_uint32(s_ord[i + 1] << 8)
+    ebx += s_ord[i];
+
+    esi = (esi ^ edi) - ((edi >> 18) ^ (edi << 14))
+    ecx = (esi ^ ebx) - ((esi >> 21) ^ (esi << 11))
+    edi = (edi ^ ecx) - ((ecx >> 7) ^ (ecx << 25))
+    esi = (esi ^ edi) - ((edi >> 16) ^ (edi << 16))
+    edx = (esi ^ ecx) - ((esi >> 28) ^ (esi << 4))
+    edi = (edi ^ edx) - ((edx >> 18) ^ (edx << 14))
+    eax = (esi ^ edi) - ((edi >> 8) ^ (edi << 24))
+
+    return_value = (edi << 32) | eax
+    if s == "build/map1legacymul/00000104.dat":
+        print("return_value: ", return_value)
+
+    return return_value
