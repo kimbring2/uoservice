@@ -123,29 +123,23 @@ def int32_to_uint32(i):
     return ctypes.c_uint32(i).value
 
 
+def int32_to_ulong(i):
+    return ctypes.c_ulong(i).value
+
+
 def CreateHash(s):
     eax = ecx = edx = ebx = esi = edi = 0
     ebx = edi = esi = int32_to_uint32(len(s) + 0xDEADBEEF)
-
-    # ebx: 3735928591
-    if s == "build/map1legacymul/00000104.dat":
-        print("edi: ", edi)
-        print("len(s): ", len(s))
 
     i = 0
 
     s_ord = []
     for char in s:
-        #print("char: ", char)
         s_ord.append(ord(char))
 
     while True:
         edi = ((s_ord[i + 7] << 24) | (s_ord[i + 6] << 16) | (s_ord[i + 5] << 8) | s_ord[i + 4]) + edi;
         edi = int32_to_uint32(edi)
-
-        #print("type(edi): ", type(edi))
-        if s == "build/map1legacymul/00000104.dat":
-            print("i: {0}, edi: {1}".format(i, edi))
 
         esi = ((s_ord[i + 11] << 24) | (s_ord[i + 10] << 16) | (s_ord[i + 9] << 8) | s_ord[i + 8]) + esi;
         esi = int32_to_uint32(esi)
@@ -154,37 +148,46 @@ def CreateHash(s):
         edx = int32_to_uint32(edx)
 
         edx = (edx + ebx) ^ (esi >> 28) ^ (esi << 4);
+        edx = int32_to_uint32(edx)
+
         esi += edi;
+        esi = int32_to_uint32(esi)
+
         edi = (edi - edx) ^ (edx >> 26) ^ (edx << 6);
+        edi = int32_to_uint32(edi)
+
         edx += esi;
+        edx = int32_to_uint32(edx)
+
         esi = (esi - edi) ^ (edi >> 24) ^ (edi << 8);
+        esi = int32_to_uint32(esi)
+
         edi += edx;
+        edi = int32_to_uint32(edi)
+
         ebx = (edx - esi) ^ (esi >> 16) ^ (esi << 16);
+        ebx = int32_to_uint32(ebx)
+
         esi += edi;
+        esi = int32_to_uint32(esi)
+
         edi = (edi - ebx) ^ (ebx >> 13) ^ (ebx << 19);
+        edi = int32_to_uint32(edi)
+
         ebx += esi;
+        ebx = int32_to_uint32(ebx)
+
         esi = (esi - edi) ^ (edi >> 28) ^ (edi << 4);
+        esi = int32_to_uint32(esi)
+
         edi += ebx;
+        edi = int32_to_uint32(edi)
 
         i += 12
 
         if i + 12 >= len(s):
             #i += 12
             break
-
-    #eax: 0
-    #ecx: 0
-    #edx: 2016057418
-    #ebx: 3029140339
-    #esi: 3187656610
-    #edi: 1094223076
-    if s == "build/map1legacymul/00000104.dat":
-        print("eax: ", eax)
-        print("ecx: ", ecx)
-        print("edx: ", edx)
-        print("ebx: ", ebx)
-        print("esi: ", esi)
-        print("edi: ", edi)
 
     switch_value = len(s) - i
     #print("switch_value: ", switch_value)
@@ -204,15 +207,30 @@ def CreateHash(s):
     ebx += s_ord[i];
 
     esi = (esi ^ edi) - ((edi >> 18) ^ (edi << 14))
+    esi = int32_to_uint32(esi)
+
     ecx = (esi ^ ebx) - ((esi >> 21) ^ (esi << 11))
+    ecx = int32_to_uint32(ecx)
+
     edi = (edi ^ ecx) - ((ecx >> 7) ^ (ecx << 25))
+    edi = int32_to_uint32(edi)
+
     esi = (esi ^ edi) - ((edi >> 16) ^ (edi << 16))
+    esi = int32_to_uint32(esi)
+
     edx = (esi ^ ecx) - ((esi >> 28) ^ (esi << 4))
+    edx = int32_to_uint32(edx)
+
     edi = (edi ^ edx) - ((edx >> 18) ^ (edx << 14))
+    edi = int32_to_uint32(edi)
+
     eax = (esi ^ edi) - ((edi >> 8) ^ (edi << 24))
+    eax = int32_to_uint32(eax)
+
+    if s == "build/map1legacymul/00000104.dat":
+        pass
 
     return_value = (edi << 32) | eax
-    if s == "build/map1legacymul/00000104.dat":
-        print("return_value: ", return_value)
+    return_value = int32_to_ulong(return_value)
 
     return return_value

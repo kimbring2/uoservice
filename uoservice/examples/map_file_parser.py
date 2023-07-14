@@ -13,44 +13,24 @@ file_size = 0
 
 MapsDefaultSize = {7168 >> 3, 4096 >> 3}
 
-#with open(filename, 'rb') as f:
-
 f = open(filename, 'rb')
 
 p = f.read()
 reader = utils.FileReader(BytesIO(p))
 file_size = reader.size
-#print("file_size: ", file_size)
-# file_size:  89965544
 
 reader.seek(0)
 
 uop_magic_number = hex(reader.read_uint32())
-#print("uop_magic_number: ", uop_magic_number)
 
 if uop_magic_number != UOP_MAGIC_NUMBER:
     raise NameError('Bad uop file')
 
 version = reader.read_uint32()
 format_timestamp = reader.read_uint32()
-
 next_block = reader.read_long()
-
 block_size = reader.read_uint32()
 count = reader.read_uint32()
-
-# version: 5
-# format_timestamp: 4246989891
-# nextBlock: 803465
-# block_size: 1000
-# count: 113
-#print("version: ", version)
-#print("format_timestamp: ", format_timestamp)
-#print("next_block: ", next_block)
-#print("block_size: ", block_size)
-#print("count: ", count)
-
-print("MapsDefaultSize: ", MapsDefaultSize)
 
 reader.seek(next_block)
 total = 0;
@@ -61,16 +41,7 @@ while next_block != 0:
     next_block = reader.read_long()
     total += files_count;
 
-    # filesCount: 1000
-    # nextBlock: 39188041
-
-    print("files_count: ", files_count)
-    print("next_block: ", next_block)
-    print("total: ", total)
-
     for i in range(0, files_count):
-        #print("i: ", i)
-
         offset = reader.read_long()
         header_length = reader.read_uint32()
         compressed_length = reader.read_uint32()
@@ -80,28 +51,13 @@ while next_block != 0:
         flag = reader.read_short();
         length = compressed_length if flag == 1 else decompressed_length;
 
-        # offset: 35750238
-        # headerLength: 136
-        # compressedLength: 1120
-        # decompressedLength: 1120
-        # hash: 854405468887571177
-        # data_hash: 2399011230
-        # flag: 0
-        # length: 1120
-        #print("offset: ", offset)
-        #print("header_length: ", header_length)
-        #print("compressed_length: ", compressed_length)
-        #print("decompressed_length: ", decompressed_length)
-        #print("hash_value: ", hash_value)
-        #print("data_hash: ", data_hash)
-        #print("flag: ", flag)
-        #print("")
+        #print("i: {0}, offset: {1}".format(i, offset))
 
         if offset == 0:
             continue
 
         real_total += 1
-        offset ++ header_length
+        offset += header_length
 
         hashes_dict[hash_value] = utils.UOFileIndex(file_size, offset, compressed_length, 
                                                     decompressed_length)
@@ -113,23 +69,19 @@ print("total_entries_count: ", total_entries_count)
 
 pattern = "build/map1legacymul/{:08d}.dat"
 
+Entries = []
 for i in range(0, total_entries_count):
     file = pattern.format(i)
-    #print("file: ", file)
-
-    #s: build/map1legacymul/00000104.dat
-    #return_value: 16711517094998306193
-
     hash_value = utils.CreateHash(file)
-    #print("hash_value: ", hash_value)
-'''
-#reader = utils.FileReader(BytesIO(p))
-reader.seek(33759002)
+    hash_data = hashes_dict[hash_value]
+    Entries.append(hash_data)
 
-#print("reader.remaining: ", reader.remaining)
-
+uopoffset = 0
 file_number = -1;
 maxblockcount = 896 * 512
+maxblockcount = 5
+
+print("len(Entries): ", len(Entries))
 
 start_remaining = reader.remaining
 for block in range(0, maxblockcount):
@@ -138,18 +90,17 @@ for block in range(0, maxblockcount):
     blocknum &= 4095;
     shifted = block >> 12;
 
-    if (fileNumber != shifted)
-    {
-        fileNumber = shifted;
+    if file_number != shifted:
+        file_number = shifted
 
-        if (shifted < Entries[i].Length)
-        {
-            uopoffset = (ulong) Entries[i][shifted].Offset;
-        }
+        if shifted < len(Entries):
+            uopoffset = Entries[shifted].offset
+            print("block: {0}, shifted: {1}, uopoffset: {2}".format(block, shifted, uopoffset))
 
-    
+    reader.seek(33759002)
+
     header = reader.read_uint32()
-    print("header: ", header)
+    #print("header: ", header)
     for y in range(0, 8):
         pos = y << 3
         for x in range(0, 8):
@@ -160,12 +111,6 @@ for block in range(0, maxblockcount):
             #print("tile_id: ", tile_id)
             #print("z: ", z)
 
-        #cells.append
-        #print("pos: ", pos)
-        step += 1
-
-    
     end_remaining = reader.remaining
     read_length = (start_remaining - end_remaining)
-    print("read_length: ", read_length)
-'''
+    #print("read_length: ", read_length)
