@@ -34,20 +34,14 @@ Finally, some values ​​inside ```settings.json``` must be changed according 
 <img src="images/server_settings.png" width="800">
 
 # Run an agent 
-Make sure to run the ServeUO before running the client.
+1. Make sure to run the ServeUO before running the client.
 ```
 $ mono ServUO.exe
 ```
 
-Run the modified ClassicUO client with [various argument options](https://github.com/kimbring2/pyuo/blob/main/README.md#run-code).
+2. Run the modified ClassicUO client with [various argument options](https://github.com/kimbring2/pyuo/blob/main/README.md#run-code).
 
-Run the [sample Python Application](https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/semaphore_sync.py).
+3. Run the [sample Python Application](https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/semaphore_sync.py).
 ```
 $ python examples/semaphore_sync.py --grpc_port 60051
-```
-
-## 3.No gRPC communication with Python, Replay saving
-```
-$ ./ClassicUO -username [Account ID] -password [Account PWD] -window_width [Screen Width] -window_height [Screen Height] -replay
-e.g. ./ClassicUO -username kimbring2 -password kimbring2 -human_play -window_width 1370 -window_height 1280 -replay
 ```
