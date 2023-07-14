@@ -127,7 +127,7 @@ def int32_to_ulong(i):
     return ctypes.c_ulong(i).value
 
 
-def CreateHash(s):
+def create_hash(s):
     eax = ecx = edx = ebx = esi = edi = 0
     ebx = edi = esi = int32_to_uint32(len(s) + 0xDEADBEEF)
 
@@ -234,3 +234,20 @@ def CreateHash(s):
     return_value = int32_to_ulong(return_value)
 
     return return_value
+
+
+class IndexMap():
+    def __init__(self, map_address, static_address, static_count, 
+                 original_map_address, original_static_address, original_static_count):
+        self.map_address = map_address;
+        self.static_address = static_address;
+        self.static_count = static_count;
+        self.original_map_address = original_map_address;
+        self.original_static_address = original_static_address;
+        self.original_static_count = original_static_count;
+
+
+def get_index(block_data, x, y):
+    block = x * 512 + y;
+
+    return block_data[block]

@@ -4,9 +4,9 @@ import struct
 import utils
 from numpy import int8
 
-files_map_name = "map1LegacyMUL.uop"
+files_map_name = "map0LegacyMUL.uop"
 files_statics_name = "statics0.mul"
-files_index_statics_name = "staidx1.mul"
+files_index_statics_name = "staidx0.mul"
 
 UOP_MAGIC_NUMBER = hex(0x50594d)
 _has_extra = False
@@ -79,16 +79,16 @@ while next_block != 0:
     files_map_reader.seek(next_block)
 
 total_entries_count = real_total;
-print("total_entries_count: ", total_entries_count)
+#print("total_entries_count: ", total_entries_count)
 
-pattern = "build/map1legacymul/{:08d}.dat"
+pattern = "build/map0legacymul/{:08d}.dat"
 
-Entries = []
+entries = []
 for i in range(0, total_entries_count):
     file = pattern.format(i)
-    hash_value = utils.CreateHash(file)
+    hash_value = utils.create_hash(file)
     hash_data = hashes_dict[hash_value]
-    Entries.append(hash_data)
+    entries.append(hash_data)
 
 mapblocksize = 196
 staticidxblocksize = 12
@@ -98,9 +98,10 @@ uopoffset = 0
 file_number = -1;
 maxblockcount = 896 * 512
 
-print("len(Entries): ", len(Entries))
+#print("len(entries): ", len(entries))
 
-start_remaining = files_map_reader.remaining
+block_data = []
+
 for block in range(0, maxblockcount):
     realmapaddress = 0
     realstaticaddress = 0
@@ -114,57 +115,68 @@ for block in range(0, maxblockcount):
     if file_number != shifted:
         file_number = shifted
 
-        if shifted < len(Entries):
-            uopoffset = Entries[shifted].offset
+        if shifted < len(entries):
+            uopoffset = entries[shifted].offset
 
     address = uopoffset + (blocknum * mapblocksize);
 
     if address < files_map_size:
         realmapaddress = address
 
-    '''
-    #files_map_reader.seek(33759002)
-    files_map_reader.seek(realmapaddress)
+    stidxaddress = (block * staticidxblocksize);
+
+    files_index_statics_reader.seek(stidxaddress)
+    position = files_index_statics_reader.read_uint32()
+    size = files_index_statics_reader.read_uint32()
+    unknown = files_index_statics_reader.read_uint32()
+    if stidxaddress < files_index_statics_size and size > 0 and position != 0xFFFFFFFF:
+        address1 = position
+        if address1 < files_statics_size:
+            realstaticaddress = address1;
+            realstaticcount = int(size / staticblocksize)
+
+            if realstaticcount > 1024:
+                realstaticcount = 1024;
+
+    if block % 1000 == 0 and realstaticcount != 0:
+        #print("block: {0}, realmapaddress: {1}, realstaticaddress: {2}, realstaticcount: {3}".format(block, 
+        #      realmapaddress, realstaticaddress, realstaticcount))
+        pass
+
+    #self, map_address, static_address, static_count, 
+    #original_map_address, original_static_address, original_static_count
+
+    index_map = utils.IndexMap(realmapaddress, realstaticaddress, realstaticcount, 
+                               realmapaddress, realstaticaddress, realstaticcount)
+
+    block_data.append(index_map)
+
+
+position_list = [[438, 313], [440, 316], [440, 314], [441, 314], [440, 313], [438, 314], [438, 315], [439, 314],
+                 [439, 312], [439, 313], [439, 311], [436, 315], [437, 314], [436, 314], [437, 315], [434, 309]]
+
+for position in position_list:
+    X = position[0]
+    Y = position[1]
+
+    im = utils.get_index(block_data, X, Y)
+    print("X: {0}, Y: {1}".format(X, Y))
+    print("realmapaddress: {0}, realstaticaddress: {1}, realstaticcount: {2}".format( 
+           im.map_address, im.static_address, im.static_count))
+    #print("")
+
+    files_map_reader.seek(im.map_address)
 
     header = files_map_reader.read_uint32()
-    #print("header: ", header)
     for y in range(0, 8):
         pos = y << 3
         for x in range(0, 8):
             tile_id = files_map_reader.read_short();
             z = int8(files_map_reader.read_byte());
             tile_id = (tile_id & 0x3FFF);
-            #print("tile_id: ", tile_id)
-            #print("z: ", z)
 
-    end_remaining = files_map_reader.remaining
-    read_length = (start_remaining - end_remaining)
-    '''
+            print("x: {0}, y: {1}, tile_id: {2}, z: {3}".format(x, y, tile_id, z))
 
-    stidxaddress = (block * staticidxblocksize);
-
-    files_index_statics_reader.seek(stidxaddress)
-
-    position = files_index_statics_reader.read_uint32()
-    size = files_index_statics_reader.read_uint32()
-    unknown = files_index_statics_reader.read_uint32()
-
-    if stidxaddress < files_index_statics_size and size > 0 and position != 0xFFFFFFFF:
-        address1 = position
-        if address1 < files_statics_size:
-            realstaticaddress = address1;
-            realstaticcount = int(size / staticblocksize)
-            #realstaticcount = utils.int32_to_uint32(realstaticcount)
-
-            #if realstaticcount != 0 and block < 20000:
-            #    print("block: {0}, size: {1}, realstaticcount: {2}".format(block, size, realstaticcount))
-
-            if realstaticcount > 1024:
-                realstaticcount = 1024;
-
-    if block % 1000 == 0 and realstaticcount != 0:
-        print("block: {0}, realmapaddress: {1}, realstaticaddress: {2}, realstaticcount: {3}".format(block, 
-              realmapaddress, realstaticaddress, realstaticcount))
-        pass
+    print("")
 
 
