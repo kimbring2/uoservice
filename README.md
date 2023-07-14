@@ -39,7 +39,7 @@ Make sure to run the ServeUO before running the client.
 $ mono ServUO.exe
 ```
 
-Unlike the original client, the client for UoService must operate most of the operations through argument setting.
+Run the modified ClassicUO client with [various argument optiops](https://github.com/kimbring2/pyuo/blob/main/README.md#run-code).
 
 Run the [sample Python Application](https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/semaphore_sync.py).
 ```
