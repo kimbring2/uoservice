@@ -3,27 +3,27 @@ from io import BytesIO
 import struct
 import utils
 
-file_name = "tiledata.mul"
+files_tiledata_name = "tiledata.mul"
 
-file = open(file_name, 'rb')
-p_file = file.read()
-files_reader = utils.FileReader(BytesIO(p_file))
+file_tiledata = open(files_tiledata_name, 'rb')
+p_file_tiledata = file_tiledata.read()
+files_tiledata_reader = utils.FileReader(BytesIO(p_file_tiledata))
 
-files_reader.seek(0)
+files_tiledata_reader.seek(0)
 
 land_data_dict = {}
 
 for i in range(0, 512):
-    files_reader.read_uint32()
+    files_tiledata_reader.read_uint32()
 
     for j in range(0, 32):
         idx = i * 32 + j
-        flags = files_reader.read_long();
-        text_id = files_reader.read_short();
+        flags = files_tiledata_reader.read_long();
+        text_id = files_tiledata_reader.read_short();
 
         buffer_string = ""
         for k in range(0, 20):
-            byte_data = files_reader.read_byte()
+            byte_data = files_tiledata_reader.read_byte()
             #print("i: {0}, byte_data: {1}".format(i, byte_data))
 
             if byte_data != 0:
@@ -37,22 +37,22 @@ for i in range(0, 512):
 
 static_data_dict = {}
 for i in range(0, 2048):
-    files_reader.read_uint32()
+    files_tiledata_reader.read_uint32()
 
     for j in range(0, 32):
         idx = i * 32 + j
-        flags = files_reader.read_long()
-        weight = files_reader.read_byte()
-        layer = files_reader.read_byte()
-        count = files_reader.read_uint32();
-        anim_id = files_reader.read_short();
-        hue = files_reader.read_short();
-        light_index = files_reader.read_short();
-        height = files_reader.read_byte();
+        flags = files_tiledata_reader.read_long()
+        weight = files_tiledata_reader.read_byte()
+        layer = files_tiledata_reader.read_byte()
+        count = files_tiledata_reader.read_uint32();
+        anim_id = files_tiledata_reader.read_short();
+        hue = files_tiledata_reader.read_short();
+        light_index = files_tiledata_reader.read_short();
+        height = files_tiledata_reader.read_byte();
 
         buffer_string = ""
         for k in range(0, 20):
-            byte_data = files_reader.read_byte()
+            byte_data = files_tiledata_reader.read_byte()
             #print("i: {0}, byte_data: {1}".format(i, byte_data))
 
             if byte_data != 0:

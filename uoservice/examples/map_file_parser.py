@@ -7,6 +7,7 @@ from numpy import int8
 files_map_name = "map0LegacyMUL.uop"
 files_statics_name = "statics0.mul"
 files_index_statics_name = "staidx0.mul"
+files_tiledata_name = "tiledata.mul"
 
 UOP_MAGIC_NUMBER = hex(0x50594d)
 _has_extra = False
@@ -31,9 +32,14 @@ p_files_index_statics = files_index_statics.read()
 files_index_statics_reader = utils.FileReader(BytesIO(p_files_index_statics))
 files_index_statics_size = files_index_statics_reader.size
 
+file_tiledata = open(files_tiledata_name, 'rb')
+p_file_tiledata = file_tiledata.read()
+files_tiledata_reader = utils.FileReader(BytesIO(p_file_tiledata))
+
 files_map_reader.seek(0)
 files_statics_reader.seek(0)
 files_index_statics_reader.seek(0)
+files_tiledata_reader.seek(0)
 
 uop_magic_number = hex(files_map_reader.read_uint32())
 
@@ -65,8 +71,6 @@ while next_block != 0:
         flag = files_map_reader.read_short();
         length = compressed_length if flag == 1 else decompressed_length;
 
-        #print("i: {0}, offset: {1}".format(i, offset))
-
         if offset == 0:
             continue
 
@@ -79,7 +83,6 @@ while next_block != 0:
     files_map_reader.seek(next_block)
 
 total_entries_count = real_total;
-#print("total_entries_count: ", total_entries_count)
 
 pattern = "build/map0legacymul/{:08d}.dat"
 
@@ -98,10 +101,7 @@ uopoffset = 0
 file_number = -1;
 maxblockcount = 896 * 512
 
-#print("len(entries): ", len(entries))
-
 block_data = []
-
 for block in range(0, maxblockcount):
     realmapaddress = 0
     realstaticaddress = 0
@@ -143,13 +143,56 @@ for block in range(0, maxblockcount):
         #      realmapaddress, realstaticaddress, realstaticcount))
         pass
 
-    #self, map_address, static_address, static_count, 
-    #original_map_address, original_static_address, original_static_count
-
     index_map = utils.IndexMap(realmapaddress, realstaticaddress, realstaticcount, 
                                realmapaddress, realstaticaddress, realstaticcount)
 
     block_data.append(index_map)
+
+
+land_data_dict = {}
+for i in range(0, 512):
+    files_tiledata_reader.read_uint32()
+
+    for j in range(0, 32):
+        idx = i * 32 + j
+        flags = files_tiledata_reader.read_long();
+        text_id = files_tiledata_reader.read_short();
+
+        buffer_string = ""
+        for k in range(0, 20):
+            byte_data = files_tiledata_reader.read_byte()
+
+            if byte_data != 0:
+                buffer_string += chr(byte_data)
+
+        land_data_dict[idx] = {"flags": flags, "text_id": text_id, "name": buffer_string}
+
+
+static_data_dict = {}
+for i in range(0, 2048):
+    files_tiledata_reader.read_uint32()
+
+    for j in range(0, 32):
+        idx = i * 32 + j
+        flags = files_tiledata_reader.read_long()
+        weight = files_tiledata_reader.read_byte()
+        layer = files_tiledata_reader.read_byte()
+        count = files_tiledata_reader.read_uint32();
+        anim_id = files_tiledata_reader.read_short();
+        hue = files_tiledata_reader.read_short();
+        light_index = files_tiledata_reader.read_short();
+        height = files_tiledata_reader.read_byte();
+
+        buffer_string = ""
+        for k in range(0, 20):
+            byte_data = files_tiledata_reader.read_byte()
+
+            if byte_data != 0:
+                buffer_string += chr(byte_data)
+
+        static_data_dict[idx] = {"flags": flags, "weight": weight, "layer": layer, "count": count,
+                                 "anim_id": anim_id, "hue": hue, "light_index": light_index,
+                                 "height": height, "name": buffer_string }
 
 
 position_list = [[438, 313], [440, 316], [440, 314], [441, 314], [440, 313], [438, 314], [438, 315], [439, 314],
@@ -160,9 +203,9 @@ for position in position_list:
     Y = position[1]
 
     im = utils.get_index(block_data, X, Y)
-    print("X: {0}, Y: {1}".format(X, Y))
-    print("realmapaddress: {0}, realstaticaddress: {1}, realstaticcount: {2}".format( 
-           im.map_address, im.static_address, im.static_count))
+    #print("X: {0}, Y: {1}".format(X, Y))
+    #print("realmapaddress: {0}, realstaticaddress: {1}, realstaticcount: {2}".format( 
+    #       im.map_address, im.static_address, im.static_count))
     #print("")
 
     files_map_reader.seek(im.map_address)
@@ -175,8 +218,7 @@ for position in position_list:
             z = int8(files_map_reader.read_byte());
             tile_id = (tile_id & 0x3FFF);
 
-            print("x: {0}, y: {1}, tile_id: {2}, z: {3}".format(x, y, tile_id, z))
+            land_data = land_data_dict[tile_id]
+            print("x: {0}, y: {1}, tile_id: {2}, z: {3}, name: {4}".format(x, y, tile_id, z, land_data["name"]))
 
     print("")
-
-
