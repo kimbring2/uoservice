@@ -19,7 +19,9 @@ import random
 ## UoService package imports
 from uoservice.protos import UoService_pb2
 from uoservice.protos import UoService_pb2_grpc
+from uoservice.UoServiceGameFileParser import UoServiceGameFileParser
 from uoservice import utils
+
 
 
 class UoService:
@@ -69,6 +71,10 @@ class UoService:
 
 		self.picked_up_item = {}
 
+		self.uo_installed_path = "/home/kimbring2/.wine/drive_c/Program Files (x86)/Electronic Arts/Ultima Online Classic"
+		self.uoservice_game_file_parser = UoServiceGameFileParser(self.uo_installed_path)
+		self.uoservice_game_file_parser.load()
+
 	def _open_grpc(self):
 		# Open the gRPC channel using the port that is same of game client 
 		channel = grpc.insecure_channel('localhost:' + str(self.grpc_port))
@@ -81,7 +87,7 @@ class UoService:
 
 		# Reset the gRPC server before communcation with it.
 		self.stub.WriteAct(UoService_pb2.GrpcAction(actionType=0, sourceSerial=0, targetSerial=0, 
-																								walkDirection=0, index=0, amount=0, run=False))
+													walkDirection=0, index=0, amount=0, run=False))
 		self.stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
 
 		self.stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
@@ -130,7 +136,8 @@ class UoService:
 			self.max_tile_y = player_object.maxTileY
 
 		#print("min_tile_x: {0}, min_tile_y: {1}, max_tile_x: {2}, max_tile_y: {3}: ".format(
-		#	self.min_tile_x, self.min_tile_y, self.max_tile_x, self.max_tile_y))
+		#	  self.min_tile_x, self.min_tile_y, self.max_tile_x, self.max_tile_y))
+
 		#if player_object.holdItemSerial != 0:
 		#	self.hold_item_serial = player_object.holdItemSerial
 
@@ -287,7 +294,7 @@ class UoService:
 
 		for skill in player_skills_data:
 			self.player_skills_dict[skill.name] = {"index": skill.index, "isClickable": skill.isClickable, "value": skill.value, 
-														   							 "base: ": skill.base, "cap": skill.cap, "lock": skill.lock}
+												   "base: ": skill.base, "cap": skill.cap, "lock": skill.lock}
 
 		for data in cliloc_data:
 			#print("data: ", data)
@@ -312,6 +319,39 @@ class UoService:
 				if v["gameX"] < screen_width and v["gameY"] < screen_height:
 						#screen_image = cv2.circle(screen_image, (v["gameX"], v["gameY"]), radius, (0, 0, 255), thickness)
 						pass
+
+		cell_x_list = []
+		cell_y_list = []
+		tile_data_list = []
+		if self.max_tile_x != None:
+			#	tile_x_range = self.max_tile_x - self.min_tile_x
+			#	tile_y_range = self.max_tile_y - self.min_tile_y
+			#	print("tile_x_range: {0}, tile_y_range: {1}: ".format(tile_x_range, tile_y_range))
+			for x in range(self.min_tile_x, self.max_tile_x):
+				cell_x = x >> 3
+				if cell_x not in cell_x_list:
+					cell_x_list.append(cell_x)
+
+			for y in range(self.min_tile_y, self.max_tile_y):
+				cell_y = y >> 3
+				if cell_y not in cell_y_list:
+					cell_y_list.append(cell_y)
+
+			#print("cell_x_list: {0}, cell_y_list: {1}: ".format(cell_x_list, cell_y_list))
+			cell_zip = zip(cell_x_list, cell_y_list)
+			for cell_x in cell_x_list:
+				for cell_y in cell_y_list:
+					#print("cell: ({0}, {1})".format(cell_x, cell_y))
+					tile_data = self.uoservice_game_file_parser.get_tile_data(cell_x, cell_y)
+
+					for tile in tile_data:
+						#print("name: {0}, game_x: {1}, game_y: {2}".format(tile["name"], tile["game_x"], tile["game_y"]))
+						if tile["name"] == "forest":
+							screen_image = cv2.circle(screen_image, (tile["game_x"], tile["game_y"]), 1, (128, 0, 128), 1)
+					#tile_data_list.append(tile_data)
+
+			print("")
+
 		'''
 		if len(self.near_land_object_dict) != 0:
 			for k, v in self.near_land_object_dict.items():
@@ -320,25 +360,6 @@ class UoService:
 				pass
 
 			#print("")
-
-		if self.static_object_game_x_data != None:
-			#print("len(self.static_object_game_x_data): ", len(self.static_object_game_x_data))
-			for i in range(0, len(self.static_object_game_x_data)):
-					#if self.static_object_game_x_data[i] >= 1400 or self.static_object_game_y_data[i] >= 1280:
-					#	continue
-					screen_image = cv2.circle(screen_image, (self.static_object_game_x_data[i], self.static_object_game_y_data[i]), 
-									   				 		    1, (120, 120, 120), 1)
-					pass
-
-		if self.rock_object_game_x_data != None:
-			#print("len(self.rock_object_game_x_data): ", len(self.rock_object_game_x_data))
-			for i in range(0, len(self.rock_object_game_x_data)):
-					#if self.static_object_game_x_data[i] >= 1400 or self.static_object_game_y_data[i] >= 1280:
-					#	continue
-					screen_image = cv2.circle(screen_image, (self.rock_object_game_x_data[i], self.rock_object_game_y_data[i]), 
-									   				 		    1, (0, 0, 255), 1)
-					pass
-		#print("")
 		'''
 
 		boundary = 50
@@ -362,7 +383,7 @@ class UoService:
 				#print("else")
 				screen_image = screen_image[0:self.player_game_y + boundary, 0:self.player_game_x + boundary, :]
 
-		vis = False
+		vis = True
 		if vis:
 			#dim = (1720, 1370)
 			try:

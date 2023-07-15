@@ -35,10 +35,10 @@ grpc_port = arguments.grpc_port
 window_width = arguments.window_width
 window_height = arguments.window_height
 
-uoservice_game_file_parser = UoServiceGameFileParser("/home/kimbring2/.wine/drive_c/Program Files (x86)/Electronic Arts/Ultima Online Classic")
-uoservice_game_file_parser.load()
+#uoservice_game_file_parser = UoServiceGameFileParser("/home/kimbring2/.wine/drive_c/Program Files (x86)/Electronic Arts/Ultima Online Classic")
+#uoservice_game_file_parser.load()
 
-uoservice_game_file_parser.get_land_data(438, 313)
+#uoservice_game_file_parser.get_tile_data(438, 313)
 
 ## Declare the main function
 def main():

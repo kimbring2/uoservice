@@ -214,7 +214,10 @@ class UoServiceGameFileParser:
 		            if byte_data != 0:
 		                buffer_string += chr(byte_data)
 
-		        #print("buffer_string: ", buffer_string)
+		        if buffer_string == 'water':
+		        	#print("idx: ", idx)
+		        	#print("buffer_string: ", buffer_string)
+		        	pass
 
 		        self.static_data_dict[idx] = {"flags": flags, "weight": weight, "layer": layer, "count": count,
 		                                      "anim_id": anim_id, "hue": hue, "light_index": light_index,
@@ -225,24 +228,51 @@ class UoServiceGameFileParser:
 
 		return self.block_data[block]
 
-	def get_land_data(self, x, y):
+	def get_tile_data(self, x, y):
 	    im = self.get_index(x, y)
-	    #print("X: {0}, Y: {1}".format(X, Y))
-	    #print("realmapaddress: {0}, realstaticaddress: {1}, realstaticcount: {2}".format( 
-	    #       im.map_address, im.static_address, im.static_count))
-	    #print("")
-
 	    self.files_map_reader.seek(im.map_address)
-
 	    header = self.files_map_reader.read_uint32()
+
+	    tile_data = []
+
+	    bx = x << 3
+	    by = y << 3
 	    for y in range(0, 8):
 	        pos = y << 3
+	        tile_y = by + y
 	        for x in range(0, 8):
-	            tile_id = self.files_map_reader.read_short();
-	            z = int8(self.files_map_reader.read_byte());
-	            tile_id = (tile_id & 0x3FFF);
+	            tile_id = self.files_map_reader.read_short()
+	            z = int8(self.files_map_reader.read_byte())
+	            tile_id = (tile_id & 0x3FFF)
+
+	            tile_x = bx + x
 
 	            land_data = self.land_data_dict[tile_id]
-	            print("x: {0}, y: {1}, tile_id: {2}, z: {3}, name: {4}".format(x, y, tile_id, z, land_data["name"]))
+	            land_data["game_x"] = tile_x
+	            land_data["game_y"] = tile_y
 
-	    print("")
+	            #print("x: {0}, y: {1}, tile_id: {2}, z: {3}, name: {4}".format(x, y, tile_id, z, land_data["name"]))
+	            tile_data.append(land_data)
+
+	    if im.static_address != 0:
+	    	self.files_statics_reader.seek(im.static_address)
+	    	#print("im.static_count: ", im.static_count)
+
+	    	for i in range(0, im.static_count):
+	    		color = self.files_statics_reader.read_short()
+	    		x = self.files_statics_reader.read_byte()
+	    		y = self.files_statics_reader.read_byte()
+	    		z = self.files_statics_reader.read_byte()
+	    		hue = self.files_statics_reader.read_short()
+
+	    		#print("color: ", color)
+	    		static_data = self.static_data_dict[color]
+	    		print("static_data: ", static_data)
+
+	    		#print("x: ", x)
+	    		#print("y: ", y)
+	    		#print("z: ", y)
+
+	    	print("")
+
+	    return tile_data
