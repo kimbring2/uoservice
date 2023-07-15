@@ -8,7 +8,7 @@ UoService is a service to play Ultima Online through gRPC. There are first-class
 
 # System requirement
 - Currently, I only test this project in Ubuntu linux.
-- You need to install the [Ultima Online game])(https://uo.com/client-download/) itself through the [Wine](https://wiki.winehq.org/Ubuntu).
+- You need to install the [Ultima Online game](https://uo.com/client-download/) itself through the [Wine](https://wiki.winehq.org/Ubuntu).
 
 # Quick Start Guide
 ## Get UoService
