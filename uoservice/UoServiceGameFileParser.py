@@ -267,12 +267,12 @@ class UoServiceGameFileParser:
 
 	    		#print("color: ", color)
 	    		static_data = self.static_data_dict[color]
-	    		print("static_data: ", static_data)
+	    		#print("static_data: ", static_data)
 
 	    		#print("x: ", x)
 	    		#print("y: ", y)
 	    		#print("z: ", y)
 
-	    	print("")
+	    	#print("")
 
 	    return tile_data

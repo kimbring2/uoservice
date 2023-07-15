@@ -90,10 +90,18 @@ class UoService:
 		self.parse_response(response)
 
 	def parse_land_static(self):
-		cell_x_list = []
-		cell_y_list = []
 		if self.max_tile_x != None:
-			self.tile_data_list = []
+			print("parse_land_static(): {0}".format(self.total_step))
+
+			screen_image = np.zeros((4000,4000,4), dtype=np.uint8)
+			radius = 5
+			thickness = 2
+			screen_width = 4000
+			screen_height = 4000
+
+			cell_x_list = []
+			cell_y_list = []
+			tile_data_list = []
 
 			for x in range(self.min_tile_x, self.max_tile_x):
 				cell_x = x >> 3
@@ -112,13 +120,54 @@ class UoService:
 					#print("cell: ({0}, {1})".format(cell_x, cell_y))
 					tile_data = self.uoservice_game_file_parser.get_tile_data(cell_x, cell_y)
 
-					#for tile in tile_data:
+					for tile in tile_data:
 						#print("name: {0}, game_x: {1}, game_y: {2}".format(tile["name"], tile["game_x"], tile["game_y"]))
-						#if tile["name"] == "forest":
-						#	screen_image = cv2.circle(screen_image, (tile["game_x"], tile["game_y"]), 1, (128, 0, 128), 1)
-					self.tile_data_list.append(tile_data)
+						if tile["name"] == "forest":
+							#print("name: {0}, game_x: {1}, game_y: {2}".format(tile["name"], tile["game_x"], tile["game_y"]))
+							#screen_image = cv2.circle(screen_image, (tile["game_x"], tile["game_y"]), 1, (128, 0, 128), 1)
+							pass
+					
+					tile_data_list.append(tile_data)
 
-			#print("")
+			radius = 5
+			thickness = 2
+			screen_width = 4000
+			screen_height = 4000
+			for k, v in self.world_mobile_dict.items():
+				if self.player_game_x != None:
+					if v["gameX"] < screen_width and v["gameY"] < screen_height:
+						screen_image = cv2.circle(screen_image, (v["gameX"], v["gameY"]), radius, (0, 0, 255), thickness)
+						pass
+
+			boundary = 50
+			if self.player_game_x != None:
+				#print("player_game_x: {0}, player_game_y: {1}".format(self.player_game_x, self.player_game_y))
+
+				radius = 1
+				screen_image = cv2.circle(screen_image, (self.player_game_x, self.player_game_y), radius, (0, 255, 0), thickness)
+				if self.player_game_y > boundary and self.player_game_x > boundary:
+					screen_image = screen_image[self.player_game_y - boundary:self.player_game_y + boundary, 
+																			self.player_game_x - boundary:self.player_game_x + boundary, :]
+				elif self.player_game_y < boundary and self.player_game_x > boundary:
+					#print("self.player_game_y < 600 and self.player_game_x > 600")
+					screen_image = screen_image[0:self.player_game_y + boundary, 
+																			self.player_game_x - boundary:self.player_game_x + boundary, :]
+				elif self.player_game_y > boundary and self.player_game_x < boundary:
+					#print("self.player_game_y > 600 and self.player_game_x < 600")
+					screen_image = screen_image[self.player_game_y - boundary:self.player_game_y + boundary, 
+																		  0:self.player_game_x + boundary, :]
+				else:
+					#print("else")
+					screen_image = screen_image[0:self.player_game_y + boundary, 0:self.player_game_x + boundary, :]
+
+			screen_image = cv2.resize(screen_image, (boundary * 4, boundary * 4), interpolation=cv2.INTER_AREA)
+			screen_image = utils.rotate_image(screen_image, -45)
+			cv2.imshow('screen_image_' + str(self.grpc_port), screen_image)
+			cv2.waitKey(1)
+
+			return tile_data_list
+		else:
+			return None
 
 	def parse_response(self, response):
 		# Preprocess the gRPC response format to Python friendly type
@@ -318,18 +367,18 @@ class UoService:
 		for k, v in self.world_mobile_dict.items():
 			if self.player_game_x != None:
 				if v["gameX"] < screen_width and v["gameY"] < screen_height:
-					#screen_image = cv2.circle(screen_image, (v["gameX"], v["gameY"]), radius, (0, 0, 255), thickness)
+					screen_image = cv2.circle(screen_image, (v["gameX"], v["gameY"]), radius, (0, 0, 255), thickness)
 					pass
 
-		
-		self.parse_land_static()
-		for tile_data in self.tile_data_list:
-			for tile in tile_data:
-				#print("name: {0}, game_x: {1}, game_y: {2}".format(tile["name"], tile["game_x"], tile["game_y"]))
-				if tile["name"] == "forest":
-					screen_image = cv2.circle(screen_image, (tile["game_x"], tile["game_y"]), 1, (128, 0, 128), 1)
-		
+		tile_data_list = self.parse_land_static()
 		'''
+		if tile_data_list != None:
+			for tile_data in tile_data_list:
+				for tile in tile_data:
+					#print("name: {0}, game_x: {1}, game_y: {2}".format(tile["name"], tile["game_x"], tile["game_y"]))
+					if tile["name"] == "forest":
+						screen_image = cv2.circle(screen_image, (tile["game_x"], tile["game_y"]), 1, (128, 0, 128), 1)
+		
 		cell_x_list = []
 		cell_y_list = []
 		if self.max_tile_x != None:
@@ -379,7 +428,7 @@ class UoService:
 				#print("else")
 				screen_image = screen_image[0:self.player_game_y + boundary, 0:self.player_game_x + boundary, :]
 
-		vis = True
+		vis = False
 		if vis:
 			#dim = (1720, 1370)
 			try:
@@ -392,14 +441,6 @@ class UoService:
 			except Exception as e:
 				print("e: ", e)
 				print("screen_image.shape: \n", screen_image.shape)
-
-		'''
-		self.static_object_game_x_list = []
-		self.static_object_game_y_list = []
-		for i in range(0, len(static_object_game_x_data)):
-			self.static_object_game_x_list.append(static_object_game_x_data[i])
-			self.static_object_game_y_list.append(static_object_game_y_data[i])
-		'''
 
 	def step(self, action):
 		#print("action: ", action)
@@ -414,12 +455,12 @@ class UoService:
 		run = action['run']
 
 		self.stub.WriteAct(UoService_pb2.GrpcAction(actionType=action_type, 
-																						    sourceSerial=source_serial,
-																						    targetSerial=target_serial,
-																						    walkDirection=walk_direction,
-																						    index=index, 
-																						    amount=amount,
-																						    run=run))
+												    sourceSerial=source_serial,
+												    targetSerial=target_serial,
+												    walkDirection=walk_direction,
+												    index=index, 
+												    amount=amount,
+												    run=run))
 		self.stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
 		self.stub.ObsSemaphoreControl(UoService_pb2.SemaphoreAction(mode='wait'))
 
