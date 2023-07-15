@@ -12,7 +12,6 @@ files_tiledata_reader = utils.FileReader(BytesIO(p_file_tiledata))
 files_tiledata_reader.seek(0)
 
 land_data_dict = {}
-
 for i in range(0, 512):
     files_tiledata_reader.read_uint32()
 
@@ -24,16 +23,11 @@ for i in range(0, 512):
         buffer_string = ""
         for k in range(0, 20):
             byte_data = files_tiledata_reader.read_byte()
-            #print("i: {0}, byte_data: {1}".format(i, byte_data))
 
             if byte_data != 0:
                 buffer_string += chr(byte_data)
 
-        #print("buffer_string: ", buffer_string)
         land_data_dict[idx] = {"flags": flags, "text_id": text_id, "name": buffer_string}
-
-
-#print("land_data_dict: ", land_data_dict)
 
 static_data_dict = {}
 for i in range(0, 2048):
@@ -53,7 +47,6 @@ for i in range(0, 2048):
         buffer_string = ""
         for k in range(0, 20):
             byte_data = files_tiledata_reader.read_byte()
-            #print("i: {0}, byte_data: {1}".format(i, byte_data))
 
             if byte_data != 0:
                 buffer_string += chr(byte_data)

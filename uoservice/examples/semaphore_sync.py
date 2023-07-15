@@ -101,7 +101,7 @@ def main():
       print("step: ", step)
       #print("gold_serial: ", gold_serial)
       if gold_serial != None and pick_up_flag == True:
-        action['action_type'] = 3
+        action['action_type'] = 0
         action['target_serial'] = gold_serial
         action['amount'] = 100
         pick_up_flag = False

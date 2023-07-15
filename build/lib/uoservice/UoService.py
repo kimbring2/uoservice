@@ -53,6 +53,11 @@ class UoService:
 		self.player_gold = None
 		self.targeting_state = None
 
+		self.min_tile_x = None
+		self.min_tile_y = None
+		self.max_tile_x = None
+		self.max_tile_y = None
+
 		self.backpack_serial = None
 		self.bank_serial = None
 
@@ -97,13 +102,11 @@ class UoService:
 		player_status_data = response.playerStatus
 		player_skills_data = response.playerSkillList.skills
 
-		land_object_data = response.landObjectList.landObjects
-
-		static_object_game_x_data = response.staticObjectInfoList.gameXs
-		static_object_game_y_data = response.staticObjectInfoList.gameYs
-
-		rock_object_game_x_data = response.landRockObjectInfoList.gameXs
-		rock_object_game_y_data = response.landRockObjectInfoList.gameYs
+		#land_object_data = response.landObjectList.landObjects
+		#static_object_game_x_data = response.staticObjectInfoList.gameXs
+		#static_object_game_y_data = response.staticObjectInfoList.gameYs
+		#rock_object_game_x_data = response.landRockObjectInfoList.gameXs
+		#rock_object_game_y_data = response.landRockObjectInfoList.gameYs
 
 		if len(popup_menu_data):
 			for popup_menu in popup_menu_data:
@@ -121,8 +124,13 @@ class UoService:
 			self.war_mode = player_object.warMode
 			self.hold_item_serial = player_object.holdItemSerial
 			self.targeting_state = player_object.targetingState
+			self.min_tile_x = player_object.minTileX
+			self.min_tile_y = player_object.minTileY
+			self.max_tile_x = player_object.maxTileX
+			self.max_tile_y = player_object.maxTileY
 
-		#print("self.hold_item_serial: ", self.hold_item_serial)
+		print("min_tile_x: {0}, min_tile_y: {1}, max_tile_x: {2}, max_tile_y: {3}: ".format(
+			self.min_tile_x, self.min_tile_y, self.max_tile_x, self.max_tile_y))
 		#if player_object.holdItemSerial != 0:
 		#	self.hold_item_serial = player_object.holdItemSerial
 
@@ -162,6 +170,7 @@ class UoService:
 			bank_box = self.world_item_dict[self.bank_serial]
 
 		#print("len(land_object_data): ", len(land_object_data))
+		'''
 		if len(land_object_data) != 0:
 			self.near_land_object_dict = {}
 			for obj in land_object_data:
@@ -174,6 +183,7 @@ class UoService:
 		if len(rock_object_game_x_data) != 0:
 			self.rock_object_game_x_data = rock_object_game_x_data
 			self.rock_object_game_y_data = rock_object_game_y_data
+		'''
 
 		if len(self.world_item_dict) != 0 and self.backpack_serial != None:
 			self.backpack_item_dict = {}
@@ -302,7 +312,7 @@ class UoService:
 				if v["gameX"] < screen_width and v["gameY"] < screen_height:
 						#screen_image = cv2.circle(screen_image, (v["gameX"], v["gameY"]), radius, (0, 0, 255), thickness)
 						pass
-
+		'''
 		if len(self.near_land_object_dict) != 0:
 			for k, v in self.near_land_object_dict.items():
 				#print("Near land {0}: {1}".format(k, self.near_land_object_dict[k]))
@@ -329,6 +339,7 @@ class UoService:
 									   				 		    1, (0, 0, 255), 1)
 					pass
 		#print("")
+		'''
 
 		boundary = 50
 		if self.player_game_x != None:
@@ -365,11 +376,13 @@ class UoService:
 				print("e: ", e)
 				print("screen_image.shape: \n", screen_image.shape)
 
+		'''
 		self.static_object_game_x_list = []
 		self.static_object_game_y_list = []
 		for i in range(0, len(static_object_game_x_data)):
 			self.static_object_game_x_list.append(static_object_game_x_data[i])
 			self.static_object_game_y_list.append(static_object_game_y_data[i])
+		'''
 
 	def step(self, action):
 		#print("action: ", action)

@@ -13,6 +13,10 @@ message GrpcPlayerObject {
   uint32 holdItemSerial = 6;
   bool warMode = 7;
   uint32 targetingState = 8;
+  uint32 minTileX = 9;
+  uint32 minTileY = 10;
+  uint32 maxTileX = 11;
+  uint32 maxTileY = 12;
 }
 
 message GrpcMobileObjectData {
