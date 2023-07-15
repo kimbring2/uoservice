@@ -4,6 +4,7 @@ import struct
 import utils
 from numpy import int8
 import os
+import threading
 
 class UoServiceGameFileParser:
 	'''UoServiceGameFileParser class including Binary file reader'''
@@ -57,6 +58,23 @@ class UoServiceGameFileParser:
 		self.files_tiledata_reader.seek(0)
 
 	def load(self):
+		#self.load_map_file()
+		#self.load_tile_data()
+		thread_1 = threading.Thread(target=self.load_map_file, daemon=True, args=())
+		thread_2 = threading.Thread(target=self.load_tile_data, daemon=True, args=())
+
+		thread_1.start()
+		thread_2.start()
+
+		thread_1.join()
+		thread_2.join()
+
+		#thread.start_new_thread(self.load_map_file(), ())
+		#thread.start_new_thread(self.load_tile_data(), ())
+
+	def load_map_file(self):
+		print("load_map_file()")
+
 		uop_magic_number = hex(self.files_map_reader.read_uint32())
 		if uop_magic_number != self.UOP_MAGIC_NUMBER:
 		    raise NameError('Bad uop file')
@@ -150,16 +168,13 @@ class UoServiceGameFileParser:
 		            if realstaticcount > 1024:
 		                realstaticcount = 1024;
 
-		    if block % 1000 == 0 and realstaticcount != 0:
-		        #print("block: {0}, realmapaddress: {1}, realstaticaddress: {2}, realstaticcount: {3}".format(block, 
-		        #      realmapaddress, realstaticaddress, realstaticcount))
-		        pass
-
 		    index_map = utils.IndexMap(realmapaddress, realstaticaddress, realstaticcount, 
 		                               realmapaddress, realstaticaddress, realstaticcount)
 
 		    self.block_data.append(index_map)
 
+	def load_tile_data(self):
+		print("load_tile_data()")
 
 		for i in range(0, 512):
 		    self.files_tiledata_reader.read_uint32()

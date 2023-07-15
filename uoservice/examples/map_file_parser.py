@@ -14,7 +14,7 @@ files_tiledata_name = "tiledata.mul"
 
 files_map_name = os.path.join(uo_installed_path, files_map_name)
 files_statics_name = os.path.join(uo_installed_path, files_statics_name)
-files_index_statics_name = os.path.join(uo_installed_path, files_map_name)
+files_index_statics_name = os.path.join(uo_installed_path, files_index_statics_name)
 files_tiledata_name = os.path.join(uo_installed_path, files_map_name)
 
 files_tiledata_name = "/home/kimbring2/.wine/drive_c/Program Files (x86)/Electronic Arts/Ultima Online Classic/tiledata.mul"
