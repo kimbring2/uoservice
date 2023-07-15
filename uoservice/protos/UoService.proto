@@ -45,22 +45,6 @@ message GrpcItemObjectData {
   uint32 container = 10;
 }
 
-message GrpcLandObjectData {
-  uint32 index = 1;
-  uint32 gameX = 2;
-  uint32 gameY = 3;
-  uint32 distance = 4;
-  string name = 5;
-}
-
-message GrpcStaticObjectData {
-  uint32 index = 1;
-  uint32 gameX = 2;
-  uint32 gameY = 3;
-  uint32 distance = 4;
-  string name = 5;
-}
-
 message GrpcPlayerStatus {
   uint32 str = 1;
   uint32 dex = 2;
@@ -87,11 +71,6 @@ message GrpcSkill {
   uint32 base = 5;
   uint32 cap = 6;
   uint32 lock = 7;
-}
-
-message GrpcObstacleInfoList {
-  repeated uint32 gameXs = 1;
-  repeated uint32 gameYs = 2;
 }
 
 message GrpcPopupMenu {
@@ -122,19 +101,6 @@ message GrpcItemObjectList {
   repeated GrpcItemObjectData itemObjects = 1;
 }
 
-message GrpcLandObjectList {
-  repeated GrpcLandObjectData landObjects = 1;
-}
-
-message GrpcStaticObjectList {
-  repeated GrpcStaticObjectData staticObjects = 1;
-}
-
-message GrpcGameObjectInfoList {
-  repeated uint32 gameXs = 1;
-  repeated uint32 gameYs = 2;
-}
-
 message SemaphoreAction {
   string mode = 1;
 }
@@ -158,13 +124,6 @@ message GrpcStates {
 
   GrpcPlayerStatus playerStatus = 6;
   GrpcSkillList playerSkillList = 7;
-
-  GrpcLandObjectList landObjectList = 8;
-  GrpcStaticObjectList staticObjectList = 9;
-
-  GrpcObstacleInfoList obstacleInfoList = 10;
-
-  GrpcGameObjectInfoList staticObjectInfoList = 11;
 }
 
 message GrpcAction {

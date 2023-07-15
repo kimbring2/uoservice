@@ -23,7 +23,6 @@ from uoservice.UoServiceGameFileParser import UoServiceGameFileParser
 from uoservice import utils
 
 
-
 class UoService:
 	'''UoService class including gRPC client'''
 	def __init__(self, grpc_port, window_width, window_height):
@@ -75,6 +74,8 @@ class UoService:
 		self.uoservice_game_file_parser = UoServiceGameFileParser(self.uo_installed_path)
 		self.uoservice_game_file_parser.load()
 
+		self.tile_data_list = []
+
 	def _open_grpc(self):
 		# Open the gRPC channel using the port that is same of game client 
 		channel = grpc.insecure_channel('localhost:' + str(self.grpc_port))
@@ -94,6 +95,37 @@ class UoService:
 		response = self.stub.ReadObs(UoService_pb2.Config(init=False))
 
 		self.parse_response(response)
+
+	def parse_land_static(self):
+		cell_x_list = []
+		cell_y_list = []
+		if self.max_tile_x != None:
+			self.tile_data_list = []
+			
+			for x in range(self.min_tile_x, self.max_tile_x):
+				cell_x = x >> 3
+				if cell_x not in cell_x_list:
+					cell_x_list.append(cell_x)
+
+			for y in range(self.min_tile_y, self.max_tile_y):
+				cell_y = y >> 3
+				if cell_y not in cell_y_list:
+					cell_y_list.append(cell_y)
+
+			#print("cell_x_list: {0}, cell_y_list: {1}: ".format(cell_x_list, cell_y_list))
+			cell_zip = zip(cell_x_list, cell_y_list)
+			for cell_x in cell_x_list:
+				for cell_y in cell_y_list:
+					#print("cell: ({0}, {1})".format(cell_x, cell_y))
+					tile_data = self.uoservice_game_file_parser.get_tile_data(cell_x, cell_y)
+
+					#for tile in tile_data:
+						#print("name: {0}, game_x: {1}, game_y: {2}".format(tile["name"], tile["game_x"], tile["game_y"]))
+						#if tile["name"] == "forest":
+						#	screen_image = cv2.circle(screen_image, (tile["game_x"], tile["game_y"]), 1, (128, 0, 128), 1)
+					self.tile_data_list.append(tile_data)
+
+			#print("")
 
 	def parse_response(self, response):
 		# Preprocess the gRPC response format to Python friendly type
@@ -317,16 +349,21 @@ class UoService:
 		for k, v in self.world_mobile_dict.items():
 			if self.player_game_x != None:
 				if v["gameX"] < screen_width and v["gameY"] < screen_height:
-						#screen_image = cv2.circle(screen_image, (v["gameX"], v["gameY"]), radius, (0, 0, 255), thickness)
-						pass
+					#screen_image = cv2.circle(screen_image, (v["gameX"], v["gameY"]), radius, (0, 0, 255), thickness)
+					pass
 
+		
+		self.parse_land_static()
+		for tile_data in self.tile_data_list:
+			for tile in tile_data:
+				#print("name: {0}, game_x: {1}, game_y: {2}".format(tile["name"], tile["game_x"], tile["game_y"]))
+				if tile["name"] == "forest":
+					screen_image = cv2.circle(screen_image, (tile["game_x"], tile["game_y"]), 1, (128, 0, 128), 1)
+		
+		'''
 		cell_x_list = []
 		cell_y_list = []
-		tile_data_list = []
 		if self.max_tile_x != None:
-			#	tile_x_range = self.max_tile_x - self.min_tile_x
-			#	tile_y_range = self.max_tile_y - self.min_tile_y
-			#	print("tile_x_range: {0}, tile_y_range: {1}: ".format(tile_x_range, tile_y_range))
 			for x in range(self.min_tile_x, self.max_tile_x):
 				cell_x = x >> 3
 				if cell_x not in cell_x_list:
@@ -348,16 +385,6 @@ class UoService:
 						#print("name: {0}, game_x: {1}, game_y: {2}".format(tile["name"], tile["game_x"], tile["game_y"]))
 						if tile["name"] == "forest":
 							screen_image = cv2.circle(screen_image, (tile["game_x"], tile["game_y"]), 1, (128, 0, 128), 1)
-					#tile_data_list.append(tile_data)
-
-			print("")
-
-		'''
-		if len(self.near_land_object_dict) != 0:
-			for k, v in self.near_land_object_dict.items():
-				#print("Near land {0}: {1}".format(k, self.near_land_object_dict[k]))
-				screen_image = cv2.circle(screen_image, (v["gameX"], v["gameY"]), 1, (128, 0, 128), 1)
-				pass
 
 			#print("")
 		'''
