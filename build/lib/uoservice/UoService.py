@@ -129,8 +129,8 @@ class UoService:
 			self.max_tile_x = player_object.maxTileX
 			self.max_tile_y = player_object.maxTileY
 
-		print("min_tile_x: {0}, min_tile_y: {1}, max_tile_x: {2}, max_tile_y: {3}: ".format(
-			self.min_tile_x, self.min_tile_y, self.max_tile_x, self.max_tile_y))
+		#print("min_tile_x: {0}, min_tile_y: {1}, max_tile_x: {2}, max_tile_y: {3}: ".format(
+		#	self.min_tile_x, self.min_tile_y, self.max_tile_x, self.max_tile_y))
 		#if player_object.holdItemSerial != 0:
 		#	self.hold_item_serial = player_object.holdItemSerial
 
@@ -145,8 +145,8 @@ class UoService:
 			for obj in world_item_data:
 				#print("name: {0}, layer: {1}".format(obj.name, obj.layer))
 				self.world_item_dict[obj.serial] = { "name": obj.name, "gameX": obj.gameX, "gameY":obj.gameY, "serial": obj.serial,
-																						 "distance": obj.distance, "layer":obj.layer, "container": obj.container, 
-																						 "isCorpse": obj.isCorpse, "amount": obj.amount }
+													 "distance": obj.distance, "layer":obj.layer, "container": obj.container, 
+													 "isCorpse": obj.isCorpse, "amount": obj.amount }
 				if obj.layer == 21:
 					self.backpack_serial = obj.serial
 
@@ -161,9 +161,9 @@ class UoService:
 			self.world_mobile_dict = {}
 			for obj in world_mobile_data:
 				self.world_mobile_dict[obj.serial] = { "name": obj.name, "gameX": obj.gameX, "gameY":obj.gameY, 
-																							 "distance": obj.distance, "title": obj.title, "hits": obj.hits,
-																							 "notorietyFlag": obj.notorietyFlag, "hitsMax": obj.hitsMax,
-																							 "race": obj.race}
+													   "distance": obj.distance, "title": obj.title, "hits": obj.hits,
+													   "notorietyFlag": obj.notorietyFlag, "hitsMax": obj.hitsMax,
+													   "race": obj.race}
 
 		#print("self.bank_serial: ", self.bank_serial)
 		if self.bank_serial != None:

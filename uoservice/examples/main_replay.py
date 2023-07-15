@@ -17,7 +17,7 @@ from enum import Enum
 
 from uoservice.protos  import UoService_pb2
 from uoservice.protos  import UoService_pb2_grpc
-from uoservice.UoService_replay import UoServiceReplay
+from uoservice.UoServiceReplay import UoServiceReplay
 
 #replay_path = '/home/kimbring2/ClassicUO/bin/dist/Replay'
 #file_name = 'kimbring2-2023-6-6-01-56-41'

@@ -3,11 +3,26 @@ from io import BytesIO
 import struct
 import utils
 from numpy import int8
+import os
+
+uo_installed_path = "/home/kimbring2/.wine/drive_c/Program Files (x86)/Electronic Arts/Ultima Online Classic"
 
 files_map_name = "map0LegacyMUL.uop"
 files_statics_name = "statics0.mul"
 files_index_statics_name = "staidx0.mul"
 files_tiledata_name = "tiledata.mul"
+
+files_map_name = os.path.join(uo_installed_path, files_map_name)
+files_statics_name = os.path.join(uo_installed_path, files_statics_name)
+files_index_statics_name = os.path.join(uo_installed_path, files_map_name)
+files_tiledata_name = os.path.join(uo_installed_path, files_map_name)
+
+files_tiledata_name = "/home/kimbring2/.wine/drive_c/Program Files (x86)/Electronic Arts/Ultima Online Classic/tiledata.mul"
+
+#files_map_name = "map0LegacyMUL.uop"
+#files_statics_name = "statics0.mul"
+#files_index_statics_name = "staidx0.mul"
+#files_tiledata_name = "tiledata.mul"
 
 UOP_MAGIC_NUMBER = hex(0x50594d)
 _has_extra = False
@@ -195,8 +210,9 @@ for i in range(0, 2048):
                                  "height": height, "name": buffer_string }
 
 
-position_list = [[438, 313], [440, 316], [440, 314], [441, 314], [440, 313], [438, 314], [438, 315], [439, 314],
-                 [439, 312], [439, 313], [439, 311], [436, 315], [437, 314], [436, 314], [437, 315], [434, 309]]
+#position_list = [[438, 313], [440, 316], [440, 314], [441, 314], [440, 313], [438, 314], [438, 315], [439, 314],
+#                 [439, 312], [439, 313], [439, 311], [436, 315], [437, 314], [436, 314], [437, 315], [434, 309]]
+position_list = [[438, 313]]
 
 for position in position_list:
     X = position[0]

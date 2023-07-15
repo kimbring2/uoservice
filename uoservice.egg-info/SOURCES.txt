@@ -2,7 +2,8 @@ LICENSE
 README.md
 setup.py
 uoservice/UoService.py
-uoservice/UoService_replay.py
+uoservice/UoServiceGameFileParser.py
+uoservice/UoServiceReplay.py
 uoservice/untitled.py
 uoservice/uoservice.py
 uoservice/utils.py
