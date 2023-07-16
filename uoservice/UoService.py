@@ -377,44 +377,7 @@ class UoService:
 				if v["gameX"] < screen_width and v["gameY"] < screen_height:
 					screen_image = cv2.circle(screen_image, (v["gameX"], v["gameY"]), radius, (0, 0, 255), thickness)
 					pass
-
-		#tile_data_list = self.parse_land_static()
-		'''
-		if tile_data_list != None:
-			for tile_data in tile_data_list:
-				for tile in tile_data:
-					#print("name: {0}, game_x: {1}, game_y: {2}".format(tile["name"], tile["game_x"], tile["game_y"]))
-					if tile["name"] == "forest":
-						screen_image = cv2.circle(screen_image, (tile["game_x"], tile["game_y"]), 1, (128, 0, 128), 1)
-		
-		cell_x_list = []
-		cell_y_list = []
-		if self.max_tile_x != None:
-			for x in range(self.min_tile_x, self.max_tile_x):
-				cell_x = x >> 3
-				if cell_x not in cell_x_list:
-					cell_x_list.append(cell_x)
-
-			for y in range(self.min_tile_y, self.max_tile_y):
-				cell_y = y >> 3
-				if cell_y not in cell_y_list:
-					cell_y_list.append(cell_y)
-
-			#print("cell_x_list: {0}, cell_y_list: {1}: ".format(cell_x_list, cell_y_list))
-			cell_zip = zip(cell_x_list, cell_y_list)
-			for cell_x in cell_x_list:
-				for cell_y in cell_y_list:
-					#print("cell: ({0}, {1})".format(cell_x, cell_y))
-					tile_data = self.uoservice_game_file_parser.get_tile_data(cell_x, cell_y)
-
-					for tile in tile_data:
-						#print("name: {0}, game_x: {1}, game_y: {2}".format(tile["name"], tile["game_x"], tile["game_y"]))
-						if tile["name"] == "forest":
-							screen_image = cv2.circle(screen_image, (tile["game_x"], tile["game_y"]), 1, (128, 0, 128), 1)
-
-			#print("")
-		'''
-
+					
 		boundary = 50
 		if self.player_game_x != None:
 			#print("player_game_x: {0}, player_game_y: {1}".format(self.player_game_x, self.player_game_y))

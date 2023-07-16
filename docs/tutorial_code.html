@@ -151,10 +151,11 @@
             <p class="toc_title">Contents</p>
             <ul class="toc_list">
                 <li><a href="#uoservice_class">1. UoService Class</a></li>
-                <li><a href="#first_walk">2. First Walk</a></li>
-                <li><a href="#first_attack">3. First Attack</a></li>
-                <li><a href="#first_looting">4. First Looting</a></li>
-                <li><a href="#conclusion">5. Conclusion</a></li>
+                <li><a href="#land_static_data">2. Land, Static Data</a></li>
+                <li><a href="#first_walk">3. First Walk</a></li>
+                <li><a href="#first_attack">4. First Attack</a></li>
+                <li><a href="#first_looting">5. First Looting</a></li>
+                <li><a href="#conclusion">6. Conclusion</a></li>
             </ul>
         </div>
 
@@ -185,15 +186,45 @@
 class UoService:
     '''UoService class including gRPC client'''
     def __init__(self, grpc_port, window_width, window_height):
-            self.grpc_port = grpc_port
-            self.window_width = window_width
-            self.window_height = window_height
-            self.stub = None
+        self.grpc_port = grpc_port
+        self.window_width = window_width
+        self.window_height = window_height
+        self.stub = None
+
+        self.uo_installed_path = "/home/kimbring2/.wine/drive_c/Program Files (x86)/Electronic Arts/Ultima Online Classic"
+        self.uoservice_game_file_parser = UoServiceGameFileParser(self.uo_installed_path)
 
     def _open_grpc(self):
         # Open the gRPC channel using the port that is same of game client 
         channel = grpc.insecure_channel('localhost:' + str(self.grpc_port))
         self.stub = UoService_pb2_grpc.UoServiceStub(channel)
+
+    def parse_land_static(self):
+        while True:
+            if self.max_tile_x != None:
+                cell_x_list = []
+                cell_y_list = []
+                tile_data_list = []
+
+                for x in range(self.min_tile_x, self.max_tile_x):
+                    cell_x = x >> 3
+                    if cell_x not in cell_x_list:
+                        cell_x_list.append(cell_x)
+
+                for y in range(self.min_tile_y, self.max_tile_y):
+                    cell_y = y >> 3
+                    if cell_y not in cell_y_list:
+                        cell_y_list.append(cell_y)
+
+                cell_zip = zip(cell_x_list, cell_y_list)
+                for cell_x in cell_x_list:
+                    for cell_y in cell_y_list:
+                        tile_data = self.uoservice_game_file_parser.get_tile_data(cell_x, cell_y)
+
+                        for tile in tile_data:
+                            if tile["name"] == "forest":
+                        
+                        tile_data_list.append(tile_data)
 
     def step(self, action):
         # Send the action data to game client and receive the state of that action
@@ -220,11 +251,112 @@ class UoService:
             </div>
         </div>
 
+        <div class="row" id="land_static_data">
+            <div class="col">
+                <h5>Figure2: State Transmission Paths.</h5>
+                <img src="Fig/ThreadDiagram.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
+            </div>
+            <div class="col">
+                <h2>2. Land and Static Data</h2>
+                In the case of Land and Static objects, there are far more numbers on one screen than Mobile and Item objects. If all objects are received through one loop, there will be significant delay.
+
+                Fortunately, Land and Static are read from a binary file unlike Mobile and Item data acquired through gRPC. Therefore we can use the two threads to perform both tasks simultaneously as can be seen in Figure 2. 
+
+                In the case of Land and Static objects, there will not be a serious problem even if the incoming order are slightly changed with the Mobile and Item object information because the information will never change unless the agent moves.
+            </div>
+            <div class="col">
+                <h5><a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/UoService.py">Code 2: Land and Static Data</a></h5>
+                <pre class="pre"><code class="python">
+
+import threading
+from uoservice.protos import UoService_pb2
+from uoservice.protos import UoService_pb2_grpc
+from uoservice.UoService import UoService
+from uoservice.UoServiceGameFileParser import UoServiceGameFileParser
+
+def parse_land_static(uo_service):
+  while True:
+    if uo_service.max_tile_x != None:
+      cell_x_list = []
+      cell_y_list = []
+      for x in range(uo_service.min_tile_x, uo_service.max_tile_x):
+        cell_x = x >> 3
+        if cell_x not in cell_x_list:
+          cell_x_list.append(cell_x)
+
+      for y in range(uo_service.min_tile_y, uo_service.max_tile_y):
+        cell_y = y >> 3
+        if cell_y not in cell_y_list:
+          cell_y_list.append(cell_y)
+
+      cell_zip = zip(cell_x_list, cell_y_list)
+      for cell_x in cell_x_list:
+        for cell_y in cell_y_list:
+          tile_data = uo_service.uoservice_game_file_parser.get_tile_data(cell_x, cell_y)
+
+          for tile in tile_data:
+            if tile["name"] == "forest":
+              print("name: {0}, game_x: {1}, game_y: {2}".format(tile["name"], tile["game_x"], tile["game_y"]))
+          
+
+def step(uo_service):
+  action_flag = True
+
+  while True:
+    ## Declare the empty action
+    action = {}
+    action['action_type'] = 0
+    action['source_serial'] = 0
+    action['target_serial'] = 0
+    action['walk_direction'] = 0
+    action['index'] = 0
+    action['amount'] = 0
+    action['run'] = False
+
+    backpack_item_data = uo_service.backpack_item_dict
+    equipped_item_data = uo_service.equipped_item_dict
+    player_status_dict = uo_service.player_status_dict
+
+    if step % 150 == 0:
+      ## Excecute the speciec action
+      if action_flag == True:
+        action['action_type'] = 0
+        action['target_serial'] = gold_serial
+        action['amount'] = 100
+        action_flag = False
+
+    
+    obs = uo_service.step(action)
+
+
+## Declare the main function
+def main():
+  ## Declare the UoService using the parsed argument
+  uo_service = UoService(grpc_port, window_width, window_height)
+
+  ## Open the gRPC client to connect with gRPC server of CSharp part
+  uo_service._open_grpc()
+
+  ## Send the reset signal to gRPC server
+  obs = uo_service.reset()
+
+  thread_2 = threading.Thread(target=step, daemon=True, args=(uo_service,))
+  thread_1 = threading.Thread(target=parse_land_static, daemon=True, args=(uo_service,))
+
+  thread_2.start()
+  thread_1.start()
+
+  thread_2.join()
+  thread_1.join()
+                </code></pre>
+            </div>
+        </div>
+
         <div class="row" id="first_walk">
             <div class="col">
             </div>
             <div class="col">
-                <h2>2. First Walk</h2>
+                <h2>3. First Walk</h2>
                 The most basic action in an MMORPG game would be walking close to a specific monster. Let's see how to use the states and actions of the UoService to do that through Python code.<br> 
 
                 The pre-work before interacting with game client is to declare the UoService class seen above, connect gRPC communication, and call the reset() function. 
@@ -240,7 +372,7 @@ class UoService:
             </div>
 
             <div class="col">
-                <h5><a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/walk_to_monster.py">Code 2: Rule-based walking example code</a></h5>
+                <h5><a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/walk_to_monster.py">Code 3: Rule-based walking example code</a></h5>
                 <pre class="pre"><code class="python">
 uo_service = UoService(grpc_port, window_width, window_height)
 uo_service._open_grpc()
@@ -293,7 +425,7 @@ for step in range(100000):
             <div class="col">
             </div>
             <div class="col">
-                <h2>3. First Attack</h2>
+                <h2>4. First Attack</h2>
                 After getting close to a monster, the most basic interaction possible would be an attack. Let's use the more state and action of the UoService to do that. <br> 
                 Melee attacks are possible only when the distance from the monster is almost zero. Therefore, this distance should be checked before attacking. This information is contained in the mobile's <b>distance</b> part, and you can acquire a value through the <b>target_mobile['distance']</b> code.<br> 
                 
@@ -308,7 +440,7 @@ for step in range(100000):
             </div>
 
             <div class="col">
-                <h5><a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/walk_to_monster.py">Code 3: Rule-based attacking example code</a>.</h5>
+                <h5><a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/walk_to_monster.py">Code 4: Rule-based attacking example code</a>.</h5>
                 <pre class="pre"><code class="python">
 uo_service = UoService(grpc_port, window_width, window_height)
 uo_service._open_grpc()
@@ -372,7 +504,7 @@ for step in range(100000):
             <div class="col">
             </div>
             <div class="col">
-                <h2>4. First looting</h2>
+                <h2>5. First looting</h2>
                 After attacking and killing a monster, player can acquire various items including gold from the corpse. To do this with python code, first you need to check <b>world_item_dict</b> of the <b>uo_service</b> instead of the <b>world_mobile_dict</b> because the monster that was mobile type is transformed to an item when it dies. For the reason that the corresponding Dict has information on all items of the world, you should filter it using the <b>isCorpse</b> value.<br>
 
                 Having secured the serial number of the corpse that exists around the player, the next step is to open it. The corresponding action can be composed by setting the <b>action_type</b> as 7 and <b>target_serial</b> as the serial number of the corpse item.<br>
@@ -391,7 +523,7 @@ for step in range(100000):
                 </video>
             </div>
             <div class="col">
-                <h5><a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/looting_the_corpse.py">Code 4: Rule-based looting example code</a>.</h5>
+                <h5><a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/looting_the_corpse.py">Code 5: Rule-based looting example code</a>.</h5>
                 <pre class="pre"><code class="python">
   target_mobile_serial = None
   corpse_dict = {}
