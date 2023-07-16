@@ -230,7 +230,8 @@ class UoServiceGameFileParser:
 	    self.files_map_reader.seek(im.map_address)
 	    header = self.files_map_reader.read_uint32()
 
-	    tile_data = []
+	    land_data_list = []
+	    static_data_list = []
 
 	    bx = x << 3
 	    by = y << 3
@@ -249,7 +250,7 @@ class UoServiceGameFileParser:
 	            land_data["game_y"] = tile_y
 
 	            #print("x: {0}, y: {1}, tile_id: {2}, z: {3}, name: {4}".format(x, y, tile_id, z, land_data["name"]))
-	            tile_data.append(land_data)
+	            land_data_list.append(land_data)
 
 	    if im.static_address != 0:
 	    	self.files_statics_reader.seek(im.static_address)
@@ -264,12 +265,16 @@ class UoServiceGameFileParser:
 
 	    		#print("color: ", color)
 	    		static_data = self.static_data_dict[color]
-	    		#print("static_data: ", static_data)
+	    		static_data["game_x"] = bx + x
+	    		static_data["game_y"] = by + y
 
+	    		static_data_list.append(static_data)
+
+	    		#print("color: ", color)
 	    		#print("x: ", x)
 	    		#print("y: ", y)
 	    		#print("z: ", y)
 
 	    	#print("")
 
-	    return tile_data
+	    return land_data_list, static_data_list

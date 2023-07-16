@@ -44,8 +44,10 @@ window_height = arguments.window_height
 
 def parse_land_static(uo_service):
   while True:
-    print("parse_land_static(): {0}".format(uo_service.total_step))
+    #print("parse_land_static(): {0}".format(uo_service.total_step))
+
     if uo_service.max_tile_x != None:
+      #print("parse_land_static(): {0}".format(uo_service.total_step))
 
       screen_image = np.zeros((4000,4000,4), dtype=np.uint8)
       radius = 5
@@ -72,31 +74,36 @@ def parse_land_static(uo_service):
       for cell_x in cell_x_list:
         for cell_y in cell_y_list:
           #print("cell: ({0}, {1})".format(cell_x, cell_y))
-          tile_data = uo_service.uoservice_game_file_parser.get_tile_data(cell_x, cell_y)
+          land_data_list, static_data_list = uo_service.uoservice_game_file_parser.get_tile_data(cell_x, cell_y)
 
-          for tile in tile_data:
+          for land_data in land_data_list:
             #print("name: {0}, game_x: {1}, game_y: {2}".format(tile["name"], tile["game_x"], tile["game_y"]))
-            if tile["name"] == "forest":
-              #print("name: {0}, game_x: {1}, game_y: {2}".format(tile["name"], tile["game_x"], tile["game_y"]))
-              screen_image = cv2.circle(screen_image, (tile["game_x"], tile["game_y"]), 1, (128, 0, 128), 1)
+            if land_data["name"] == "forest":
+              #print("name: {0}, game_x: {1}, game_y: {2}".format(land_data["name"], land_data["game_x"], land_data["game_y"]))
+              #screen_image = cv2.circle(screen_image, (land_data["game_x"], land_data["game_y"]), 1, (128, 0, 128), 1)
+              pass
+
+          for static_data in static_data_list:
+            #print("name: {0}, game_x: {1}, game_y: {2}".format(static_data["name"], static_data["game_x"], static_data["game_y"]))
+            if static_data["name"] == "tree":
+              #print("name: {0}, game_x: {1}, game_y: {2}".format(static_data["name"], static_data["game_x"], static_data["game_y"]))
+              screen_image = cv2.circle(screen_image, (static_data["game_x"], static_data["game_y"]), 1, (0, 0, 128), 1)
               pass
           
-          tile_data_list.append(tile_data)
+          #tile_data_list.append(tile_data)
 
       boundary = 50
 
-      '''
       radius = 1
       thickness = 2
       screen_width = 4000
       screen_height = 4000
-      for k, v in self.world_mobile_dict.items():
-        if self.player_game_x != None:
+      for k, v in uo_service.world_mobile_dict.items():
+        if uo_service.player_game_x != None:
           if v["gameX"] < screen_width and v["gameY"] < screen_height:
             screen_image = cv2.circle(screen_image, (v["gameX"], v["gameY"]), radius, (0, 0, 255), thickness)
             pass
 
-      '''
       if uo_service.player_game_x != None:
         #print("player_game_x: {0}, player_game_y: {1}".format(self.player_game_x, self.player_game_y))
 
@@ -122,12 +129,6 @@ def parse_land_static(uo_service):
       cv2.imshow('screen_image_' + str(uo_service.grpc_port), screen_image)
       cv2.waitKey(1)
       
-      #time.sleep(1.0)
-
-      #return tile_data_list
-    #else:
-      #return None
-
 
 def step(uo_service):
   player_gold = None
@@ -136,7 +137,7 @@ def step(uo_service):
 
   step = 0
   while True:
-    print("step()")
+    #print("step()")
 
     ## Declare the empty action
     action = {}
@@ -158,12 +159,12 @@ def step(uo_service):
     #  print("world_mobile {0}: {1}".format(k_mobile, v_mobile))
 
     equipped_item_data = uo_service.equipped_item_dict
-    #print("equipped_item_data: ", equipped_item_data)
 
     player_status_dict = uo_service.player_status_dict
-    #print("player_status_dict: ", player_status_dict)
 
     gold_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
+    #print("gold_serial: ", gold_serial)
+
     #print("gold_serial: ", gold_serial)
 
     if gold_serial in backpack_item_data:
@@ -179,8 +180,8 @@ def step(uo_service):
 
     ## Declare the empty action
     if step % 150 == 0:
-      print("step: ", step)
-      #print("gold_serial: ", gold_serial)
+      #print("step: ", step)
+
       if gold_serial != None and pick_up_flag == True:
         action['action_type'] = 0
         action['target_serial'] = gold_serial
@@ -188,20 +189,14 @@ def step(uo_service):
         pick_up_flag = False
         drop_flag = True
       elif drop_flag == True:
-        #if len(uo_service.near_land_object_dict) != 0:
-        if True:
-          action['action_type'] = 4
+        action['action_type'] = 4
 
-          #drop_index = random.randint(0, len(near_land_object_dict))
-          action['index'] = 0
-          drop_flag = False
+        #drop_index = random.randint(0, len(near_land_object_dict))
+        action['index'] = 0
+        drop_flag = False
 
-      obs = uo_service.step(action)
-    else:
-      obs = uo_service.step(utils.noop_action)
-
+    obs = uo_service.step(action)
     step += 1
-    #print("")
 
 
 ## Declare the main function
