@@ -3,6 +3,11 @@
     text-align: center;
 }
 
+.abstract-template {
+    padding: 3rem 1.5rem;
+    text-align: left;
+}
+
 .text {
     padding: 3rem 1.5rem;
     text-align: left;
