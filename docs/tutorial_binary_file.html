@@ -57,41 +57,71 @@
     
 <main role="main" class="container-fluid">
     <div class="starter-template">
-        <h1>Replay tutorial</h1>
+        <h1>Binary File Tutorial</h1>
+        <p style="text-align:left; font-size:18px;"> Excluding Mobile and Item objects, there are Land and Static objects in the game that can passively affect the Agent. However, these do not move by themselves and only change their relative position when the player moves. In addition, information on Land and Static objects can be extracted from the already installed binary file of Ultima Online.
+
+        </p>
+        <img src="Fig/BinaryFileArchitecture.png" class="rounded mx-auto d-block float-center" alt="Logo" width="700" height="380">
+
+        <p style="text-align:left; font-size:18px;">The location of the files may vary slightly depending on the setting of the computer, but they are generally located in the same path as /home/kimbring2/.wine/drive_c/Program Files (x86)/Electronic Arts/Ultima Online Classic.
+        </p>
     </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col">
-                <h2>MPQ (MoPaQ) archive format</h2>
-                When the action is complex like Ultima Online, it is necessary to record the game play of human experts and use it for training the AI agent. In a real-time game, the amount of data generated at each second is excessively large. To solve such a problem, UoService used the same method used by Blizzard to store replay data of Starcraft game. 
-
-                The code for the MQP is already open-sourced for the <a href="https://github.com/robpaveza/stormlibsharp">C#</a> and <a href="https://github.com/eagleflo/mpyq">Python</a>. Therefore, they could be applied into UoService easily. 
+                <hr>
+                <h2>Map Data File</h2>
             </div>
 
             <div class="col">
-                <h5>Figure1: Replay File.</h5>
-                <img src="Fig/ReplayFile.png" class="rounded mx-auto d-block" alt="Training process" width="500" height="40" align="left">
+                <h5>Figure1: map0LegacyMUL.uop File</h5>
+                <img src="Fig/MapFile.png" class="rounded mx-auto d-block" alt="Training process" width="500" height="40" align="left">
             </div>
+        </div>
 
-            <div class="row">
-                <div class="col">
-                    <hr>
-                    <h2>Replay file composition </h2>
-                    
-                    Because game information does not always change, it is inefficient to store state data of every game tick. For example,if there will be no need to receive GrpcPlayerObject data if the player does not move. Of course, this method requires another array to store the length of the data. However, this method has an advantage than saving the main data array because a single int value is enough to store the length. 
-                </div>
-
-                <div class="col">
-                    <hr>
-                    <h5>Figure2: Replay File Composition.</h5>
-                    <img src="Fig/ReplayComposition.png" class="rounded mx-auto d-block float-center" alt="Training process" width=80%>
-                </div>
+        <div class="row">
+            <div class="col">
+                <hr>
+                <h2>Statics File</h2>
             </div>
 
             <div class="col">
                 <hr>
-                <h5>Code 1: Read the data from MPQ file.</h5>
-                <pre class="pre"><code class="python">
+                <h5>Figure2: statics0.mul File</h5>
+                <img src="Fig/StaticsFile.png" class="rounded mx-auto d-block" alt="Training process" width="500" height="40" align="left">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <hr>
+                <h2>Statics Index File</h2>
+            </div>
+
+            <div class="col">
+                <hr>
+                <h5>Figure3: staidx0.mul File</h5>
+                <img src="Fig/IndexStaticsFile.png" class="rounded mx-auto d-block" alt="Training process" width="500" height="40" align="left">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <hr>
+                <h2>Tile Data File</h2>
+            </div>
+
+            <div class="col">
+                <hr>
+                <h5>Figure4: tiledata.mul File</h5>
+                <img src="Fig/TileDataFile.png" class="rounded mx-auto d-block" alt="Training process" width="500" height="40" align="left">
+            </div>
+        </div>
+
+        <div class="col">
+            <hr>
+            <h5>Code 1: Read the data from MPQ file.</h5>
+            <pre class="pre"><code class="python">
 from mpyq import MPQArchive
 
 archive = MPQArchive("kimbring2-2023-6-29-17-35-47.uoreplay")
@@ -117,8 +147,7 @@ playerStatusArr = archive.read_file("replay.data.playerStatus");
 playerSkillListArr = archive.read_file("replay.data.playerSkillList");
 staticObjectInfoListArr = archive.read_file("replay.data.staticObjectInfoList");
 actionArr = archive.read_file("replay.data.actionArrays");
-                </code></pre>
-            </div>
+            </code></pre>
         </div>
 
         <div class="row">
@@ -126,10 +155,10 @@ actionArr = archive.read_file("replay.data.actionArrays");
                 <hr>
                 <h5>Code 2: Parse the main data using length array.</h5>
                 <pre class="pre"><code class="python">
-_playerObjectArrayOffset = 0
-_playerObjectList = []
+    _playerObjectArrayOffset = 0
+    _playerObjectList = []
 
-def GetSubsetArray(index, lengthList, offset, arr):
+    def GetSubsetArray(index, lengthList, offset, arr):
     # Crop the part of array when the length is variable. Return the modifed offset value for next cropping.
     item = lengthList[index]
     startIndex = offset
@@ -138,11 +167,11 @@ def GetSubsetArray(index, lengthList, offset, arr):
 
     return subsetArray, offset
 
-playerObjectSubsetArray, _playerObjectArrayOffset = GetSubsetArray(step, playerObjectArrayLengthList, 
+    playerObjectSubsetArray, _playerObjectArrayOffset = GetSubsetArray(step, playerObjectArrayLengthList, 
                                                                    _playerObjectArrayOffset, 
                                                                    self.playerObjectArr)
-grpcPlayerObjectReplay = UoService_pb2.GrpcPlayerObject().FromString(playerObjectSubsetArray)
-_playerObjectList.append(grpcPlayerObjectReplay)
+    grpcPlayerObjectReplay = UoService_pb2.GrpcPlayerObject().FromString(playerObjectSubsetArray)
+    _playerObjectList.append(grpcPlayerObjectReplay)
                 </code></pre>
             </div>
         </div>
@@ -152,16 +181,13 @@ _playerObjectList.append(grpcPlayerObjectReplay)
                 <hr>
                 <h5>Code 3: Obtain the player object information from replay data.</h5>
                 <pre class="pre"><code class="python">
-if _playerObjectList[replay_step].gameX != 0:
+    if _playerObjectList[replay_step].gameX != 0:
     player_game_x = _playerObjectList[replay_step].gameX
     player_game_y = _playerObjectList[replay_step].gameY
-
-
 
                 </code></pre>
             </div>
         </div>
-        
     </div><!-- /.container -->
 </main>
 

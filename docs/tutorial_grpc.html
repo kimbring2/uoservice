@@ -40,7 +40,11 @@
             </li>
 
             <li class="nav-item active">
-              <a class="nav-link" href="grpc_tutorial.html">gRPC tutorial<span class="sr-only"></span></a>
+              <a class="nav-link" href="tutorial_grpc.html">gRPC Tutorial<span class="sr-only"></span></a>
+            </li>
+
+            <li class="nav-item active">
+              <a class="nav-link" href="tutorial_binary_file.html">Binary File Tutorial<span class="sr-only"></span></a>
             </li>
 
             <li class="nav-item active">
@@ -60,11 +64,17 @@
     
 <main role="main" class="container-fluid">
     <div class="starter-template">
-        <h1>States/Actions</h1>
+        <h1>gRPC Tutorial</h1>
+        <p style="text-align:left; font-size:18px;">Among the various components of the Ultima Online game, in the case of Mobile and Item objects around Agent, their states can change over time. Futhermore, Agent can make changes to the elements of the game through various actions. UoService uses the using gRPC communication to exchange such real-time information between the C# and Python application.
+        </p>
+        <img src="Fig/GrpcArchitecture.png" class="rounded mx-auto d-block float-center" alt="Logo" width="700" height="380">
+
+        <p style="text-align:left; font-size:18px;">The Proto file is needed to build the gRPC communication, the file is avilable from <a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/protos/UoService.proto">UoService.proto</a>.
+        </p>
     </div>
     <div class="starter-template">
-        <h1>Data Type</h1>
-        <p style="text-align:left; font-size:18px;">Ultima Online is high level complex game consist of various components. Therefore, it is not possible to implement the current state recognized by the player only with basic data such as string, int, and float. Furthermore, action representation also requires a more complex form than basic data because the game basically receives action input from the mouse.
+        <h1>gRPC Message Type</h1>
+        <p style="text-align:left; font-size:18px;">
         </p>
     </div>
     <div class="container-fluid">
