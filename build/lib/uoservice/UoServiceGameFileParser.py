@@ -69,9 +69,6 @@ class UoServiceGameFileParser:
 		thread_1.join()
 		thread_2.join()
 
-		#thread.start_new_thread(self.load_map_file(), ())
-		#thread.start_new_thread(self.load_tile_data(), ())
-
 	def load_map_file(self):
 		print("load_map_file()")
 
