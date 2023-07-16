@@ -1,28 +1,12 @@
-from io import StringIO
-from io import BytesIO
+from io import StringIO, BytesIO
 import struct
 import utils
 from numpy import int8
 import os
 
-uo_installed_path = "/home/kimbring2/.wine/drive_c/Program Files (x86)/Electronic Arts/Ultima Online Classic"
-
 files_map_name = "map0LegacyMUL.uop"
 files_statics_name = "statics0.mul"
 files_index_statics_name = "staidx0.mul"
-files_tiledata_name = "tiledata.mul"
-
-files_map_name = os.path.join(uo_installed_path, files_map_name)
-files_statics_name = os.path.join(uo_installed_path, files_statics_name)
-files_index_statics_name = os.path.join(uo_installed_path, files_index_statics_name)
-files_tiledata_name = os.path.join(uo_installed_path, files_map_name)
-
-files_tiledata_name = "/home/kimbring2/.wine/drive_c/Program Files (x86)/Electronic Arts/Ultima Online Classic/tiledata.mul"
-
-#files_map_name = "map0LegacyMUL.uop"
-#files_statics_name = "statics0.mul"
-#files_index_statics_name = "staidx0.mul"
-#files_tiledata_name = "tiledata.mul"
 
 UOP_MAGIC_NUMBER = hex(0x50594d)
 _has_extra = False
@@ -47,14 +31,9 @@ p_files_index_statics = files_index_statics.read()
 files_index_statics_reader = utils.FileReader(BytesIO(p_files_index_statics))
 files_index_statics_size = files_index_statics_reader.size
 
-file_tiledata = open(files_tiledata_name, 'rb')
-p_file_tiledata = file_tiledata.read()
-files_tiledata_reader = utils.FileReader(BytesIO(p_file_tiledata))
-
 files_map_reader.seek(0)
 files_statics_reader.seek(0)
 files_index_statics_reader.seek(0)
-files_tiledata_reader.seek(0)
 
 uop_magic_number = hex(files_map_reader.read_uint32())
 
@@ -164,6 +143,14 @@ for block in range(0, maxblockcount):
     block_data.append(index_map)
 
 
+
+files_tiledata_name = "tiledata.mul"
+file_tiledata = open(files_tiledata_name, 'rb')
+p_file_tiledata = file_tiledata.read()
+files_tiledata_reader = utils.FileReader(BytesIO(p_file_tiledata))
+
+files_tiledata_reder.seek(0)
+
 land_data_dict = {}
 for i in range(0, 512):
     files_tiledata_reader.read_uint32()
@@ -210,9 +197,8 @@ for i in range(0, 2048):
                                  "height": height, "name": buffer_string }
 
 
-#position_list = [[438, 313], [440, 316], [440, 314], [441, 314], [440, 313], [438, 314], [438, 315], [439, 314],
-#                 [439, 312], [439, 313], [439, 311], [436, 315], [437, 314], [436, 314], [437, 315], [434, 309]]
-position_list = [[438, 313]]
+position_list = [[438, 313], [440, 316], [440, 314], [441, 314], [440, 313], [438, 314], [438, 315], [439, 314],
+                 [439, 312], [439, 313], [439, 311], [436, 315], [437, 314], [436, 314], [437, 315], [434, 309]]
 
 for position in position_list:
     X = position[0]
@@ -236,5 +222,17 @@ for position in position_list:
 
             land_data = land_data_dict[tile_id]
             print("x: {0}, y: {1}, tile_id: {2}, z: {3}, name: {4}".format(x, y, tile_id, z, land_data["name"]))
+
+    if im.static_address != 0:
+        files_statics_reader.seek(im.static_address)
+
+        for i in range(0, im.static_count):
+            color = files_statics_reader.read_short()
+            x = files_statics_reader.read_byte()
+            y = files_statics_reader.read_byte()
+            z = files_statics_reader.read_byte()
+            hue = files_statics_reader.read_short()
+
+            static_data = static_data_dict[color]
 
     print("")
