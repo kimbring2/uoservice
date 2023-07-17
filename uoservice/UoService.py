@@ -90,6 +90,30 @@ class UoService:
 
 		self.parse_response(response)
 
+	def get_land_index(self, game_x, game_y):
+		x_relative = 0
+		for i in range(self.min_tile_x, self.max_tile_x):
+			if gameX == i:
+				x_relative = i - self.min_tile_x
+
+		y_relative = 0
+		for i in range(self.min_tile_y, self.max_tile_y):
+			if gameY == i:
+				y_relative = i - self.min_tile_y
+
+	  	index = x_relative * (self.max_tile_x - self.min_tile_x) + y_relative
+
+	  	return index
+
+	def get_land_position(self, index):
+		game_x = index / (self.max_tile_x - self.min_tile_x);
+    	game_y = index % (self.max_tile_x - self.min_tile_x);
+
+    	x = game_x + self.min_tile_x;
+    	y = game_y + self.min_tile_y;
+
+        return x, y
+
 	def parse_response(self, response):
 		# Preprocess the gRPC response format to Python friendly type
 		player_object = response.playerObject

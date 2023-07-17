@@ -165,7 +165,14 @@ def step(uo_service):
     gold_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
     #print("gold_serial: ", gold_serial)
 
-    #print("gold_serial: ", gold_serial)
+    #self.min_tile_x = None
+    #self.min_tile_y = None
+    #self.max_tile_x = None
+    #self.max_tile_y = None
+    #print("uo_service.min_tile_x: ", uo_service.min_tile_x)
+    #print("uo_service.min_tile_y: ", uo_service.min_tile_y)
+    #print("uo_service.max_tile_x: ", uo_service.max_tile_x)
+    #print("uo_service.max_tile_y: ", uo_service.max_tile_y)
 
     if gold_serial in backpack_item_data:
       gold_info = backpack_item_data[gold_serial]
@@ -183,16 +190,15 @@ def step(uo_service):
       #print("step: ", step)
 
       if gold_serial != None and pick_up_flag == True:
-        action['action_type'] = 0
+        action['action_type'] = 3
         action['target_serial'] = gold_serial
         action['amount'] = 100
         pick_up_flag = False
         drop_flag = True
       elif drop_flag == True:
         action['action_type'] = 4
-
         #drop_index = random.randint(0, len(near_land_object_dict))
-        action['index'] = 0
+        action['index'] = 2554
         drop_flag = False
 
     obs = uo_service.step(action)
