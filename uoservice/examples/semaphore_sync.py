@@ -49,11 +49,11 @@ def parse_land_static(uo_service):
     if uo_service.max_tile_x != None:
       #print("parse_land_static(): {0}".format(uo_service.total_step))
 
-      screen_image = np.zeros((4000,4000,4), dtype=np.uint8)
+      screen_image = np.zeros((1000,1000,4), dtype=np.uint8)
       radius = 5
       thickness = 2
-      screen_width = 4000
-      screen_height = 4000
+      screen_width = 1000
+      screen_height = 1000
 
       cell_x_list = []
       cell_y_list = []
@@ -69,6 +69,9 @@ def parse_land_static(uo_service):
         if cell_y not in cell_y_list:
           cell_y_list.append(cell_y)
 
+      player_game_x = uo_service.player_game_x
+      player_game_y = uo_service.player_game_y
+
       #print("cell_x_list: {0}, cell_y_list: {1}: ".format(cell_x_list, cell_y_list))
       cell_zip = zip(cell_x_list, cell_y_list)
       for cell_x in cell_x_list:
@@ -77,41 +80,94 @@ def parse_land_static(uo_service):
           land_data_list, static_data_list = uo_service.uoservice_game_file_parser.get_tile_data(cell_x, cell_y)
 
           for land_data in land_data_list:
-            #print("name: {0}, game_x: {1}, game_y: {2}".format(tile["name"], tile["game_x"], tile["game_y"]))
-            if land_data["name"] == "forest":
+            #print("name: {0}, game_x: {1}, game_y: {2}".format(land_data["name"], land_data["game_x"], land_data["game_y"]))
+            #if land_data["name"] == "forest":
+            if True:
               #print("name: {0}, game_x: {1}, game_y: {2}".format(land_data["name"], land_data["game_x"], land_data["game_y"]))
+              start_point = ( (land_data["game_x"] - player_game_x) * 4 + 500 - 2, 
+                              (land_data["game_y"] - player_game_y) * 4 + 500 - 2 )
+              end_point = ( (land_data["game_x"] - player_game_x) * 4 + 500 + 2, 
+                            (land_data["game_y"] - player_game_y) * 4 + 500 + 2 )
+
+              #print("start_point: {0}, end_point: {1}".format(start_point, end_point))
+
+              #screen_image = cv2.rectangle(screen_image, start_point, end_point, (128, 0, 128), 1)
               #screen_image = cv2.circle(screen_image, (land_data["game_x"], land_data["game_y"]), 1, (128, 0, 128), 1)
               pass
 
+          water_num = 0
           for static_data in static_data_list:
             #print("name: {0}, game_x: {1}, game_y: {2}".format(static_data["name"], static_data["game_x"], static_data["game_y"]))
-            if static_data["name"] == "tree":
-              #print("name: {0}, game_x: {1}, game_y: {2}".format(static_data["name"], static_data["game_x"], static_data["game_y"]))
-              screen_image = cv2.circle(screen_image, (static_data["game_x"], static_data["game_y"]), 1, (0, 0, 128), 1)
-              pass
-          
-          #tile_data_list.append(tile_data)
+            if "wood" in static_data["name"]:
+            #  water_num += 1
+            #if True:
+              print("name: {0}, game_x: {1}, game_y: {2}".format(static_data["name"], static_data["game_x"], static_data["game_y"]))
+              #screen_image = cv2.circle(screen_image, (static_data["game_x"], static_data["game_y"]), 1, (0, 0, 128), 1)
+              #print("name: {0}, game_x: {1}, game_y: {2}".format(land_data["name"], land_data["game_x"], land_data["game_y"]))
+              start_point = ( (static_data["game_x"] - player_game_x) * 4 + 500 - 2, 
+                              (static_data["game_y"] - player_game_y) * 4 + 500 - 2 )
+              end_point = ( (static_data["game_x"] - player_game_x) * 4 + 500 + 2, 
+                            (static_data["game_y"] - player_game_y) * 4 + 500 + 2 )
 
-      boundary = 50
+              #print("start_point: {0}, end_point: {1}".format(start_point, end_point))
+
+              #screen_image = cv2.rectangle(screen_image, start_point, end_point, (0, 128, 128), 1)
+              screen_image = cv2.circle(screen_image, 
+                                        ( 
+                                          (static_data["game_x"] - player_game_x) * 4 + 500, 
+                                          (static_data["game_y"] - player_game_y) * 4 + 500
+                                        ),
+                                        1, (0, 0, 128), -1)
+              pass
+
+          print("")
+
+          #print("water_num: ", water_num)
+
+      for i in range(0, 250):
+        thickness = 1
+        start_point = (0, i * 4 + 2)
+        end_point = (250 * 4, i * 4 + 2)
+        screen_image = cv2.line(screen_image, start_point, end_point, (255, 255, 255), thickness)
+
+      boundary = 200
 
       radius = 1
-      thickness = 2
+      thickness = 1
       screen_width = 4000
       screen_height = 4000
       for k, v in uo_service.world_mobile_dict.items():
         if uo_service.player_game_x != None:
           if v["gameX"] < screen_width and v["gameY"] < screen_height:
-            screen_image = cv2.circle(screen_image, (v["gameX"], v["gameY"]), radius, (0, 0, 255), thickness)
+            #screen_image = cv2.circle(screen_image, (v["gameX"], v["gameY"]), radius, (0, 0, 255), thickness)
             pass
+
+      for k, v in uo_service.world_item_dict.items():
+        if uo_service.player_game_x != None:
+          #print("world item {0}: {1}".format(k, uo_service.world_item_dict[k]))
+          if v["gameX"] < screen_width and v["gameY"] < screen_height:
+            screen_image = cv2.circle(screen_image, 
+                                      ( 
+                                          (v["gameX"] - player_game_x) * 4 + 500, 
+                                          (v["gameY"] - player_game_y) * 4 + 500
+                                      ),
+                                      radius, (0, 0, 255), thickness)
+            #pass
+      #print("")
 
       if uo_service.player_game_x != None:
         #print("player_game_x: {0}, player_game_y: {1}".format(self.player_game_x, self.player_game_y))
 
         radius = 1
-        screen_image = cv2.circle(screen_image, (uo_service.player_game_x, uo_service.player_game_y), radius, (0, 255, 0), thickness)
+        #screen_image = cv2.circle(screen_image, (uo_service.player_game_x, uo_service.player_game_y), radius, (0, 255, 0), thickness)
+        screen_image = cv2.circle(screen_image, (500, 500), radius, (0, 255, 0), thickness)
+        
+        screen_image = screen_image[500 - boundary:500 + boundary, 500 - boundary:500 + boundary, :]
+        
+        '''
         if uo_service.player_game_y > boundary and uo_service.player_game_x > boundary:
-          screen_image = screen_image[uo_service.player_game_y - boundary:uo_service.player_game_y + boundary, 
-                                      uo_service.player_game_x - boundary:uo_service.player_game_x + boundary, :]
+          screen_image = screen_image[500 - boundary:500 + boundary, 
+                                      500 - boundary:500 + boundary, :]
         elif uo_service.player_game_y < boundary and uo_service.player_game_x > boundary:
           #print("self.player_game_y < 600 and self.player_game_x > 600")
           screen_image = screen_image[0:uo_service.player_game_y + boundary, 
@@ -123,11 +179,15 @@ def parse_land_static(uo_service):
         else:
           #print("else")
           screen_image = screen_image[0:uo_service.player_game_y + boundary, 0:uo_service.player_game_x + boundary, :]
+        '''
+        
       
-      screen_image = cv2.resize(screen_image, (boundary * 4, boundary * 4), interpolation=cv2.INTER_AREA)
+      screen_image = cv2.resize(screen_image, (1000, 1000), interpolation=cv2.INTER_AREA)
       screen_image = utils.rotate_image(screen_image, -45)
       cv2.imshow('screen_image_' + str(uo_service.grpc_port), screen_image)
       cv2.waitKey(1)
+
+      time.sleep(1.0)
       
 
 def step(uo_service):
@@ -188,6 +248,7 @@ def step(uo_service):
     ## Declare the empty action
     if step % 150 == 0:
       #print("step: ", step)
+      #continue
 
       if gold_serial != None and pick_up_flag == True:
         action['action_type'] = 3
@@ -201,6 +262,7 @@ def step(uo_service):
         action['index'] = 2554
         drop_flag = False
 
+    action['action_type'] = 0
     obs = uo_service.step(action)
     step += 1
 

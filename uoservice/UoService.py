@@ -101,18 +101,18 @@ class UoService:
 			if gameY == i:
 				y_relative = i - self.min_tile_y
 
-	  	index = x_relative * (self.max_tile_x - self.min_tile_x) + y_relative
+		index = x_relative * (self.max_tile_x - self.min_tile_x) + y_relative
 
-	  	return index
+		return index
 
 	def get_land_position(self, index):
 		game_x = index / (self.max_tile_x - self.min_tile_x);
-    	game_y = index % (self.max_tile_x - self.min_tile_x);
+		game_y = index % (self.max_tile_x - self.min_tile_x);
 
-    	x = game_x + self.min_tile_x;
-    	y = game_y + self.min_tile_y;
+		x = game_x + self.min_tile_x;
+		y = game_y + self.min_tile_y;
 
-        return x, y
+		return x, y
 
 	def parse_response(self, response):
 		# Preprocess the gRPC response format to Python friendly type

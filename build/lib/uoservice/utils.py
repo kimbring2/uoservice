@@ -14,6 +14,7 @@ noop_action['run'] = False
 
 warrior_npc_title_list = ['healer', 'armourer', 'banker', 'blacksmith', 'weaponsmith', 'armourer', 'armourer']
 
+
 def get_serial_by_name(item_dict, name):
   keys = list(item_dict.keys())
   for k, v in item_dict.items():
