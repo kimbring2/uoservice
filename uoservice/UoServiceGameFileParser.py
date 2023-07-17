@@ -173,8 +173,6 @@ class UoServiceGameFileParser:
 		    self.block_data.append(index_map)
 
 	def load_tile_data(self):
-		#print("load_tile_data()")
-
 		for i in range(0, 512):
 		    self.files_tiledata_reader.read_uint32()
 
@@ -188,8 +186,6 @@ class UoServiceGameFileParser:
 		            byte_data = self.files_tiledata_reader.read_byte()
 		            if byte_data != 0:
 		                buffer_string += chr(byte_data)
-
-		        #print("land buffer_string: ", buffer_string)
 
 		        self.land_data_dict[idx] = {"flags": flags, "text_id": text_id, "name": buffer_string}
 
@@ -213,13 +209,6 @@ class UoServiceGameFileParser:
 		            if byte_data != 0:
 		                buffer_string += chr(byte_data)
 
-		        #print("static buffer_string: ", buffer_string)
-
-		        if buffer_string == 'water':
-		        	#print("idx: ", idx)
-		        	#print("buffer_string: ", buffer_string)
-		        	pass
-
 		        self.static_data_dict[idx] = {"flags": flags, "weight": weight, "layer": layer, "count": count,
 		                                      "anim_id": anim_id, "hue": hue, "light_index": light_index,
 		                                      "height": height, "name": buffer_string }
@@ -240,8 +229,6 @@ class UoServiceGameFileParser:
 	    bx = x << 3
 	    by = y << 3
 
-	    #print("im.map_address: {0}".format(im.map_address))
-	    #print("by: {0}, by: {1}".format(bx, by))
 	    for y in range(0, 8):
 	        pos = y << 3
 	        tile_y = by + y
@@ -263,8 +250,6 @@ class UoServiceGameFileParser:
 	    	static_address = im.static_address
 	    	self.files_statics_reader.seek(static_address)
 
-	    	#print("static_address: ", static_address)
-
 	    	for i in range(0, im.static_count):
 	    		color = self.files_statics_reader.read_short()
 	    		x = self.files_statics_reader.read_byte()
@@ -272,26 +257,10 @@ class UoServiceGameFileParser:
 	    		z = self.files_statics_reader.read_byte()
 	    		hue = self.files_statics_reader.read_short()
 
-	    		#print("color: ", color)
 	    		static_data = self.static_data_dict[color]
 	    		static_data["game_x"] = bx + x
 	    		static_data["game_y"] = by + y
 
-	    		#print("static_address: ", static_address)
-
-	    		#if "wood" in static_data["name"]:
-	    		#	print("Color: {0}, X: {1}, Y: {2}, Name: {3}".format(color, bx + x, by + y, static_data["name"]))
-	    		#	print("static_data: {0}".format(static_data))
-
 	    		static_data_list.append(copy.deepcopy(static_data))
-
-	    		#print("color: ", color)
-	    		#print("x: ", x)
-	    		#print("y: ", y)
-	    		#print("z: ", y)
-
-	    		#static_address += 7
-
-	    	#print("")
 
 	    return land_data_list, static_data_list

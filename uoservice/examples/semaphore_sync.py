@@ -37,10 +37,6 @@ grpc_port = arguments.grpc_port
 window_width = arguments.window_width
 window_height = arguments.window_height
 
-#uoservice_game_file_parser = UoServiceGameFileParser("/home/kimbring2/.wine/drive_c/Program Files (x86)/Electronic Arts/Ultima Online Classic")
-#uoservice_game_file_parser.load()
-#uoservice_game_file_parser.get_tile_data(438, 313)
-
 
 color_dict = {"Black": (0, 0, 0),
               "Red": (0, 0, 255),
@@ -50,6 +46,7 @@ color_dict = {"Black": (0, 0, 0),
               "Yellow": (0, 255, 255),
               "Purple": (128, 255, 128),
               "Gray": (128, 128, 128),
+              "Brown": (42, 42, 165),
              }
 
 
@@ -85,16 +82,13 @@ def parse_land_static(uo_service):
 
       scale = 40
 
-      #print("cell_x_list: {0}, cell_y_list: {1}: ".format(cell_x_list, cell_y_list))
       cell_zip = zip(cell_x_list, cell_y_list)
       for cell_x in cell_x_list:
         for cell_y in cell_y_list:
-          #print("cell: ({0}, {1})".format(cell_x, cell_y))
           land_data_list, static_data_list = uo_service.uoservice_game_file_parser.get_tile_data(cell_x, cell_y)
 
           for land_data in land_data_list:
-            #print("name: {0}, game_x: {1}, game_y: {2}".format(land_data["name"], land_data["game_x"], land_data["game_y"]))
-            #if land_data["name"] == "forest":
+            #print("land / name: {0}, game_x: {1}, game_y: {2}".format(land_data["name"], land_data["game_x"], land_data["game_y"]))
             start_point = ( (land_data["game_x"] - player_game_x) * scale + 500 - int(scale / 2), 
                             (land_data["game_y"] - player_game_y) * scale + 500 - int(scale / 2) )
             end_point = ( (land_data["game_x"] - player_game_x) * scale + 500 + int(scale / 2), 
@@ -111,17 +105,27 @@ def parse_land_static(uo_service):
             thickness = 1
             screen_image = cv2.putText(screen_image, str(index), org, font, fontScale, color, thickness, cv2.LINE_4)
 
-            screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Gray"], 1)
+            if land_data["name"] == "forest":
+              #screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Lime"], 1)
+              pass
+            else:
+              screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Gray"], 1)
 
           for static_data in static_data_list:
-            #print("name: {0}, game_x: {1}, game_y: {2}".format(static_data["name"], static_data["game_x"], static_data["game_y"]))
-            if "water" in static_data["name"]:
-              start_point = ( (static_data["game_x"] - player_game_x) * scale + 500 - int(scale / 2), 
-                              (static_data["game_y"] - player_game_y) * scale + 500 - int(scale / 2) )
-              end_point = ( (static_data["game_x"] - player_game_x) * scale + 500 + int(scale / 2), 
-                            (static_data["game_y"] - player_game_y) * scale + 500 + int(scale / 2) )
+            if "water" not in static_data["name"]:
+              print("static / name: {0}, game_x: {1}, game_y: {2}".format(static_data["name"], static_data["game_x"], static_data["game_y"]))
+            
+            start_point = ( (static_data["game_x"] - player_game_x) * scale + 500 - int(scale / 2), 
+                            (static_data["game_y"] - player_game_y) * scale + 500 - int(scale / 2) )
+            end_point = ( (static_data["game_x"] - player_game_x) * scale + 500 + int(scale / 2), 
+                          (static_data["game_y"] - player_game_y) * scale + 500 + int(scale / 2) )
 
-              screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Blue"], 1)
+            if "wood" in static_data["name"]:
+              screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Brown"], 1)
+            elif "grasses" in static_data["name"]:
+              screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Green"], 1)
+            #elif "water" in static_data["name"]:
+            #  screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Blue"], 1)
 
       boundary = 500
 

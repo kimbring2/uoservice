@@ -76,44 +76,16 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col" id="3">
-                <script>createHeader("3", "GrpcLandObjectData", "");</script>
-                This type includes the every mobile type object such as monster, npc, aminal, other player, and etc.
-                <img src="Fig/LandObject.png" class="rounded mx-auto d-block float-center" alt="Logo" width="300" height="100">
-
-                <script>
-                    generate_table("3", 
-                                    [   
-                                        ["index", "uint32", "order number among multiple land objects"],
-                                        ["gameX", "uint32", "x position of mobile in the game"],
-                                        ["gameY", "uint32", "y position of mobile in the game"],
-                                        ["distance", "uint32", "distance between the player and item object"]
-                                    );
-                </script>
+            <div class="col" id="1">
+                <script>createHeader("1", "Land Object Example", "");</script>
+                Land Object is basically a basic block that the agent can walk on. The texture of it is slightly different depending on the region or location. However basically it does not block the movement of the agent.
+                <img src="Fig/LandObject.png" class="rounded mx-auto d-block float-center" alt="Logo" width="350" height="120">
             </div>
 
-            <div class="col" id="4">
-                <script>createHeader("4", "GrpcPlayerStatus", "");</script>
-                <img src="Fig/Status.png" class="rounded mx-auto d-block float-center" alt="Logo" width="420" height="150">
-                <script>
-                    generate_table("4", 
-                                    [
-                                        ["str", "uint32", "strenthg of player"], 
-                                        ["dex", "uint32", "dexterity of player"],
-                                        ["intell", "uint32", "intelligence of player"],
-                                        ["hits", "uint32", "current HP of player"],
-                                        ["hitsMax", "uint32", "maximum value of HP of player"], 
-                                        ["stamina", "uint32", "stamina of player"],
-                                        ["staminaMax", "uint32", "maximum value of stamina of player"],
-                                        ["mana", "uint32", "mana of player"],
-                                        ["manaMax", "uint32", "maximum value of mana of player"], 
-                                        ["gold", "uint32", "gold the player currently has"],
-                                        ["physicalResistance", "uint32", "the physical resistance of player"],
-                                        ["weightMax", "uint32", "maximum value of weight of player"],
-                                        ["holdItemSerial", "uint32", "serial of item what player current is holding"]
-                                    ]
-                                    );
-                </script>
+            <div class="col" id="2">
+                <script>createHeader("2", "Static Object Example", "");</script>
+                Static objects is placed on the land object. They can block the movement of agent such as tree and wall. Besides, it can compose structures such as bridge and house. 
+                <img src="Fig/StaticObject.png" class="rounded mx-auto d-block float-center" alt="Logo" width="350" height="130">
             </div>
         </div>
     </div>
