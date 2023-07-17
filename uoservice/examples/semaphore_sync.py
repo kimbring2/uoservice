@@ -42,6 +42,17 @@ window_height = arguments.window_height
 #uoservice_game_file_parser.get_tile_data(438, 313)
 
 
+color_dict = {"Black": (0, 0, 0),
+              "Red": (0, 0, 255),
+              "Blue": (255, 0, 0),
+              "Lime": (0, 255, 0),
+              "Green": (0, 128, 0),
+              "Yellow": (0, 255, 255),
+              "Purple": (128, 255, 128),
+              "Gray": (128, 128, 128),
+             }
+
+
 def parse_land_static(uo_service):
   while True:
     #print("parse_land_static(): {0}".format(uo_service.total_step))
@@ -72,6 +83,8 @@ def parse_land_static(uo_service):
       player_game_x = uo_service.player_game_x
       player_game_y = uo_service.player_game_y
 
+      scale = 40
+
       #print("cell_x_list: {0}, cell_y_list: {1}: ".format(cell_x_list, cell_y_list))
       cell_zip = zip(cell_x_list, cell_y_list)
       for cell_x in cell_x_list:
@@ -82,53 +95,33 @@ def parse_land_static(uo_service):
           for land_data in land_data_list:
             #print("name: {0}, game_x: {1}, game_y: {2}".format(land_data["name"], land_data["game_x"], land_data["game_y"]))
             #if land_data["name"] == "forest":
-            if True:
-              #print("name: {0}, game_x: {1}, game_y: {2}".format(land_data["name"], land_data["game_x"], land_data["game_y"]))
-              start_point = ( (land_data["game_x"] - player_game_x) * 4 + 500 - 2, 
-                              (land_data["game_y"] - player_game_y) * 4 + 500 - 2 )
-              end_point = ( (land_data["game_x"] - player_game_x) * 4 + 500 + 2, 
-                            (land_data["game_y"] - player_game_y) * 4 + 500 + 2 )
+            start_point = ( (land_data["game_x"] - player_game_x) * scale + 500 - int(scale / 2), 
+                            (land_data["game_y"] - player_game_y) * scale + 500 - int(scale / 2) )
+            end_point = ( (land_data["game_x"] - player_game_x) * scale + 500 + int(scale / 2), 
+                          (land_data["game_y"] - player_game_y) * scale + 500 + int(scale / 2) )
 
-              #print("start_point: {0}, end_point: {1}".format(start_point, end_point))
+            index = uo_service.get_land_index(land_data["game_x"], land_data["game_y"])
 
-              #screen_image = cv2.rectangle(screen_image, start_point, end_point, (128, 0, 128), 1)
-              #screen_image = cv2.circle(screen_image, (land_data["game_x"], land_data["game_y"]), 1, (128, 0, 128), 1)
-              pass
+            radius = 1
+            font = cv2.FONT_HERSHEY_SIMPLEX
+            org = ( (land_data["game_x"] - player_game_x) * scale + 500 - int(scale / 2), 
+                    (land_data["game_y"] - player_game_y) * scale + 500 )
+            fontScale = 0.4
+            color = (255, 0, 0)
+            thickness = 1
+            screen_image = cv2.putText(screen_image, str(index), org, font, fontScale, color, thickness, cv2.LINE_4)
 
-          water_num = 0
+            screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Gray"], 1)
+
           for static_data in static_data_list:
             #print("name: {0}, game_x: {1}, game_y: {2}".format(static_data["name"], static_data["game_x"], static_data["game_y"]))
-            if "wood" in static_data["name"]:
-            #  water_num += 1
-            #if True:
-              print("name: {0}, game_x: {1}, game_y: {2}".format(static_data["name"], static_data["game_x"], static_data["game_y"]))
-              #screen_image = cv2.circle(screen_image, (static_data["game_x"], static_data["game_y"]), 1, (0, 0, 128), 1)
-              #print("name: {0}, game_x: {1}, game_y: {2}".format(land_data["name"], land_data["game_x"], land_data["game_y"]))
-              start_point = ( (static_data["game_x"] - player_game_x) * 4 + 500 - 2, 
-                              (static_data["game_y"] - player_game_y) * 4 + 500 - 2 )
-              end_point = ( (static_data["game_x"] - player_game_x) * 4 + 500 + 2, 
-                            (static_data["game_y"] - player_game_y) * 4 + 500 + 2 )
+            if "water" in static_data["name"]:
+              start_point = ( (static_data["game_x"] - player_game_x) * scale + 500 - int(scale / 2), 
+                              (static_data["game_y"] - player_game_y) * scale + 500 - int(scale / 2) )
+              end_point = ( (static_data["game_x"] - player_game_x) * scale + 500 + int(scale / 2), 
+                            (static_data["game_y"] - player_game_y) * scale + 500 + int(scale / 2) )
 
-              #print("start_point: {0}, end_point: {1}".format(start_point, end_point))
-
-              #screen_image = cv2.rectangle(screen_image, start_point, end_point, (0, 128, 128), 1)
-              screen_image = cv2.circle(screen_image, 
-                                        ( 
-                                          (static_data["game_x"] - player_game_x) * 4 + 500, 
-                                          (static_data["game_y"] - player_game_y) * 4 + 500
-                                        ),
-                                        1, (0, 0, 128), -1)
-              pass
-
-          print("")
-
-          #print("water_num: ", water_num)
-
-      for i in range(0, 250):
-        thickness = 1
-        start_point = (0, i * 4 + 2)
-        end_point = (250 * 4, i * 4 + 2)
-        screen_image = cv2.line(screen_image, start_point, end_point, (255, 255, 255), thickness)
+              screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Blue"], 1)
 
       boundary = 200
 
@@ -148,8 +141,8 @@ def parse_land_static(uo_service):
           if v["gameX"] < screen_width and v["gameY"] < screen_height:
             screen_image = cv2.circle(screen_image, 
                                       ( 
-                                          (v["gameX"] - player_game_x) * 4 + 500, 
-                                          (v["gameY"] - player_game_y) * 4 + 500
+                                          (v["gameX"] - player_game_x) * scale + 500, 
+                                          (v["gameY"] - player_game_y) * scale + 500
                                       ),
                                       radius, (0, 0, 255), thickness)
             #pass
@@ -159,7 +152,13 @@ def parse_land_static(uo_service):
         #print("player_game_x: {0}, player_game_y: {1}".format(self.player_game_x, self.player_game_y))
 
         radius = 1
-        #screen_image = cv2.circle(screen_image, (uo_service.player_game_x, uo_service.player_game_y), radius, (0, 255, 0), thickness)
+        font = cv2.FONT_HERSHEY_SIMPLEX
+        org = (500 - 16, 500)
+        fontScale = 0.5
+        color = (255, 0, 0)
+        thickness = 1
+        #screen_image = cv2.putText(screen_image, str("player"), org, font, fontScale, color, thickness, cv2.LINE_4)
+
         screen_image = cv2.circle(screen_image, (500, 500), radius, (0, 255, 0), thickness)
         
         screen_image = screen_image[500 - boundary:500 + boundary, 500 - boundary:500 + boundary, :]

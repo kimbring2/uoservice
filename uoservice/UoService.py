@@ -93,12 +93,12 @@ class UoService:
 	def get_land_index(self, game_x, game_y):
 		x_relative = 0
 		for i in range(self.min_tile_x, self.max_tile_x):
-			if gameX == i:
+			if game_x == i:
 				x_relative = i - self.min_tile_x
 
 		y_relative = 0
 		for i in range(self.min_tile_y, self.max_tile_y):
-			if gameY == i:
+			if game_y == i:
 				y_relative = i - self.min_tile_y
 
 		index = x_relative * (self.max_tile_x - self.min_tile_x) + y_relative

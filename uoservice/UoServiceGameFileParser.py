@@ -5,6 +5,8 @@ import utils
 from numpy import int8
 import os
 import threading
+import copy
+
 
 class UoServiceGameFileParser:
 	'''UoServiceGameFileParser class including Binary file reader'''
@@ -238,8 +240,8 @@ class UoServiceGameFileParser:
 	    bx = x << 3
 	    by = y << 3
 
-	    print("im.map_address: {0}".format(im.map_address))
-	    print("by: {0}, by: {1}".format(bx, by))
+	    #print("im.map_address: {0}".format(im.map_address))
+	    #print("by: {0}, by: {1}".format(bx, by))
 	    for y in range(0, 8):
 	        pos = y << 3
 	        tile_y = by + y
@@ -255,7 +257,7 @@ class UoServiceGameFileParser:
 	            land_data["game_y"] = tile_y
 
 	            #print("land x: {0}, y: {1}, tile_id: {2}, z: {3}, name: {4}".format(x, y, tile_id, z, land_data["name"]))
-	            land_data_list.append(land_data)
+	            land_data_list.append(copy.deepcopy(land_data))
 
 	    if im.static_address != 0:
 	    	static_address = im.static_address
@@ -277,11 +279,11 @@ class UoServiceGameFileParser:
 
 	    		#print("static_address: ", static_address)
 
-	    		if "wood" in static_data["name"]:
-	    			print("Color: {0}, X: {1}, Y: {2}, Name: {3}".format(color, bx + x, by + y, static_data["name"]))
-	    			print("static_data: {0}".format(static_data))
+	    		#if "wood" in static_data["name"]:
+	    		#	print("Color: {0}, X: {1}, Y: {2}, Name: {3}".format(color, bx + x, by + y, static_data["name"]))
+	    		#	print("static_data: {0}".format(static_data))
 
-	    		static_data_list.append(static_data)
+	    		static_data_list.append(copy.deepcopy(static_data))
 
 	    		#print("color: ", color)
 	    		#print("x: ", x)
@@ -290,6 +292,6 @@ class UoServiceGameFileParser:
 
 	    		#static_address += 7
 
-	    	print("")
+	    	#print("")
 
 	    return land_data_list, static_data_list
