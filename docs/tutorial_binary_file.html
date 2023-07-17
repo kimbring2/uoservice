@@ -14,6 +14,7 @@
 
     <!-- Custom styles for this template -->
     <link href="css/tmp.css" rel="stylesheet">
+    <script src="js/scripts.js"></script>
 
     <script src="js/highlight.pack.js"></script>
 	<script>hljs.initHighlightingOnLoad();</script>
@@ -66,6 +67,63 @@
         <p style="text-align:left; font-size:18px;">The location of the files might be different slightly depending on the setting of the computer, but the full path usually looks like a <u>/home/kimbring2/.wine/drive_c/Program Files (x86)/Electronic Arts/Ultima Online Classic</u> when the Wine program is used to install the Windows client.
         </p>
     </div>
+
+    <div class="starter-template">
+        <h1>Land and Static data</h1>
+        <p style="text-align:left; font-size:18px;">
+        </p>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col" id="3">
+                <script>createHeader("3", "GrpcLandObjectData", "");</script>
+                This type includes the every mobile type object such as monster, npc, aminal, other player, and etc.
+                <img src="Fig/LandObject.png" class="rounded mx-auto d-block float-center" alt="Logo" width="300" height="100">
+
+                <script>
+                    generate_table("3", 
+                                    [   
+                                        ["index", "uint32", "order number among multiple land objects"],
+                                        ["gameX", "uint32", "x position of mobile in the game"],
+                                        ["gameY", "uint32", "y position of mobile in the game"],
+                                        ["distance", "uint32", "distance between the player and item object"]
+                                    );
+                </script>
+            </div>
+
+            <div class="col" id="4">
+                <script>createHeader("4", "GrpcPlayerStatus", "");</script>
+                <img src="Fig/Status.png" class="rounded mx-auto d-block float-center" alt="Logo" width="420" height="150">
+                <script>
+                    generate_table("4", 
+                                    [
+                                        ["str", "uint32", "strenthg of player"], 
+                                        ["dex", "uint32", "dexterity of player"],
+                                        ["intell", "uint32", "intelligence of player"],
+                                        ["hits", "uint32", "current HP of player"],
+                                        ["hitsMax", "uint32", "maximum value of HP of player"], 
+                                        ["stamina", "uint32", "stamina of player"],
+                                        ["staminaMax", "uint32", "maximum value of stamina of player"],
+                                        ["mana", "uint32", "mana of player"],
+                                        ["manaMax", "uint32", "maximum value of mana of player"], 
+                                        ["gold", "uint32", "gold the player currently has"],
+                                        ["physicalResistance", "uint32", "the physical resistance of player"],
+                                        ["weightMax", "uint32", "maximum value of weight of player"],
+                                        ["holdItemSerial", "uint32", "serial of item what player current is holding"]
+                                    ]
+                                    );
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <div class="starter-template">
+        <h1>Extracting Land and Static data</h1>
+        <p style="text-align:left; font-size:18px;">
+        </p>
+    </div>
+
     <div class="container-fluid">
         <div class="row">
             <div class="col">
@@ -354,7 +412,6 @@ for position in position_list:
             static_data = static_data_dict[color]
 
     print("")
-
                 </code></pre>
             </div>
         </div>

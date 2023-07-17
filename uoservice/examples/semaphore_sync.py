@@ -123,7 +123,7 @@ def parse_land_static(uo_service):
 
               screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Blue"], 1)
 
-      boundary = 200
+      boundary = 500
 
       radius = 1
       thickness = 1
