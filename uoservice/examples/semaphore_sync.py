@@ -245,8 +245,22 @@ def step(uo_service):
     #for k_mobile, v_mobile in uo_service.world_mobile_dict.items():
     #  print("world_mobile {0}: {1}".format(k_mobile, v_mobile))
 
+    min_tile_x = uo_service.min_tile_x
+    max_tile_x = uo_service.max_tile_x
+    min_tile_y = uo_service.min_tile_y 
+    max_tile_y = uo_service.max_tile_y
+
+    if min_tile_x != None:
+      tile_x_range = max_tile_x - min_tile_x
+      tile_y_range = max_tile_y - min_tile_y
+
+      #print("min_tile_x: {0}, max_tile_x: {0}", min_tile_x, max_tile_x)
+      #print("min_tile_y: {0}, max_tile_y: {0}", min_tile_y, max_tile_y)
+      print("tile_x_range: {0}, tile_y_range: {0}", tile_x_range, tile_y_range)
+      print("")
+
     hold_item_serial = uo_service.hold_item_serial
-    print("hold_item_serial: ", hold_item_serial)
+    #print("hold_item_serial: ", hold_item_serial)
 
     equipped_item_data = uo_service.equipped_item_dict
 
