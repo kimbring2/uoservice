@@ -41,6 +41,8 @@ $ mono ServUO.exe
 ```
 
 - Run the modified ClassicUO client with [various argument options](https://github.com/kimbring2/pyuo/blob/main/README.md#run-code).
+<img src="images/HumanPlayLaunch.gif" width="800">
+
 
 - Run the [sample Python Application](https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/semaphore_sync.py).
 ```
