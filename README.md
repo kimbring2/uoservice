@@ -53,7 +53,7 @@ $ mono ServUO.exe
   In Human Play of step 1, the agent information is obtained through the game screen. Then, agent is controlled via the mouse. However, this process is substituted through code in case of the Python connecting mode.
 
   **3. Replay Recording(Human Play with no Python connection)**
-  <img src="images/ReplayRecording" width="500">
+  <img src="images/ReplayRecording.gif" width="500">
 
   Finally, the record will be stored as a replay file if the replay argument is added to Human Play mode. That files are automatically created and saved in the subfolder of the exe file folder per a certain game tick pass.
 
