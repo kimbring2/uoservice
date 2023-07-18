@@ -44,6 +44,8 @@ $ mono ServUO.exe
   1. Human Play with no Python connection(No replay recording)
   <img src="images/HumanPlayLaunch.gif" width="500">
 
+  To reduce complexity, the Login, Shard Selection, and Character Selection screens are skipped unlike the original ClassicUO client. Furthermore, first character of the account is automacially selected.
+
   2. Python connection through the gRPC(No replay recording)
   <img src="images/PythonConnectLaunch.gif" width="500">
 
