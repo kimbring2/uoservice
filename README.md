@@ -41,12 +41,12 @@ $ mono ServUO.exe
 ```
 
 - Run the modified ClassicUO client with [various argument options](https://github.com/kimbring2/pyuo/blob/main/README.md#run-code).
-    1. Human Play with no Python connection(No replay recording)
+  1. Human Play with no Python connection(No replay recording)
   <img src="images/HumanPlayLaunch.gif" width="500">
 
-    3. Python connection through the gRPC(No replay recording)
+  2. Python connection through the gRPC(No replay recording)
 
-    4. Replay Recording(Human Play with no Python connection)
+  3. Replay Recording(Human Play with no Python connection)
 
 - Run the [sample Python Application](https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/semaphore_sync.py).
 ```
