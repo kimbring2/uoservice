@@ -32,7 +32,6 @@
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
@@ -63,8 +62,6 @@
     </nav>
     
 <main role="main" class="container-fluid">
-    <br>
-
     <div class="starter-template">
         <h1>gRPC Tutorial</h1>
         <p style="text-align:left; font-size:18px;">Among the various components of the Ultima Online game, in the case of Mobile and Item objects around Agent, their states can change over time. Futhermore, Agent can make changes to the elements of the game through various actions. UoService uses the using gRPC communication to exchange such real-time information between the C# and Python application.
@@ -131,22 +128,6 @@
         </div>
 
         <div class="row">
-            <div class="col" id="3">
-                <script>createHeader("3", "GrpcLandObjectData", "");</script>
-                This type includes the every mobile type object such as monster, npc, aminal, other player, and etc.
-                <img src="Fig/LandObject.png" class="rounded mx-auto d-block float-center" alt="Logo" width="300" height="100">
-
-                <script>
-                    generate_table("3", 
-                                    [   
-                                        ["index", "uint32", "order number among multiple land objects"],
-                                        ["gameX", "uint32", "x position of mobile in the game"],
-                                        ["gameY", "uint32", "y position of mobile in the game"],
-                                        ["distance", "uint32", "distance between the player and item object"]
-                                    );
-                </script>
-            </div>
-
             <div class="col" id="4">
                 <script>createHeader("4", "GrpcPlayerStatus", "");</script>
                 <img src="Fig/Status.png" class="rounded mx-auto d-block float-center" alt="Logo" width="420" height="150">
@@ -171,9 +152,7 @@
                 </script>
 
             </div>
-        </div>
 
-        <div class="row">
             <div class="col" id="5">
                 <script>createHeader("5", "GrpcSkill", "");</script>
                 <img src="Fig/Skill.png" class="rounded mx-auto d-block float-center" alt="Logo" width="350" height="300">
@@ -191,7 +170,9 @@
                                     );
                 </script>
             </div>
+        </div>
 
+        <div class="row">
             <div class="col" id="6">
                 <script>createHeader("6", "GrpcClilocData", "");</script>
                 <img src="Fig/Cliloc.png" class="rounded mx-auto d-block float-center" alt="Logo" width="170" height="170">
@@ -206,28 +187,15 @@
                                     );
                 </script>
             </div>
+
+
         </div>
 
         <div class="row">
             <div class="col" id="7">
-                <script>createHeader("7", "GrpcPopupMenu", "");</script>
-                The type is used for saving the text, and active status of single pop up menu.
-                <img src="Fig/PopUpMenu.png" class="rounded mx-auto d-block float-center" alt="Logo" width="130" height="210">
-
-                <script>
-                    generate_table("7", 
-                                    [
-                                        ["text", "string", "text body of pop up"],
-                                        ["active", "bool", "true if this menu can be selected"],
-                                    ]
-                                    );
-                </script>
-            </div>
-
-            <div class="col" id="8">
-                <script>createHeader("8", "Actions", "");</script>
+                <script>createHeader("7", "Actions", "");</script>
                 Due to the huge number of pixels, using the position of screen as action directly is really inefficient. However, we can project the any mouse input into a specific game event by using the multiple action arguments. <script>
-                    generate_table("8", 
+                    generate_table("7", 
                                     [
                                         ["actionType", "uint32", "type of action"],
                                         ["itemSerial", "uint32", "unique item serial what player hold now"], 
@@ -266,7 +234,12 @@
                                         ["name", "string", "name of player"],
                                         ["title", "string", "title of player"],
                                         ["holdItemSerial", "uint32", "unique serial number of holded item by player"],
-                                        ["warMode", "bool", "this should be true to attack the monster"]
+                                        ["warMode", "bool", "this should be true to attack the monster"],
+                                        ["targetingState", "uint32", "Targeting type(invalid = -1, object = 0, position = 1). e.g. This will be changed as position type when you double click the PickAxe for mining the ore."],
+                                        ["minTileX", "uint32", "The smallest x position among the lands in the player's field of view on the entire map"],
+                                        ["minTileY", "uint32", "The smallest y position among the lands in the player's field of view on the entire map"],
+                                        ["maxTileX", "uint32", "The largest x position among the lands in the player's field of view on the entire map"],
+                                        ["maxTileY", "uint32", "The largest y position among the lands in the player's field of view on the entire map"],
                                     ]
                                     );
                 </script>
@@ -332,20 +305,6 @@
         </div>
 
         <div class="row">
-            <div class="col", id="states_5">
-                <script>createHeader("states_5", "StaticObjectInfoList", "");</script>
-                    This data type only stores the position of game object as list type. It is mainly used to store the Stactic object such as tree and rock that is not really important for player's decision.
-                    <img src="Fig/Static.png" class="rounded mx-auto d-block float-center" alt="Logo" width="100" height="100">
-                    <script>
-                        generate_table("states_5", 
-                                        [
-                                            ["screenXs", "list of uint32", "list of x position of mobile in the game scene"],
-                                            ["screenYs", "list of uint32", "list of y position of mobile in the game scene"],
-                                        ]
-                                        );
-                </script>
-            </div>
-
             <div class="col", id="states_6">
                 <script>createHeader("states_6", "ClilocDataList", "");</script>
                     The speech of NPC consists of multiple sentence even if it looks like a one sentence in game. Therefore, old cliloc text should be kept for a certain period of time(50 is default length)
@@ -357,6 +316,9 @@
                                         ]
                                         );
                 </script>
+            </div>
+
+            <div class="col", id="states_6">
             </div>
         </div>
 

@@ -28,7 +28,7 @@ namespace Uoservice {
             "Y1BsYXllck9iamVjdBINCgVnYW1lWBgBIAEoDRINCgVnYW1lWRgCIAEoDRIO",
             "CgZzZXJpYWwYAyABKA0SDAoEbmFtZRgEIAEoCRINCgV0aXRsZRgFIAEoCRIW",
             "Cg5ob2xkSXRlbVNlcmlhbBgGIAEoDRIPCgd3YXJNb2RlGAcgASgIEhYKDnRh",
-            "cmdldGluZ1N0YXRlGAggASgNEhAKCG1pblRpbGVYGAkgASgNEhAKCG1pblRp",
+            "cmdldGluZ1N0YXRlGAggASgFEhAKCG1pblRpbGVYGAkgASgNEhAKCG1pblRp",
             "bGVZGAogASgNEhAKCG1heFRpbGVYGAsgASgNEhAKCG1heFRpbGVZGAwgASgN",
             "IrcBChRHcnBjTW9iaWxlT2JqZWN0RGF0YRIMCgRoaXRzGAEgASgNEg8KB2hp",
             "dHNNYXgYAiABKA0SDAoEcmFjZRgDIAEoDRIQCghkaXN0YW5jZRgEIAEoDRIN",
@@ -331,9 +331,9 @@ namespace Uoservice {
 
     /// <summary>Field number for the "targetingState" field.</summary>
     public const int TargetingStateFieldNumber = 8;
-    private uint targetingState_;
+    private int targetingState_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint TargetingState {
+    public int TargetingState {
       get { return targetingState_; }
       set {
         targetingState_ = value;
@@ -470,7 +470,7 @@ namespace Uoservice {
       }
       if (TargetingState != 0) {
         output.WriteRawTag(64);
-        output.WriteUInt32(TargetingState);
+        output.WriteInt32(TargetingState);
       }
       if (MinTileX != 0) {
         output.WriteRawTag(72);
@@ -518,7 +518,7 @@ namespace Uoservice {
         size += 1 + 1;
       }
       if (TargetingState != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TargetingState);
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(TargetingState);
       }
       if (MinTileX != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(MinTileX);
@@ -619,7 +619,7 @@ namespace Uoservice {
             break;
           }
           case 64: {
-            TargetingState = input.ReadUInt32();
+            TargetingState = input.ReadInt32();
             break;
           }
           case 72: {

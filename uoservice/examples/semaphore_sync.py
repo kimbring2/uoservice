@@ -256,8 +256,11 @@ def step(uo_service):
 
       #print("min_tile_x: {0}, max_tile_x: {0}", min_tile_x, max_tile_x)
       #print("min_tile_y: {0}, max_tile_y: {0}", min_tile_y, max_tile_y)
-      print("tile_x_range: {0}, tile_y_range: {0}", tile_x_range, tile_y_range)
-      print("")
+      #print("tile_x_range: {0}, tile_y_range: {0}", tile_x_range, tile_y_range)
+      #print("")
+
+    targeting_state = uo_service.targeting_state
+    print("targeting_state: ", targeting_state)
 
     hold_item_serial = uo_service.hold_item_serial
     #print("hold_item_serial: ", hold_item_serial)
