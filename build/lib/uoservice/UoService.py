@@ -46,19 +46,16 @@ class UoService:
 		self.corpse_item_dict = {}
 		self.cliloc_dict = {}
 		self.popup_menu_list = []
+		self.ground_item_dict = {}
 
-		self.player_game_x = None
-		self.player_game_y = None
+		self.player_game_x = self.player_game_y = None
 		self.player_serial = None
 		self.war_mode = False
 		self.hold_item_serial = 0
 		self.player_gold = None
 		self.targeting_state = None
 
-		self.min_tile_x = None
-		self.min_tile_y = None
-		self.max_tile_x = None
-		self.max_tile_y = None
+		self.min_tile_x = self.min_tile_y = self.max_tile_x = self.max_tile_y = None
 
 		self.backpack_serial = None
 		self.bank_serial = None
@@ -146,14 +143,11 @@ class UoService:
 			self.max_tile_x = player_object.maxTileX
 			self.max_tile_y = player_object.maxTileY
 
-		#print("min_tile_x: {0}, min_tile_y: {1}, max_tile_x: {2}, max_tile_y: {3}: ".format(
-		#	  self.min_tile_x, self.min_tile_y, self.max_tile_x, self.max_tile_y))
-
 		#if player_object.holdItemSerial != 0:
 		#	self.hold_item_serial = player_object.holdItemSerial
 
-		#if len(world_item_data) != 0:
-			#print("len(world_item_data): ", len(world_item_data))
+		if len(world_item_data) != 0:
+			print("len(world_item_data): ", len(world_item_data))
 
 		if len(world_item_data) != 0:
 			self.world_item_dict = {}
@@ -191,66 +185,66 @@ class UoService:
 			self.backpack_item_dict = {}
 			self.equipped_item_dict = {}
 			self.corpse_dict = {}
+			self.ground_item_dict = {}
 
-			#print("")
 			for k, v in self.world_item_dict.items():
-				#print("{0}".format(self.world_item_dict[k]['name']))
+				#print("name: {0}, layer: {1}".format(v['name'], v['layer']))
 
 				if v["isCorpse"] == True:
 					self.corpse_dict[k] = v
-
-				if v["container"] == self.backpack_serial:
+				elif v["container"] == self.backpack_serial:
 					self.backpack_item_dict[k] = v
-
-				if v["container"] == self.bank_serial:
+				elif v["container"] == self.bank_serial:
 					self.bank_item_dict[k] = v
-
-				if v["layer"] == 1:
-					self.equipped_item_dict['OneHanded'] = v
-				elif v["layer"] == 2:
-					self.equipped_item_dict['TwoHanded'] = v
-				elif v["layer"] == 3:
-					self.equipped_item_dict['Shoes'] = v
-				elif v["layer"] == 4:
-					self.equipped_item_dict['Pants'] = v
-				elif v["layer"] == 5:
-					self.equipped_item_dict['Shirt'] = v
-				elif v["layer"] == 6:
-					self.equipped_item_dict['Helmet'] = v
-				elif v["layer"] == 7:
-					self.equipped_item_dict['Gloves'] = v
-				elif v["layer"] == 8:
-					self.equipped_item_dict['Ring'] = v
-				elif v["layer"] == 9:
-					self.equipped_item_dict['Talisman'] = v
-				elif v["layer"] == 10:
-					self.equipped_item_dict['Necklace'] = v
-				elif v["layer"] == 11:
-					self.equipped_item_dict['Hair'] = v
-				elif v["layer"] == 12:
-					self.equipped_item_dict['Waist'] = v
-				elif v["layer"] == 13:
-					self.equipped_item_dict['Torso'] = v
-				elif v["layer"] == 14:
-					self.equipped_item_dict['Bracelet'] = v
-				elif v["layer"] == 15:
-					self.equipped_item_dict['Face'] = v
-				elif v["layer"] == 16:
-					self.equipped_item_dict['Beard'] = v
-				elif v["layer"] == 17:
-					self.equipped_item_dict['Tunic'] = v
-				elif v["layer"] == 18:
-					self.equipped_item_dict['Earrings'] = v
-				elif v["layer"] == 19:
-					self.equipped_item_dict['Arms'] = v
-				elif v["layer"] == 20:
-					self.equipped_item_dict['Cloak'] = v
-				elif v["layer"] == 22:
-					self.equipped_item_dict['Robe'] = v
-				elif v["layer"] == 23:
-					self.equipped_item_dict['Skirt'] = v
-				elif v["layer"] == 24:
-					self.equipped_item_dict['Legs'] = v
+				elif v["layer"] != 0:
+					if v["layer"] == 1:
+						self.equipped_item_dict['OneHanded'] = v
+					elif v["layer"] == 2:
+						self.equipped_item_dict['TwoHanded'] = v
+					elif v["layer"] == 3:
+						self.equipped_item_dict['Shoes'] = v
+					elif v["layer"] == 4:
+						self.equipped_item_dict['Pants'] = v
+					elif v["layer"] == 5:
+						self.equipped_item_dict['Shirt'] = v
+					elif v["layer"] == 6:
+						self.equipped_item_dict['Helmet'] = v
+					elif v["layer"] == 7:
+						self.equipped_item_dict['Gloves'] = v
+					elif v["layer"] == 8:
+						self.equipped_item_dict['Ring'] = v
+					elif v["layer"] == 9:
+						self.equipped_item_dict['Talisman'] = v
+					elif v["layer"] == 10:
+						self.equipped_item_dict['Necklace'] = v
+					elif v["layer"] == 11:
+						self.equipped_item_dict['Hair'] = v
+					elif v["layer"] == 12:
+						self.equipped_item_dict['Waist'] = v
+					elif v["layer"] == 13:
+						self.equipped_item_dict['Torso'] = v
+					elif v["layer"] == 14:
+						self.equipped_item_dict['Bracelet'] = v
+					elif v["layer"] == 15:
+						self.equipped_item_dict['Face'] = v
+					elif v["layer"] == 16:
+						self.equipped_item_dict['Beard'] = v
+					elif v["layer"] == 17:
+						self.equipped_item_dict['Tunic'] = v
+					elif v["layer"] == 18:
+						self.equipped_item_dict['Earrings'] = v
+					elif v["layer"] == 19:
+						self.equipped_item_dict['Arms'] = v
+					elif v["layer"] == 20:
+						self.equipped_item_dict['Cloak'] = v
+					elif v["layer"] == 22:
+						self.equipped_item_dict['Robe'] = v
+					elif v["layer"] == 23:
+						self.equipped_item_dict['Skirt'] = v
+					elif v["layer"] == 24:
+						self.equipped_item_dict['Legs'] = v
+				else:
+					self.ground_item_dict[k] = v
 
 		#print("self.corpse_dict: ", self.corpse_dict)
 		#print("self.equipped_item_dict: ", self.equipped_item_dict)
@@ -268,20 +262,6 @@ class UoService:
 						self.corpse_item_dict[k_corpse][k_world] = self.world_item_dict[k_world]
 
 					pass
-
-		if self.backpack_item_dict != 0:
-			#print("self.backpack_item_dict: ", self.backpack_item_dict)
-			for k, v in self.backpack_item_dict.items():
-				#print("backpack item {0}: {1}".format(k, self.backpack_item_dict[k]))
-				pass
-
-		if len(self.bank_item_dict) != 0:
-			#print("self.backpack_item_dict: ", self.backpack_item_dict)
-			for k, v in self.bank_item_dict.items():
-				#print("{0}: {1}".format(self.bank_item_dict[k]["name"], k))
-				pass
-
-			#print("")
 
 		if player_status_data.str != 0:
 			#print("player_status_data.str: ", player_status_data.str)

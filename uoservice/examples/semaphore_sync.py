@@ -112,8 +112,8 @@ def parse_land_static(uo_service):
               screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Gray"], 1)
 
           for static_data in static_data_list:
-            if "water" not in static_data["name"]:
-              print("static / name: {0}, game_x: {1}, game_y: {2}".format(static_data["name"], static_data["game_x"], static_data["game_y"]))
+            #if "water" not in static_data["name"]:
+            #  print("static / name: {0}, game_x: {1}, game_y: {2}".format(static_data["name"], static_data["game_x"], static_data["game_y"]))
             
             start_point = ( (static_data["game_x"] - player_game_x) * scale + 500 - int(scale / 2), 
                             (static_data["game_y"] - player_game_y) * scale + 500 - int(scale / 2) )
@@ -212,11 +212,29 @@ def step(uo_service):
     action['amount'] = 0
     action['run'] = False
 
+    world_item_data = uo_service.world_item_dict
     backpack_item_data = uo_service.backpack_item_dict
-    #print("backpack_item_data: ", backpack_item_data)
-    for k_backpack, v_backpack in backpack_item_data.items():
-      #print("backpack {0}: {1}".format(k_backpack, v_backpack))
-      pass
+    equipped_item_data = uo_service.equipped_item_dict
+    ground_item_data = uo_service.ground_item_dict
+    
+    if len(backpack_item_data) != 0:
+      for k_backpack, v_backpack in backpack_item_data.items():
+        #print("backpack {0}: {1}".format(k_backpack, v_backpack["name"]))
+        pass
+      #print("")
+
+    if len(world_item_data) != 0:
+      for k_world, v_world in world_item_data.items():
+        #print("world {0}: {1}".format(k_world, v_world["name"]))
+        pass
+      #print("")
+
+    if len(equipped_item_data) != 0:
+      for k_equipped, v_equipped in equipped_item_data.items():
+        print("equipped {0}: {1}".format(k_equipped, v_equipped["name"]))
+        pass
+
+      print("")
 
     #for k_mobile, v_mobile in uo_service.world_mobile_dict.items():
     #  print("world_mobile {0}: {1}".format(k_mobile, v_mobile))
@@ -227,15 +245,6 @@ def step(uo_service):
 
     gold_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
     #print("gold_serial: ", gold_serial)
-
-    #self.min_tile_x = None
-    #self.min_tile_y = None
-    #self.max_tile_x = None
-    #self.max_tile_y = None
-    #print("uo_service.min_tile_x: ", uo_service.min_tile_x)
-    #print("uo_service.min_tile_y: ", uo_service.min_tile_y)
-    #print("uo_service.max_tile_x: ", uo_service.max_tile_x)
-    #print("uo_service.max_tile_y: ", uo_service.max_tile_y)
 
     if gold_serial in backpack_item_data:
       gold_info = backpack_item_data[gold_serial]
