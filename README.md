@@ -41,6 +41,7 @@ $ mono ServUO.exe
 ```
 
 - Run the modified ClassicUO client with [various argument options](https://github.com/kimbring2/pyuo/blob/main/README.md#run-code).
+
   **1. Human Play with no Python connection(No replay recording)**
   <img src="images/HumanPlayLaunch.gif" width="500">
 
