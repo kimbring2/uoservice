@@ -45,7 +45,7 @@ $ mono ServUO.exe
   <img src="images/HumanPlayLaunch.gif" width="500">
 
   2. Python connection through the gRPC(No replay recording)
-  <img src="images/PythonConnectLaunch" width="500">
+  <img src="images/PythonConnectLaunch.gif" width="500">
 
   4. Replay Recording(Human Play with no Python connection)
 
