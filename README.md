@@ -50,7 +50,10 @@ $ mono ServUO.exe
   **2. Python connection through the gRPC(No replay recording)**
   <img src="images/PythonConnectLaunch.gif" width="500">
 
+  In Human Play of step 1, the agent information is obtained through the game screen. Then, agent is controlled via the mouse. However, this process is substituted through code in case of the Python connecting mode.
+
   **3. Replay Recording(Human Play with no Python connection)**
+  
 
 - Run the [sample Python Application](https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/semaphore_sync.py).
 ```
