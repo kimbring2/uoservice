@@ -47,6 +47,7 @@ color_dict = {"Black": (0, 0, 0),
               "Purple": (128, 255, 128),
               "Gray": (128, 128, 128),
               "Brown": (42, 42, 165),
+              "White": (255, 255, 255),
              }
 
 
@@ -57,11 +58,13 @@ def parse_land_static(uo_service):
     if uo_service.max_tile_x != None:
       #print("parse_land_static(): {0}".format(uo_service.total_step))
 
-      screen_image = np.zeros((1000,1000,4), dtype=np.uint8)
+      screen_length = 2000
+
+      screen_image = np.zeros((screen_length,screen_length,4), dtype=np.uint8)
       radius = 5
       thickness = 2
-      screen_width = 1000
-      screen_height = 1000
+      screen_width = screen_length
+      screen_height = screen_length
 
       cell_x_list = []
       cell_y_list = []
@@ -89,17 +92,17 @@ def parse_land_static(uo_service):
 
           for land_data in land_data_list:
             #print("land / name: {0}, game_x: {1}, game_y: {2}".format(land_data["name"], land_data["game_x"], land_data["game_y"]))
-            start_point = ( (land_data["game_x"] - player_game_x) * scale + 500 - int(scale / 2), 
-                            (land_data["game_y"] - player_game_y) * scale + 500 - int(scale / 2) )
-            end_point = ( (land_data["game_x"] - player_game_x) * scale + 500 + int(scale / 2), 
-                          (land_data["game_y"] - player_game_y) * scale + 500 + int(scale / 2) )
+            start_point = ( (land_data["game_x"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
+                            (land_data["game_y"] - player_game_y) * scale + int(screen_length / 2) - int(scale / 2) )
+            end_point = ( (land_data["game_x"] - player_game_x) * scale + int(screen_length / 2) + int(scale / 2), 
+                          (land_data["game_y"] - player_game_y) * scale + int(screen_length / 2) + int(scale / 2) )
 
             index = uo_service.get_land_index(land_data["game_x"], land_data["game_y"])
 
             radius = 1
             font = cv2.FONT_HERSHEY_SIMPLEX
-            org = ( (land_data["game_x"] - player_game_x) * scale + 500 - int(scale / 2), 
-                    (land_data["game_y"] - player_game_y) * scale + 500 )
+            org = ( (land_data["game_x"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
+                    (land_data["game_y"] - player_game_y) * scale + int(screen_length / 2) )
             fontScale = 0.4
             color = (255, 0, 0)
             thickness = 1
@@ -113,31 +116,41 @@ def parse_land_static(uo_service):
 
           for static_data in static_data_list:
             #if "water" not in static_data["name"]:
-            #  print("static / name: {0}, game_x: {1}, game_y: {2}".format(static_data["name"], static_data["game_x"], static_data["game_y"]))
+            #print("static / name: {0}, game_x: {1}, game_y: {2}".format(static_data["name"], static_data["game_x"], static_data["game_y"]))
             
-            start_point = ( (static_data["game_x"] - player_game_x) * scale + 500 - int(scale / 2), 
-                            (static_data["game_y"] - player_game_y) * scale + 500 - int(scale / 2) )
-            end_point = ( (static_data["game_x"] - player_game_x) * scale + 500 + int(scale / 2), 
-                          (static_data["game_y"] - player_game_y) * scale + 500 + int(scale / 2) )
+            start_point = ( (static_data["game_x"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
+                            (static_data["game_y"] - player_game_y) * scale + int(screen_length / 2) - int(scale / 2) )
+            end_point = ( (static_data["game_x"] - player_game_x) * scale + int(screen_length / 2) + int(scale / 2), 
+                          (static_data["game_y"] - player_game_y) * scale + int(screen_length / 2) + int(scale / 2) )
 
-            if "wood" in static_data["name"]:
-              screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Brown"], 1)
-            elif "grasses" in static_data["name"]:
-              screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Green"], 1)
+            #if "grasses" in static_data["name"]:
+            #  screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Green"], 1)
+            if "wall" in static_data["name"]:
+              screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["White"], -1)
+            #elif "wood" in static_data["name"]:
+            #  screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Brown"], 1)
+
             #elif "water" in static_data["name"]:
             #  screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Blue"], 1)
+      #print("")
 
-      boundary = 500
+      boundary = 1000
 
-      radius = 1
-      thickness = 1
+      radius = int(scale / 2)
       screen_width = 4000
       screen_height = 4000
       for k, v in uo_service.world_mobile_dict.items():
         if uo_service.player_game_x != None:
           if v["gameX"] < screen_width and v["gameY"] < screen_height:
-            #screen_image = cv2.circle(screen_image, (v["gameX"], v["gameY"]), radius, (0, 0, 255), thickness)
-            pass
+            screen_image = cv2.circle(screen_image, 
+                                      ( (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
+                                        (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
+                                      radius, color_dict["Red"], -1)
+
+            screen_image = cv2.putText(screen_image, "  " + v["name"], 
+                                       ( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
+                                         (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
+                                       cv2.FONT_HERSHEY_SIMPLEX, 0.5, color_dict["Red"], 2, cv2.LINE_4)
 
       for k, v in uo_service.world_item_dict.items():
         if uo_service.player_game_x != None:
@@ -145,52 +158,36 @@ def parse_land_static(uo_service):
           if v["gameX"] < screen_width and v["gameY"] < screen_height:
             screen_image = cv2.circle(screen_image, 
                                       ( 
-                                          (v["gameX"] - player_game_x) * scale + 500, 
-                                          (v["gameY"] - player_game_y) * scale + 500
+                                          (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
+                                          (v["gameY"] - player_game_y) * scale + int(screen_length / 2)
                                       ),
-                                      radius, (0, 0, 255), thickness)
-            #pass
+                                      radius, color_dict["Purple"], -1)
+           
+            item_name_list = v["name"].split(" ")
+            screen_image = cv2.putText(screen_image, "     " + item_name_list[-1], 
+                                       ( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
+                                         (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
+                                       cv2.FONT_HERSHEY_SIMPLEX, 0.5, color_dict["Purple"], 2, cv2.LINE_4)
+
       #print("")
 
       if uo_service.player_game_x != None:
         #print("player_game_x: {0}, player_game_y: {1}".format(self.player_game_x, self.player_game_y))
 
-        radius = 1
-        font = cv2.FONT_HERSHEY_SIMPLEX
-        org = (500 - 16, 500)
-        fontScale = 0.5
-        color = (255, 0, 0)
-        thickness = 1
-        #screen_image = cv2.putText(screen_image, str("player"), org, font, fontScale, color, thickness, cv2.LINE_4)
+        screen_image = cv2.putText(screen_image, str("player"), (int(screen_length / 2), int(screen_length / 2) - int(scale / 2)), 
+                                   cv2.FONT_HERSHEY_SIMPLEX, 1.0, color_dict["Green"], 4, cv2.LINE_4)
 
-        screen_image = cv2.circle(screen_image, (500, 500), radius, (0, 255, 0), thickness)
+        radius = int(scale / 2)
+        screen_image = cv2.circle(screen_image, (int(screen_length / 2), int(screen_length / 2)), radius, color_dict["Lime"], -1)
+        screen_image = screen_image[int(screen_length / 2) - boundary:int(screen_length / 2) + boundary, 
+                                    int(screen_length / 2) - boundary:int(screen_length / 2) + boundary, :]
         
-        screen_image = screen_image[500 - boundary:500 + boundary, 500 - boundary:500 + boundary, :]
-        
-        '''
-        if uo_service.player_game_y > boundary and uo_service.player_game_x > boundary:
-          screen_image = screen_image[500 - boundary:500 + boundary, 
-                                      500 - boundary:500 + boundary, :]
-        elif uo_service.player_game_y < boundary and uo_service.player_game_x > boundary:
-          #print("self.player_game_y < 600 and self.player_game_x > 600")
-          screen_image = screen_image[0:uo_service.player_game_y + boundary, 
-                                      uo_service.player_game_x - boundary:uo_service.player_game_x + boundary, :]
-        elif uo_service.player_game_y > boundary and uo_service.player_game_x < boundary:
-          #print("self.player_game_y > 600 and self.player_game_x < 600")
-          screen_image = screen_image[uo_service.player_game_y - boundary:uo_service.player_game_y + boundary, 
-                                      0:uo_service.player_game_x + boundary, :]
-        else:
-          #print("else")
-          screen_image = screen_image[0:uo_service.player_game_y + boundary, 0:uo_service.player_game_x + boundary, :]
-        '''
-        
-      
-      screen_image = cv2.resize(screen_image, (1000, 1000), interpolation=cv2.INTER_AREA)
+      screen_image = cv2.resize(screen_image, (screen_length, screen_length), interpolation=cv2.INTER_AREA)
       screen_image = utils.rotate_image(screen_image, -45)
       cv2.imshow('screen_image_' + str(uo_service.grpc_port), screen_image)
       cv2.waitKey(1)
 
-      time.sleep(1.0)
+      #time.sleep(1.0)
       
 
 def step(uo_service):
@@ -221,23 +218,35 @@ def step(uo_service):
       for k_backpack, v_backpack in backpack_item_data.items():
         #print("backpack {0}: {1}".format(k_backpack, v_backpack["name"]))
         pass
+
       #print("")
 
     if len(world_item_data) != 0:
       for k_world, v_world in world_item_data.items():
         #print("world {0}: {1}".format(k_world, v_world["name"]))
         pass
+
       #print("")
 
     if len(equipped_item_data) != 0:
       for k_equipped, v_equipped in equipped_item_data.items():
-        print("equipped {0}: {1}".format(k_equipped, v_equipped["name"]))
+        #print("equipped {0}: {1}".format(k_equipped, v_equipped["name"]))
         pass
 
-      print("")
+      #print("")
+
+    if len(ground_item_data) != 0:
+      for k_ground, v_ground in ground_item_data.items():
+        #print("ground {0}: {1}".format(k_ground, v_ground["name"]))
+        pass
+
+      #print("")
 
     #for k_mobile, v_mobile in uo_service.world_mobile_dict.items():
     #  print("world_mobile {0}: {1}".format(k_mobile, v_mobile))
+
+    hold_item_serial = uo_service.hold_item_serial
+    print("hold_item_serial: ", hold_item_serial)
 
     equipped_item_data = uo_service.equipped_item_dict
 
