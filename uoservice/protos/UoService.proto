@@ -43,6 +43,7 @@ message GrpcItemObjectData {
   uint32 price = 8;
   uint32 layer = 9;
   uint32 container = 10;
+  string data = 11;
 }
 
 message GrpcPlayerStatus {

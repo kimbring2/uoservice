@@ -158,7 +158,7 @@ class UoService:
 				#print("name: {0}, layer: {1}".format(obj.name, obj.layer))
 				self.world_item_dict[obj.serial] = { "name": obj.name, "gameX": obj.gameX, "gameY":obj.gameY, "serial": obj.serial,
 													 "distance": obj.distance, "layer":obj.layer, "container": obj.container, 
-													 "isCorpse": obj.isCorpse, "amount": obj.amount }
+													 "isCorpse": obj.isCorpse, "amount": obj.amount, "data": obj.data }
 				if obj.layer == 21:
 					self.backpack_serial = obj.serial
 
