@@ -190,37 +190,56 @@ def parse_land_static(uo_service):
       
 
 def step(uo_service):
-  pick_up_ingot_flag = False
+  pick_up_ingot_flag = True
+  drop_ingot_flag = False
+
   ingot_serial = None
 
   step = 0
   while True:
-    backpack_item_data = uo_service.backpack_item_dict
+    if len(uo_service.world_item_dict) != 0:
+      for k, v in uo_service.world_item_dict.items():
+        #print("name: {0}, layer: {1}".format(v['name'], v['layer']))
+        pass
 
+      #print("")
+
+    backpack_item_data = uo_service.backpack_item_dict
     if len(backpack_item_data) != 0:
       for k_backpack, v_backpack in backpack_item_data.items():
-        if "Ingot" in v_backpack["name"]:
-          print("{0}: {1}, {2}".format(k_backpack, v_backpack["name"], v_backpack["data"]))
+        #print("{0}: {1}".format(k_backpack, v_backpack["name"]))
 
-      print("")
+        if "Ore" in v_backpack["name"] and "Gold" not in v_backpack["name"]:
+          if v_backpack["amount"] >= 8:
+            #print("{0}: {1}, {2}".format(k_backpack, v_backpack["name"], v_backpack["data"]))
+          
+            if ingot_serial == None:
+              ingot_serial = k_backpack
+              pick_up_ingot_flag = True
+
+            pass
+      #print("")
       pass
 
     equipped_item_dict = uo_service.equipped_item_dict
     if len(equipped_item_dict) != 0:
       for k_equip, v_equip in equipped_item_dict.items():
-        #print("equipped item {0}: {1}, {2}".format(k_equip, v_equip["name"], v_equip["data"]))
+        #print("equipped item {0}: {1}".format(k_equip, v_equip["name"]))
         pass
 
       #print("")
 
+    bank_item_dict = uo_service.bank_item_dict
+    if len(bank_item_dict) != 0:
+      for k_bank, v_bank in bank_item_dict.items():
+        print("bank item {0}: {1}".format(k_bank, v_bank["name"]))
+        pass
+
+      print("")
+
     ## Player holded item
     hold_item_serial = uo_service.hold_item_serial
     targeting_state = uo_service.targeting_state
-
-    #print("targeting_state: ", targeting_state)
-
-    player_status_dict = uo_service.player_status_dict
-    #print("player_status_dict: ", player_status_dict)
 
     cliloc_dict = uo_service.cliloc_dict
     #print("cliloc_dict: ", cliloc_dict)
@@ -228,8 +247,15 @@ def step(uo_service):
     pickaxe_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
     #print("gold_serial: ", gold_serial)
 
-    if pickaxe_serial in backpack_item_data:
-      pickaxe_serial = backpack_item_data[pickaxe_serial]
+    hold_item_serial = uo_service.hold_item_serial
+    backpack_serial = uo_service.backpack_serial
+    bank_serial = uo_service.bank_serial
+
+    gold_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
+    #print("gold_serial: ", gold_serial)
+
+    if gold_serial in backpack_item_data:
+      gold_info = backpack_item_data[gold_serial]
       #print("gold_info: ", gold_info)
     else:
       #print("gold_serial is not in backpack_item_data")
@@ -246,23 +272,35 @@ def step(uo_service):
     action['run'] = False
 
     if step % 100 == 0:
-      #print("step: ", step)
-      #print("targeting_state: ", targeting_state)
+      print("step: ", step)
+      #print("pick_up_ingot_flag: ", pick_up_ingot_flag)
+      #print("ingot_serial: ", ingot_serial)
+      #print("")
+      print("bank_serial: ", bank_serial)
 
-      if pick_up_ingot_flag == True:
+      if pick_up_ingot_flag == True and ingot_serial != None:
         #print("Pick up the equipped item from player")
 
         action['action_type'] = 3
-        action['target_serial'] = unequip_item_serial
+        action['target_serial'] = gold_serial
+        action['amount'] = 100
 
-        unequip_item = uo_service.world_item_dict[unequip_item_serial]
-        uo_service.picked_up_item = unequip_item
+        picked_item = uo_service.world_item_dict[ingot_serial]
+        uo_service.picked_up_item = picked_item
 
-        drop_item_serial = unequip_item_serial
-        unequip_item_serial = None
+        drop_ingot_flag = True
+        pick_up_ingot_flag = False
+      elif drop_ingot_flag == True:
+        action['action_type'] = 4
+        #action['target_serial'] = backpack_serial
+        action['target_serial'] = bank_serial
+        #action['index'] = 1
 
+        drop_ingot_flag = False
 
-    action['action_type'] = 0
+      #action['action_type'] = 1
+      #action['walk_direction'] = 1
+
     obs = uo_service.step(action)
 
     step += 1

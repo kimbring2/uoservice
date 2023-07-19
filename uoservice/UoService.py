@@ -147,7 +147,8 @@ class UoService:
 		#	self.hold_item_serial = player_object.holdItemSerial
 
 		if len(world_item_data) != 0:
-			print("len(world_item_data): ", len(world_item_data))
+			#print("len(world_item_data): ", len(world_item_data))
+			pass
 
 		if len(world_item_data) != 0:
 			self.world_item_dict = {}
