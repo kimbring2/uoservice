@@ -195,6 +195,7 @@ def step(uo_service):
 
   ingot_serial = None
   corpse_item_dict = {}
+  bag_serial = None
 
   step = 0
   while True:
@@ -277,6 +278,9 @@ def step(uo_service):
     gold_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
     #print("gold_serial: ", gold_serial)
 
+    bag_serial, index = utils.get_serial_by_name(backpack_item_data, 'Bag')
+    #print("bag_serial: ", bag_serial)
+
     if gold_serial in backpack_item_data:
       gold_info = backpack_item_data[gold_serial]
       #print("gold_info: ", gold_info)
@@ -295,31 +299,32 @@ def step(uo_service):
     action['run'] = False
 
     if step % 100 == 0:
-      #print("step: ", step)
+      print("step: ", step)
       #print("pick_up_ingot_flag: ", pick_up_ingot_flag)
       #print("ingot_serial: ", ingot_serial)
       #print("len(corpse_item_dict): ", len(corpse_item_dict))
-      print("corpse_item_dict: ", corpse_item_dict)
-      #print("corpse_dict: ", corpse_dict)
+      print("gold_serial: ", gold_serial)
+      print("bag_serial: ", bag_serial)
 
       #if len(corpse_item_dict) != 0:
-      if True:
+      if False:
         ## Pick up the gold from corpse
         gold_item_serial, gold_item_max = \
           utils.get_serial_amount_from_corpse_item_list(corpse_item_dict, 'Gold')
 
-        print("gold_item_serial: ", gold_item_serial)
-        print("gold_item_max: ", gold_item_max)
+        #print("gold_item_serial: ", gold_item_serial)
+        #print("gold_item_max: ", gold_item_max)
 
         action['action_type'] = 0
         #action['action_type'] = 3
 
         action['target_serial'] = 1073970115
         action['amount'] = 1
-      elif pick_up_ingot_flag == True and ingot_serial != None:
-        #print("Pick up the equipped item from player")
+      #elif pick_up_ingot_flag == True and ingot_serial != None:
+      elif gold_serial != None and pick_up_ingot_flag == True:
+        print("Pick up the item from player")
 
-        action['action_type'] = 0
+        action['action_type'] = 3
         action['target_serial'] = gold_serial
         action['amount'] = 100
 
@@ -328,11 +333,13 @@ def step(uo_service):
 
         drop_ingot_flag = True
         pick_up_ingot_flag = False
-      elif drop_ingot_flag == True:
-        action['action_type'] = 0
+      elif drop_ingot_flag == True and bag_serial != None:
+        print("Drop the item into the backpack")
+
+        action['action_type'] = 4
         #action['target_serial'] = backpack_serial
-        action['target_serial'] = bank_serial
-        #action['index'] = 1
+        action['target_serial'] = bag_serial
+        action['index'] = 0
 
         drop_ingot_flag = False
 
