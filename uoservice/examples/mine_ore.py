@@ -245,7 +245,7 @@ def step(uo_service):
     #print("player_status_dict: ", player_status_dict)
 
     cliloc_dict = uo_service.cliloc_dict
-    print("cliloc_dict: ", cliloc_dict)
+    #print("cliloc_dict: ", cliloc_dict)
 
     pickaxe_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
     #print("gold_serial: ", gold_serial)
