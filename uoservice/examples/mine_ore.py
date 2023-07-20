@@ -54,12 +54,8 @@ color_dict = {"Black": (0, 0, 0),
 
 def parse_land_static(uo_service):
   while True:
-    #print("parse_land_static(): {0}".format(uo_service.total_step))
-
     if uo_service.max_tile_x != None:
-      #print("parse_land_static(): {0}".format(uo_service.total_step))
-
-      screen_length = 2000
+      screen_length = 1000
 
       screen_image = np.zeros((screen_length,screen_length,4), dtype=np.uint8)
       radius = 5
@@ -135,7 +131,7 @@ def parse_land_static(uo_service):
             #  screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Blue"], 1)
       #print("")
 
-      boundary = 1000
+      boundary = 500
 
       radius = int(scale / 2)
       screen_width = 4000
@@ -169,8 +165,6 @@ def parse_land_static(uo_service):
                                        ( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
                                          (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
                                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, color_dict["Purple"], 2, cv2.LINE_4)
-
-      #print("")
 
       if uo_service.player_game_x != None:
         #print("player_game_x: {0}, player_game_y: {1}".format(self.player_game_x, self.player_game_y))
@@ -304,7 +298,7 @@ def step(uo_service):
         mining_prepare_flag = False
         mining_ready_flag = True
         one_time_trial = False
-      elif mining_ready_flag == True:
+      elif mining_ready_flag == True and targeting_state == 1:
         print("Mining the land target")
 
         action['action_type'] = 5

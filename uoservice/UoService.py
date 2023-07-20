@@ -131,7 +131,7 @@ class UoService:
 			#print("")
 
 		if player_object.gameX != 0:
-			#print("player_object.gameX != 0")
+			print("player_object.gameX != 0")
 			#print("player_object.holdItemSerial: ", player_object.holdItemSerial)
 			self.player_game_x = player_object.gameX
 			self.player_game_y = player_object.gameY
