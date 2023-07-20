@@ -194,6 +194,7 @@ def step(uo_service):
   drop_ingot_flag = False
 
   ingot_serial = None
+  corpse_item_dict = {}
 
   step = 0
   while True:
@@ -232,10 +233,32 @@ def step(uo_service):
     bank_item_dict = uo_service.bank_item_dict
     if len(bank_item_dict) != 0:
       for k_bank, v_bank in bank_item_dict.items():
-        print("bank item {0}: {1}".format(k_bank, v_bank["name"]))
+        #print("bank item {0}: {1}".format(k_bank, v_bank["name"]))
         pass
 
-      print("")
+      #print("")
+
+    corpse_dict = {}
+    for k, v in uo_service.world_item_dict.items():
+      if v["isCorpse"] == True:
+        corpse_dict[k] = v
+
+    corpse_item_dict = {}
+
+    for k_corpse, v_corpse in corpse_dict.items():
+      for k_world, v_world in uo_service.world_item_dict.items():
+        if k_corpse == v_world["container"]:
+          if k_world not in corpse_item_dict:
+            corpse_item_dict[k_world] = uo_service.world_item_dict[k_world]
+          else:
+            corpse_item_dict[k_world] = uo_service.world_item_dict[k_world]
+
+    if len(corpse_item_dict) != 0:
+      for k_corpse, v_corpse in corpse_item_dict.items():
+        #print("corpse item {0}: {1}".format(k_corpse, v_corpse["name"]))
+        pass
+
+      #print("")
 
     ## Player holded item
     hold_item_serial = uo_service.hold_item_serial
@@ -272,16 +295,31 @@ def step(uo_service):
     action['run'] = False
 
     if step % 100 == 0:
-      print("step: ", step)
+      #print("step: ", step)
       #print("pick_up_ingot_flag: ", pick_up_ingot_flag)
       #print("ingot_serial: ", ingot_serial)
-      #print("")
-      print("bank_serial: ", bank_serial)
+      #print("len(corpse_item_dict): ", len(corpse_item_dict))
+      print("corpse_item_dict: ", corpse_item_dict)
+      #print("corpse_dict: ", corpse_dict)
 
-      if pick_up_ingot_flag == True and ingot_serial != None:
+      #if len(corpse_item_dict) != 0:
+      if True:
+        ## Pick up the gold from corpse
+        gold_item_serial, gold_item_max = \
+          utils.get_serial_amount_from_corpse_item_list(corpse_item_dict, 'Gold')
+
+        print("gold_item_serial: ", gold_item_serial)
+        print("gold_item_max: ", gold_item_max)
+
+        action['action_type'] = 0
+        #action['action_type'] = 3
+
+        action['target_serial'] = 1073970115
+        action['amount'] = 1
+      elif pick_up_ingot_flag == True and ingot_serial != None:
         #print("Pick up the equipped item from player")
 
-        action['action_type'] = 3
+        action['action_type'] = 0
         action['target_serial'] = gold_serial
         action['amount'] = 100
 
@@ -291,14 +329,14 @@ def step(uo_service):
         drop_ingot_flag = True
         pick_up_ingot_flag = False
       elif drop_ingot_flag == True:
-        action['action_type'] = 4
+        action['action_type'] = 0
         #action['target_serial'] = backpack_serial
         action['target_serial'] = bank_serial
         #action['index'] = 1
 
         drop_ingot_flag = False
 
-      #action['action_type'] = 1
+      #action['action_type'] = 0
       #action['walk_direction'] = 1
 
     obs = uo_service.step(action)
