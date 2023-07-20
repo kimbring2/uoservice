@@ -257,6 +257,7 @@ def step(uo_service):
       print("ore_bulk_serial: ", ore_bulk_serial)
       print("ore_serial: ", ore_serial)
       print("forge_serial: ", forge_serial)
+      print("targeting_state: ", targeting_state)
       print("")
 
       if pick_up_ore_flag == True and ore_bulk_serial != None:
@@ -289,7 +290,7 @@ def step(uo_service):
         forging_flag = True
         double_click_ore_flag = False
       elif forging_flag == True and forge_serial != None:
-        action['action_type'] = 4
+        action['action_type'] = 5
         action['target_serial'] = forge_serial
         #action['target_serial'] = bag_serial
         #action['index'] = 0

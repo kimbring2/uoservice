@@ -216,7 +216,6 @@ def step(uo_service):
 
     equipped_item_dict = uo_service.equipped_item_dict
     #print("equipped_item_dict: ", equipped_item_dict)
-
     #for k_equip, v_equip in equipped_item_dict.items():
     #  print("equipped item {0}: {1}".format(k_equip, v_equip))
 
