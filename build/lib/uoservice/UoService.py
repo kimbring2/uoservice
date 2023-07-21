@@ -26,7 +26,7 @@ from uoservice import utils
 
 class UoService:
 	'''UoService class including gRPC client'''
-	def __init__(self, grpc_port, window_width, window_height):
+	def __init__(self, grpc_port, window_width, window_height, uo_installed_path):
 		self.grpc_port = grpc_port
 		self.window_width = window_width
 		self.window_height = window_height
@@ -61,7 +61,8 @@ class UoService:
 		self.bank_serial = None
 		self.picked_up_item = {}
 
-		self.uo_installed_path = "/home/kimbring2/.wine/drive_c/Program Files (x86)/Electronic Arts/Ultima Online Classic"
+		#self.uo_installed_path = "/home/kimbring2/.wine/drive_c/Program Files (x86)/Electronic Arts/Ultima Online Classic"
+		self.uo_installed_path = uo_installed_path
 		self.uoservice_game_file_parser = UoServiceGameFileParser(self.uo_installed_path)
 		self.uoservice_game_file_parser.load()
 
@@ -110,6 +111,137 @@ class UoService:
 		y = game_y + self.min_tile_y;
 
 		return x, y
+
+	def parse_land_static(self):
+		while True:
+			if self.max_tile_x != None:
+				screen_length = 1000
+
+				screen_image = np.zeros((screen_length,screen_length,4), dtype=np.uint8)
+				radius = 5
+				thickness = 2
+				screen_width = screen_length
+				screen_height = screen_length
+
+				cell_x_list = []
+				cell_y_list = []
+				tile_data_list = []
+
+				for x in range(self.min_tile_x, self.max_tile_x):
+					cell_x = x >> 3
+					if cell_x not in cell_x_list:
+						cell_x_list.append(cell_x)
+
+				for y in range(self.min_tile_y, self.max_tile_y):
+					cell_y = y >> 3
+					if cell_y not in cell_y_list:
+						cell_y_list.append(cell_y)
+
+				player_game_x = self.player_game_x
+				player_game_y = self.player_game_y
+
+				scale = 40
+
+				cell_zip = zip(cell_x_list, cell_y_list)
+				for cell_x in cell_x_list:
+					for cell_y in cell_y_list:
+						land_data_list, static_data_list = self.uoservice_game_file_parser.get_tile_data(cell_x, cell_y)
+
+						for land_data in land_data_list:
+							#print("land / name: {0}, game_x: {1}, game_y: {2}".format(land_data["name"], land_data["game_x"], land_data["game_y"]))
+							start_point = ( (land_data["game_x"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
+											(land_data["game_y"] - player_game_y) * scale + int(screen_length / 2) - int(scale / 2) )
+							end_point = ( (land_data["game_x"] - player_game_x) * scale + int(screen_length / 2) + int(scale / 2), 
+										  (land_data["game_y"] - player_game_y) * scale + int(screen_length / 2) + int(scale / 2) )
+
+							index = self.get_land_index(land_data["game_x"], land_data["game_y"])
+
+							radius = 1
+							font = cv2.FONT_HERSHEY_SIMPLEX
+							org = ( (land_data["game_x"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
+									(land_data["game_y"] - player_game_y) * scale + int(screen_length / 2) )
+							fontScale = 0.4
+							color = (255, 0, 0)
+							thickness = 1
+							screen_image = cv2.putText(screen_image, str(index), org, font, fontScale, color, thickness, cv2.LINE_4)
+
+							if land_data["name"] == "forest":
+								screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Lime"], 1)
+							elif land_data["name"] == "rock":
+								screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Yellow"], 1)
+							else:
+								screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Gray"], 1)
+
+						for static_data in static_data_list:
+							#if "water" not in static_data["name"]:
+							#print("static / name: {0}, game_x: {1}, game_y: {2}".format(static_data["name"], static_data["game_x"], static_data["game_y"]))
+			            
+							start_point = ( (static_data["game_x"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
+											(static_data["game_y"] - player_game_y) * scale + int(screen_length / 2) - int(scale / 2) )
+							end_point = ( (static_data["game_x"] - player_game_x) * scale + int(screen_length / 2) + int(scale / 2), 
+											(static_data["game_y"] - player_game_y) * scale + int(screen_length / 2) + int(scale / 2) )
+
+							if "grasses" in static_data["name"]:
+								screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Green"], 1)
+							elif "wall" in static_data["name"]:
+								screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["White"], -1)
+							elif "water" in static_data["name"]:
+								screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Cadetblue"], 1)
+							else:
+								screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Lavenderblush2"], 1)
+
+				#print("")
+
+				boundary = 500
+
+				radius = int(scale / 2)
+				screen_width = 4000
+				screen_height = 4000
+				for k, v in self.world_mobile_dict.items():
+					if self.player_game_x != None:
+						if v["gameX"] < screen_width and v["gameY"] < screen_height:
+							screen_image = cv2.circle(screen_image, 
+											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
+											  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
+											  radius, utils.color_dict["Red"], -1)
+
+							screen_image = cv2.putText(screen_image, "  " + v["name"], 
+											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
+											(v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
+											cv2.FONT_HERSHEY_SIMPLEX, 0.5, utils.color_dict["Red"], 1, cv2.LINE_4)
+
+				for k, v in self.world_item_dict.items():
+					if self.player_game_x != None:
+						#print("world item {0}: {1}".format(k, self.world_item_dict[k]))
+						if v["gameX"] < screen_width and v["gameY"] < screen_height:
+							screen_image = cv2.circle(screen_image, 
+											( 
+											(v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
+											(v["gameY"] - player_game_y) * scale + int(screen_length / 2)
+											),
+											radius, utils.color_dict["Purple"], -1)
+		           
+							item_name_list = v["name"].split(" ")
+							screen_image = cv2.putText(screen_image, "     " + item_name_list[-1], 
+												( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
+												(v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
+												cv2.FONT_HERSHEY_SIMPLEX, 0.5, utils.color_dict["Purple"], 1, cv2.LINE_4)
+
+				if self.player_game_x != None:
+					#print("player_game_x: {0}, player_game_y: {1}".format(self.player_game_x, self.player_game_y))
+
+					screen_image = cv2.putText(screen_image, str("player"), (int(screen_length / 2), int(screen_length / 2) - int(scale / 2)), 
+											  cv2.FONT_HERSHEY_SIMPLEX, 1.0, utils.color_dict["Green"], 4, cv2.LINE_4)
+
+					radius = int(scale / 2)
+					screen_image = cv2.circle(screen_image, (int(screen_length / 2), int(screen_length / 2)), radius, utils.color_dict["Lime"], -1)
+					screen_image = screen_image[int(screen_length / 2) - boundary:int(screen_length / 2) + boundary, 
+												int(screen_length / 2) - boundary:int(screen_length / 2) + boundary, :]
+		        
+				screen_image = cv2.resize(screen_image, (screen_length, screen_length), interpolation=cv2.INTER_AREA)
+				screen_image = utils.rotate_image(screen_image, -45)
+				cv2.imshow('screen_image_' + str(self.grpc_port), screen_image)
+				cv2.waitKey(1)
 
 	def parse_response(self, response):
 		# Preprocess the gRPC response format to Python friendly type
@@ -283,53 +415,6 @@ class UoService:
 
 		for menu_data in popup_menu_data:
 			self.popup_menu_list.append(menu_data)
-
-		screen_image = np.zeros((4000,4000,4), dtype=np.uint8)
-
-		radius = 5
-		thickness = 2
-		screen_width = 4000
-		screen_height = 4000
-		for k, v in self.world_mobile_dict.items():
-			if self.player_game_x != None:
-				if v["gameX"] < screen_width and v["gameY"] < screen_height:
-					screen_image = cv2.circle(screen_image, (v["gameX"], v["gameY"]), radius, (0, 0, 255), thickness)
-					pass
-
-		boundary = 50
-		if self.player_game_x != None:
-			#print("player_game_x: {0}, player_game_y: {1}".format(self.player_game_x, self.player_game_y))
-
-			radius = 1
-			screen_image = cv2.circle(screen_image, (self.player_game_x, self.player_game_y), radius, (0, 255, 0), thickness)
-			if self.player_game_y > boundary and self.player_game_x > boundary:
-				screen_image = screen_image[self.player_game_y - boundary:self.player_game_y + boundary, 
-																		self.player_game_x - boundary:self.player_game_x + boundary, :]
-			elif self.player_game_y < boundary and self.player_game_x > boundary:
-				#print("self.player_game_y < 600 and self.player_game_x > 600")
-				screen_image = screen_image[0:self.player_game_y + boundary, 
-																		self.player_game_x - boundary:self.player_game_x + boundary, :]
-			elif self.player_game_y > boundary and self.player_game_x < boundary:
-				#print("self.player_game_y > 600 and self.player_game_x < 600")
-				screen_image = screen_image[self.player_game_y - boundary:self.player_game_y + boundary, 
-																	  0:self.player_game_x + boundary, :]
-			else:
-				#print("else")
-				screen_image = screen_image[0:self.player_game_y + boundary, 0:self.player_game_x + boundary, :]
-
-		vis = False
-		if vis:
-			#dim = (1720, 1370)
-			try:
-				screen_image = cv2.resize(screen_image, (boundary * 4, boundary * 4), interpolation=cv2.INTER_AREA)
-				screen_image = utils.rotate_image(screen_image, -45)
-				#screen_image = cv2.rotate(screen_image, cv2.ROTATE_90_CLOCKWISE)
-				#screen_image = cv2.flip(screen_image, 1)
-				cv2.imshow('screen_image_' + str(self.grpc_port), screen_image)
-				cv2.waitKey(1)
-			except Exception as e:
-				print("e: ", e)
-				print("screen_image.shape: \n", screen_image.shape)
 
 	def step(self, action):
 		#print("action: ", action)

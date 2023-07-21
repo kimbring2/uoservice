@@ -15,6 +15,21 @@ noop_action['run'] = False
 warrior_npc_title_list = ['healer', 'armourer', 'banker', 'blacksmith', 'weaponsmith', 'armourer', 'armourer']
 
 
+color_dict = {"Black": (0, 0, 0),
+              "Red": (0, 0, 255),
+              "Blue": (255, 0, 0),
+              "Lime": (0, 255, 0),
+              "Green": (0, 128, 0),
+              "Yellow": (0, 255, 255),
+              "Purple": (128, 255, 128),
+              "Gray": (128, 128, 128),
+              "Brown": (42, 42, 165),
+              "Cadetblue": (255, 245, 152),
+              "Lavenderblush2": (229, 224, 238),
+              "White": (255, 255, 255),
+             }
+
+
 def get_serial_by_name(item_dict, name):
   keys = list(item_dict.keys())
   for k, v in item_dict.items():

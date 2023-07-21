@@ -12,7 +12,22 @@ noop_action['index'] = 0
 noop_action['amount'] = 0
 noop_action['run'] = False
 
-warrior_npc_title_list = ['healer', 'armourer', 'banker', 'blacksmith', 'weaponsmith', 'armourer', 'armourer']
+warrior_npc_title_list = ['healer', 'armourer', 'banker', 'blacksmith', 'weaponsmith', 'armourer', 'miner']
+
+
+color_dict = {"Black": (0, 0, 0),
+              "Red": (0, 0, 255),
+              "Blue": (255, 0, 0),
+              "Lime": (0, 255, 0),
+              "Green": (0, 128, 0),
+              "Yellow": (0, 255, 255),
+              "Purple": (128, 255, 128),
+              "Gray": (128, 128, 128),
+              "Brown": (42, 42, 165),
+              "Cadetblue": (255, 245, 152),
+              "Lavenderblush2": (229, 224, 238),
+              "White": (255, 255, 255),
+             }
 
 
 def get_serial_by_name(item_dict, name):
@@ -25,9 +40,7 @@ def get_serial_by_name(item_dict, name):
 
 
 def get_serial_amount_from_corpse_item_list(corpse_item_dict, name):
-  #print("corpse_item_dict: ", corpse_item_dict)
   for k, v in corpse_item_dict.items():
-    #print("corpse item {0}: {1}".format(k, v))
     if name in v["name"]:
       return k, v["amount"]
 
@@ -131,18 +144,6 @@ def parsePlayerStatus(playerStatusGrpc):
   playerStatusDict['weightMax'] = playerStatusGrpc.weightMax
 
   return playerStatusDict
-
-
-def visObject(screenImage, ObjectData, color):
-  radius = 20
-  thickness = 2
-  for obj in ObjectData:
-    try:
-      screenImage = cv2.circle(screenImage, (obj.screenX, obj.screenY), radius, color, thickness)
-    except:
-      print("screenX: {0}, screenY: {1}", obj.screenX, obj.screenY)
-
-  return screenImage
 
 
 def rotate_image(image, angle):

@@ -628,15 +628,15 @@ for step in range(100000):
 
                 After that, if you double-click the pickaxe item, you can use the unique ability of the item for the position target. In this case, it is mining skill becauise item is Pickaxe. The <b>uo_service.targeting_state</b> value is changed from -1 to 1 when the tarining status is set as ground target.
 
-                When a human plays the game, the target land can be selected by mouse-clicking. How to deliver that kind of action in <b>UoService</b> that has an x and y. 
+                When a human plays the game, the target land can be selected by mouse-clicking. How to deliver that kind of action in <b>UoService</b> that has an x and y. As you can see from <a href="https://kimbring2.github.io/uoservice/tutorial_binary_file.html#land_indexing">land indexing tutorial</a>, the land can be divided and processed as follows although it looks like a continuous data in game screen.
 
                 <br>
                 <br>
-
-                <a href="https://kimbring2.github.io/uoservice/tutorial_binary_file.html#land_indexing">land indexing</a>
 
                 <h5>Figure3: Diagram of Land target indexing.</h5>
                 <img src="Fig/MineTileIndex.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
+
+                After land targeting is activated by double-clicking PickAxe, you can use the mining ability for the land by settingt the action_type to 5, index to the unique index of that land.
             </div>
             <div class="col">
                 <h5><a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/mine_ore.py">Code 6: Rule-based mining example code</a>.</h5>
@@ -735,103 +735,143 @@ def step(uo_service):
             </div>
         </div>
 
+        <div class="row" id="first_training_ability">
+            <div class="col">
+                <h2>7. First training ability</h2>
+
+                <h5>Figure4: Mining Skill Level.</h5>
+                <img src="Fig/MiningSkillLevel.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
+                
+            </div>
+            <div class="col">
+                <h5><a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/learn_mining.py">Code 7: Rule-based training ability example code</a>.</h5>
+                <pre class="pre"><code class="python">
+  step = 0
+  open_pop_up_flag = True
+  select_pop_up_flag = False
+  training_price = None
+  pick_up_gold_flag = False
+  giving_gold_flag = False
+
+  one_trial_check_flag = True
+
+  while True:
+    miner_teacher_serial = None
+    miner_teacher = None
+
+    if len(uo_service.world_mobile_dict) != 0:
+      for k_world, v_world in uo_service.world_mobile_dict.items():
+        #print("name: {0}, title: {1}, distance: {2}".format(v_world['name'], v_world['title'], v_world['distance']))
+        # name:  Jacob Waltzt The Miner Instructor, title:  Jacob Waltzt The Miner Instructor
+        # name:  Gervis The Blacksmith Trainer, title:  Gervis the blacksmith trainer
+        # name:  Mugg The Miner, title:  Mugg the miner
+        # name:  Orane The Miner, title:  Orane the miner
+        # name:  Grizzled Mare , title:  Grizzled Mare
+        if "Orane" in v_world["name"] and "miner" in v_world["title"]:
+          miner_teacher_serial = k_world
+          miner_teacher = uo_service.world_mobile_dict[miner_teacher_serial]
+
+      #print("")
+
+    ## Player status
+    hold_item_serial = uo_service.hold_item_serial
+    cliloc_dict = uo_service.cliloc_dict
+    backpack_serial = uo_service.backpack_serial
+    cliloc_dict = uo_service.cliloc_dict
+    popup_menu_list = uo_service.popup_menu_list
+    player_skills_dict = uo_service.player_skills_dict
+
+    if "Mining" in player_skills_dict:
+      mining_skill_level = player_skills_dict["Mining"]["value"]
+      print("mining_skill_level: ", mining_skill_level)
+
+    backpack_item_data = uo_service.backpack_item_dict
+    gold_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
+
+    ## Declare the empty action
+    action = {}
+    action['action_type'] = 0
+    action['source_serial'] = 0
+    action['target_serial'] = 0
+    action['walk_direction'] = 0
+    action['index'] = 0
+    action['amount'] = 0
+    action['run'] = False
+
+    if step % 100 == 0:
+      print("step: ", step)
+      if miner_teacher_serial != None:
+        if miner_teacher_serial in cliloc_dict:
+          #[{'text': ' Orane the miner', 'affix': '', 'name': 'Orane'}, 
+          # {'text': ' Orane the miner', 'affix': '', 'name': 'Orane'}, 
+          # {'text': 'I will teach thee all I know, if paid the amount in full.  The price is: 225', 'affix': ' 225', 'name': 'Orane'}, 
+          # {'text': 'For less I shall teach thee less.', 'affix': '', 'name': 'Orane'}]
+          for cliloc_data in cliloc_dict[miner_teacher_serial]:
+            if cliloc_data["affix"] != '':
+              training_price = int(cliloc_data["affix"])
+              if one_trial_check_flag == True:
+                pick_up_gold_flag = True
+                one_trial_check_flag = False
+
+      if open_pop_up_flag == True and miner_teacher_serial != None and mining_skill_level < 20:
+        print("open the pop up menu of NPC")
+
+        action['action_type'] = 10
+        action['target_serial'] = miner_teacher_serial
+
+        open_pop_up_flag = False
+        select_pop_up_flag = True
+      elif select_pop_up_flag == True and len(popup_menu_list) != 0:
+        print("select the pop up menu")
+
+        action['action_type'] = 11
+        action['target_serial'] = miner_teacher_serial
+
+        menu_index = 0
+        for i in range(0, len(popup_menu_list)):
+          if popup_menu_list[i].text == "Train Mining" and popup_menu_list[i].active == True:
+            action['index'] = i
+
+        uo_service.popup_menu_list = []
+        select_pop_up_flag = False
+      elif training_price != None and pick_up_gold_flag == True and backpack_serial != None and gold_serial != None:
+        print("pick up gold to before giving it to NPC")
+
+        action['action_type'] = 3
+        action['target_serial'] = gold_serial
+        action['amount'] = training_price
+
+        pick_up_gold_flag = False
+        giving_gold_flag = True
+      elif giving_gold_flag == True:
+        print("giving the gold to NPC")
+
+        action['action_type'] = 4
+        action['target_serial'] = miner_teacher_serial
+
+        giving_gold_flag = False
+
+    obs = uo_service.step(action)
+                </code></pre>
+            </div>
+        </div>
+
         <div class="row" id="first_smelting">
             <div class="col">
+                <h2>8. First Smelting</h2>
+
+                <br>
+                <br>
+
+                <h5>Figure4: Forge Item Location.</h5>
+                <img src="Fig/ForgeItemLocation.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
             </div>
             <div class="col">
-                <h2>7. First Smelting</h2>
-            </div>
-            <div class="col">
-                <h5><a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/make_ingot.py">Code 7: Rule-based smelting example code</a>.</h5>
+                <h5><a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/make_ingot.py">Code 8: Rule-based smelting example code</a>.</h5>
                 <pre class="pre"><code class="python">
 def step(uo_service):
   pickaxe_serial = None
-  equip_item_flag = False
-  unequip_item_serial = None
-  pickaxe_item_serial = None
-  onehanded_item_serial = None
-  drop_item_serial = None
-  picked_up_item_serial = None
 
-  mining_prepare_flag = False
-  mining_ready_flag = False
-
-  targeting_type = None
-
-  one_time_trial = True
-  while True:
-    backpack_item_data = uo_service.backpack_item_dict
-    equipped_item_dict = uo_service.equipped_item_dict
-    hold_item_serial = uo_service.hold_item_serial
-    targeting_state = uo_service.targeting_state
-
-    unequip_item_serial = None
-    pickaxe_item_serial = None
-    if "OneHanded" in equipped_item_dict:
-      if equipped_item_dict["OneHanded"]["name"] != "Pickaxe":
-        unequip_item_serial = equipped_item_dict["OneHanded"]["serial"]
-      elif equipped_item_dict["OneHanded"]["name"] == "Pickaxe":
-        onehanded_item_serial = equipped_item_dict["OneHanded"]["serial"]
-        if mining_ready_flag == False:
-          mining_prepare_flag = True
-    else:
-      for k_backpack, v_backpack in backpack_item_data.items():
-        if v_backpack["name"] == "Pickaxe":
-          pickaxe_item_serial = k_backpack
-
-    player_status_dict = uo_service.player_status_dict
-
-    pickaxe_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
-
-    if pickaxe_serial in backpack_item_data:
-      pickaxe_serial = backpack_item_data[pickaxe_serial]
-    else:
-      print("pickaxe_serial is not in backpack_item_data")
-
-    if step % 100 == 0:
-      if unequip_item_serial != None:
-        print("Pick up the equipped item from player")
-
-        action['action_type'] = 3
-        action['target_serial'] = unequip_item_serial
-
-        unequip_item = uo_service.world_item_dict[unequip_item_serial]
-        uo_service.picked_up_item = unequip_item
-
-        drop_item_serial = unequip_item_serial
-        unequip_item_serial = None
-      elif drop_item_serial != None and uo_service.backpack_serial: 
-        print("Drop the holded item into backpack")
-
-        action['action_type'] = 4
-        action['target_serial'] = uo_service.backpack_serial
-        drop_item_serial = None
-      elif pickaxe_item_serial != None:
-        print("Pick up the Pickaxe item from backpack")
-        action['action_type'] = 3
-        action['target_serial'] = pickaxe_item_serial
-        equip_item_flag = True
-      elif equip_item_flag == True:
-        print("Equip the holded item")
-        action['action_type'] = 6
-        equip_item_flag = False
-      elif mining_prepare_flag == True and one_time_trial == True:
-        print("Double click the Pickaxe item")
-        action['action_type'] = 2
-        action['target_serial'] = onehanded_item_serial
-
-        mining_prepare_flag = False
-        mining_ready_flag = True
-        one_time_trial = False
-      elif mining_ready_flag == True and targeting_state == 1:
-        print("Mining the land target")
-        action['action_type'] = 5
-        action['index'] = 2554
-        mining_ready_flag = False
-
-    obs = uo_service.step(action)
-
-    step += 1
                 </code></pre>
             </div>
         </div>
