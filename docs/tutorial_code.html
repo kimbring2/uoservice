@@ -155,7 +155,9 @@
                 <li><a href="#first_walk">3. First Walk</a></li>
                 <li><a href="#first_attack">4. First Attack</a></li>
                 <li><a href="#first_looting">5. First Looting</a></li>
-                <li><a href="#conclusion">6. Conclusion</a></li>
+                <li><a href="#first_mining">6. First Mining</a></li>
+                <li><a href="#first_smelting">7. First Smelting</a></li>
+                <li><a href="#conclusion">8. Conclusion</a></li>
             </ul>
         </div>
 
@@ -623,24 +625,200 @@ for step in range(100000):
             <div class="col">
             </div>
             <div class="col">
-                <h2>5. First looting</h2>
-                After attacking and killing a monster, player can acquire various items including gold from the corpse. To do this with python code, first you need to check <b>world_item_dict</b> of the <b>uo_service</b> instead of the <b>world_mobile_dict</b> because the monster that was mobile type is transformed to an item when it dies. For the reason that the corresponding Dict has information on all items of the world, you should filter it using the <b>isCorpse</b> value.<br>
-
-                Having secured the serial number of the corpse that exists around the player, the next step is to open it. The corresponding action can be composed by setting the <b>action_type</b> as 7 and <b>target_serial</b> as the serial number of the corpse item.<br>
-
-                From the moment the corpse is opened, world_item_dict start to include the items of that corpse. To determine which item is inside the corpse, the <b>container</b> part of item information can be used <b>item["container"]</b>. If you want to select only gold among the identified items inside the corpse, you can use the <b>name</b> information of item like a <b>if "gold" in item["name"]</b>.<br>
-
-                Having obtained a serial of the gold item of opened corpse, that item should be picked up before putting it in the player backpack. This can be done by setting the <b>action_type</b> as 3, <b>target_serial</b> to the serial of the gold item, and <b>amount</b> to the total number of gold.<br>
-
-                When picking up an item, <b>hold_item_serial</b> of <b>uo_service</b> is changed to the serial number of the item. Finally, player can drop the currently held item onto the backpack by setting <b>action_type</b> to 4 causes the.<br>
-
-                In order to check whether the player looted gold well, you can check the <b>gold part</b> of <b>player_status_dict</b> of the <b>uo_service</b> like <b>player_status_dict['gold']</b>.
-
+                <h2>6. First mining</h2>
             </div>
             <div class="col">
                 <h5><a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/looting_the_corpse.py">Code 6: Rule-based mining example code</a>.</h5>
                 <pre class="pre"><code class="python">
-  
+def step(uo_service):
+  pickaxe_serial = None
+  equip_item_flag = False
+  unequip_item_serial = None
+  pickaxe_item_serial = None
+  onehanded_item_serial = None
+  drop_item_serial = None
+  picked_up_item_serial = None
+
+  mining_prepare_flag = False
+  mining_ready_flag = False
+
+  targeting_type = None
+
+  one_time_trial = True
+  while True:
+    backpack_item_data = uo_service.backpack_item_dict
+    equipped_item_dict = uo_service.equipped_item_dict
+    hold_item_serial = uo_service.hold_item_serial
+    targeting_state = uo_service.targeting_state
+
+    unequip_item_serial = None
+    pickaxe_item_serial = None
+    if "OneHanded" in equipped_item_dict:
+      if equipped_item_dict["OneHanded"]["name"] != "Pickaxe":
+        unequip_item_serial = equipped_item_dict["OneHanded"]["serial"]
+      elif equipped_item_dict["OneHanded"]["name"] == "Pickaxe":
+        onehanded_item_serial = equipped_item_dict["OneHanded"]["serial"]
+        if mining_ready_flag == False:
+          mining_prepare_flag = True
+    else:
+      for k_backpack, v_backpack in backpack_item_data.items():
+        if v_backpack["name"] == "Pickaxe":
+          pickaxe_item_serial = k_backpack
+
+    player_status_dict = uo_service.player_status_dict
+
+    pickaxe_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
+
+    if pickaxe_serial in backpack_item_data:
+      pickaxe_serial = backpack_item_data[pickaxe_serial]
+    else:
+      print("pickaxe_serial is not in backpack_item_data")
+
+    if step % 100 == 0:
+      if unequip_item_serial != None:
+        print("Pick up the equipped item from player")
+
+        action['action_type'] = 3
+        action['target_serial'] = unequip_item_serial
+
+        unequip_item = uo_service.world_item_dict[unequip_item_serial]
+        uo_service.picked_up_item = unequip_item
+
+        drop_item_serial = unequip_item_serial
+        unequip_item_serial = None
+      elif drop_item_serial != None and uo_service.backpack_serial: 
+        print("Drop the holded item into backpack")
+
+        action['action_type'] = 4
+        action['target_serial'] = uo_service.backpack_serial
+        drop_item_serial = None
+      elif pickaxe_item_serial != None:
+        print("Pick up the Pickaxe item from backpack")
+        action['action_type'] = 3
+        action['target_serial'] = pickaxe_item_serial
+        equip_item_flag = True
+      elif equip_item_flag == True:
+        print("Equip the holded item")
+        action['action_type'] = 6
+        equip_item_flag = False
+      elif mining_prepare_flag == True and one_time_trial == True:
+        print("Double click the Pickaxe item")
+        action['action_type'] = 2
+        action['target_serial'] = onehanded_item_serial
+
+        mining_prepare_flag = False
+        mining_ready_flag = True
+        one_time_trial = False
+      elif mining_ready_flag == True and targeting_state == 1:
+        print("Mining the land target")
+        action['action_type'] = 5
+        action['index'] = 2554
+        mining_ready_flag = False
+
+    obs = uo_service.step(action)
+
+    step += 1
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="row" id="first_smelting">
+            <div class="col">
+            </div>
+            <div class="col">
+                <h2>7. First Smelting</h2>
+            </div>
+            <div class="col">
+                <h5><a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/looting_the_corpse.py">Code 7: Rule-based smelting example code</a>.</h5>
+                <pre class="pre"><code class="python">
+def step(uo_service):
+  pickaxe_serial = None
+  equip_item_flag = False
+  unequip_item_serial = None
+  pickaxe_item_serial = None
+  onehanded_item_serial = None
+  drop_item_serial = None
+  picked_up_item_serial = None
+
+  mining_prepare_flag = False
+  mining_ready_flag = False
+
+  targeting_type = None
+
+  one_time_trial = True
+  while True:
+    backpack_item_data = uo_service.backpack_item_dict
+    equipped_item_dict = uo_service.equipped_item_dict
+    hold_item_serial = uo_service.hold_item_serial
+    targeting_state = uo_service.targeting_state
+
+    unequip_item_serial = None
+    pickaxe_item_serial = None
+    if "OneHanded" in equipped_item_dict:
+      if equipped_item_dict["OneHanded"]["name"] != "Pickaxe":
+        unequip_item_serial = equipped_item_dict["OneHanded"]["serial"]
+      elif equipped_item_dict["OneHanded"]["name"] == "Pickaxe":
+        onehanded_item_serial = equipped_item_dict["OneHanded"]["serial"]
+        if mining_ready_flag == False:
+          mining_prepare_flag = True
+    else:
+      for k_backpack, v_backpack in backpack_item_data.items():
+        if v_backpack["name"] == "Pickaxe":
+          pickaxe_item_serial = k_backpack
+
+    player_status_dict = uo_service.player_status_dict
+
+    pickaxe_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
+
+    if pickaxe_serial in backpack_item_data:
+      pickaxe_serial = backpack_item_data[pickaxe_serial]
+    else:
+      print("pickaxe_serial is not in backpack_item_data")
+
+    if step % 100 == 0:
+      if unequip_item_serial != None:
+        print("Pick up the equipped item from player")
+
+        action['action_type'] = 3
+        action['target_serial'] = unequip_item_serial
+
+        unequip_item = uo_service.world_item_dict[unequip_item_serial]
+        uo_service.picked_up_item = unequip_item
+
+        drop_item_serial = unequip_item_serial
+        unequip_item_serial = None
+      elif drop_item_serial != None and uo_service.backpack_serial: 
+        print("Drop the holded item into backpack")
+
+        action['action_type'] = 4
+        action['target_serial'] = uo_service.backpack_serial
+        drop_item_serial = None
+      elif pickaxe_item_serial != None:
+        print("Pick up the Pickaxe item from backpack")
+        action['action_type'] = 3
+        action['target_serial'] = pickaxe_item_serial
+        equip_item_flag = True
+      elif equip_item_flag == True:
+        print("Equip the holded item")
+        action['action_type'] = 6
+        equip_item_flag = False
+      elif mining_prepare_flag == True and one_time_trial == True:
+        print("Double click the Pickaxe item")
+        action['action_type'] = 2
+        action['target_serial'] = onehanded_item_serial
+
+        mining_prepare_flag = False
+        mining_ready_flag = True
+        one_time_trial = False
+      elif mining_ready_flag == True and targeting_state == 1:
+        print("Mining the land target")
+        action['action_type'] = 5
+        action['index'] = 2554
+        mining_ready_flag = False
+
+    obs = uo_service.step(action)
+
+    step += 1
                 </code></pre>
             </div>
         </div>

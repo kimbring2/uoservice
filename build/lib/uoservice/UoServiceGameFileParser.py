@@ -13,9 +13,9 @@ class UoServiceGameFileParser:
 	def __init__(self, uo_installed_path):
 		self.uo_installed_path = uo_installed_path
 
-		self.files_map_name = "map0LegacyMUL.uop"
-		self.files_statics_name = "statics0.mul"
-		self.files_index_statics_name = "staidx0.mul"
+		self.files_map_name = "map1LegacyMUL.uop"
+		self.files_statics_name = "statics1.mul"
+		self.files_index_statics_name = "staidx1.mul"
 		self.files_tiledata_name = "tiledata.mul"
 
 		self.files_map_path = os.path.join(self.uo_installed_path, self.files_map_name)
@@ -115,7 +115,7 @@ class UoServiceGameFileParser:
 
 		total_entries_count = real_total;
 
-		pattern = "build/map0legacymul/{:08d}.dat"
+		pattern = "build/map1legacymul/{:08d}.dat"
 
 		entries = []
 		for i in range(0, total_entries_count):
@@ -243,7 +243,10 @@ class UoServiceGameFileParser:
 	            land_data["game_x"] = tile_x
 	            land_data["game_y"] = tile_y
 
-	            #print("land x: {0}, y: {1}, tile_id: {2}, z: {3}, name: {4}".format(x, y, tile_id, z, land_data["name"]))
+
+	            if land_data["name"] == "rock":
+	            	print("land x: {0}, y: {1}, tile_id: {2}, z: {3}, name: {4}".format(x, y, tile_id, z, land_data["name"]))
+
 	            land_data_list.append(copy.deepcopy(land_data))
 
 	    if im.static_address != 0:
