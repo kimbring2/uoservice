@@ -49,12 +49,6 @@ class FileReader(object):
 
         return struct.unpack("i", self.stream.read(4))[0]
 
-    def read_uint32_be(self):
-        value = self.read_bytes(2)
-        value = int.from_bytes(value, "big")
-
-        return value
-
     def read_uint32(self):
         self.nibble(4)
 

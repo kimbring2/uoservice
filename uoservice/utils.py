@@ -180,12 +180,9 @@ class FileReader(object):
         self.nibble(1)
 
         value = self.stream.read(1)
-        #print("value: ", value)
-
         value = int.from_bytes(value, "little")
-        return value
 
-        #return float(self.stream.read(1))
+        return value
 
     def read(self, length=None):
         if length is None:
@@ -199,12 +196,6 @@ class FileReader(object):
         self.nibble(4)
 
         return struct.unpack("i", self.stream.read(4))[0]
-
-    def read_uint32_be(self):
-        value = self.read_bytes(2)
-        value = int.from_bytes(value, "big")
-
-        return value
 
     def read_uint32(self):
         self.nibble(4)
