@@ -49,6 +49,7 @@ color_dict = {"Black": (0, 0, 0),
               "Gray": (128, 128, 128),
               "Brown": (42, 42, 165),
               "Cadetblue": (255, 245, 152),
+              "Lavenderblush2": (229, 224, 238),
               "White": (255, 255, 255),
              }
 
@@ -110,7 +111,6 @@ def parse_land_static(uo_service):
               screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Lime"], 1)
             elif land_data["name"] == "rock":
               screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Yellow"], 1)
-              #print("land / name: {0}, game_x: {1}, game_y: {2}".format(land_data["name"], land_data["game_x"], land_data["game_y"]))
             else:
               screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Gray"], 1)
 
@@ -123,14 +123,15 @@ def parse_land_static(uo_service):
             end_point = ( (static_data["game_x"] - player_game_x) * scale + int(screen_length / 2) + int(scale / 2), 
                           (static_data["game_y"] - player_game_y) * scale + int(screen_length / 2) + int(scale / 2) )
 
-            #if "grasses" in static_data["name"]:
-            #  screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Green"], 1)
-            if "wall" in static_data["name"]:
+            if "grasses" in static_data["name"]:
+              screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Green"], 1)
+            elif "wall" in static_data["name"]:
               screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["White"], -1)
             elif "water" in static_data["name"]:
               screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Cadetblue"], 1)
             else:
-              screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Red"], 1)
+              screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Lavenderblush2"], 1)
+
       #print("")
 
       boundary = 500
@@ -282,12 +283,14 @@ def step(uo_service):
 
         action['action_type'] = 4
         action['target_serial'] = uo_service.backpack_serial
+        
         drop_item_serial = None
       elif pickaxe_item_serial != None:
         print("Pick up the Pickaxe item from backpack")
 
         action['action_type'] = 3
         action['target_serial'] = pickaxe_item_serial
+
         equip_item_flag = True
       elif equip_item_flag == True:
         print("Equip the holded item")
@@ -309,7 +312,7 @@ def step(uo_service):
         action['index'] = 2554
         mining_ready_flag = False
 
-    action['action_type'] = 0  
+    #action['action_type'] = 0  
     obs = uo_service.step(action)
 
     step += 1

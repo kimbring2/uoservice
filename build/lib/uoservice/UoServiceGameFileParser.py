@@ -243,10 +243,6 @@ class UoServiceGameFileParser:
 	            land_data["game_x"] = tile_x
 	            land_data["game_y"] = tile_y
 
-
-	            if land_data["name"] == "rock":
-	            	print("land x: {0}, y: {1}, tile_id: {2}, z: {3}, name: {4}".format(x, y, tile_id, z, land_data["name"]))
-
 	            land_data_list.append(copy.deepcopy(land_data))
 
 	    if im.static_address != 0:

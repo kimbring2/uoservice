@@ -180,12 +180,9 @@ class FileReader(object):
         self.nibble(1)
 
         value = self.stream.read(1)
-        #print("value: ", value)
-
         value = int.from_bytes(value, "little")
-        return value
 
-        #return float(self.stream.read(1))
+        return value
 
     def read(self, length=None):
         if length is None:

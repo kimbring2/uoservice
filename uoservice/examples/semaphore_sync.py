@@ -109,8 +109,7 @@ def parse_land_static(uo_service):
             screen_image = cv2.putText(screen_image, str(index), org, font, fontScale, color, thickness, cv2.LINE_4)
 
             if land_data["name"] == "forest":
-              #screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Lime"], 1)
-              pass
+              screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Lime"], 1)
             else:
               screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Gray"], 1)
 
