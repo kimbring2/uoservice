@@ -761,7 +761,7 @@ def step(uo_service):
 
                 <br>
                 <br>
-                <h5>Figure6: Giving the gold to NPC.</h5>
+                <h5>Figure6: Paying the training fee to NPC.</h5>
                 <img src="Fig/GivingGoldToNPC.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
 
                 If you do that, you can pick up that amount of gold, and then you have to deliver this gold to the corresponding NPC. This can be done by setting <b>action_type</b> to 4 and <b>target_serial</b> to the serial number of the NPC you want to pass.
@@ -770,7 +770,6 @@ def step(uo_service):
             <div class="col">
                 <h5><a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/learn_mining.py">Code 7: Rule-based training ability example code</a>.</h5>
                 <pre class="pre"><code class="python">
-  step = 0
   open_pop_up_flag = True
   select_pop_up_flag = False
   training_price = None
@@ -785,17 +784,9 @@ def step(uo_service):
 
     if len(uo_service.world_mobile_dict) != 0:
       for k_world, v_world in uo_service.world_mobile_dict.items():
-        #print("name: {0}, title: {1}, distance: {2}".format(v_world['name'], v_world['title'], v_world['distance']))
-        # name:  Jacob Waltzt The Miner Instructor, title:  Jacob Waltzt The Miner Instructor
-        # name:  Gervis The Blacksmith Trainer, title:  Gervis the blacksmith trainer
-        # name:  Mugg The Miner, title:  Mugg the miner
-        # name:  Orane The Miner, title:  Orane the miner
-        # name:  Grizzled Mare , title:  Grizzled Mare
         if "Orane" in v_world["name"] and "miner" in v_world["title"]:
           miner_teacher_serial = k_world
           miner_teacher = uo_service.world_mobile_dict[miner_teacher_serial]
-
-      #print("")
 
     ## Player status
     hold_item_serial = uo_service.hold_item_serial
@@ -822,13 +813,8 @@ def step(uo_service):
     action['run'] = False
 
     if step % 100 == 0:
-      print("step: ", step)
       if miner_teacher_serial != None:
         if miner_teacher_serial in cliloc_dict:
-          #[{'text': ' Orane the miner', 'affix': '', 'name': 'Orane'}, 
-          # {'text': ' Orane the miner', 'affix': '', 'name': 'Orane'}, 
-          # {'text': 'I will teach thee all I know, if paid the amount in full.  The price is: 225', 'affix': ' 225', 'name': 'Orane'}, 
-          # {'text': 'For less I shall teach thee less.', 'affix': '', 'name': 'Orane'}]
           for cliloc_data in cliloc_dict[miner_teacher_serial]:
             if cliloc_data["affix"] != '':
               training_price = int(cliloc_data["affix"])
@@ -882,6 +868,7 @@ def step(uo_service):
         <div class="row" id="first_smelting">
             <div class="col">
                 <h2>8. First Smelting</h2>
+                To make a sword using collected Ore, the item must be melted and converted into an ingot. This process is called Smelting and can be done by double-clicking the collected Ore item and clicking the Forge as the target. Since Forge is in the Mining camp and is classified as an Item, if the item is around the agent, you can check the unique information of it from <b>world_item_dict</b> of <b>uo_service</b>.
 
                 <br>
                 <br>

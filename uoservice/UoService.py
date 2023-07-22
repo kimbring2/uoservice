@@ -88,6 +88,12 @@ class UoService:
 
 		self.parse_response(response)
 
+	def get_distance(self, target_game_x, target_game_y):
+		if self.player_game_x != None:
+			return max(abs(self.player_game_x - target_game_x), abs(self.player_game_y - target_game_y))
+		else:
+			return -1
+
 	def get_land_index(self, game_x, game_y):
 		x_relative = 0
 		for i in range(self.min_tile_x, self.max_tile_x):
@@ -261,7 +267,8 @@ class UoService:
 			#print("")
 
 		if player_object.gameX != 0:
-			#print("player_object.gameX != 0")
+			print("gameX: {0}, gameY: {1}", player_object.gameX, player_object.gameY)
+
 			#print("player_object.holdItemSerial: ", player_object.holdItemSerial)
 			self.player_game_x = player_object.gameX
 			self.player_game_y = player_object.gameY

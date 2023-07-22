@@ -28,15 +28,18 @@ import uoservice.utils as utils
 
 ## Define the command arguments
 parser = argparse.ArgumentParser(description='Ultima Online Replay Parser')
-parser.add_argument('--window_width', type=int, default=1370, help='screen width of game')
-parser.add_argument('--window_height', type=int, default=1280, help='screen height of game')
-parser.add_argument('--grpc_port', type=int, default=60051, help='port of grpc')
+parser.add_argument('--window_width', type=int, default=1370, help='Screen width of game')
+parser.add_argument('--window_height', type=int, default=1280, help='Screen height of game')
+parser.add_argument('--grpc_port', type=int, default=60051, help='Port of grpc')
+parser.add_argument('--uo_installed_path', type=str, help='Install path of UO windows client')
+
 
 ## Parse the command argument
 arguments = parser.parse_args()
 grpc_port = arguments.grpc_port
 window_width = arguments.window_width
 window_height = arguments.window_height
+uo_installed_path = arguments.uo_installed_path
 
 
 def step(uo_service):
@@ -54,8 +57,12 @@ def step(uo_service):
   while True:
     if len(uo_service.world_item_dict) != 0:
       for k_world, v_world in uo_service.world_item_dict.items():
-        #print("name: {0}, layer: {1}".format(v_world['name'], v_world['layer']))
         if "Forge" in v_world["name"]:
+          #print("gameX: {0}, gameY: {1}".format(v_world['gameX'], v_world['gameY']))
+
+          forge_distance = uo_service.get_distance(v_world['gameX'], v_world['gameY'])
+          #print("forge_distance: ", forge_distance)
+
           forge_serial = k_world
 
         pass
@@ -102,16 +109,16 @@ def step(uo_service):
     action['run'] = False
 
     if step % 100 == 0:
-      print("step: ", step)
+      #print("step: ", step)
       #print("pick_up_ore_flag: ", pick_up_ore_flag)
-      print("ore_bulk_serial: ", ore_bulk_serial)
-      print("ore_serial: ", ore_serial)
-      print("forge_serial: ", forge_serial)
-      print("targeting_state: ", targeting_state)
-      print("")
+      #print("ore_bulk_serial: ", ore_bulk_serial)
+      #print("ore_serial: ", ore_serial)
+      #print("forge_serial: ", forge_serial)
+      #print("targeting_state: ", targeting_state)
+      #print("")
 
       if pick_up_ore_flag == True and ore_bulk_serial != None:
-        print("Pick up the item from player")
+        #print("Pick up the item from player")
 
         action['action_type'] = 3
         action['target_serial'] = ore_bulk_serial
@@ -123,7 +130,7 @@ def step(uo_service):
         drop_ore_flag = True
         pick_up_ore_flag = False
       elif drop_ore_flag == True:
-        print("Drop the item into the backpack")
+        #print("Drop the item into the backpack")
 
         action['action_type'] = 4
         action['target_serial'] = backpack_serial
@@ -132,7 +139,7 @@ def step(uo_service):
         drop_ore_flag = False
         double_click_ore_flag = True
       elif double_click_ore_flag == True and ore_serial != None:
-        print("Double click the ore item")
+        #print("Double click the ore item")
 
         action['action_type'] = 2
         action['target_serial'] = ore_serial
@@ -142,8 +149,6 @@ def step(uo_service):
       elif forging_flag == True and forge_serial != None:
         action['action_type'] = 5
         action['target_serial'] = forge_serial
-        #action['target_serial'] = bag_serial
-        #action['index'] = 0
 
         forging_flag = False
 
@@ -156,7 +161,7 @@ def step(uo_service):
 ## Declare the main function
 def main():
   ## Declare the UoService using the parsed argument
-  uo_service = UoService(grpc_port, window_width, window_height)
+  uo_service = UoService(grpc_port, window_width, window_height, uo_installed_path)
 
   ## Open the gRPC client to connect with gRPC server of CSharp part
   uo_service._open_grpc()
