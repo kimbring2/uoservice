@@ -80,7 +80,7 @@ def step(uo_service):
 
     if "Mining" in player_skills_dict:
       mining_skill_level = player_skills_dict["Mining"]["value"]
-      print("mining_skill_level: ", mining_skill_level)
+      #print("mining_skill_level: ", mining_skill_level)
 
     backpack_item_data = uo_service.backpack_item_dict
     gold_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
@@ -97,6 +97,10 @@ def step(uo_service):
 
     if step % 100 == 0:
       print("step: ", step)
+
+      print("cliloc_dict: ", cliloc_dict)
+      print("popup_menu_list: ", popup_menu_list)
+
       if miner_teacher_serial != None:
         if miner_teacher_serial in cliloc_dict:
           #[{'text': ' Orane the miner', 'affix': '', 'name': 'Orane'}, 
@@ -148,6 +152,7 @@ def step(uo_service):
 
         giving_gold_flag = False
 
+    action['action_type'] = 0
     obs = uo_service.step(action)
 
     step += 1

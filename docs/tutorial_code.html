@@ -156,8 +156,9 @@
                 <li><a href="#first_attack">4. First Attack</a></li>
                 <li><a href="#first_looting">5. First Looting</a></li>
                 <li><a href="#first_mining">6. First Mining</a></li>
-                <li><a href="#first_smelting">7. First Smelting</a></li>
-                <li><a href="#conclusion">8. Conclusion</a></li>
+                <li><a href="#first_training_ability">7. First Training Ability</a></li>
+                <li><a href="#first_smelting">8. First Smelting</a></li>
+                <li><a href="#conclusion">9. Conclusion</a></li>
             </ul>
         </div>
 
@@ -624,9 +625,9 @@ for step in range(100000):
         <div class="row" id="first_mining">
             <div class="col">
                 <h2>6. First mining</h2>
-                In Ultima Online, player is able to obtain various ingridents to craft the items through the gathering from nature. For example, iron ores must be gathered from nearby mines in order to craft items such as sword. To collect ore, you must equip a PickAxe in one hand tha can be chekced using the <b>equipped_item_dict["OneHanded"]</b> information of <b>UoService</b>. If you are holding a Pickaxe in one hand instead of something else, you need to unequip it first. This can be done by setting the action's <b>action_type</b> to 3 and <b>target_serial</b> to the serial of the currently held item. Next, set the <b>action_type</b> of the action to 4 and the <b>target_serial</b> to the backpack's serial, and put the held item into the backpack. Next, pick up the PickAxe of the backpack in the same way, and set the <b>action_type</b> to 6 to equip it.
+                In Ultima Online, player is able to obtain various ingredients to craft the items through the gathering from nature. For example, iron ores must be gathered from nearby mines in order to craft items such as sword. To collect ore, you must equip a Pickaxe in one hand that can be checked using the <b>equipped_item_dict["OneHanded"]</b> information of <b>UoService</b>. If you are holding a Pickaxe in one hand instead of something else, you need to unequip it first. This can be done by setting the action's <b>action_type</b> to 3 and <b>target_serial</b> to the serial of the currently held item. Next, set the <b>action_type</b> of the action to 4 and the <b>target_serial</b> to the backpack's serial, and put the held item into the backpack. Next, pick up the PickAxe of the backpack in the same way, and set the <b>action_type</b> to 6 to equip it.
 
-                After that, if you double-click the pickaxe item, you can use the unique ability of the item for the position target. In this case, it is mining skill becauise item is Pickaxe. The <b>uo_service.targeting_state</b> value is changed from -1 to 1 when the tarining status is set as ground target.
+                After that, if you double-click the Pickaxe item, you can use the unique ability of the item for the position target. In this case, it is mining skill because item is PickAxe. The <b>uo_service.targeting_state</b> value is changed from -1 to 1 when the training status is set as ground target.
 
                 When a human plays the game, the target land can be selected by mouse-clicking. How to deliver that kind of action in <b>UoService</b> that has an x and y. As you can see from <a href="https://kimbring2.github.io/uoservice/tutorial_binary_file.html#land_indexing">land indexing tutorial</a>, the land can be divided and processed as follows although it looks like a continuous data in game screen.
 
@@ -738,10 +739,33 @@ def step(uo_service):
         <div class="row" id="first_training_ability">
             <div class="col">
                 <h2>7. First training ability</h2>
+                In the case of skills in Ultima Online, the success rate of skills and the types of items that can be obtained vary depending on the level. The success rate of the mining skill discussed earlier is much higher if you give gold to the NPC at the beginning and raise the level a little.
 
                 <h5>Figure4: Mining Skill Level.</h5>
                 <img src="Fig/MiningSkillLevel.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
                 
+                At this section, let's learn how to raise the skill level with Python code using <b>UoService</b>. The first thing to do is to check the mining skill level of the current agent, which can be checked using the <b>player_skills_dict</b>. Because the corresponding Dict has information of all skills of agent, information for the Mining skill can be obtained through the 'Mining' key.
+
+                The next thing to do is to find an NPC who can teach Mining skills among Mobiles around the agent. This information can be found by looking at whether the title string of <b>world_mobile_dict</b> has a <b>miner</b>. If such an NPC exists, it is necessary to know the list of interaction that is available with the corresponding NPC. This can be done by setting <b>action_type</b> to 10 and <b>target_serial</b> to the serial number of the Miner that was previous step. 
+
+                In the case of the Pop Up menu, it is saved in the form of a Python list in the <b>popup_menu_list</b> of <b>UoService</b> as soon as it is shown on the screen. If you set this value as <b>index</b> and <b>action_type</b> as 11 and send the action to the client, you can select the corresponding pop up menu.
+
+                <br>
+                <br>
+                <h5>Figure5: Open Pop Up Menu.</h5>
+                <img src="Fig/OpenPopUpMenu.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
+
+                If you select the Training Mining pop-up menu, the NPC will tell you the gold needed to learn the skill through the chat at the top of it. This data is stored in <b>cliloc_dict</b> of <b>UoService</b>, and the key value is the serial number of the NPC that said the text, so the value can be obtained by using the serial number of the NPC used when opening the pop-up menu as a key. Among the obtained values, affix represents the required gold value. 
+
+                To pay gold, you must first pick up as much gold as the value of gold from the agent's backpack. First, find out the serial number of gold, set it as <b>target_serial</b>, <b>action_type</b> as 3, set <b>amount</b> as the value of gold for skill learning acquired in the previous step, and send an action.
+
+                <br>
+                <br>
+                <h5>Figure6: Giving the gold to NPC.</h5>
+                <img src="Fig/GivingGoldToNPC.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
+
+                If you do that, you can pick up that amount of gold, and then you have to deliver this gold to the corresponding NPC. This can be done by setting <b>action_type</b> to 4 and <b>target_serial</b> to the serial number of the NPC you want to pass.
+
             </div>
             <div class="col">
                 <h5><a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/learn_mining.py">Code 7: Rule-based training ability example code</a>.</h5>
@@ -783,7 +807,6 @@ def step(uo_service):
 
     if "Mining" in player_skills_dict:
       mining_skill_level = player_skills_dict["Mining"]["value"]
-      print("mining_skill_level: ", mining_skill_level)
 
     backpack_item_data = uo_service.backpack_item_dict
     gold_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
