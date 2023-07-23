@@ -267,9 +267,9 @@ class UoService:
 			#print("")
 
 		if player_object.gameX != 0:
-			print("gameX: {0}, gameY: {1}", player_object.gameX, player_object.gameY)
-
+			#print("gameX: {0}, gameY: {1}", player_object.gameX, player_object.gameY)
 			#print("player_object.holdItemSerial: ", player_object.holdItemSerial)
+			
 			self.player_game_x = player_object.gameX
 			self.player_game_y = player_object.gameY
 			self.war_mode = player_object.warMode

@@ -63,7 +63,8 @@ def step(uo_service):
           forge_distance = uo_service.get_distance(v_world['gameX'], v_world['gameY'])
           #print("forge_distance: ", forge_distance)
 
-          forge_serial = k_world
+          if forge_distance <= 2:
+            forge_serial = k_world
 
         pass
       #print("")
@@ -74,7 +75,7 @@ def step(uo_service):
         #print("{0}: {1}".format(k_backpack, v_backpack["name"]))
 
         if "Ore" in v_backpack["name"] and "Gold" not in v_backpack["data"]:
-          if v_backpack["amount"] >= 50:
+          if v_backpack["amount"] >= 30:
             #print("{0}: {1}, {2}".format(k_backpack, v_backpack["name"], v_backpack["data"]))
           
             if ore_bulk_serial == None:
@@ -115,14 +116,15 @@ def step(uo_service):
       #print("ore_serial: ", ore_serial)
       #print("forge_serial: ", forge_serial)
       #print("targeting_state: ", targeting_state)
-      #print("")
+      print("cliloc_dict: ", cliloc_dict)
+      print("")
 
       if pick_up_ore_flag == True and ore_bulk_serial != None:
         #print("Pick up the item from player")
 
         action['action_type'] = 3
         action['target_serial'] = ore_bulk_serial
-        action['amount'] = 8
+        action['amount'] = 4
 
         picked_item = uo_service.world_item_dict[ore_bulk_serial]
         uo_service.picked_up_item = picked_item
@@ -146,13 +148,13 @@ def step(uo_service):
 
         forging_flag = True
         double_click_ore_flag = False
-      elif forging_flag == True and forge_serial != None:
+      elif forging_flag == True and forge_serial != None  and targeting_state == 0:
         action['action_type'] = 5
         action['target_serial'] = forge_serial
 
         forging_flag = False
 
-    action['action_type'] = 0
+    #action['action_type'] = 0
     obs = uo_service.step(action)
 
     step += 1

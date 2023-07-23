@@ -28,165 +28,19 @@ import uoservice.utils as utils
 
 ## Define the command arguments
 parser = argparse.ArgumentParser(description='Ultima Online Replay Parser')
-parser.add_argument('--window_width', type=int, default=1370, help='screen width of game')
-parser.add_argument('--window_height', type=int, default=1280, help='screen height of game')
-parser.add_argument('--grpc_port', type=int, default=60051, help='port of grpc')
+parser.add_argument('--window_width', type=int, default=1370, help='Screen width of game')
+parser.add_argument('--window_height', type=int, default=1280, help='Screen height of game')
+parser.add_argument('--grpc_port', type=int, default=60051, help='Port of grpc')
+parser.add_argument('--uo_installed_path', type=str, help='Install path of UO windows client')
+
 
 ## Parse the command argument
 arguments = parser.parse_args()
 grpc_port = arguments.grpc_port
 window_width = arguments.window_width
 window_height = arguments.window_height
+uo_installed_path = arguments.uo_installed_path
 
-
-color_dict = {"Black": (0, 0, 0),
-              "Red": (0, 0, 255),
-              "Blue": (255, 0, 0),
-              "Lime": (0, 255, 0),
-              "Green": (0, 128, 0),
-              "Yellow": (0, 255, 255),
-              "Purple": (128, 255, 128),
-              "Gray": (128, 128, 128),
-              "Brown": (42, 42, 165),
-              "Cadetblue": (255, 245, 152),
-              "Lavenderblush2": (229, 224, 238),
-              "White": (255, 255, 255),
-             }
-
-
-def parse_land_static(uo_service):
-  while True:
-    if uo_service.max_tile_x != None:
-      screen_length = 1000
-
-      screen_image = np.zeros((screen_length,screen_length,4), dtype=np.uint8)
-      radius = 5
-      thickness = 2
-      screen_width = screen_length
-      screen_height = screen_length
-
-      cell_x_list = []
-      cell_y_list = []
-      tile_data_list = []
-
-      for x in range(uo_service.min_tile_x, uo_service.max_tile_x):
-        cell_x = x >> 3
-        if cell_x not in cell_x_list:
-          cell_x_list.append(cell_x)
-
-      for y in range(uo_service.min_tile_y, uo_service.max_tile_y):
-        cell_y = y >> 3
-        if cell_y not in cell_y_list:
-          cell_y_list.append(cell_y)
-
-      player_game_x = uo_service.player_game_x
-      player_game_y = uo_service.player_game_y
-
-      scale = 40
-
-      cell_zip = zip(cell_x_list, cell_y_list)
-      for cell_x in cell_x_list:
-        for cell_y in cell_y_list:
-          land_data_list, static_data_list = uo_service.uoservice_game_file_parser.get_tile_data(cell_x, cell_y)
-
-          for land_data in land_data_list:
-            #print("land / name: {0}, game_x: {1}, game_y: {2}".format(land_data["name"], land_data["game_x"], land_data["game_y"]))
-            start_point = ( (land_data["game_x"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
-                            (land_data["game_y"] - player_game_y) * scale + int(screen_length / 2) - int(scale / 2) )
-            end_point = ( (land_data["game_x"] - player_game_x) * scale + int(screen_length / 2) + int(scale / 2), 
-                          (land_data["game_y"] - player_game_y) * scale + int(screen_length / 2) + int(scale / 2) )
-
-            index = uo_service.get_land_index(land_data["game_x"], land_data["game_y"])
-
-            radius = 1
-            font = cv2.FONT_HERSHEY_SIMPLEX
-            org = ( (land_data["game_x"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
-                    (land_data["game_y"] - player_game_y) * scale + int(screen_length / 2) )
-            fontScale = 0.4
-            color = (255, 0, 0)
-            thickness = 1
-            screen_image = cv2.putText(screen_image, str(index), org, font, fontScale, color, thickness, cv2.LINE_4)
-
-            if land_data["name"] == "forest":
-              screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Lime"], 1)
-            elif land_data["name"] == "rock":
-              screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Yellow"], 1)
-            else:
-              screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Gray"], 1)
-
-          for static_data in static_data_list:
-            #if "water" not in static_data["name"]:
-            #print("static / name: {0}, game_x: {1}, game_y: {2}".format(static_data["name"], static_data["game_x"], static_data["game_y"]))
-            
-            start_point = ( (static_data["game_x"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
-                            (static_data["game_y"] - player_game_y) * scale + int(screen_length / 2) - int(scale / 2) )
-            end_point = ( (static_data["game_x"] - player_game_x) * scale + int(screen_length / 2) + int(scale / 2), 
-                          (static_data["game_y"] - player_game_y) * scale + int(screen_length / 2) + int(scale / 2) )
-
-            if "grasses" in static_data["name"]:
-              screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Green"], 1)
-            elif "wall" in static_data["name"]:
-              screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["White"], -1)
-            elif "water" in static_data["name"]:
-              screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Cadetblue"], 1)
-            else:
-              screen_image = cv2.rectangle(screen_image, start_point, end_point, color_dict["Lavenderblush2"], 1)
-
-      #print("")
-
-      boundary = 500
-
-      radius = int(scale / 2)
-      screen_width = 4000
-      screen_height = 4000
-      for k, v in uo_service.world_mobile_dict.items():
-        if uo_service.player_game_x != None:
-          if v["gameX"] < screen_width and v["gameY"] < screen_height:
-            screen_image = cv2.circle(screen_image, 
-                                      ( (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
-                                        (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
-                                      radius, color_dict["Red"], -1)
-
-            screen_image = cv2.putText(screen_image, "  " + v["name"], 
-                                       ( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
-                                         (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
-                                       cv2.FONT_HERSHEY_SIMPLEX, 0.5, color_dict["Red"], 2, cv2.LINE_4)
-
-      for k, v in uo_service.world_item_dict.items():
-        if uo_service.player_game_x != None:
-          #print("world item {0}: {1}".format(k, uo_service.world_item_dict[k]))
-          if v["gameX"] < screen_width and v["gameY"] < screen_height:
-            screen_image = cv2.circle(screen_image, 
-                                      ( 
-                                          (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
-                                          (v["gameY"] - player_game_y) * scale + int(screen_length / 2)
-                                      ),
-                                      radius, color_dict["Purple"], -1)
-           
-            item_name_list = v["name"].split(" ")
-            screen_image = cv2.putText(screen_image, "     " + item_name_list[-1], 
-                                       ( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
-                                         (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
-                                       cv2.FONT_HERSHEY_SIMPLEX, 0.5, color_dict["Purple"], 2, cv2.LINE_4)
-
-      if uo_service.player_game_x != None:
-        #print("player_game_x: {0}, player_game_y: {1}".format(self.player_game_x, self.player_game_y))
-
-        screen_image = cv2.putText(screen_image, str("player"), (int(screen_length / 2), int(screen_length / 2) - int(scale / 2)), 
-                                   cv2.FONT_HERSHEY_SIMPLEX, 1.0, color_dict["Green"], 4, cv2.LINE_4)
-
-        radius = int(scale / 2)
-        screen_image = cv2.circle(screen_image, (int(screen_length / 2), int(screen_length / 2)), radius, color_dict["Lime"], -1)
-        screen_image = screen_image[int(screen_length / 2) - boundary:int(screen_length / 2) + boundary, 
-                                    int(screen_length / 2) - boundary:int(screen_length / 2) + boundary, :]
-        
-      screen_image = cv2.resize(screen_image, (screen_length, screen_length), interpolation=cv2.INTER_AREA)
-      screen_image = utils.rotate_image(screen_image, -45)
-      cv2.imshow('screen_image_' + str(uo_service.grpc_port), screen_image)
-      cv2.waitKey(1)
-
-      #time.sleep(1.0)
-      
 
 def step(uo_service):
   pickaxe_serial = None
@@ -321,7 +175,7 @@ def step(uo_service):
 ## Declare the main function
 def main():
   ## Declare the UoService using the parsed argument
-  uo_service = UoService(grpc_port, window_width, window_height)
+  uo_service = UoService(grpc_port, window_width, window_height, uo_installed_path)
 
   ## Open the gRPC client to connect with gRPC server of CSharp part
   uo_service._open_grpc()
@@ -330,7 +184,7 @@ def main():
   obs = uo_service.reset()
 
   thread_2 = threading.Thread(target=step, daemon=True, args=(uo_service,))
-  thread_1 = threading.Thread(target=parse_land_static, daemon=True, args=(uo_service,))
+  thread_1 = threading.Thread(target=uo_service.parse_land_static, daemon=True, args=())
 
   thread_2.start()
   thread_1.start()

@@ -873,15 +873,120 @@ def step(uo_service):
                 <br>
                 <br>
 
-                <h5>Figure4: Forge Item Location.</h5>
+                <h5>Figure8: Forge Item Location.</h5>
                 <img src="Fig/ForgeItemLocation.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
+
+                The agent can use the Smelting skill when the distance between Forge is 2 or less. Therefore, you you must first check the distance using <b>get_distance</b> function of <b>uo_service</b>.
+
+                Once near the Forge, you now need to double-click the Ore item in the BackPack to prepare for Smelting. If you want to use only part of the Ore, set the <b>action_type</b> to 3, the <b>target_serial</b> to the serial of the Ore and the <b>amount</b> as value you want to pick up. Next, you need to drop it back to the Backpack. At this time, you can use the previously used <b>action_type</b> 4, but you need to set the <b>index</b> to 1 here to prevent the dropped item will be merged into the existing item chunk what it come from.
+
+                <br>
+                <br>
+
+                <h5>Figure9: Item Divide Drop.</h5>
+                <img src="Fig/ItemDivide.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
+
+                After dividing ores, there are two Ore items in the Backpack. For some reason, you should use the amount information of <b>world_item_dict</b> to check the serial number of the smaller ore item. Now, you need to double-click the Ore Item you want to Smelting. Just as you used a PickAxe when collecting Ore, set the <b>action_type</b> to 2 and set the <b>target_serial</b> to the serial of the Ore. 
+
+                When Ore is double-clicked, the <b>targeting_state</b> of <b>UoService</b> changes like PickAxe. This time, the value changes to 0 to indicate that the item is the target, not a 1 for a land target.
+
+                Finally, you need to set <b>action_type</b> to 5 as in the case of collecting Ore. In this case, the <b>target_serial</b> should be set to Forge's serial number instead of <b>index</b>.
+
+                If the ingot was created successfully, you can check the that using the <b>cliloc_dict</b>.
+
+                <br>
+                <br>
+
+                <h5>Figure10: Crafting Success Check.</h5>
+                <img src="Fig/IngotMakeMessage.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
+
             </div>
             <div class="col">
                 <h5><a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/make_ingot.py">Code 8: Rule-based smelting example code</a>.</h5>
                 <pre class="pre"><code class="python">
-def step(uo_service):
-  pickaxe_serial = None
+def get_distance(self, target_game_x, target_game_y):
+    if self.player_game_x != None:
+        return max(abs(self.player_game_x - target_game_x), abs(self.player_game_y - target_game_y))
+    else:
+        return -1
 
+
+def step(uo_service):
+  pick_up_ore_flag = True
+  drop_ore_flag = False
+  forging_flag = False
+  ore_bulk_serial = None
+  ore_serial = None
+  double_click_ore_flag = False
+  forge_serial = None
+
+  while True:
+    if len(uo_service.world_item_dict) != 0:
+      for k_world, v_world in uo_service.world_item_dict.items():
+        if "Forge" in v_world["name"]:
+          forge_distance = uo_service.get_distance(v_world['gameX'], v_world['gameY'])
+          if forge_distance <= 2:
+            forge_serial = k_world
+
+    backpack_item_data = uo_service.backpack_item_dict
+    if len(backpack_item_data) != 0:
+      for k_backpack, v_backpack in backpack_item_data.items():
+        if "Ore" in v_backpack["name"] and "Gold" not in v_backpack["data"]:
+          if v_backpack["amount"] >= 30:
+            if ore_bulk_serial == None:
+              ore_bulk_serial = k_backpack
+              pick_up_ore_flag = True
+          else:
+            ore_serial = k_backpack
+
+    hold_item_serial = uo_service.hold_item_serial
+    targeting_state = uo_service.targeting_state
+    cliloc_dict = uo_service.cliloc_dict
+
+    hold_item_serial = uo_service.hold_item_serial
+    backpack_serial = uo_service.backpack_serial
+    bank_serial = uo_service.bank_serial
+
+    ## Declare the empty action
+    action = {}
+    action['action_type'] = 0
+    action['source_serial'] = 0
+    action['target_serial'] = 0
+    action['walk_direction'] = 0
+    action['index'] = 0
+    action['amount'] = 0
+    action['run'] = False
+    if step % 100 == 0:
+      if pick_up_ore_flag == True and ore_bulk_serial != None:
+        action['action_type'] = 3
+        action['target_serial'] = ore_bulk_serial
+        action['amount'] = 4
+
+        picked_item = uo_service.world_item_dict[ore_bulk_serial]
+        uo_service.picked_up_item = picked_item
+
+        drop_ore_flag = True
+        pick_up_ore_flag = False
+      elif drop_ore_flag == True:
+        action['action_type'] = 4
+        action['target_serial'] = backpack_serial
+        action['index'] = 1
+
+        drop_ore_flag = False
+        double_click_ore_flag = True
+      elif double_click_ore_flag == True and ore_serial != None:
+        action['action_type'] = 2
+        action['target_serial'] = ore_serial
+
+        forging_flag = True
+        double_click_ore_flag = False
+      elif forging_flag == True and forge_serial != None  and targeting_state == 0:
+        action['action_type'] = 5
+        action['target_serial'] = forge_serial
+
+        forging_flag = False
+
+    obs = uo_service.step(action)
                 </code></pre>
             </div>
         </div>
