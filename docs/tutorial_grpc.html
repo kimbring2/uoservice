@@ -350,7 +350,7 @@
             <div class="col", id="actions_4">
                 <script>createHeaderAction("actions_4", "4. Pick up the amount of item", "-> Set the Index as 0 for picking up all items");</script>
                 <script>
-                    generate_action_table("actions_4", [["3", "", "item serial", "", "", "amount of item to be picked", ""]]);
+                    generate_action_table("actions_4", [["3", "", "item serial", "", "", "amount of item", ""]]);
                 </script>
             </div>
 
@@ -363,7 +363,7 @@
 
             <div class="col", id="actions_6">
                 <script>createHeaderAction("actions_6", "6. Use the activated skill to the target", "-> When TargetSerial is 0, land is the target, otherwise Mobile or Item is the target");</script>
-                <script> generate_action_table("actions_6", [["5", "holded item serial", "", "", "index of land", "", ""]]);</script>
+                <script> generate_action_table("actions_6", [["5", "item serial", "", "", "index of land", "", ""]]);</script>
             </div>
 
             <div class="col", id="actions_7">
@@ -381,9 +381,44 @@
             </div>
 
             <div class="col", id="actions_9">
-                <script>createHeaderAction("actions_9", "9. Change the lock status of skill", "-> Each time an action is executed, it changes sequentially to increment, lock, and decrement.");</script>
+                <script>createHeaderAction("actions_9", "9. Change the lock status of skill", "-> Each time an action is sent, status is changed sequentially to increment, lock, and decrement.");</script>
                 <script>
                     generate_action_table("actions_9", [["8", "", "", "", "index of skill", "", ""]]);
+                </script>
+            </div>
+
+            <div class="col", id="actions_10">
+                <script>createHeaderAction("actions_10", "10. ", "-> ");</script>
+                <script>
+                    generate_action_table("actions_10", [["9", "", "", "", "", "", ""]]);
+                </script>
+            </div>
+
+            <div class="col", id="actions_11">
+                <script>createHeaderAction("actions_11", "11. Open the pop up menu of the vendor/teacher", "-> This action can be used for NPCs of each job in the town");</script>
+                <script>
+                    generate_action_table("actions_11", [["10", "", "mobile serial", "", "", "", ""]]);
+                </script>
+            </div>
+
+            <div class="col", id="actions_12">
+                <script>createHeaderAction("actions_12", "12. Select one of menu from the pop up menu", "-> This action can be used for NPCs of each job in the town");</script>
+                <script>
+                    generate_action_table("actions_12", [["11", "", "mobile serial", "", "index of menu", "", ""]]);
+                </script>
+            </div>
+
+            <div class="col", id="actions_13">
+                <script>createHeaderAction("actions_13", "13. Buy the item from vendor by selecting the item from shop gump", "-> ");</script>
+                <script>
+                    generate_action_table("actions_13", [["12", "item serial", "mobile serial", "", "", "amount of item", ""]]);
+                </script>
+            </div>
+
+            <div class="col", id="actions_14">
+                <script>createHeaderAction("actions_14", "14. Sell the item to vendor by selecting the item from shop gump", "-> ");</script>
+                <script>
+                    generate_action_table("actions_14", [["13", "item serial", "mobile serial", "", "", "amount of item", ""]]);
                 </script>
             </div>
         </div>
