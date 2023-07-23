@@ -341,29 +341,29 @@
             </div>
 
             <div class="col", id="actions_3">
-                <script>createHeaderAction("actions_3", "3. Attack target by it's serial", "-> player must be close enough to attack the target and war mode must be True");</script>
+                <script>createHeaderAction("actions_3", "3. Double click target", "-> This action can be used to attack monsters, activate gathering tools, or process gathered resources");</script>
                 <script>
-                    generate_action_table("actions_3", [["2", "", "target mobile serial", "", "", "", ""]]);
+                    generate_action_table("actions_3", [["2", "", "mobile, item serial", "", "", "", ""]]);
                 </script>
             </div>
 
             <div class="col", id="actions_4">
-                <script>createHeaderAction("actions_4", "4. Pick up the amount of item by it's serial", "");</script>
+                <script>createHeaderAction("actions_4", "4. Pick up the amount of item", "-> Set the Index as 0 for picking up all items");</script>
                 <script>
-                    generate_action_table("actions_4", [["3", "target item serial", "", "", "", "amount of item to be picked", ""]]);
+                    generate_action_table("actions_4", [["3", "", "item serial", "", "", "amount of item to be picked", ""]]);
                 </script>
             </div>
 
             <div class="col", id="actions_5">
-                <script>createHeaderAction("actions_5", "5. Drop the holded item into my backpack", "-> Backpack serial will be provided automatically inside of CSharp");</script>
+                <script>createHeaderAction("actions_5", "5. Drop the holded item", "-> When TargetSerial is 0, land is the target. Otherwise, if you set the index to 1, you can divide the items into the bag.");</script>
                 <script>
-                    generate_action_table("actions_5", [["4", "", "", "", "", "", ""]]);
+                    generate_action_table("actions_5", [["4", "", "mobile, item serial", "", "index of land", "", ""]]);
                 </script>
             </div>
 
             <div class="col", id="actions_6">
-                <script>createHeaderAction("actions_6", "6. Drop the holded item on land around the player", "-> This will drop item one of possible droppable land");</script>
-                <script> generate_action_table("actions_6", [["5", "holded item serial", "", "", "", "", ""]]);</script>
+                <script>createHeaderAction("actions_6", "6. Use the activated skill to the target", "-> When TargetSerial is 0, land is the target, otherwise Mobile or Item is the target");</script>
+                <script> generate_action_table("actions_6", [["5", "holded item serial", "", "", "index of land", "", ""]]);</script>
             </div>
 
             <div class="col", id="actions_7">

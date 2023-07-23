@@ -111,7 +111,7 @@ function generate_action_table(container, inputs, outputs, parameters = []) {
     var tblThead = document.createElement("thead");
     tblThead.className = "thead-light";
 
-    var header_row = generate_row_header_action(["actionType", "itemSerial", "mobileSerial", "walkDirection", "index", "amount", "run"]);
+    var header_row = generate_row_header_action(["actionType", "sourceSerial", "targetSerial", "walkDirection", "index", "amount", "run"]);
     tblThead.appendChild(header_row);
     tbl.appendChild(tblThead);
 
