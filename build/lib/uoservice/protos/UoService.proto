@@ -74,6 +74,12 @@ message GrpcSkill {
   uint32 lock = 7;
 }
 
+message GrpcBuff {
+  uint32 type = 1;
+  uint32 delta = 2;
+  string text = 3;
+}
+
 message GrpcPopupMenu {
   string text = 1;
   bool active = 2;
@@ -86,12 +92,12 @@ message GrpcClilocData {
   string name = 4;
 }
 
-message GrpcPopupMenuList {
-  repeated GrpcPopupMenu menus = 1;
+message GrpcSkillList {
+  repeated GrpcSkill skills = 1;
 }
 
-message GrpcClilocDataList {
-  repeated GrpcClilocData clilocDatas = 1;
+message GrpcBuffList {
+  repeated GrpcBuff buffs = 1;
 }
 
 message GrpcMobileObjectList {
@@ -102,16 +108,20 @@ message GrpcItemObjectList {
   repeated GrpcItemObjectData itemObjects = 1;
 }
 
+message GrpcPopupMenuList {
+  repeated GrpcPopupMenu menus = 1;
+}
+
+message GrpcClilocDataList {
+  repeated GrpcClilocData clilocDatas = 1;
+}
+
 message SemaphoreAction {
   string mode = 1;
 }
 
 message Config {
   bool init = 1;
-}
-
-message GrpcSkillList {
-  repeated GrpcSkill skills = 1;
 }
 
 message GrpcStates {
@@ -125,6 +135,7 @@ message GrpcStates {
 
   GrpcPlayerStatus playerStatus = 6;
   GrpcSkillList playerSkillList = 7;
+  GrpcBuffList playerBuffList = 8;
 }
 
 message GrpcAction {

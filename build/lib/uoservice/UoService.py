@@ -259,6 +259,7 @@ class UoService:
 
 		player_status_data = response.playerStatus
 		player_skills_data = response.playerSkillList.skills
+		player_buffs_data = response.playerBuffList.buffs
 
 		if len(popup_menu_data):
 			for popup_menu in popup_menu_data:
@@ -266,10 +267,17 @@ class UoService:
 				pass
 			#print("")
 
+		if len(player_buffs_data) != 0:
+			for buff in player_buffs_data:
+				print("buff: ", buff)
+
+			print("")
+
+
 		if player_object.gameX != 0:
 			#print("gameX: {0}, gameY: {1}", player_object.gameX, player_object.gameY)
 			#print("player_object.holdItemSerial: ", player_object.holdItemSerial)
-			
+
 			self.player_game_x = player_object.gameX
 			self.player_game_y = player_object.gameY
 			self.war_mode = player_object.warMode
