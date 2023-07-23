@@ -15,6 +15,7 @@ import argparse
 import sys
 import grpc
 from tqdm import tqdm
+import threading
 
 ## UoService package imports
 from uoservice.protos import UoService_pb2
@@ -108,6 +109,7 @@ def step(uo_service):
 
         ## Player holded item
         hold_item_serial = uo_service.hold_item_serial
+        print("hold_item_serial: ", hold_item_serial)
 
         backpack_serial = uo_service.backpack_serial
         #print("backpack_serial: ", backpack_serial)
@@ -165,6 +167,7 @@ def step(uo_service):
               action['action_type'] = 4
               action['target_serial'] = backpack_serial
 
+    #action['action_type'] = 0         
     obs = uo_service.step(action)
     step += 1
 
