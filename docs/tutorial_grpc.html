@@ -374,16 +374,16 @@
             </div>
 
             <div class="col", id="actions_8">
-                <script>createHeaderAction("actions_8", "8. Open the corpse by it's serial", "-> Mobile become the item type after dying. Thus, itemSerial argument should be used");</script>
+                <script>createHeaderAction("actions_8", "8. Change the war mode", "-> War mode change according to the index argument. 1 is for active");</script>
                 <script>
-                    generate_action_table("actions_8", [["7", "corpse item serial", "", "", "", "", ""]]);
+                    generate_action_table("actions_8", [["7", "", "", "", "0, 1", "", ""]]);
                 </script>
             </div>
 
-            <div class="col", id="actions_20">
-                <script>createHeaderAction("actions_20", "20. Change the war mode", "-> War mode change according to the index argument. 1 is for active");</script>
+            <div class="col", id="actions_9">
+                <script>createHeaderAction("actions_9", "9. Change the lock status of skill", "-> Each time an action is executed, it changes sequentially to increment, lock, and decrement.");</script>
                 <script>
-                    generate_action_table("actions_20", [["19", "", "", "", "0, 1", "", ""]]);
+                    generate_action_table("actions_9", [["8", "", "", "", "index of skill", "", ""]]);
                 </script>
             </div>
         </div>

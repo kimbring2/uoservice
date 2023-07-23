@@ -429,7 +429,7 @@ for step in range(100000):
                 After getting close to a monster, the most basic interaction possible would be an attack. Let's use the more state and action of the UoService to do that. <br> 
                 Melee attacks are possible only when the distance from the monster is almost zero. Therefore, this distance should be checked before attacking. This information is contained in the mobile's <b>distance</b> part, and you can acquire a value through the <b>target_mobile['distance']</b> code.<br> 
                 
-                Next, the player must be in the war mode to attack enemie in Ultima Online. You must check the current status of mode by using the <b>war_mode</b> value of UoService class like a <b>uo_service.war_mode</b> If it is false, set the <b>action_type</b> and <b>index</b> argument of action to 19 and 1 respectively to set the player as war mode. <br> 
+                Next, the player must be in the war mode to attack enemie in Ultima Online. You must check the current status of mode by using the <b>war_mode</b> value of UoService class like a <b>uo_service.war_mode</b> If it is false, set the <b>action_type</b> and <b>index</b> argument of action to 7 and 1 respectively to set the player as war mode. <br> 
 
                 Finally, if the player approach close to the monster and war mode is true, you can set the <b>action_type</b> as 2. Additionally, the <b>target_serial</b> argument is needed to be set as the serial of target mobile.
 
@@ -488,7 +488,7 @@ for step in range(100000):
             action['run'] = True
         else:
             if war_mode == False:
-              action['action_type'] = 19
+              action['action_type'] = 7
               action['index'] = 1
             else:
               action['action_type'] = 2
@@ -506,7 +506,7 @@ for step in range(100000):
                 <h2>5. First looting</h2>
                 After attacking and killing a monster, player can acquire various items including gold from the corpse. To do this with python code, first you need to check <b>world_item_dict</b> of the <b>uo_service</b> instead of the <b>world_mobile_dict</b> because the monster that was mobile type is transformed to an item when it dies. For the reason that the corresponding Dict has information on all items of the world, you should filter it using the <b>isCorpse</b> value.<br>
 
-                Having secured the serial number of the corpse that exists around the player, the next step is to open it. The corresponding action can be composed by setting the <b>action_type</b> as 7 and <b>target_serial</b> as the serial number of the corpse item.<br>
+                Having secured the serial number of the corpse that exists around the player, the next step is to open it. The corresponding action can be composed by setting the <b>action_type</b> as 2 and <b>target_serial</b> as the serial number of the corpse item.<br>
 
                 From the moment the corpse is opened, world_item_dict start to include the items of that corpse. To determine which item is inside the corpse, the <b>container</b> part of item information can be used <b>item["container"]</b>. If you want to select only gold among the identified items inside the corpse, you can use the <b>name</b> information of item like a <b>if "gold" in item["name"]</b>.<br>
 
@@ -591,7 +591,7 @@ for step in range(100000):
               action['run'] = True
           else:
               if war_mode == False:
-                action['action_type'] = 19
+                action['action_type'] = 7
                 action['index'] = 1
               else:
                 action['action_type'] = 2
@@ -603,7 +603,7 @@ for step in range(100000):
             if corpse_serial == None:
               corpse_serial = corpse_serial_data
 
-            action['action_type'] = 7
+            action['action_type'] = 2
             action['target_serial'] = corpse_serial
           else:
             if hold_item_serial == 0:
@@ -625,9 +625,9 @@ for step in range(100000):
         <div class="row" id="first_mining">
             <div class="col">
                 <h2>6. First mining</h2>
-                In Ultima Online, player is able to obtain various ingredients to craft the items through the gathering from nature. For example, iron ores must be gathered from nearby mines in order to craft items such as sword. To collect ore, you must equip a Pickaxe in one hand that can be checked using the <b>equipped_item_dict["OneHanded"]</b> information of <b>UoService</b>. If you are holding a Pickaxe in one hand instead of something else, you need to unequip it first. This can be done by setting the action's <b>action_type</b> to 3 and <b>target_serial</b> to the serial of the currently held item. Next, set the <b>action_type</b> of the action to 4 and the <b>target_serial</b> to the backpack's serial, and put the held item into the backpack. Next, pick up the PickAxe of the backpack in the same way, and set the <b>action_type</b> to 6 to equip it.
+                In Ultima Online, player is able to obtain various ingredients to craft the items through the gathering from nature. For example, iron ores must be gathered from nearby mines in order to craft items such as sword. To collect ore, you must equip a PickAxe in one hand that can be checked using the <b>equipped_item_dict["OneHanded"]</b> information of <b>UoService</b>. If you are holding a PickAxe in one hand instead of something else, you need to unequip it first. This can be done by setting the action's <b>action_type</b> to 3 and <b>target_serial</b> to the serial of the currently held item. Next, set the <b>action_type</b> of the action to 4 and the <b>target_serial</b> to the backpack's serial, and put the held item into the backpack. Next, pick up the PickAxe of the backpack in the same way, and set the <b>action_type</b> to 6 to equip it.
 
-                After that, if you double-click the Pickaxe item, you can use the unique ability of the item for the position target. In this case, it is mining skill because item is PickAxe. The <b>uo_service.targeting_state</b> value is changed from -1 to 1 when the training status is set as ground target.
+                After that, if you double-click the PickAxe item, you can use the unique ability of the item for the position target. In this case, it is mining skill because item is PickAxe. The <b>uo_service.targeting_state</b> value is changed from -1 to 1 when the training status is set as ground target.
 
                 When a human plays the game, the target land can be selected by mouse-clicking. How to deliver that kind of action in <b>UoService</b> that has an x and y. As you can see from <a href="https://kimbring2.github.io/uoservice/tutorial_binary_file.html#land_indexing">land indexing tutorial</a>, the land can be divided and processed as follows although it looks like a continuous data in game screen.
 

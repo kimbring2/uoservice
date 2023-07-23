@@ -137,7 +137,7 @@ def step(uo_service):
             ## Player is near the target
               if war_mode == False:
                 ## Change the war mode to combat to attack
-                action['action_type'] = 19
+                action['action_type'] = 7
                 action['index'] = 1
               else:
                 ## Attack the target mobile
