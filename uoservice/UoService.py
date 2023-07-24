@@ -47,6 +47,7 @@ class UoService:
 		self.cliloc_dict = {}
 		self.popup_menu_list = []
 		self.ground_item_dict = {}
+		self.vendor_item_list = []
 
 		self.player_game_x = self.player_game_y = None
 		self.player_serial = None
@@ -274,14 +275,6 @@ class UoService:
 				pass
 			#print("")
 
-
-		if len(vendor_data) != 0:
-			print("len(vendor_data): ", len(vendor_data))
-			for data in vendor_data:
-				print("data: ", data)
-
-			print("")
-
 		if player_object.gameX != 0:
 			#print("gameX: {0}, gameY: {1}", player_object.gameX, player_object.gameY)
 			#print("player_object.holdItemSerial: ", player_object.holdItemSerial)
@@ -398,8 +391,11 @@ class UoService:
 				else:
 					self.ground_item_dict[k] = v
 
-		#print("self.corpse_dict: ", self.corpse_dict)
-		#print("self.equipped_item_dict: ", self.equipped_item_dict)
+		if len(vendor_data) != 0:
+			self.vendor_item_list = []
+			for data in vendor_data:
+				self.vendor_item_list.append({"vendor_serial": data.vendorSerial, 
+											  "item_serial": data.itemSerial})
 
 		self.corpse_item_dict = {}
 		for k_corpse, v_corpse in self.corpse_dict.items():

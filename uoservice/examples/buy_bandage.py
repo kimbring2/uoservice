@@ -74,6 +74,8 @@ def step(uo_service):
     equipped_item_data = uo_service.equipped_item_dict
     player_status_dict = uo_service.player_status_dict
 
+    vendor_item_list = uo_service.vendor_item_list
+
     if len(world_mobile_data) != 0:
       for k_world, v_world in world_mobile_data.items():
         #print("mobile v_world: ", v_world)
@@ -85,19 +87,36 @@ def step(uo_service):
       #print("")
 
     if len(world_item_data) != 0:
+        #print("uo_service.vendor_data: ", uo_service.vendor_data)
         for k_world, v_world in world_item_data.items():
           #print("name: {0}, container: {1}, amount: {2}".format(v_world['name'], v_world['container'], v_world['amount']))
 
           #if v_world["container"] == healer_vendor_serial:
-          if v_world["amount"] == 250:
+          if v_world["amount"] == 31:
             #print("item v_world: ", v_world)
-            #print("healer_vendor_serial: ", healer_vendor_serial)
-            print("item / name: {0}, layer: {1}, amount: {2}".format(v_world["name"], 
-                                                                     v_world["layer"],
-                                                                     v_world["amount"]))
+            #print("item / name: {0}, serial: {1}, amount: {2}".format(v_world["name"], 
+            #                                                          v_world["serial"],
+            #                                                          v_world["amount"]))
             pass
-            #print("")
         #print("")
+
+    #print("vendor_data: ", vendor_data)
+    if len(vendor_item_list) != 0:
+      for vendor_item in vendor_item_list:
+        #print("vendor_item: ", vendor_item)
+        vendor_serial = vendor_item["vendor_serial"]
+        item_serial = vendor_item["item_serial"]
+
+        if item_serial in world_item_data:
+          vendor_item = world_item_data[item_serial]
+
+          if vendor_serial in world_mobile_data:
+            vendor_mobile = world_mobile_data[vendor_serial]
+            #print("vendor_item: ", vendor_item)
+            #print("vendor_mobile: ", vendor_mobile)
+            print("vendor name: {0}, item name: {1}".format(vendor_item['name'], vendor_mobile['name']))
+
+      print("")
 
     gold_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
 
@@ -146,7 +165,7 @@ def step(uo_service):
         uo_service.popup_menu_list = []
         select_pop_up_flag = False
 
-    #action['action_type'] = 0
+    action['action_type'] = 0
     obs = uo_service.step(action)
     step += 1
 
