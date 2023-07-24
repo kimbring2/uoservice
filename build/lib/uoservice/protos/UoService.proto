@@ -19,7 +19,7 @@ message GrpcPlayerObject {
   uint32 maxTileY = 12;
 }
 
-message GrpcMobileObjectData {
+message GrpcMobileObject {
   uint32 hits = 1;
   uint32 hitsMax = 2;
   uint32 race = 3;
@@ -33,7 +33,7 @@ message GrpcMobileObjectData {
   uint32 item = 11;
 }
 
-message GrpcItemObjectData {
+message GrpcItemObject {
   uint32 distance = 1;
   uint32 gameX = 2;
   uint32 gameY = 3;
@@ -86,14 +86,14 @@ message GrpcPopupMenu {
   bool active = 2;
 }
 
-message GrpcClilocData {
+message GrpcCliloc {
   uint32 serial = 1;
   string text = 2;
   string affix = 3;
   string name = 4;
 }
 
-message GrpcVendorData {
+message GrpcVendor {
   uint32 vendorSerial = 1;
   uint32 itemSerial = 2;
 }
@@ -107,23 +107,23 @@ message GrpcBuffList {
 }
 
 message GrpcMobileObjectList {
-  repeated GrpcMobileObjectData mobileObjects = 1;
+  repeated GrpcMobileObject mobileObjects = 1;
 }
 
 message GrpcItemObjectList {
-  repeated GrpcItemObjectData itemObjects = 1;
+  repeated GrpcItemObject itemObjects = 1;
 }
 
 message GrpcPopupMenuList {
   repeated GrpcPopupMenu menus = 1;
 }
 
-message GrpcClilocDataList {
-  repeated GrpcClilocData clilocDatas = 1;
+message GrpcClilocList {
+  repeated GrpcCliloc clilocs = 1;
 }
 
-message GrpcVendorDataList {
-  repeated GrpcVendorData vendorDatas = 1;
+message GrpcVendorList {
+  repeated GrpcVendor vendors = 1;
 }
 
 message SemaphoreAction {
@@ -141,13 +141,13 @@ message GrpcStates {
   GrpcMobileObjectList WorldMobileList = 3;
 
   GrpcPopupMenuList popupMenuList = 4;
-  GrpcClilocDataList clilocDataList = 5;
+  GrpcClilocList clilocList = 5;
 
   GrpcPlayerStatus playerStatus = 6;
   GrpcSkillList playerSkillList = 7;
   GrpcBuffList playerBuffList = 8;
 
-  GrpcVendorDataList vendorDataList = 9;
+  GrpcVendorList vendorList = 9;
 }
 
 message GrpcAction {

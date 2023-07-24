@@ -255,13 +255,13 @@ class UoService:
 		world_mobile_data = response.WorldMobileList.mobileObjects
 
 		popup_menu_data = response.popupMenuList.menus
-		cliloc_data = response.clilocDataList.clilocDatas
+		cliloc_data = response.clilocList.clilocs
 
 		player_status_data = response.playerStatus
 		player_skills_data = response.playerSkillList.skills
 		player_buffs_data = response.playerBuffList.buffs
 
-		vendor_data = response.vendorDataList.vendorDatas
+		vendor_data = response.vendorList.vendors
 
 		if len(popup_menu_data):
 			for popup_menu in popup_menu_data:

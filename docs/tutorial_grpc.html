@@ -81,7 +81,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col" id="1">
-                <script>createHeader("1", "GrpcMobileObjectData", "");</script>
+                <script>createHeader("1", "GrpcMobileObject", "");</script>
                 This type includes the every mobile type object such as monster, npc, aminal, other player, and etc.
                 <img src="Fig/MobileObject.png" class="rounded mx-auto d-block float-center" alt="Logo" width="500" height="130">
 
@@ -104,7 +104,7 @@
             </div>
 
             <div class="col" id="2">
-                <script>createHeader("2", "GrpcItemObjectData", "");</script>
+                <script>createHeader("2", "GrpcItemObject", "");</script>
                 This data type is for saving the information of every type of items such as gold, portion, book, and etc. 
                 <img src="Fig/ItemObject.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="210">
 
@@ -189,7 +189,7 @@
             </div>
 
             <div class="col" id="6">
-                <script>createHeader("6", "GrpcVendorData", "");</script>
+                <script>createHeader("6", "GrpcVendor", "");</script>
                 <img src="Fig/VendorData.png" class="rounded mx-auto d-block float-center" alt="Logo" width="330" height="350">
                 <script>
                     generate_table("6", 
@@ -204,7 +204,7 @@
 
         <div class="row">
             <div class="col" id="7">
-                <script>createHeader("7", "GrpcClilocData", "");</script>
+                <script>createHeader("7", "GrpcCliloc", "");</script>
                 <img src="Fig/Cliloc.png" class="rounded mx-auto d-block float-center" alt="Logo" width="170" height="170">
                 <script>
                     generate_table("7", 
@@ -265,7 +265,7 @@
         <div class="row">
             <div class="col" id="states_1">
                 <script>createHeader("states_1", "GrpcPlayerObject", "");</script>
-                This data type is usually used to store the item of backpack, equipped by player, corpse of monster. Note that, this is the simpler than GrpcGameObjectData data type. 
+                This data type is usually used to store the item of backpack, equipped by player, corpse of monster. Note that, this is the simpler than GrpcGameObject data type. 
                 <img src="Fig/PlayerObject.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="300">
 
                 <script>
@@ -295,7 +295,7 @@
                 <script>
                     generate_table("states_2", 
                                     [
-                                        ["WorldItemList", "list of GrpcItemObjectData", "list of items related to the player's current game play"],
+                                        ["WorldItemList", "list of GrpcItemObject", "list of items related to the player's current game play"],
                                     ]
                                     );
                 </script>
@@ -315,15 +315,15 @@
                 <script>
                     generate_table("states_3", 
                                     [
-                                        ["WorldMobileList", "list of GrpcMobileObjectData", "list of mobiles related to the player's current game play"],
+                                        ["WorldMobileList", "list of GrpcMobileObject", "list of mobiles related to the player's current game play"],
                                     ]
                                     );
                 </script>
 
-                In Ultima Online, there are various mobiles that players can interact with, and one of them is a vendor that can purchase or sell items for a specific job. In case of these, it must be distinguished by job name included in title information of GrpcMobileObjectData rather than name. 
+                In Ultima Online, there are various mobiles that players can interact with, and one of them is a vendor that can purchase or sell items for a specific job. In case of these, it must be distinguished by job name included in title information of GrpcMobileObject rather than name. 
                 <img src="Fig/VendorMobile.png" class="rounded mx-auto d-block float-center" alt="Logo" width="550" height="90">
 
-                Another type of mobile is a monster that the player battles to obtain XP or items. Unlike NPCs in town, the notorietyFlag of GrpcMobileObjectData basically starts from 3(grey).
+                Another type of mobile is a monster that the player battles to obtain XP or items. Unlike NPCs in town, the notorietyFlag of GrpcMobileObject basically starts from 3(grey).
                 <img src="Fig/MonsterMobile.png" class="rounded mx-auto d-block float-center" alt="Logo" width="450" height="100">
 
                 The player can learn various types of skills up to a total of 700, and must interact with certain NPCs in the village.
@@ -349,13 +349,13 @@
 
         <div class="row">
             <div class="col", id="states_6">
-                <script>createHeader("states_6", "ClilocDataList", "");</script>
+                <script>createHeader("states_6", "ClilocList", "");</script>
                 The speech of NPC consists of multiple sentence even if it looks like a one sentence in game. Therefore, old cliloc text should be kept for a certain period of time(50 is default length)
                 <img src="Fig/Clilocs.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="130">
                 <script>
                     generate_table("states_6", 
                                     [
-                                        ["GrpcClilocDataList", "list of GrpcClilocData", "list of cliloc text"]
+                                        ["GrpcClilocList", "list of GrpcCliloc", "list of cliloc text"]
                                     ]
                                     );
                 </script>
