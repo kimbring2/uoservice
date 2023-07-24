@@ -30,6 +30,7 @@ message GrpcMobileObjectData {
   string name = 8;
   string title = 9;
   uint32 notorietyFlag = 10;
+  uint32 item = 11;
 }
 
 message GrpcItemObjectData {
@@ -92,6 +93,11 @@ message GrpcClilocData {
   string name = 4;
 }
 
+message GrpcVendorData {
+  uint32 vendorSerial = 1;
+  uint32 itemSerial = 2;
+}
+
 message GrpcSkillList {
   repeated GrpcSkill skills = 1;
 }
@@ -116,6 +122,10 @@ message GrpcClilocDataList {
   repeated GrpcClilocData clilocDatas = 1;
 }
 
+message GrpcVendorDataList {
+  repeated GrpcVendorData vendorDatas = 1;
+}
+
 message SemaphoreAction {
   string mode = 1;
 }
@@ -136,6 +146,8 @@ message GrpcStates {
   GrpcPlayerStatus playerStatus = 6;
   GrpcSkillList playerSkillList = 7;
   GrpcBuffList playerBuffList = 8;
+
+  GrpcVendorDataList vendorDataList = 9;
 }
 
 message GrpcAction {

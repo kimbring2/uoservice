@@ -211,7 +211,7 @@ class UoService:
 
 							screen_image = cv2.putText(screen_image, "  " + v["name"], 
 											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
-											(v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
+											  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
 											cv2.FONT_HERSHEY_SIMPLEX, 0.5, utils.color_dict["Red"], 1, cv2.LINE_4)
 
 				for k, v in self.world_item_dict.items():
@@ -219,16 +219,15 @@ class UoService:
 						#print("world item {0}: {1}".format(k, self.world_item_dict[k]))
 						if v["gameX"] < screen_width and v["gameY"] < screen_height:
 							screen_image = cv2.circle(screen_image, 
-											( 
-											(v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
-											(v["gameY"] - player_game_y) * scale + int(screen_length / 2)
+											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
+											  (v["gameY"] - player_game_y) * scale + int(screen_length / 2)
 											),
 											radius, utils.color_dict["Purple"], -1)
 		           
 							item_name_list = v["name"].split(" ")
 							screen_image = cv2.putText(screen_image, "     " + item_name_list[-1], 
 												( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
-												(v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
+												  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
 												cv2.FONT_HERSHEY_SIMPLEX, 0.5, utils.color_dict["Purple"], 1, cv2.LINE_4)
 
 				if self.player_game_x != None:
@@ -261,6 +260,8 @@ class UoService:
 		player_skills_data = response.playerSkillList.skills
 		player_buffs_data = response.playerBuffList.buffs
 
+		vendor_data = response.vendorDataList.vendorDatas
+
 		if len(popup_menu_data):
 			for popup_menu in popup_menu_data:
 				#print("popup_menu / text: {0}, active: {1}".format(popup_menu.text, popup_menu.active))
@@ -269,10 +270,17 @@ class UoService:
 
 		if len(player_buffs_data) != 0:
 			for buff in player_buffs_data:
-				print("buff: ", buff)
+				#print("buff: ", buff)
+				pass
+			#print("")
+
+
+		if len(vendor_data) != 0:
+			print("len(vendor_data): ", len(vendor_data))
+			for data in vendor_data:
+				print("data: ", data)
 
 			print("")
-
 
 		if player_object.gameX != 0:
 			#print("gameX: {0}, gameY: {1}", player_object.gameX, player_object.gameY)
@@ -319,7 +327,7 @@ class UoService:
 				self.world_mobile_dict[obj.serial] = { "name": obj.name, "gameX": obj.gameX, "gameY":obj.gameY, 
 													   "distance": obj.distance, "title": obj.title, "hits": obj.hits,
 													   "notorietyFlag": obj.notorietyFlag, "hitsMax": obj.hitsMax,
-													   "race": obj.race}
+													   "race": obj.race, "serial": obj.serial}
 
 		#print("self.bank_serial: ", self.bank_serial)
 		if self.bank_serial != None:

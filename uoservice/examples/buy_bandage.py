@@ -42,9 +42,10 @@ uo_installed_path = arguments.uo_installed_path
 
 
 def step(uo_service):
-  player_gold = None
-  pick_up_flag = True
-  drop_flag = False
+  open_pop_up_flag = True
+  select_pop_up_flag = False
+
+  one_trial_check_flag = True
 
   step = 0
   while True:
@@ -58,39 +59,51 @@ def step(uo_service):
     action['amount'] = 0
     action['run'] = False
 
+    healer_vendor_serial = None
+    healer_vendor = None
+
     world_item_data = uo_service.world_item_dict
+    world_mobile_data = uo_service.world_mobile_dict
     backpack_item_data = uo_service.backpack_item_dict
     equipped_item_data = uo_service.equipped_item_dict
+    popup_menu_list = uo_service.popup_menu_list
     ground_item_data = uo_service.ground_item_dict
     
-    if len(ground_item_data) != 0:
-      for k_ground, v_ground in ground_item_data.items():
-        #print("ground {0}: {1}".format(k_ground, v_ground["name"]))
-        pass
-
-    if len(uo_service.world_mobile_dict) != 0:
-      for k_mobile, v_mobile in uo_service.world_mobile_dict.items():
-        #print("world_mobile {0}: {1}".format(k_mobile, v_mobile["name"]))
-        pass
-
     targeting_state = uo_service.targeting_state
-    #print("targeting_state: ", targeting_state)
-
     hold_item_serial = uo_service.hold_item_serial
-    #print("hold_item_serial: ", hold_item_serial)
-
     equipped_item_data = uo_service.equipped_item_dict
-
     player_status_dict = uo_service.player_status_dict
 
+    if len(world_mobile_data) != 0:
+      for k_world, v_world in world_mobile_data.items():
+        #print("mobile v_world: ", v_world)
+        #print("name: {0}, title: {1}, distance: {2}".format(v_world['name'], v_world['title'], v_world['distance']))
+        if "Lowell" in v_world["name"] and "healer" in v_world["title"]:
+          #print("name: {0}, title: {1}, serial: {2}".format(v_world['name'], v_world['title'], v_world['serial']))
+          healer_vendor_serial = k_world
+          healer_vendor = world_mobile_data[healer_vendor_serial]
+      #print("")
+
+    if len(world_item_data) != 0:
+        for k_world, v_world in world_item_data.items():
+          #print("name: {0}, container: {1}, amount: {2}".format(v_world['name'], v_world['container'], v_world['amount']))
+
+          #if v_world["container"] == healer_vendor_serial:
+          if v_world["amount"] == 250:
+            #print("item v_world: ", v_world)
+            #print("healer_vendor_serial: ", healer_vendor_serial)
+            print("item / name: {0}, layer: {1}, amount: {2}".format(v_world["name"], 
+                                                                     v_world["layer"],
+                                                                     v_world["amount"]))
+            pass
+            #print("")
+        #print("")
+
     gold_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
-    #print("gold_serial: ", gold_serial)
 
     if gold_serial in backpack_item_data:
       gold_info = backpack_item_data[gold_serial]
-      #print("gold_info: ", gold_info)
     else:
-      #print("gold_serial is not in backpack_item_data")
       pass
 
     if len(uo_service.player_status_dict) != 0:
@@ -99,42 +112,41 @@ def step(uo_service):
 
     ## Declare the empty action
     if step % 100 == 0:
-      if len(world_item_data) != 0:
-        for k_world, v_world in world_item_data.items():
-          #print("world {0}: {1}".format(k_world, v_world["name"]))
-          pass
-        #print("")
-
-      if len(equipped_item_data) != 0:
-        for k_equipped, v_equipped in equipped_item_data.items():
-          #print("equipped {0}: {1}".format(k_equipped, v_equipped["name"]))
-          pass
-        #print("")
-
       if len(backpack_item_data) != 0:
         for k_backpack, v_backpack in backpack_item_data.items():
-          print("backpack {0}: {1}".format(k_backpack, v_backpack["name"]))
+          #print("backpack {0}: {1}".format(k_backpack, v_backpack["name"]))
           pass
-        print("")
+        #print("")
 
       #print("step: ", step)
-      #print("gold_serial: ", gold_serial)
-      #print("pick_up_flag: ", pick_up_flag)
-      #print("hold_item_serial: ", hold_item_serial)
+      #print("healer_vendor_serial: ", healer_vendor_serial)
+      #print("select_pop_up_flag: ", select_pop_up_flag)
+      #print("popup_menu_list: ", popup_menu_list)
       #print("")
 
-      if gold_serial != None and pick_up_flag == True:
-        action['action_type'] = 3
-        action['target_serial'] = gold_serial
-        action['amount'] = 100
-        pick_up_flag = False
-        drop_flag = True
-      elif drop_flag == True:
-        action['action_type'] = 4
-        action['index'] = 2554
-        drop_flag = False
+      if open_pop_up_flag == True and healer_vendor_serial != None:
+        print("open the pop up menu of NPC")
 
-    action['action_type'] = 0
+        action['action_type'] = 10
+        action['target_serial'] = healer_vendor_serial
+
+        open_pop_up_flag = False
+        select_pop_up_flag = True
+      elif select_pop_up_flag == True and len(popup_menu_list) != 0:
+        print("select the pop up menu")
+
+        action['action_type'] = 11
+        action['target_serial'] = healer_vendor_serial
+
+        menu_index = 0
+        for i in range(0, len(popup_menu_list)):
+          if popup_menu_list[i].text == "Buy" and popup_menu_list[i].active == True:
+            action['index'] = i
+
+        uo_service.popup_menu_list = []
+        select_pop_up_flag = False
+
+    #action['action_type'] = 0
     obs = uo_service.step(action)
     step += 1
 
