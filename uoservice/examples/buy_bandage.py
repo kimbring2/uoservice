@@ -175,10 +175,6 @@ def step(uo_service):
                   action['amount'] = 1
                   trade_item_flag = False
 
-          #print("")
-
-
-    #action['action_type'] = 0
     obs = uo_service.step(action)
     step += 1
 

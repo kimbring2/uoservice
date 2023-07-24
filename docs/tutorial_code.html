@@ -154,11 +154,12 @@
                 <li><a href="#land_static_data">2. Land, Static Data</a></li>
                 <li><a href="#first_walk">3. First Walk</a></li>
                 <li><a href="#first_attack">4. First Attack</a></li>
-                <li><a href="#first_looting">5. First Looting</a></li>
+                <li><a hr1ef="#first_looting">5. First Looting</a></li>
                 <li><a href="#first_mining">6. First Mining</a></li>
                 <li><a href="#first_training_ability">7. First Training Ability</a></li>
                 <li><a href="#first_smelting">8. First Smelting</a></li>
-                <li><a href="#conclusion">9. Conclusion</a></li>
+                <li><a href="#first_trading_item">9. First Trading Item</a></li>
+                <li><a href="#conclusion">10. Conclusion</a></li>
             </ul>
         </div>
 
@@ -503,7 +504,7 @@ for step in range(100000):
             <div class="col">
             </div>
             <div class="col">
-                <h2>5. First looting</h2>
+                <h2>5. First Looting</h2>
                 After attacking and killing a monster, player can acquire various items including gold from the corpse. To do this with python code, first you need to check <b>world_item_dict</b> of the <b>uo_service</b> instead of the <b>world_mobile_dict</b> because the monster that was mobile type is transformed to an item when it dies. For the reason that the corresponding Dict has information on all items of the world, you should filter it using the <b>isCorpse</b> value.<br>
 
                 Having secured the serial number of the corpse that exists around the player, the next step is to open it. The corresponding action can be composed by setting the <b>action_type</b> as 2 and <b>target_serial</b> as the serial number of the corpse item.<br>
@@ -624,7 +625,7 @@ for step in range(100000):
 
         <div class="row" id="first_mining">
             <div class="col">
-                <h2>6. First mining</h2>
+                <h2>6. First Mining</h2>
                 In Ultima Online, player is able to obtain various ingredients to craft the items through the gathering from nature. For example, iron ores must be gathered from nearby mines in order to craft items such as sword. To collect ore, you must equip a PickAxe in one hand that can be checked using the <b>equipped_item_dict["OneHanded"]</b> information of <b>UoService</b>. If you are holding a PickAxe in one hand instead of something else, you need to unequip it first. This can be done by setting the action's <b>action_type</b> to 3 and <b>target_serial</b> to the serial of the currently held item. Next, set the <b>action_type</b> of the action to 4 and the <b>target_serial</b> to the backpack's serial, and put the held item into the backpack. Next, pick up the PickAxe of the backpack in the same way, and set the <b>action_type</b> to 6 to equip it.
 
                 After that, if you double-click the PickAxe item, you can use the unique ability of the item for the position target. In this case, it is mining skill because item is PickAxe. The <b>uo_service.targeting_state</b> value is changed from -1 to 1 when the training status is set as ground target.
@@ -738,7 +739,7 @@ def step(uo_service):
 
         <div class="row" id="first_training_ability">
             <div class="col">
-                <h2>7. First training ability</h2>
+                <h2>7. First Training Ability</h2>
                 In the case of skills in Ultima Online, the success rate of skills and the types of items that can be obtained vary depending on the level. The success rate of the mining skill discussed earlier is much higher if you give gold to the NPC at the beginning and raise the level a little.
 
                 <h5>Figure4: Mining Skill Level.</h5>
@@ -987,6 +988,20 @@ def step(uo_service):
         forging_flag = False
 
     obs = uo_service.step(action)
+                </code></pre>
+            </div>
+        </div>
+
+        <div class="row" id="first_trading_item">
+            <div class="col">
+                <h2>8. First Trading Item</h2>
+                Test
+
+            </div>
+            <div class="col">
+                <h5><a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/make_ingot.py">Code 8: Rule-based smelting example code</a>.</h5>
+                <pre class="pre"><code class="python">
+
                 </code></pre>
             </div>
         </div>

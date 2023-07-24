@@ -150,7 +150,6 @@
                                     ]
                                     );
                 </script>
-
             </div>
 
             <div class="col" id="4">
@@ -175,6 +174,8 @@
         <div class="row">
             <div class="col" id="5">
                 <script>createHeader("5", "GrpcBuff", "");</script>
+                Due to the use of items and skills, agent can have several different types of buff and debuff effects at the same time. This data is sent with the type, name, and duration of the effect when it starts.
+
                 <img src="Fig/BuffData.png" class="rounded mx-auto d-block float-center" alt="Logo" width="250" height="140">
                 <script>
                     generate_table("5", 
@@ -190,6 +191,8 @@
 
             <div class="col" id="6">
                 <script>createHeader("6", "GrpcVendor", "");</script>
+                This data type is used to store the information for the items of seller and buyer when buying or selling is selected from the NPC's pop up menu.
+
                 <img src="Fig/VendorData.png" class="rounded mx-auto d-block float-center" alt="Logo" width="330" height="350">
                 <script>
                     generate_table("6", 
@@ -330,17 +333,25 @@
                 <img src="Fig/TeacherMobile.png" class="rounded mx-auto d-block float-center" alt="Logo" width="500" height="100">
             </div>
 
-            <div class="col", id="states_4">
-                <script>createHeader("states_4", "GrpcPopupMenuList", "");</script>
-                Players must click the NPC of around player to buy or sell items or learn skills. At the moment of clicking, a pop up menu data is included in the state.
-
-                <img src="Fig/PopUpMenuList.png" class="rounded mx-auto d-block float-center" alt="Logo" width="200" height="290">
-
-                If the menu can be selected, the active data of GrpcPopupMenu is displayed as true.
+            <div class="col" id="states_4">
+                <script>createHeader("states_4", "GrpcPlayerStatus", "");</script>
+                <img src="Fig/Status.png" class="rounded mx-auto d-block float-center" alt="Logo" width="420" height="150">
                 <script>
                     generate_table("states_4", 
                                     [
-                                        ["menus", "list of GrpcPopupMenu", "list of pop up menu data"],
+                                        ["str", "uint32", "strenthg of player"], 
+                                        ["dex", "uint32", "dexterity of player"],
+                                        ["intell", "uint32", "intelligence of player"],
+                                        ["hits", "uint32", "current HP of player"],
+                                        ["hitsMax", "uint32", "maximum value of HP of player"], 
+                                        ["stamina", "uint32", "stamina of player"],
+                                        ["staminaMax", "uint32", "maximum value of stamina of player"],
+                                        ["mana", "uint32", "mana of player"],
+                                        ["manaMax", "uint32", "maximum value of mana of player"], 
+                                        ["gold", "uint32", "gold the player currently has"],
+                                        ["physicalResistance", "uint32", "the physical resistance of player"],
+                                        ["weightMax", "uint32", "maximum value of weight of player"],
+                                        ["holdItemSerial", "uint32", "serial of item what player current is holding"]
                                     ]
                                     );
                 </script>
@@ -348,6 +359,22 @@
         </div>
 
         <div class="row">
+            <div class="col", id="states_5">
+                <script>createHeader("states_5", "GrpcPopupMenuList", "");</script>
+                Players must click the NPC of around player to buy or sell items or learn skills. At the moment of clicking, a pop up menu data is included in the state.
+
+                <img src="Fig/PopUpMenuList.png" class="rounded mx-auto d-block float-center" alt="Logo" width="200" height="290">
+
+                If the menu can be selected, the active data of GrpcPopupMenu is displayed as true.
+                <script>
+                    generate_table("states_5", 
+                                    [
+                                        ["menus", "list of GrpcPopupMenu", "list of pop up menu data"],
+                                    ]
+                                    );
+                </script>
+            </div>
+
             <div class="col", id="states_6">
                 <script>createHeader("states_6", "ClilocList", "");</script>
                 The speech of NPC consists of multiple sentence even if it looks like a one sentence in game. Therefore, old cliloc text should be kept for a certain period of time(50 is default length)
@@ -360,8 +387,35 @@
                                     );
                 </script>
             </div>
+        </div>
 
-            <div class="col", id="states_6">
+        <div class="row">
+            <div class="col", id="states_7">
+                <script>createHeader("states_7", "playerSkillList", "");</script>
+                
+
+                <img src="Fig/SkillList.png" class="rounded mx-auto d-block float-center" alt="Logo" width="390" height="290">
+
+                <script>
+                    generate_table("states_7", 
+                                    [
+                                        ["menus", "list of GrpcSkill", "list of player skill data"],
+                                    ]
+                                    );
+                </script>
+            </div>
+
+            <div class="col", id="states_8">
+                <script>createHeader("states_8", "playerBuffList", "");</script>
+                
+                <img src="Fig/BuffList.png" class="rounded mx-auto d-block float-center" alt="Logo" width="380" height="130">
+                <script>
+                    generate_table("states_8", 
+                                    [
+                                        ["GrpcClilocList", "list of GrpcBuff", "list of player buff data"]
+                                    ]
+                                    );
+                </script>
             </div>
         </div>
 
