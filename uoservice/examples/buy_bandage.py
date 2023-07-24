@@ -44,6 +44,7 @@ uo_installed_path = arguments.uo_installed_path
 def step(uo_service):
   open_pop_up_flag = True
   select_pop_up_flag = False
+  trade_item_flag = False
 
   one_trial_check_flag = True
 
@@ -100,24 +101,6 @@ def step(uo_service):
             pass
         #print("")
 
-    #print("vendor_data: ", vendor_data)
-    if len(vendor_item_list) != 0:
-      for vendor_item in vendor_item_list:
-        #print("vendor_item: ", vendor_item)
-        vendor_serial = vendor_item["vendor_serial"]
-        item_serial = vendor_item["item_serial"]
-
-        if item_serial in world_item_data:
-          vendor_item = world_item_data[item_serial]
-
-          if vendor_serial in world_mobile_data:
-            vendor_mobile = world_mobile_data[vendor_serial]
-            #print("vendor_item: ", vendor_item)
-            #print("vendor_mobile: ", vendor_mobile)
-            print("vendor name: {0}, item name: {1}".format(vendor_item['name'], vendor_mobile['name']))
-
-      print("")
-
     gold_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
 
     if gold_serial in backpack_item_data:
@@ -131,17 +114,14 @@ def step(uo_service):
 
     ## Declare the empty action
     if step % 100 == 0:
+      print("step: ", step)
+      #print("")
+
       if len(backpack_item_data) != 0:
         for k_backpack, v_backpack in backpack_item_data.items():
-          #print("backpack {0}: {1}".format(k_backpack, v_backpack["name"]))
+          print("backpack {0}: {1}".format(k_backpack, v_backpack["name"]))
           pass
-        #print("")
-
-      #print("step: ", step)
-      #print("healer_vendor_serial: ", healer_vendor_serial)
-      #print("select_pop_up_flag: ", select_pop_up_flag)
-      #print("popup_menu_list: ", popup_menu_list)
-      #print("")
+        print("")
 
       if open_pop_up_flag == True and healer_vendor_serial != None:
         print("open the pop up menu of NPC")
@@ -157,15 +137,48 @@ def step(uo_service):
         action['action_type'] = 11
         action['target_serial'] = healer_vendor_serial
 
-        menu_index = 0
+        buy_menu_index = 0
+        sell_menu_index = 0
         for i in range(0, len(popup_menu_list)):
           if popup_menu_list[i].text == "Buy" and popup_menu_list[i].active == True:
-            action['index'] = i
+            buy_menu_index = i
+          elif popup_menu_list[i].text == "Sell" and popup_menu_list[i].active == True:
+            sell_menu_index = i
+
+        action['index'] = buy_menu_index
 
         uo_service.popup_menu_list = []
         select_pop_up_flag = False
+        trade_item_flag = True
+      elif trade_item_flag == True and len(vendor_item_list) != 0:
+        source_serial = None
+        target_serial = None
+        if len(vendor_item_list) != 0:
+          for vendor_item in vendor_item_list:
+            vendor_serial = vendor_item["vendor_serial"]
+            item_serial = vendor_item["item_serial"]
 
-    action['action_type'] = 0
+            if item_serial in world_item_data:
+              vendor_item = world_item_data[item_serial]
+              print("vendor item / name: {0}, serial: {1}, amount: {2}".format(vendor_item["name"], 
+                                                                               vendor_item["serial"],
+                                                                               vendor_item["amount"]))
+              if vendor_serial in world_mobile_data:
+                vendor_mobile = world_mobile_data[vendor_serial]
+                if "Clean Bandage" in vendor_item['name']:
+                  source_serial = vendor_item['serial']
+                  target_serial = vendor_mobile['serial']
+
+                  action['action_type'] = 12
+                  action['source_serial'] = source_serial
+                  action['target_serial'] = target_serial
+                  action['amount'] = 1
+                  trade_item_flag = False
+
+          #print("")
+
+
+    #action['action_type'] = 0
     obs = uo_service.step(action)
     step += 1
 

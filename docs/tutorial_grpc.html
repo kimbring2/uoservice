@@ -128,11 +128,11 @@
         </div>
 
         <div class="row">
-            <div class="col" id="4">
-                <script>createHeader("4", "GrpcPlayerStatus", "");</script>
+            <div class="col" id="3">
+                <script>createHeader("3", "GrpcPlayerStatus", "");</script>
                 <img src="Fig/Status.png" class="rounded mx-auto d-block float-center" alt="Logo" width="420" height="150">
                 <script>
-                    generate_table("4", 
+                    generate_table("3", 
                                     [
                                         ["str", "uint32", "strenthg of player"], 
                                         ["dex", "uint32", "dexterity of player"],
@@ -153,11 +153,11 @@
 
             </div>
 
-            <div class="col" id="5">
-                <script>createHeader("5", "GrpcSkill", "");</script>
+            <div class="col" id="4">
+                <script>createHeader("4", "GrpcSkill", "");</script>
                 <img src="Fig/Skill.png" class="rounded mx-auto d-block float-center" alt="Logo" width="350" height="300">
                 <script>
-                    generate_table("5", 
+                    generate_table("4", 
                                     [
                                         ["name", "string", "name of skill"], 
                                         ["index", "uint32", "unique index numer of skill"],
@@ -173,11 +173,41 @@
         </div>
 
         <div class="row">
+            <div class="col" id="5">
+                <script>createHeader("5", "GrpcBuff", "");</script>
+                <img src="Fig/BuffData.png" class="rounded mx-auto d-block float-center" alt="Logo" width="250" height="140">
+                <script>
+                    generate_table("5", 
+                                    [
+                                        ["type", "uint32", "strenthg of player"], 
+                                        ["delta", "uint32", "dexterity of player"],
+                                        ["text", "string", "intelligence of player"]
+                                    ]
+                                    );
+                </script>
+
+            </div>
+
             <div class="col" id="6">
-                <script>createHeader("6", "GrpcClilocData", "");</script>
-                <img src="Fig/Cliloc.png" class="rounded mx-auto d-block float-center" alt="Logo" width="170" height="170">
+                <script>createHeader("6", "GrpcVendorData", "");</script>
+                <img src="Fig/VendorData.png" class="rounded mx-auto d-block float-center" alt="Logo" width="330" height="350">
                 <script>
                     generate_table("6", 
+                                    [
+                                        ["vendorSerial", "uint32", "unique index numer of skill"],
+                                        ["itemSerial", "bool", "whether the skill can be activated by clicking"]
+                                    ]
+                                    );
+                </script>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col" id="7">
+                <script>createHeader("7", "GrpcClilocData", "");</script>
+                <img src="Fig/Cliloc.png" class="rounded mx-auto d-block float-center" alt="Logo" width="170" height="170">
+                <script>
+                    generate_table("7", 
                                     [
                                         ["serial", "uint32", "serial number of mobile who say this cliloc"],
                                         ["text", "string", "main text body of cliloc"], 
@@ -188,14 +218,27 @@
                 </script>
             </div>
 
-
+            <div class="col" id="8">
+                <script>createHeader("8", "GrpcPopupMenu", "");</script>
+                Players must click the NPC of around player to buy or sell items or learn skills. At the moment of clicking, a pop up menu data is included in the state.
+                <img src="Fig/PopUpMenu.png" class="rounded mx-auto d-block float-center" alt="Logo" width="330" height="240">
+                If the menu can be selected, the active data of GrpcPopupMenu is displayed as true.
+                <script>
+                    generate_table("8", 
+                                    [
+                                        ["text", "string", "serial number of mobile who say this cliloc"],
+                                        ["active", "bool", "main text body of cliloc"]
+                                    ]
+                                    );
+                </script>
+            </div>
         </div>
 
         <div class="row">
-            <div class="col" id="7">
-                <script>createHeader("7", "Actions", "");</script>
+            <div class="col" id="9">
+                <script>createHeader("9", "Actions", "");</script>
                 Due to the huge number of pixels, using the position of screen as action directly is really inefficient. However, we can project the any mouse input into a specific game event by using the multiple action arguments. <script>
-                    generate_table("7", 
+                    generate_table("9", 
                                     [
                                         ["actionType", "uint32", "type of action"],
                                         ["itemSerial", "uint32", "unique item serial what player hold now"], 
@@ -291,7 +334,7 @@
                 <script>createHeader("states_4", "GrpcPopupMenuList", "");</script>
                 Players must click the NPC of around player to buy or sell items or learn skills. At the moment of clicking, a pop up menu data is included in the state.
 
-                <img src="Fig/PopUpMenu.png" class="rounded mx-auto d-block float-center" alt="Logo" width="140" height="200">
+                <img src="Fig/PopUpMenuList.png" class="rounded mx-auto d-block float-center" alt="Logo" width="200" height="290">
 
                 If the menu can be selected, the active data of GrpcPopupMenu is displayed as true.
                 <script>
@@ -307,14 +350,14 @@
         <div class="row">
             <div class="col", id="states_6">
                 <script>createHeader("states_6", "ClilocDataList", "");</script>
-                    The speech of NPC consists of multiple sentence even if it looks like a one sentence in game. Therefore, old cliloc text should be kept for a certain period of time(50 is default length)
-                    <img src="Fig/Clilocs.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="130">
-                    <script>
-                        generate_table("states_6", 
-                                        [
-                                            ["GrpcClilocDataList", "list of GrpcClilocData", "list of cliloc text"]
-                                        ]
-                                        );
+                The speech of NPC consists of multiple sentence even if it looks like a one sentence in game. Therefore, old cliloc text should be kept for a certain period of time(50 is default length)
+                <img src="Fig/Clilocs.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="130">
+                <script>
+                    generate_table("states_6", 
+                                    [
+                                        ["GrpcClilocDataList", "list of GrpcClilocData", "list of cliloc text"]
+                                    ]
+                                    );
                 </script>
             </div>
 
