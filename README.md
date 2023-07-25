@@ -50,7 +50,9 @@ $ mono ServUO.exe
   **2. Python connection through the gRPC(No replay recording)**
   - Run the [sample Python Application](https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/semaphore_sync.py).
   ```
-  $ python examples/semaphore_sync.py --grpc_port 60051
+  $ python examples/semaphore_sync.py --grpc_port [gRPC port of C# side] --uo_installed_path [EA UO installed path on Wine]"
+  
+  e.g. $ python examples/semaphore_sync.py --grpc_port 60051 --uo_installed_path "/home/kimbring2/.wine/drive_c/Program Files (x86)/Electronic Arts/Ultima Online Classic"
   ```
 
   <img src="images/PythonConnectLaunch.gif" width="500">
