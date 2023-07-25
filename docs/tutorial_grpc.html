@@ -506,16 +506,23 @@
             </div>
 
             <div class="col", id="actions_13">
-                <script>createHeaderAction("actions_13", "13. Buy the item from vendor by selecting the item from shop gump", "-> ");</script>
+                <script>createHeaderAction("actions_13", "13. Buy the item from vendor", "-> Before purchasing, use Actions 11 and 12 to check the items that can be purchased from the NPC.");</script>
                 <script>
                     generate_action_table("actions_13", [["12", "item serial", "mobile serial", "", "", "amount of item", ""]]);
                 </script>
             </div>
 
             <div class="col", id="actions_14">
-                <script>createHeaderAction("actions_14", "14. Sell the item to vendor by selecting the item from shop gump", "-> ");</script>
+                <script>createHeaderAction("actions_14", "14. Sell the item to vendor", "-> Before purchasing, use Actions 11 and 12 to check the items that can be sold to the NPC.");</script>
                 <script>
                     generate_action_table("actions_14", [["13", "item serial", "mobile serial", "", "", "amount of item", ""]]);
+                </script>
+            </div>
+
+            <div class="col", id="actions_15">
+                <script>createHeaderAction("actions_15", "15. Use the bandage myself", "-> Before purchasing, use Actions 11 and 12 to check the items that can be sold to the NPC.");</script>
+                <script>
+                    generate_action_table("actions_15", [["14", "item serial", "mobile serial", "", "", "amount of item", ""]]);
                 </script>
             </div>
         </div>

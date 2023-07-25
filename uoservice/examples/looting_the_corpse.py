@@ -109,10 +109,12 @@ def step(uo_service):
 
         ## Player holded item
         hold_item_serial = uo_service.hold_item_serial
-        print("hold_item_serial: ", hold_item_serial)
+        #print("hold_item_serial: ", hold_item_serial)
 
         backpack_serial = uo_service.backpack_serial
         #print("backpack_serial: ", backpack_serial)
+
+        print("corpse_dict: ", corpse_dict)
 
         for k_corpse, v_corpse in corpse_dict.items():
           for k_world, v_world in uo_service.world_item_dict.items():
@@ -167,7 +169,7 @@ def step(uo_service):
               action['action_type'] = 4
               action['target_serial'] = backpack_serial
 
-    #action['action_type'] = 0         
+    action['action_type'] = 0         
     obs = uo_service.step(action)
     step += 1
 

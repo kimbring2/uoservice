@@ -38,6 +38,7 @@ class UoService:
 		self.world_mobile_dict = {}
 		self.player_skills_dict = {}
 		self.player_status_dict = {}
+		self.player_buff_dict = {}
 
 		self.backpack_item_dict = {}
 		self.bank_item_dict = {}
@@ -49,6 +50,8 @@ class UoService:
 		self.ground_item_dict = {}
 		self.vendor_item_list = []
 
+		self.player_hit = None
+		self.player_hit_max = None
 		self.player_game_x = self.player_game_y = None
 		self.player_serial = None
 		self.war_mode = False
@@ -270,15 +273,17 @@ class UoService:
 			#print("")
 
 		if len(player_buffs_data) != 0:
+			#print("len(player_buffs_data): ", len(player_buffs_data))
+			self.player_buff_dict = {}
 			for buff in player_buffs_data:
 				#print("buff: ", buff)
+				self.player_buff_dict[buff.type] = {"text": buff.text, "delta": buff.delta}
 				pass
 			#print("")
 
 		if player_object.gameX != 0:
 			#print("gameX: {0}, gameY: {1}", player_object.gameX, player_object.gameY)
-			#print("player_object.holdItemSerial: ", player_object.holdItemSerial)
-
+			self.player_serial = player_object.serial
 			self.player_game_x = player_object.gameX
 			self.player_game_y = player_object.gameY
 			self.war_mode = player_object.warMode
