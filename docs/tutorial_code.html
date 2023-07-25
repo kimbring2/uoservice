@@ -1010,7 +1010,7 @@ def step(uo_service):
                 <br>
                 <br>
 
-                <h5>Figure12: Bandage Inside of BackPack.</h5>
+                <h5>Figure12: Bandage Number Change.</h5>
                 <img src="Fig/BandageBackpack.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
 
                 If the purchase is successful, the number increase of bandage items in the Backpack can be checked through the <b>backpack_item_dict</b> information of <b>uo_service</b>.
@@ -1106,7 +1106,37 @@ def step(uo_service):
         <div class="row" id="first_healing">
             <div class="col">
                 <h2>8. First Healing</h2>
-                In Ultima Online, 
+                Now that you have purchased an item from an NPC, let's try it. In the case of a Bandage item, it can be used only when it is in the backpack. Therefore, first check whether you have the item from the <b>backpack_item_dict</b> of <b>uo_service</b> information.
+
+                <br>
+                <br>
+
+                <h5>Figure13: Bandage item in backpack.</h5>
+                <img src="Fig/BandageInBackpack.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
+
+                The next status to check is whether current HP of agent is less than its maximum hp. Bandage can only be used when there is more than a certain amount of damage because its purpose is to recover HP. This information can be checked in <b>player_status_dict['hits']</b> and <b>player_status_dict['hitsMax']</b> of <b>uo_service</b>.
+
+                In the case of Bandage, overlapping use is possible, but the HP recovery is not doubled. Therefore, it is better to check whether the effect of the previous Bandage remains on the agent before using new one.
+
+                The information on the buff the Agent currently has is in <b>player_buff_dict</b>, and you can check the existence of the healing buff by checking the text part of that.
+
+                <br>
+                <br>
+
+                <h5>Figure13: Buff icon of Heal buff.</h5>
+                <img src="Fig/HealBuffIcon.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
+
+                If all conditions described above are satisfied, set <b>action_type</b> to 14, <b>source_serial</b> to bandage item serial, and <b>target_serial</b> to agent's own serial that can be checked with <b>uo_service.player_serial</b>, and execute the action.
+
+
+                When Bandage item is used, the result after use is displayed in <b>cliloc_dict</b> of <b>uo_service</b>. Therefore, by checking this, you can know whether the item was used well and HP is recovered or not.
+
+                <br>
+                <br>
+
+                <h5>Figure14: Cliloc message of Heal buff.</h5>
+                <img src="Fig/ClilocHealBuff.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
+
 
             </div>
             <div class="col">
@@ -1121,44 +1151,28 @@ def step(uo_service):
   step = 0
   while True:
     player_serial = uo_service.player_serial
-    #print("player_serial: ", player_serial)
-
     player_status_data = uo_service.player_status_dict
-    #print("player_status_data: ", player_status_data)
 
     if len(player_status_data) != 0:
       player_hit = player_status_data['hits']
       player_hit_max = player_status_data['hitsMax']
-      #print("player_hit: ", player_hit)
-      #print("player_hit_max: ", player_hit_max)
-
       if player_hit < player_hit_max:
         use_bandage_flag = True
 
     backpack_item_data = uo_service.backpack_item_dict
     if len(backpack_item_data) != 0:
       for k_backpack, v_backpack in backpack_item_data.items():
-        #print("{0}: {1}".format(k_backpack, v_backpack["name"]))
         if "Clean Bandage" in v_backpack["name"]:
-          #if v_backpack["amount"] >= 30:
-          #print("{0}: {1}, {2}".format(k_backpack, v_backpack["name"], v_backpack["data"]))
           bandage_serial = k_backpack
-          pass
           
-      #print("")
-
     player_buff_data = uo_service.player_buff_dict
     if len(player_buff_data) != 0:
       for k_buff, v_buff in player_buff_data.items():
-        #print("{0}: {1}".format(k_buff, v_buff["text"]))
         if "Healing" in v_buff["text"]:
           healing_active = True
         else:
           healing_active = False
 
-      #print("")
-
-    ## Player holded item
     hold_item_serial = uo_service.hold_item_serial
     targeting_state = uo_service.targeting_state
     cliloc_dict = uo_service.cliloc_dict
@@ -1168,39 +1182,23 @@ def step(uo_service):
 
     ## Declare the empty action
     action = {}
-    action['action_type'] = 0
-    action['source_serial'] = 0
-    action['target_serial'] = 0
-    action['walk_direction'] = 0
-    action['index'] = 0
-    action['amount'] = 0
-    action['run'] = False
 
     if step % 100 == 0:
-      print("step: ", step)
-      print("use_bandage_flag: ", use_bandage_flag)
-      print("player_serial: ", player_serial)
-      print("bandage_serial: ", bandage_serial)
-      print("healing_active: ", healing_active)
-      print("")
-
       if use_bandage_flag == True and player_serial != None and \
           bandage_serial != None and healing_active == False:
-        print("Use the bandage to the player")
-
         action['action_type'] = 14
         action['source_serial'] = bandage_serial
         action['target_serial'] = player_serial
 
         use_bandage_flag = False
 
-    #action['action_type'] = 0
     obs = uo_service.step(action)
-
-    step += 1
                 </code></pre>
             </div>
         </div>
+
+        <br>
+        <br>
 
         <div class="row" id="conclusion">
             <div class="col">

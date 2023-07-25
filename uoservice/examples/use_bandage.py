@@ -68,7 +68,7 @@ def step(uo_service):
     backpack_item_data = uo_service.backpack_item_dict
     if len(backpack_item_data) != 0:
       for k_backpack, v_backpack in backpack_item_data.items():
-        #print("{0}: {1}".format(k_backpack, v_backpack["name"]))
+        print("{0}: {1}".format(k_backpack, v_backpack["name"]))
         if "Clean Bandage" in v_backpack["name"]:
           #if v_backpack["amount"] >= 30:
           #print("{0}: {1}, {2}".format(k_backpack, v_backpack["name"], v_backpack["data"]))
@@ -80,7 +80,7 @@ def step(uo_service):
     player_buff_data = uo_service.player_buff_dict
     if len(player_buff_data) != 0:
       for k_buff, v_buff in player_buff_data.items():
-        #print("{0}: {1}".format(k_buff, v_buff["text"]))
+        print("{0}: {1}".format(k_buff, v_buff["text"]))
         if "Healing" in v_buff["text"]:
           healing_active = True
         else:
@@ -95,6 +95,14 @@ def step(uo_service):
     hold_item_serial = uo_service.hold_item_serial
     backpack_serial = uo_service.backpack_serial
     bank_serial = uo_service.bank_serial
+
+    if len(cliloc_dict) != 0:
+      for k_cliloc, v_cliloc in cliloc_dict.items():
+        #print("{0}: {1}".format(k_cliloc, v_cliloc))
+        for cliloc in v_cliloc:
+          if cliloc["name"] == "System":
+            print("cliloc data {0}: {1}".format(cliloc["name"], cliloc["text"]))
+      print("")
 
     ## Declare the empty action
     action = {}
@@ -124,7 +132,7 @@ def step(uo_service):
 
         use_bandage_flag = False
 
-    #action['action_type'] = 0
+    action['action_type'] = 0
     obs = uo_service.step(action)
 
     step += 1
