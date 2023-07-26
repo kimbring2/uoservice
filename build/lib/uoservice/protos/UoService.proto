@@ -148,6 +148,9 @@ message GrpcStates {
   GrpcBuffList playerBuffList = 8;
 
   GrpcVendorList vendorList = 9;
+
+  repeated uint32 deleteItemSerial = 10;
+  repeated uint32 deleteMobileSerial = 11;
 }
 
 message GrpcAction {

@@ -207,6 +207,8 @@ class UoService:
 				screen_height = 4000
 				for k, v in self.world_mobile_dict.items():
 					if self.player_game_x != None:
+						print("world mobile {0}: {1}".format(k, v["name"]))
+
 						if v["gameX"] < screen_width and v["gameY"] < screen_height:
 							screen_image = cv2.circle(screen_image, 
 											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
@@ -282,7 +284,7 @@ class UoService:
 			#print("")
 
 		if player_object.gameX != 0:
-			print("gameX: {0}, gameY: {1}", player_object.gameX, player_object.gameY)
+			#print("gameX: {0}, gameY: {1}", player_object.gameX, player_object.gameY)
 			self.player_serial = player_object.serial
 			self.player_game_x = player_object.gameX
 			self.player_game_y = player_object.gameY
@@ -302,7 +304,7 @@ class UoService:
 			pass
 
 		if len(world_item_data) != 0:
-			self.world_item_dict = {}
+			#self.world_item_dict = {}
 			self.bank_item_dict = {}
 			self.bank_serial = None
 
@@ -318,11 +320,13 @@ class UoService:
 					#print("bank item distance: ", obj.distance)
 					self.bank_serial = obj.serial
 
-		#print("len(world_mobile_data): ", len(world_mobile_data))
 		if len(world_mobile_data) != 0:
-			self.world_mobile_dict = {}
+			#print("len(world_mobile_data): ", len(world_mobile_data))
+			#self.world_mobile_dict = {}
 			for obj in world_mobile_data:
-				self.world_mobile_dict[obj.serial] = { "name": obj.name, "gameX": obj.gameX, "gameY":obj.gameY, 
+				print("name: {0}, gameX: {1}, gameY: {2}".format(obj.name, obj.gameX, obj.gameY))
+
+				self.world_mobile_dict[obj.serial] = { "name": obj.name, "gameX": obj.gameX, "gameY": obj.gameY, 
 													   "distance": obj.distance, "title": obj.title, "hits": obj.hits,
 													   "notorietyFlag": obj.notorietyFlag, "hitsMax": obj.hitsMax,
 													   "race": obj.race, "serial": obj.serial}
