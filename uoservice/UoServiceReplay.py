@@ -26,6 +26,7 @@ from mpyq import MPQArchive
 ## UoService package imports
 from uoservice.protos import UoService_pb2
 from uoservice.protos import UoService_pb2_grpc
+from uoservice.UoServiceGameFileParser import UoServiceGameFileParser
 from uoservice import utils
 
 
@@ -70,7 +71,7 @@ class Layers(Enum):
 
 class UoServiceReplay:
 	'''UoServiceReplay class including MPQ loader'''
-	def __init__(self, rootPath, screenWidth, screenHeight):
+	def __init__(self, rootPath, screenWidth, screenHeight, uo_installed_path):
 		self._rootPath = rootPath
 		self._archive = None
 
@@ -84,22 +85,23 @@ class UoServiceReplay:
 		self._worldItemArrayOffset = 0
 		self._worldMobileArrayOffset = 0
 		self._popupMenuArrayOffset = 0
-		self._clilocDataArrayOffset = 0
+		self._clilocArrayOffset = 0
+		self._vendorListArrayOffset = 0
 		self._playerStatusArrayOffset = 0
 		self._playerSkillListArrayOffset = 0
-		self._staticObjectInfoListArrayOffset = 0
+		self._playerBuffListArrayOffset = 0
 		self._actionArrayOffset = 0
 
 		## Initialize the list to save the replay state data
 		self._playerObjectList = []
 		self._worldItemList = []
 		self._worldMobileList = []
-		self._popupMenuDataList = []
-		self._clilocDataList = []
+		self._popupMenuList = []
+		self._clilocList = []
+		self._vendorListList = []
 		self._playerStatusList = []
 		self._playerSkillListList = []
-		self._staticObjectScreenXsList = []
-		self._staticObjectScreenYsList = []
+		self._playerBuffListList = []
 		self._actionList = []
 
 		## Initialize the witdh, height of replay file
@@ -121,8 +123,13 @@ class UoServiceReplay:
 		self.player_status_dict = {}
 
 		self.player_game_name = None
-		self.player_game_x = None
-		self.player_game_y = None
+		self.player_hit = self.player_hit_max = None
+		self.player_game_x = self.player_game_y = None
+		self.player_serial = None
+		self.war_mode = False
+		self.hold_item_serial = 0
+		self.player_gold = None
+		self.targeting_state = None
 
 		self.backpack_serial = None
 
@@ -130,8 +137,9 @@ class UoServiceReplay:
 		self.equipped_item_dict = {}
 		self.corpse_dict = {}
 
-		self.static_object_game_x_data = None
-		self.static_object_game_y_data = None
+		self.uo_installed_path = uo_installed_path
+		self.uoservice_game_file_parser = UoServiceGameFileParser(self.uo_installed_path)
+		self.uoservice_game_file_parser.load()
 
 	def ConvertByteArrayToIntList(self, byteArray):
 		# Convert byte array of MQP file to int list
@@ -175,40 +183,45 @@ class UoServiceReplay:
 		self._archive = MPQArchive(self._rootPath + '/' + fileName + ".uoreplay")
 
 		## The length byte array for data array
-		self.playerObjectArrayLengthArr = self._archive.read_file("replay.metadata.playerObjectLen");
-		self.worldItemArrayLengthArr = self._archive.read_file("replay.metadata.worldItemLen");
-		self.worldMobileArrayLengthArr = self._archive.read_file("replay.metadata.worldMobileLen");
-		self.popupMenuArrayLengthArr = self._archive.read_file("replay.metadata.popupMenuLen");
-		self.clilocDataArrayLengthArr = self._archive.read_file("replay.metadata.clilocDataLen");
-		self.playerStatusArrayLengthArr = self._archive.read_file("replay.metadata.playerStatusLen");
-		self.playerSkillListArrayLengthArr = self._archive.read_file("replay.metadata.playerSkillListLen");
-		self.staticObjectInfoListLengthArr = self._archive.read_file("replay.metadata.staticObjectInfoListArraysLen");
-		self.actionArrayLengthArr = self._archive.read_file("replay.metadata.actionArraysLen");
+		self.playerObjectArrayLengthArr = self._archive.read_file("replay.meta.playerObjectLen");
+		self.worldItemArrayLengthArr = self._archive.read_file("replay.meta.worldItemLen");
+		self.worldMobileArrayLengthArr = self._archive.read_file("replay.meta.worldMobileLen");
+		self.popupMenuArrayLengthArr = self._archive.read_file("replay.meta.popupMenuLen");
+		self.clilocArrayLengthArr = self._archive.read_file("replay.meta.clilocLen");
+		self.vendorListArrayLengthArr = self._archive.read_file("replay.meta.vendorListLen");
+		self.playerStatusArrayLengthArr = self._archive.read_file("replay.meta.playerStatusLen");
+		self.playerSkillListArrayLengthArr = self._archive.read_file("replay.meta.playerSkillListLen");
+		self.playerBuffListArrayLengthArr = self._archive.read_file("replay.meta.playerBuffListLen");
+		self.actionArrayLengthArr = self._archive.read_file("replay.meta.actionArraysLen");
+
+		#print("len(self.playerObjectArrayLengthArr): ", len(self.playerObjectArrayLengthArr))
 
 		## Convert the byte array to int array
 		self.playerObjectArrayLengthList = self.ConvertByteArrayToIntList(self.playerObjectArrayLengthArr);
 		self.worldItemArrayLengthList = self.ConvertByteArrayToIntList(self.worldItemArrayLengthArr);
 		self.worldMobileArrayLengthList = self.ConvertByteArrayToIntList(self.worldMobileArrayLengthArr);
 		self.popupMenuArrayLengthList = self.ConvertByteArrayToIntList(self.popupMenuArrayLengthArr);
-		self.clilocDataArrayLengthList = self.ConvertByteArrayToIntList(self.clilocDataArrayLengthArr);
+		self.clilocArrayLengthList = self.ConvertByteArrayToIntList(self.clilocArrayLengthArr);
+		self.vendorListArrayLengthList = self.ConvertByteArrayToIntList(self.vendorListArrayLengthArr);
 		self.playerStatusArrayLengthList = self.ConvertByteArrayToIntList(self.playerStatusArrayLengthArr);
 		self.playerSkillListArrayLengthList = self.ConvertByteArrayToIntList(self.playerSkillListArrayLengthArr);
-		self.staticObjectInfoListLengthList = self.ConvertByteArrayToIntList(self.staticObjectInfoListLengthArr);
+		self.playerBuffListArrayLengthList = self.ConvertByteArrayToIntList(self.playerBuffListArrayLengthArr);
 		self.actionArrayLengthList = self.ConvertByteArrayToIntList(self.actionArrayLengthArr);
 
 		## Find the total length of replay
 		self._replayLength = len(self.playerObjectArrayLengthList)
 
 		## The actual data as byte array
-		self.playerObjectArr = self._archive.read_file("replay.data.playerObject");
-		self.worldItemArr = self._archive.read_file("replay.data.worldItems");
-		self.worldMobileArr = self._archive.read_file("replay.data.worldMobiles");
-		self.popupMenuArr = self._archive.read_file("replay.data.popupMenu");
-		self.clilocDataArr = self._archive.read_file("replay.data.clilocData");
-		self.playerStatusArr = self._archive.read_file("replay.data.playerStatus");
-		self.playerSkillListArr = self._archive.read_file("replay.data.playerSkillList");
-		self.staticObjectInfoListArr = self._archive.read_file("replay.data.staticObjectInfoList");
-		self.actionArr = self._archive.read_file("replay.data.actionArrays");
+		self.playerObjectArr = self._archive.read_file("replay.playerObject");
+		self.worldItemArr = self._archive.read_file("replay.worldItems");
+		self.worldMobileArr = self._archive.read_file("replay.worldMobiles");
+		self.popupMenuArr = self._archive.read_file("replay.popupMenu");
+		self.clilocArr = self._archive.read_file("replay.cliloc");
+		self.vendorListArr = self._archive.read_file("replay.vendorList");
+		self.playerStatusArr = self._archive.read_file("replay.playerStatus");
+		self.playerSkillListArr = self._archive.read_file("replay.playerSkillList");
+		self.playerBuffListArr = self._archive.read_file("replay.playerBuffList");
+		self.actionArr = self._archive.read_file("replay.actionArrays");
 
 		## Check the data array is existed
 		if self.playerObjectArr:
@@ -231,10 +244,15 @@ class UoServiceReplay:
 		else:
 			print("popupMenuArr is None")
 
-		if self.clilocDataArr:
-			print("len(self.clilocDataArr): ", len(self.clilocDataArr))
+		if self.clilocArr:
+			print("len(self.clilocArr): ", len(self.clilocArr))
 		else:
-			print("self.clilocDataArr is None")
+			print("self.clilocArr is None")
+
+		if self.vendorListArr:
+			print("len(self.vendorListArr): ", len(self.vendorListArr))
+		else:
+			print("self.vendorListArr is None")
 
 		if self.playerStatusArr:
 			print("len(self.playerStatusArr): ", len(self.playerStatusArr))
@@ -246,10 +264,10 @@ class UoServiceReplay:
 		else:
 			print("self.playerSkillListArr is None")
 
-		if self.staticObjectInfoListArr:
-			print("len(self.staticObjectInfoListArr): ", len(self.staticObjectInfoListArr))
+		if self.playerBuffListArr:
+			print("len(self.playerBuffListArr): ", len(self.playerBuffListArr))
 		else:
-			print("self.staticObjectInfoListArr is None")
+			print("self.playerBuffListArr is None")
 
 		if self.actionArr:
 			print("len(self.actionArr): ", len(self.actionArr))
@@ -266,6 +284,7 @@ class UoServiceReplay:
 																				             self._playerObjectArrayOffset, 
 																				             self.playerObjectArr)
 				grpcPlayerObjectReplay = UoService_pb2.GrpcPlayerObject().FromString(playerObjectSubsetArray)
+				#print("grpcPlayerObjectReplay: ", grpcPlayerObjectReplay)
 				self._playerObjectList.append(grpcPlayerObjectReplay)
 			else:
 				#print("playerObjectArr is None")
@@ -284,6 +303,7 @@ class UoServiceReplay:
 				worldMobileSubsetArray, self._worldMobileArrayOffset = self.GetSubsetArray(step, self.worldMobileArrayLengthList, 
 																				           self._worldMobileArrayOffset, self.worldMobileArr)
 				grpcWorldMobileReplay = UoService_pb2.GrpcMobileObjectList().FromString(worldMobileSubsetArray)
+				#print("grpcWorldMobileReplay: ", grpcWorldMobileReplay)
 				self._worldMobileList.append(grpcWorldMobileReplay.mobileObjects)
 			else:
 				#print("worldMobileArr is None")
@@ -293,19 +313,28 @@ class UoServiceReplay:
 				popupMenuSubsetArray, self._popupMenuArrayOffset = self.GetSubsetArray(step, self.popupMenuArrayLengthList, 
 																			 		   self._popupMenuArrayOffset, self.popupMenuArr)
 				grpcPopupMenuReplay = UoService_pb2.GrpcPopupMenuList().FromString(popupMenuSubsetArray)
-				self._popupMenuDataList.append(grpcPopupMenuReplay.menus)
+				self._popupMenuList.append(grpcPopupMenuReplay.menus)
 			else:
 				#print("popupMenuArr is None")
 				pass
 
-			if self.clilocDataArr:
-				clilocDataSubsetArray, self._clilocDataArrayOffset = self.GetSubsetArray(step, self.clilocDataArrayLengthList, 
-																			   			 self._clilocDataArrayOffset, self.clilocDataArr)
-				grpcClilocDataReplay = UoService_pb2.GrpcClilocDataList().FromString(clilocDataSubsetArray)
-				self._clilocDataList.append(grpcClilocDataReplay.clilocDatas)
+			if self.clilocArr:
+				clilocSubsetArray, self._clilocArrayOffset = self.GetSubsetArray(step, self.clilocArrayLengthList, 
+																			   			 self._clilocArrayOffset, self.clilocArr)
+				grpcClilocReplay = UoService_pb2.GrpcClilocList().FromString(clilocSubsetArray)
+				self._clilocList.append(grpcClilocReplay.clilocs)
 			else:
 				pass
-				#print("clilocDataArr is None")
+				#print("clilocArr is None")
+
+			if self.vendorListArr:
+				vendorListSubsetArray, self._vendorListArrayOffset = self.GetSubsetArray(step, self.vendorListArrayLengthList, 
+																			   			 self._vendorListArrayOffset, self.vendorListArr)
+				grpcVendorListReplay = UoService_pb2.GrpcVendorList().FromString(vendorListSubsetArray)
+				self._vendorListList.append(grpcVendorListReplay.vendors)
+			else:
+				pass
+				#print("clilocArr is None")
 
 			if self.playerStatusArr:
 				playerStatusSubsetArray, self._playerStatusArrayOffset = self.GetSubsetArray(step, self.playerStatusArrayLengthList, 
@@ -327,21 +356,22 @@ class UoServiceReplay:
 				pass
 				#print("playerSkillListArr is None")
 
-			if self.staticObjectInfoListArr:
-				staticObjectInfoListSubsetArrays, self._staticObjectInfoListArrayOffset = self.GetSubsetArray(step, self.staticObjectInfoListLengthList, 
-																				   		   					  self._staticObjectInfoListArrayOffset, 
-																				   		   					  self.staticObjectInfoListArr)
-				grpcStaticObjectInfoListReplay = UoService_pb2.GrpcGameObjectInfoList().FromString(staticObjectInfoListSubsetArrays)
-				self._staticObjectScreenXsList.append(grpcStaticObjectInfoListReplay.gameXs)
-				self._staticObjectScreenYsList.append(grpcStaticObjectInfoListReplay.gameYs)
+			if self.playerBuffListArr:
+				playerBuffListSubsetArray, self._playerBuffListArrayOffset = self.GetSubsetArray(step, self.playerBuffListArrayLengthList, 
+																				   		 		   self._playerBuffListArrayOffset, 
+																				   		 		   self.playerBuffListArr)
+				grpcPlayerBuffListReplay = UoService_pb2.GrpcBuffList().FromString(playerBuffListSubsetArray)
+				self._playerBuffListList.append(grpcPlayerBuffListReplay.buffs)
 			else:
 				pass
-				#print("staticObjectInfoListArr is None")
+				#print("playerBuffListArr is None")
 
+			#print("self.actionArrayLengthList[step]: ", self.actionArrayLengthList[step])
 			if self.actionArr:
 				actionSubsetArrays, self._actionArrayOffset = self.GetSubsetArray(step, self.actionArrayLengthList, self._actionArrayOffset, 
 																				  self.actionArr)
 				actionReplay = UoService_pb2.GrpcAction().FromString(actionSubsetArrays)
+				#print("actionReplay: ", actionReplay)
 				self._actionList.append(actionReplay)
 			else:
 				pass
@@ -356,11 +386,14 @@ class UoServiceReplay:
 		if len(self._worldMobileList) == 0:
 			print("No worldMobileList")
 
-		if len(self._popupMenuDataList) == 0:
-			print("No popupMenuDataList")
+		if len(self._popupMenuList) == 0:
+			print("No popupMenuList")
 
-		if len(self._clilocDataList) == 0:
-			print("No clilocDataList")
+		if len(self._clilocList) == 0:
+			print("No _clilocList")
+
+		if len(self._vendorListList) == 0:
+			print("No vendorListList")
 
 		if len(self._playerStatusList) == 0:
 			print("No playerStatusList")
@@ -368,11 +401,8 @@ class UoServiceReplay:
 		if len(self._playerSkillListList) == 0:
 			print("No playerSkillListList")
 
-		if len(self._staticObjectScreenXsList) == 0:
-			print("No staticObjectScreenXsList")
-
-		if len(self._staticObjectScreenYsList) == 0:
-			print("No staticObjectScreenYsList")
+		if len(self._playerBuffListList) == 0:
+			print("No playerBuffListList")
 
 		if len(self._actionList) == 0:
 			print("No _actionList")
@@ -418,6 +448,7 @@ class UoServiceReplay:
 			screen_image = np.zeros((int((5000)), int((5000)), 3), dtype=np.uint8)
 			if self._playerObjectList[replay_step].name != '':
 				self.player_game_name = self._playerObjectList[replay_step].name
+				self.player_game_name = self._playerObjectList[replay_step].name
 
 			#print("replay_step: ", replay_step)
 			#print("self.player_game_name: ", self.player_game_name)
@@ -429,8 +460,18 @@ class UoServiceReplay:
 
 			if self._playerObjectList[replay_step].gameX != 0:
 				#print("player_object: ", player_object)
+				self.player_serial = self._playerObjectList[replay_step].serial
 				self.player_game_x = self._playerObjectList[replay_step].gameX
 				self.player_game_y = self._playerObjectList[replay_step].gameY
+				self.war_mode = self._playerObjectList[replay_step].warMode
+				self.hold_item_serial = self._playerObjectList[replay_step].holdItemSerial
+				self.targeting_state = self._playerObjectList[replay_step].targetingState
+				self.min_tile_x = self._playerObjectList[replay_step].minTileX
+				self.min_tile_y = self._playerObjectList[replay_step].minTileY
+				self.max_tile_x = self._playerObjectList[replay_step].maxTileX
+				self.max_tile_y = self._playerObjectList[replay_step].maxTileY
+
+				print("player_game_x: {0}, player_game_y: {1}: ", self.player_game_x, self.player_game_y)
 
 			if len(self._worldMobileList[replay_step]) != 0:
 				self.world_mobile_dict = {}
@@ -532,11 +573,7 @@ class UoServiceReplay:
 					pass
 				#print("")
 
-			# Draw the static object
-			if len(self._staticObjectScreenXsList[replay_step]) != 0:
-				self.static_object_game_x_data = self._staticObjectScreenXsList[replay_step]
-				self.static_object_game_y_data = self._staticObjectScreenYsList[replay_step]
-
+			'''
 			radius = 2
 			color = (120, 120, 120)
 			thickness = 2
@@ -547,7 +584,8 @@ class UoServiceReplay:
 
 					image = cv2.circle(screen_image, (self.static_object_game_x_data[i], self.static_object_game_y_data[i]), 
 									   radius, color, thickness)
-			
+			'''
+
 			radius = 10
 			thickness = 2
 			for k, v in self.world_mobile_dict.items():
@@ -565,6 +603,8 @@ class UoServiceReplay:
 
 			surf = pygame.surfarray.make_surface(screen_image)
 			self._screenSurface.blit(surf, (0, 0))
+
+			print("self._actionList[replay_step]: ", self._actionList[replay_step])
 
 			# Draw the action info on the Pygame screen
 			font = pygame.font.Font('freesansbold.ttf', 16)

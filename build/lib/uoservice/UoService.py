@@ -272,7 +272,6 @@ class UoService:
 				pass
 			#print("")
 
-
 		if len(player_buffs_data) != 0:
 			#print("len(player_buffs_data): ", len(player_buffs_data))
 			self.player_buff_dict = {}
@@ -283,7 +282,7 @@ class UoService:
 			#print("")
 
 		if player_object.gameX != 0:
-			#print("gameX: {0}, gameY: {1}", player_object.gameX, player_object.gameY)
+			print("gameX: {0}, gameY: {1}", player_object.gameX, player_object.gameY)
 			self.player_serial = player_object.serial
 			self.player_game_x = player_object.gameX
 			self.player_game_y = player_object.gameY
