@@ -35,20 +35,8 @@ screen_width = arguments.screen_width
 screen_height = arguments.screen_height
 uo_installed_path = arguments.uo_installed_path
 
-print("screen_width: ", screen_width)
-print("screen_height: ", screen_height)
-
 pygame.init()
 pygame.display.set_caption("OpenCV camera stream on Pygame")
-
-
-def parse_item(item_grpc):
-  item_dict = {}
-
-  for item in item_grpc :
-    item_dict[item.serial] = [item.name, item.amount]
-
-  return item_dict
 
 
 def main():

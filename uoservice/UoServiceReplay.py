@@ -137,6 +137,8 @@ class UoServiceReplay:
 		self.equipped_item_dict = {}
 		self.corpse_dict = {}
 
+		self.min_tile_x = self.min_tile_y = self.max_tile_x = self.max_tile_y = None
+
 		self.uo_installed_path = uo_installed_path
 		self.uoservice_game_file_parser = UoServiceGameFileParser(self.uo_installed_path)
 		self.uoservice_game_file_parser.load()
@@ -193,8 +195,6 @@ class UoServiceReplay:
 		self.playerSkillListArrayLengthArr = self._archive.read_file("replay.meta.playerSkillListLen");
 		self.playerBuffListArrayLengthArr = self._archive.read_file("replay.meta.playerBuffListLen");
 		self.actionArrayLengthArr = self._archive.read_file("replay.meta.actionArraysLen");
-
-		#print("len(self.playerObjectArrayLengthArr): ", len(self.playerObjectArrayLengthArr))
 
 		## Convert the byte array to int array
 		self.playerObjectArrayLengthList = self.ConvertByteArrayToIntList(self.playerObjectArrayLengthArr);
@@ -276,6 +276,15 @@ class UoServiceReplay:
 
 	def ParseReplay(self):
 		# Saves the loaded replay data into Python list to visualize them one by one
+		player_game_x = None
+		player_game_y = None
+		min_tile_x = None
+		min_tile_y = None
+		max_tile_x = None
+		max_tile_y = None
+
+		mydict = {}
+
 		for step in range(0, self._replayLength):
 			#print("step: ", step)
 
@@ -284,7 +293,16 @@ class UoServiceReplay:
 																				             self._playerObjectArrayOffset, 
 																				             self.playerObjectArr)
 				grpcPlayerObjectReplay = UoService_pb2.GrpcPlayerObject().FromString(playerObjectSubsetArray)
-				#print("grpcPlayerObjectReplay: ", grpcPlayerObjectReplay)
+
+				if grpcPlayerObjectReplay.gameX != 0:
+					player_game_x = grpcPlayerObjectReplay.gameX
+					player_game_y = grpcPlayerObjectReplay.gameY
+					min_tile_x = grpcPlayerObjectReplay.minTileX
+					min_tile_y = grpcPlayerObjectReplay.minTileY
+					max_tile_x = grpcPlayerObjectReplay.maxTileX
+					max_tile_y = grpcPlayerObjectReplay.maxTileY
+					#print("grpcPlayerObjectReplay: ", grpcPlayerObjectReplay)
+
 				self._playerObjectList.append(grpcPlayerObjectReplay)
 			else:
 				#print("playerObjectArr is None")
@@ -377,6 +395,32 @@ class UoServiceReplay:
 				pass
 				#print("actionArr is None")
 
+			print("step: {0}, player_game_x: {1}, player_game_y: {2}", step, player_game_x, player_game_y)
+
+			if min_tile_x != None:
+				cell_x_list = []
+				cell_y_list = []
+				tile_data_list = []
+				for x in range(min_tile_x, max_tile_x):
+					cell_x = x >> 3
+					if cell_x not in cell_x_list:
+						cell_x_list.append(cell_x)
+
+				for y in range(min_tile_y, max_tile_y):
+					cell_y = y >> 3
+					if cell_y not in cell_y_list:
+						cell_y_list.append(cell_y)
+
+				cell_zip = zip(cell_x_list, cell_y_list)
+				for cell_x in cell_x_list:
+					for cell_y in cell_y_list:
+						if (cell_x, cell_y) not in mydict:
+							land_data_list, static_data_list = self.uoservice_game_file_parser.get_tile_data(cell_x, cell_y)
+							mydict[(cell_x, cell_y)] = [land_data_list, static_data_list]
+						else:
+							land_data_list, static_data_list = mydict[(cell_x, cell_y)]
+
+
 		if len(self._playerObjectList) == 0:
 			print("No playerObjectList")
 
@@ -406,6 +450,165 @@ class UoServiceReplay:
 
 		if len(self._actionList) == 0:
 			print("No _actionList")
+
+	def get_distance(self, target_game_x, target_game_y):
+		if self.player_game_x != None:
+			return max(abs(self.player_game_x - target_game_x), abs(self.player_game_y - target_game_y))
+		else:
+			return -1
+
+	def get_land_index(self, game_x, game_y):
+		x_relative = 0
+		for i in range(self.min_tile_x, self.max_tile_x):
+			if game_x == i:
+				x_relative = i - self.min_tile_x
+
+		y_relative = 0
+		for i in range(self.min_tile_y, self.max_tile_y):
+			if game_y == i:
+				y_relative = i - self.min_tile_y
+
+		index = x_relative * (self.max_tile_x - self.min_tile_x) + y_relative
+
+		return index
+
+	def get_land_position(self, index):
+		game_x = index / (self.max_tile_x - self.min_tile_x);
+		game_y = index % (self.max_tile_x - self.min_tile_x);
+
+		x = game_x + self.min_tile_x;
+		y = game_y + self.min_tile_y;
+
+		return x, y
+
+	def parse_land_static(self):
+		if self.max_tile_x != None:
+			screen_length = 1000
+
+			screen_image = np.zeros((screen_length, screen_length, 3), dtype=np.uint8)
+			radius = 5
+			thickness = 2
+			screen_width = screen_length
+			screen_height = screen_length
+
+			cell_x_list = []
+			cell_y_list = []
+			tile_data_list = []
+
+			for x in range(self.min_tile_x, self.max_tile_x):
+				cell_x = x >> 3
+				if cell_x not in cell_x_list:
+					cell_x_list.append(cell_x)
+
+			for y in range(self.min_tile_y, self.max_tile_y):
+				cell_y = y >> 3
+				if cell_y not in cell_y_list:
+					cell_y_list.append(cell_y)
+
+			player_game_x = self.player_game_x
+			player_game_y = self.player_game_y
+
+			scale = 40
+
+			cell_zip = zip(cell_x_list, cell_y_list)
+			for cell_x in cell_x_list:
+				for cell_y in cell_y_list:
+					land_data_list, static_data_list = self.uoservice_game_file_parser.get_tile_data(cell_x, cell_y)
+
+					for land_data in land_data_list:
+						#print("land / name: {0}, game_x: {1}, game_y: {2}".format(land_data["name"], land_data["game_x"], land_data["game_y"]))
+						start_point = ( (land_data["game_x"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
+										(land_data["game_y"] - player_game_y) * scale + int(screen_length / 2) - int(scale / 2) )
+						end_point = ( (land_data["game_x"] - player_game_x) * scale + int(screen_length / 2) + int(scale / 2), 
+									  (land_data["game_y"] - player_game_y) * scale + int(screen_length / 2) + int(scale / 2) )
+
+						index = self.get_land_index(land_data["game_x"], land_data["game_y"])
+
+						radius = 1
+						font = cv2.FONT_HERSHEY_SIMPLEX
+						org = ( (land_data["game_x"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
+								(land_data["game_y"] - player_game_y) * scale + int(screen_length / 2) )
+						fontScale = 0.4
+						color = (255, 0, 0)
+						thickness = 1
+						screen_image = cv2.putText(screen_image, str(index), org, font, fontScale, color, thickness, cv2.LINE_4)
+
+						if land_data["name"] == "forest":
+							screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Lime"], 1)
+						elif land_data["name"] == "rock":
+							screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Yellow"], 1)
+						else:
+							screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Gray"], 1)
+
+					for static_data in static_data_list:
+						#if "water" not in static_data["name"]:
+						#print("static / name: {0}, game_x: {1}, game_y: {2}".format(static_data["name"], static_data["game_x"], static_data["game_y"]))
+		            
+						start_point = ( (static_data["game_x"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
+										(static_data["game_y"] - player_game_y) * scale + int(screen_length / 2) - int(scale / 2) )
+						end_point = ( (static_data["game_x"] - player_game_x) * scale + int(screen_length / 2) + int(scale / 2), 
+										(static_data["game_y"] - player_game_y) * scale + int(screen_length / 2) + int(scale / 2) )
+
+						if "grasses" in static_data["name"]:
+							screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Green"], 1)
+						elif "wall" in static_data["name"]:
+							screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["White"], -1)
+						elif "water" in static_data["name"]:
+							screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Cadetblue"], 1)
+						else:
+							screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Lavenderblush2"], 1)
+
+			boundary = 500
+
+			radius = int(scale / 2)
+			screen_width = 4000
+			screen_height = 4000
+			for k, v in self.world_mobile_dict.items():
+				if self.player_game_x != None:
+					if v["gameX"] < screen_width and v["gameY"] < screen_height:
+						screen_image = cv2.circle(screen_image, 
+										( (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
+										  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
+										  radius, utils.color_dict["Red"], -1)
+
+						screen_image = cv2.putText(screen_image, "  " + v["name"], 
+										( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
+										  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
+										cv2.FONT_HERSHEY_SIMPLEX, 0.5, utils.color_dict["Red"], 1, cv2.LINE_4)
+
+			for k, v in self.world_item_dict.items():
+				if self.player_game_x != None:
+					#print("world item {0}: {1}".format(k, self.world_item_dict[k]))
+					if v["gameX"] < screen_width and v["gameY"] < screen_height:
+						screen_image = cv2.circle(screen_image, 
+										( (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
+										  (v["gameY"] - player_game_y) * scale + int(screen_length / 2)
+										),
+										radius, utils.color_dict["Purple"], -1)
+	           
+						item_name_list = v["name"].split(" ")
+						screen_image = cv2.putText(screen_image, "     " + item_name_list[-1], 
+											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
+											  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
+											cv2.FONT_HERSHEY_SIMPLEX, 0.5, utils.color_dict["Purple"], 1, cv2.LINE_4)
+
+			if self.player_game_x != None:
+				#print("player_game_x: {0}, player_game_y: {1}".format(self.player_game_x, self.player_game_y))
+
+				screen_image = cv2.putText(screen_image, str("player"), (int(screen_length / 2), int(screen_length / 2) - int(scale / 2)), 
+										  cv2.FONT_HERSHEY_SIMPLEX, 1.0, utils.color_dict["Green"], 4, cv2.LINE_4)
+
+				radius = int(scale / 2)
+				screen_image = cv2.circle(screen_image, (int(screen_length / 2), int(screen_length / 2)), radius, utils.color_dict["Lime"], -1)
+				screen_image = screen_image[int(screen_length / 2) - boundary:int(screen_length / 2) + boundary, 
+											int(screen_length / 2) - boundary:int(screen_length / 2) + boundary, :]
+	        
+			screen_image = cv2.resize(screen_image, (screen_length, screen_length), interpolation=cv2.INTER_AREA)
+			screen_image = utils.rotate_image(screen_image, -45)
+
+			return screen_image
+			#cv2.imshow('screen_image_' + str(self.grpc_port), screen_image)
+			#cv2.waitKey(1)
 
 	def InteractWithReplay(self):
 		# Viewers can Forward and rewind the saved replay data by left and right arrow key
@@ -444,22 +647,10 @@ class UoServiceReplay:
 				self._tickScale = 10
 
 			# Create the downscaled array for bigger mobile object drawing
-			#screen_image = np.zeros((int((self._screenWidth + 100)), int((self._screenHeight + 100)), 3), dtype=np.uint8)
-			screen_image = np.zeros((int((5000)), int((5000)), 3), dtype=np.uint8)
+			screen_image = np.zeros((int((self._screenWidth + 100)), int((self._screenHeight + 100)), 3), dtype=np.uint8)
+			#screen_image = np.zeros((int((5000)), int((5000)), 3), dtype=np.uint8)
 			if self._playerObjectList[replay_step].name != '':
 				self.player_game_name = self._playerObjectList[replay_step].name
-				self.player_game_name = self._playerObjectList[replay_step].name
-
-			#print("replay_step: ", replay_step)
-			#print("self.player_game_name: ", self.player_game_name)
-
-			if self.player_game_name == None:
-				#print("self.player_game_name: ", self.player_game_name)
-				replay_step += 1
-				continue
-
-			if self._playerObjectList[replay_step].gameX != 0:
-				#print("player_object: ", player_object)
 				self.player_serial = self._playerObjectList[replay_step].serial
 				self.player_game_x = self._playerObjectList[replay_step].gameX
 				self.player_game_y = self._playerObjectList[replay_step].gameY
@@ -472,6 +663,15 @@ class UoServiceReplay:
 				self.max_tile_y = self._playerObjectList[replay_step].maxTileY
 
 				print("player_game_x: {0}, player_game_y: {1}: ", self.player_game_x, self.player_game_y)
+
+			#print("replay_step: ", replay_step)
+			#print("self.player_game_name: ", self.player_game_name)
+			#screen_image = self.parse_land_static()
+
+			if self.player_game_name == None:
+				#print("self.player_game_name: ", self.player_game_name)
+				replay_step += 1
+				continue
 
 			if len(self._worldMobileList[replay_step]) != 0:
 				self.world_mobile_dict = {}
@@ -584,7 +784,7 @@ class UoServiceReplay:
 
 					image = cv2.circle(screen_image, (self.static_object_game_x_data[i], self.static_object_game_y_data[i]), 
 									   radius, color, thickness)
-			'''
+			
 
 			radius = 10
 			thickness = 2
@@ -601,10 +801,11 @@ class UoServiceReplay:
 			screen_image = cv2.rotate(screen_image, cv2.ROTATE_90_CLOCKWISE)
 			screen_image = cv2.flip(screen_image, 1)
 
+			'''
 			surf = pygame.surfarray.make_surface(screen_image)
 			self._screenSurface.blit(surf, (0, 0))
 
-			print("self._actionList[replay_step]: ", self._actionList[replay_step])
+			#print("self._actionList[replay_step]: ", self._actionList[replay_step])
 
 			# Draw the action info on the Pygame screen
 			font = pygame.font.Font('freesansbold.ttf', 16)
