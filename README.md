@@ -43,6 +43,7 @@ $ mono ServUO.exe
 - Run the modified ClassicUO client with [various argument options](https://github.com/kimbring2/pyuo/blob/main/README.md#run-code).
 
   **1. Human Play with no Python connection(No replay recording)**
+  
   <img src="images/HumanPlayLaunch.gif" width="500">
 
   To reduce complexity, the Login, Shard Selection, and Character Selection screens are skipped unlike the original ClassicUO client. Furthermore, first character of the account is automacially selected.
@@ -60,6 +61,7 @@ $ mono ServUO.exe
   In Human Play of step 1, the agent information is obtained through the game screen. Then, agent is controlled via the mouse. However, this process is substituted through code in case of the Python connecting mode.
 
   **3. Replay Recording(Human Play with no Python connection)**
+  
   <img src="images/ReplayRecording.gif" width="500">
 
   Finally, the record will be stored as a replay file if the replay argument is added to Human Play mode. That files are automatically created and saved in the subfolder of the exe file folder per a certain game tick pass.
