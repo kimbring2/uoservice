@@ -70,6 +70,58 @@ class Layers(Enum):
   Bank = 29
 
 
+COLOR_INACTIVE = pygame.Color('lightskyblue3')
+COLOR_ACTIVE = pygame.Color('dodgerblue2')
+FONT = pygame.font.Font(None, 32)
+
+class InputBox:
+    def __init__(self, x, y, w, h, text=''):
+        self.rect = pygame.Rect(x, y, w, h)
+        self.color = COLOR_INACTIVE
+        self.text = text
+        self.txt_surface = FONT.render(text, True, self.color)
+        self.active = False
+
+    def handle_event(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            # If the user clicked on the input_box rect.
+            if self.rect.collidepoint(event.pos):
+                # Toggle the active variable.
+                self.active = not self.active
+            else:
+                self.active = False
+
+            # Change the current color of the input box.
+            self.color = COLOR_ACTIVE if self.active else COLOR_INACTIVE
+
+        if event.type == pygame.KEYDOWN:
+            if self.active:
+                if event.key == pygame.K_RETURN:
+                    print(self.text)
+                    self.text = ''
+                elif event.key == pygame.K_BACKSPACE:
+                    self.text = self.text[:-1]
+                else:
+                    self.text += event.unicode
+
+                # Re-render the text.
+                self.txt_surface = FONT.render(self.text, True, self.color)
+
+    def update(self):
+        # Resize the box if the text is too long.
+        width = max(200, self.txt_surface.get_width()+10)
+        self.rect.w = width
+
+        return self.text
+
+    def draw(self, screen):
+        # Blit the text.
+        screen.blit(self.txt_surface, (self.rect.x+5, self.rect.y+5))
+
+        # Blit the rect.
+        pygame.draw.rect(screen, self.color, self.rect, 2)
+
+
 class UoServiceReplay:
 	'''UoServiceReplay class including MPQ loader'''
 	def __init__(self, rootPath, screenWidth, screenHeight, uo_installed_path):
@@ -117,6 +169,8 @@ class UoServiceReplay:
 		self._statusSurface = pygame.Surface((500, self._screenHeight))
 		self._clock = pygame.time.Clock()
 		self._replay_step = 0
+		#self._step_box = InputBox(600, 1000, 140, 32)
+		self._step_box = InputBox(900, 900, 140, 32)
 
 		## Dict to keep the replay data
 		self.world_item_dict = {}
@@ -286,8 +340,9 @@ class UoServiceReplay:
 		max_tile_x = None
 		max_tile_y = None
 
+		print("self._replayLength: ", self._replayLength)
 		for step in range(0, self._replayLength):
-			#print("step: ", step)
+			print("step: ", step)
 
 			if self.playerObjectArr:
 				playerObjectSubsetArray, self._playerObjectArrayOffset = self.GetSubsetArray(step, self.playerObjectArrayLengthList, 
@@ -385,7 +440,8 @@ class UoServiceReplay:
 				pass
 				#print("playerBuffListArr is None")
 
-			#print("self.actionArrayLengthList[step]: ", self.actionArrayLengthList[step])
+			print("self.actionArrayLengthList[step]: ", self.actionArrayLengthList[step])
+			print("self._actionArrayOffset: ", self._actionArrayOffset)
 			if self.actionArr:
 				actionSubsetArrays, self._actionArrayOffset = self.GetSubsetArray(step, self.actionArrayLengthList, self._actionArrayOffset, 
 																				  self.actionArr)
@@ -530,7 +586,7 @@ class UoServiceReplay:
 							radius = 1
 							font = cv2.FONT_HERSHEY_SIMPLEX
 							org = ( (land_data["game_x"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
-									(land_data["game_y"] - player_game_y) * scale + int(screen_length / 2) )
+									    (land_data["game_y"] - player_game_y) * scale + int(screen_length / 2) )
 							fontScale = 0.4
 							color = (255, 0, 0)
 							thickness = 1
@@ -588,7 +644,7 @@ class UoServiceReplay:
 											  (v["gameY"] - player_game_y) * scale + int(screen_length / 2)
 											),
 											radius, utils.color_dict["Purple"], -1)
-		           
+		          
 							item_name_list = v["name"].split(" ")
 							screen_image = cv2.putText(screen_image, "     " + item_name_list[-1], 
 												( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
@@ -612,8 +668,6 @@ class UoServiceReplay:
 
 				surf = pygame.surfarray.make_surface(screen_image)
 				self._screenSurface.blit(surf, (0, 0))
-
-				#print("self._actionList[self._replay_step]: ", self._actionList[self._replay_step])
 
 				# Draw the action info on the Pygame screen
 				font = pygame.font.Font('freesansbold.ttf', 16)
@@ -687,6 +741,8 @@ class UoServiceReplay:
 				#self._mainSurface.blit(self._npcSurface, (500, self._screenHeight))
 				self._mainSurface.blit(self._statusSurface, (0, 0))
 				
+				self._step_box.draw(self._mainSurface)
+
 				pygame.display.update()
 
 				#self._clock.tick(30)
@@ -706,10 +762,15 @@ class UoServiceReplay:
 				 if event.type == pygame.QUIT:
 					 running = False
 
+				 self._step_box.handle_event(event)
+
+			replay = self._step_box.update()
+			print("replay: ", replay)
+
 			keys = pygame.key.get_pressed()
 			if keys[pygame.K_LEFT]:
 				if self._previousControl == pygame.K_LEFT:
-					if self._tickScale < 300:
+					if self._tickScale < 100:
 				  		self._tickScale += 1
 
 				if self._replay_step >= 1:
@@ -720,7 +781,7 @@ class UoServiceReplay:
 					print("This is start of replay")
 			elif keys[pygame.K_RIGHT]:
 				if self._previousControl == pygame.K_RIGHT:
-					if self._tickScale < 300:
+					if self._tickScale < 100:
 				  		self._tickScale += 1
 
 				if self._replay_step < self._replayLength - 1:
@@ -753,7 +814,8 @@ class UoServiceReplay:
 
 			#print("self._replay_step: ", self._replay_step)
 			#print("self.player_game_name: ", self.player_game_name)
-			#screen_image = self.parse_land_static()
+			popup_menu_data = self._popupMenuList[self._replay_step]
+			print("popup_menu_data: ", popup_menu_data)
 
 			if self.player_game_name == None:
 				#print("self.player_game_name: ", self.player_game_name)
@@ -860,6 +922,10 @@ class UoServiceReplay:
 					pass
 				#print("")
 
+			# Wait little bit
+			#print("self._tickScale: ", self._tickScale)
+			self._clock.tick(self._tickScale)
+
 			'''
 			surf = pygame.surfarray.make_surface(screen_image)
 			self._screenSurface.blit(surf, (0, 0))
@@ -940,8 +1006,3 @@ class UoServiceReplay:
 			
 			pygame.display.update()
 			'''
-
-			# Wait little bit
-			#print("self._tickScale: ", self._tickScale)
-			#self._clock.tick(self._tickScale)
-			#self._clock.tick(60)
