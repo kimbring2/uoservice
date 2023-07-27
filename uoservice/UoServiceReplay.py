@@ -21,6 +21,7 @@ import sys
 import copy
 from enum import Enum
 import threading
+import logging
 
 ## package for replay
 from mpyq import MPQArchive
@@ -36,6 +37,7 @@ from uoservice import utils
 pygame.init()
 pygame.display.set_caption("OpenCV camera stream on Pygame")
 
+logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
 
 ## layers of Equipped item
 class Layers(Enum):
@@ -71,7 +73,7 @@ class Layers(Enum):
   Bank = 29
 
 
-
+## Contol box to move to the specific replay point
 COLOR_INACTIVE = pygame.Color('lightskyblue3')
 COLOR_ACTIVE = pygame.Color('dodgerblue2')
 FONT = pygame.font.Font(None, 32)
@@ -110,14 +112,14 @@ class InputBox:
 
     def update(self):
         # Resize the box if the text is too long.
-        width = max(200, self.txt_surface.get_width()+10)
+        width = max(200, self.txt_surface.get_width() + 10)
         self.rect.w = width
 
         return self.text
 
     def draw(self, screen):
         # Blit the text.
-        screen.blit(self.txt_surface, (self.rect.x+5, self.rect.y+5))
+        screen.blit(self.txt_surface, (self.rect.x + 5, self.rect.y + 5))
 
         # Blit the rect.
         pygame.draw.rect(screen, self.color, self.rect, 2)
@@ -294,64 +296,64 @@ class UoServiceReplay:
 
 		## Check the data array is existed
 		if self.playerObjectArr:
-			print("len(self.playerObjectArr): ", len(self.playerObjectArr))
+			logging.info('Length of the playerObjectArr is %d', len(self.playerObjectArr))
 		else:
-			print("self.playerObjectArr is None")
+			logging.warning('playerObjectArr is None')
 
 		if self.worldItemArr:
-			print("len(self.worldItemArr): ", len(self.worldItemArr))
+			logging.info('Length of the worldItemArr is %d', len(self.worldItemArr))
 		else:
-			print("self.worldItemArr is None")
+			logging.warning('worldItemArr is None')
 
 		if self.worldMobileArr:
-			print("len(self.worldMobileArr): ", len(self.worldMobileArr))
+			logging.info('Length of the worldMobileArr is %d', len(self.worldMobileArr))
 		else:
-			print("self.worldMobileArr is None")
+			logging.warning('worldMobileArr is None')
 
 		if self.popupMenuArr:
-			print("len(popupMenuArr): ", len(self.popupMenuArr))
+			logging.info('Length of the popupMenuArr is %d', len(self.popupMenuArr))
 		else:
-			print("popupMenuArr is None")
+			logging.warning('popupMenuArr is None')
 
 		if self.clilocArr:
-			print("len(self.clilocArr): ", len(self.clilocArr))
+			logging.info('Length of the clilocArr is %d', len(self.clilocArr))
 		else:
-			print("self.clilocArr is None")
+			logging.warning('clilocArr is None')
 
 		if self.vendorListArr:
-			print("len(self.vendorListArr): ", len(self.vendorListArr))
+			logging.info('Length of the vendorListArr is %d', len(self.vendorListArr))
 		else:
-			print("self.vendorListArr is None")
+			logging.warning('vendorListArr is None')
 
 		if self.playerStatusArr:
-			print("len(self.playerStatusArr): ", len(self.playerStatusArr))
+			logging.info('Length of the playerStatusArr is %d', len(self.playerStatusArr))
 		else:
-			print("self.playerStatusArr is None")
+			logging.warning('playerStatusArr is None')
 
 		if self.playerSkillListArr:
-			print("len(self.playerSkillListArr): ", len(self.playerSkillListArr))
+			logging.info('Length of the playerSkillListArr is %d', len(self.playerSkillListArr))
 		else:
-			print("self.playerSkillListArr is None")
+			logging.warning('playerSkillListArr is None')
 
 		if self.playerBuffListArr:
-			print("len(self.playerBuffListArr): ", len(self.playerBuffListArr))
+			logging.info('Length of the playerBuffListArr is %d', len(self.playerBuffListArr))
 		else:
-			print("self.playerBuffListArr is None")
+			logging.warning('playerBuffListArr is None')
 
 		if self.deleteItemSerialsArr:
-			print("len(self.deleteItemSerialsArr): ", len(self.deleteItemSerialsArr))
+			logging.info('Length of the deleteItemSerialsArr is %d', len(self.deleteItemSerialsArr))
 		else:
-			print("self.deleteItemSerialsArr is None")
+			logging.warning('deleteItemSerialsArr is None')
 
 		if self.deleteMobileSerialsArr:
-			print("len(self.deleteMobileSerialsArr): ", len(self.deleteMobileSerialsArr))
+			logging.info('Length of the deleteMobileSerialsArr is %d', len(self.deleteMobileSerialsArr))
 		else:
-			print("self.deleteMobileSerialsArr is None")
+			logging.warning('deleteMobileSerialsArr is None')
 
 		if self.actionArr:
-			print("len(self.actionArr): ", len(self.actionArr))
+			logging.info('Length of the actionArr is %d', len(self.actionArr))
 		else:
-			print("self.actionArr is None")
+			logging.warning('actionArr is None')
 
 	def ParseReplay(self):
 		## Saves the loaded replay data into Python list to visualize them one by one
@@ -505,43 +507,6 @@ class UoServiceReplay:
 						else:
 							land_data_list, static_data_list = self.cell_dict[(cell_x, cell_y)]
 
-		## Check the 0 data part that can not be used at replay playing
-		if len(self._playerObjectList) == 0:
-			print("No playerObjectList")
-
-		if len(self._worldItemList) == 0:
-			print("No worldItemList")
-
-		if len(self._worldMobileList) == 0:
-			print("No worldMobileList")
-
-		if len(self._popupMenuList) == 0:
-			print("No popupMenuList")
-
-		if len(self._clilocList) == 0:
-			print("No _clilocList")
-
-		if len(self._vendorListList) == 0:
-			print("No vendorListList")
-
-		if len(self._playerStatusList) == 0:
-			print("No playerStatusList")
-
-		if len(self._playerSkillListList) == 0:
-			print("No playerSkillListList")
-
-		if len(self._playerBuffListList) == 0:
-			print("No playerBuffListList")
-
-		if len(self._deleteItemSerialsList) == 0:
-			print("No _deleteItemSerialsList")
-
-		if len(self._deleteMobileSerialsList) == 0:
-			print("No _deleteMobileSerialsList")
-
-		if len(self._actionList) == 0:
-			print("No _actionList")
-
 	def get_distance(self, target_game_x, target_game_y):
 		## Distance between the player and target
 		if self.player_game_x != None:
@@ -655,7 +620,7 @@ class UoServiceReplay:
 							else:
 								screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Lavenderblush2"], 1)
 				
-				## Rendering the replay data as real screen scale 
+				## Rendering the mobile data of replay as real screen scale 
 				screen_width = 4000
 				screen_height = 4000
 				radius = int(scale / 2)
@@ -673,7 +638,7 @@ class UoServiceReplay:
 											  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
 											cv2.FONT_HERSHEY_SIMPLEX, 0.5, utils.color_dict["Red"], 2, cv2.LINE_4)
 
-
+				## Rendering the item data of replay as real screen scale 
 				world_item_dict = copy.deepcopy(self.world_item_dict)
 				for k, v in world_item_dict.items():
 					if self.player_game_x != None:
