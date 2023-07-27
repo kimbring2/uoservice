@@ -79,6 +79,9 @@ COLOR_ACTIVE = pygame.Color('dodgerblue2')
 FONT = pygame.font.Font(None, 32)
 class InputBox:
     def __init__(self, x, y, w, h, text=''):
+        self.main_surface = pygame.Surface((300, 50))
+        self.main_surface.fill(((255, 255, 255)))
+
         self.rect = pygame.Rect(x, y, w, h)
         self.color = COLOR_INACTIVE
         self.text = text
@@ -119,10 +122,12 @@ class InputBox:
 
     def draw(self, screen):
         # Blit the text.
-        screen.blit(self.txt_surface, (self.rect.x + 5, self.rect.y + 5))
+        self.main_surface.blit(self.txt_surface, (self.rect.x + 5, self.rect.y + 5))
+        screen.blit(self.main_surface, (0, 0))
 
         # Blit the rect.
-        pygame.draw.rect(screen, self.color, self.rect, 2)
+        #pygame.draw.rect(screen, self.color, self.rect, 2)
+        pygame.draw.rect(self.main_surface, self.color, self.rect, 2)
 
 
 class UoServiceReplay:
@@ -591,15 +596,15 @@ class UoServiceReplay:
 									    (land_data["game_y"] - player_game_y) * scale + int(screen_length / 2) )
 
 							## Text for land index
-							screen_image = cv2.putText(screen_image, str(index), org, cv2.FONT_HERSHEY_SIMPLEX, 0.4, utils.color_dict["Blue"], 1, cv2.LINE_4)
+							screen_image = cv2.putText(screen_image, str(index), org, cv2.FONT_HERSHEY_SIMPLEX, 0.4, pygame.Color('blue'), 1, cv2.LINE_4)
 
 							## Draw the different color box for land
 							if land_data["name"] == "forest":
-								screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Lime"], 1)
+								screen_image = cv2.rectangle(screen_image, start_point, end_point, pygame.Color('lime'), 1)
 							elif land_data["name"] == "rock":
-								screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Yellow"], 1)
+								screen_image = cv2.rectangle(screen_image, start_point, end_point, pygame.Color('yellow'), 1)
 							else:
-								screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Gray"], 1)
+								screen_image = cv2.rectangle(screen_image, start_point, end_point, pygame.Color('gray'), 1)
 
 						for static_data in static_data_list:
 							#print("static / name: {0}, game_x: {1}, game_y: {2}".format(static_data["name"], static_data["game_x"], static_data["game_y"]))
@@ -612,13 +617,13 @@ class UoServiceReplay:
 
 							## Draw the different color box for static object
 							if "grasses" in static_data["name"]:
-								screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Green"], 1)
+								screen_image = cv2.rectangle(screen_image, start_point, end_point, pygame.Color('green'), 1)
 							elif "wall" in static_data["name"]:
-								screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["White"], -1)
+								screen_image = cv2.rectangle(screen_image, start_point, end_point, pygame.Color('white'), -1)
 							elif "water" in static_data["name"]:
-								screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Cadetblue"], 1)
+								screen_image = cv2.rectangle(screen_image, start_point, end_point, pygame.Color('cadetblue'), 1)
 							else:
-								screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Lavenderblush2"], 1)
+								screen_image = cv2.rectangle(screen_image, start_point, end_point, pygame.Color('lavenderblush2'), 1)
 				
 				## Rendering the mobile data of replay as real screen scale 
 				screen_width = 4000
@@ -631,12 +636,12 @@ class UoServiceReplay:
 							screen_image = cv2.circle(screen_image, 
 											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
 											  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
-											  radius, utils.color_dict["Red"], -1)
+											  radius, pygame.Color('blue'), -1)
 
 							screen_image = cv2.putText(screen_image, "  " + v["name"], 
 											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
 											  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
-											cv2.FONT_HERSHEY_SIMPLEX, 0.5, utils.color_dict["Red"], 2, cv2.LINE_4)
+											cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('blue'), 1, cv2.LINE_4)
 
 				## Rendering the item data of replay as real screen scale 
 				world_item_dict = copy.deepcopy(self.world_item_dict)
@@ -648,13 +653,13 @@ class UoServiceReplay:
 											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
 											  (v["gameY"] - player_game_y) * scale + int(screen_length / 2)
 											),
-											radius, utils.color_dict["Purple"], -1)
+											radius, pygame.Color('purple'), -1)
 		          
 							item_name_list = v["name"].split(" ")
 							screen_image = cv2.putText(screen_image, "     " + item_name_list[-1], 
 												( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
 												  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
-												cv2.FONT_HERSHEY_SIMPLEX, 0.5, utils.color_dict["Purple"], 1, cv2.LINE_4)
+												cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('purple'), 1, cv2.LINE_4)
 
 				## Cropping the real screen around player position to zoom in
 				boundary = 500
@@ -662,7 +667,7 @@ class UoServiceReplay:
 				if self.player_game_x != None:
 					#print("player_game_x: {0}, player_game_y: {1}".format(self.player_game_x, self.player_game_y))
 					screen_image = cv2.putText(screen_image, str("player"), (int(screen_length / 2), int(screen_length / 2) - int(scale / 2)), 
-											  cv2.FONT_HERSHEY_SIMPLEX, 1.0, utils.color_dict["Green"], 4, cv2.LINE_4)
+											  cv2.FONT_HERSHEY_SIMPLEX, 1.0, pygame.Color('green'), 4, cv2.LINE_4)
 
 					radius = int(scale / 2)
 					screen_image = cv2.circle(screen_image, (int(screen_length / 2), int(screen_length / 2)), radius, utils.color_dict["Lime"], -1)
