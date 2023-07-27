@@ -134,6 +134,14 @@ message Config {
   bool init = 1;
 }
 
+message GrpcDeleteItemSerialList {
+  repeated uint32 serials = 1;
+}
+
+message GrpcDeleteMobileSerialList {
+  repeated uint32 serials = 1;
+}
+
 message GrpcStates {
   GrpcPlayerObject playerObject = 1;
 
@@ -149,8 +157,8 @@ message GrpcStates {
 
   GrpcVendorList vendorList = 9;
 
-  repeated uint32 deleteItemSerial = 10;
-  repeated uint32 deleteMobileSerial = 11;
+  GrpcDeleteItemSerialList deleteItemSerialList = 10;
+  GrpcDeleteMobileSerialList deleteMobileSerialList = 11;
 }
 
 message GrpcAction {

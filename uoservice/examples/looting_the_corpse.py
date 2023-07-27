@@ -65,8 +65,13 @@ def step(uo_service):
 
     corpse_dict = {}
     for k, v in uo_service.world_item_dict.items():
+      #print("world item {0}: {1}, isCorpse: {2}".format(k, v["name"], v["isCorpse"]))
       if v["isCorpse"] == True:
+        #print("world item {0}: {1}, isCorpse: {2}".format(k, v["name"], v["isCorpse"]))
         corpse_dict[k] = v
+
+    #print("corpse_dict: ", corpse_dict)
+    #print("")
 
     ## Declare the empty action
     action = {}
@@ -83,7 +88,7 @@ def step(uo_service):
       #print("step: ", step)
       if len(uo_service.player_status_dict) != 0:
         player_gold = uo_service.player_status_dict['gold']
-        print("player_gold: ", player_gold)
+        #print("player_gold: ", player_gold)
 
       if target_skeleton_serial != None and player_game_x != None:
         ## finally, we can acquire the target mobile data
@@ -113,8 +118,6 @@ def step(uo_service):
 
         backpack_serial = uo_service.backpack_serial
         #print("backpack_serial: ", backpack_serial)
-
-        print("corpse_dict: ", corpse_dict)
 
         for k_corpse, v_corpse in corpse_dict.items():
           for k_world, v_world in uo_service.world_item_dict.items():

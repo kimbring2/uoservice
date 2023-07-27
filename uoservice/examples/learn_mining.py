@@ -98,8 +98,8 @@ def step(uo_service):
     if step % 100 == 0:
       print("step: ", step)
 
-      print("cliloc_dict: ", cliloc_dict)
-      print("popup_menu_list: ", popup_menu_list)
+      #print("cliloc_dict: ", cliloc_dict)
+      #print("popup_menu_list: ", popup_menu_list)
 
       if miner_teacher_serial != None:
         if miner_teacher_serial in cliloc_dict:
@@ -152,7 +152,7 @@ def step(uo_service):
 
         giving_gold_flag = False
 
-    action['action_type'] = 0
+    #action['action_type'] = 0
     obs = uo_service.step(action)
 
     step += 1

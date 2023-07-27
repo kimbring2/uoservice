@@ -16,6 +16,7 @@ import numpy as np
 import cv2
 import random
 import threading
+import copy
 
 ## UoService package imports
 from uoservice.protos import UoService_pb2
@@ -205,10 +206,11 @@ class UoService:
 				radius = int(scale / 2)
 				screen_width = 4000
 				screen_height = 4000
-				for k, v in self.world_mobile_dict.items():
-					if self.player_game_x != None:
-						print("world mobile {0}: {1}".format(k, v["name"]))
 
+				world_mobile_dict = copy.deepcopy(self.world_mobile_dict)
+				for k, v in world_mobile_dict.items():
+					if self.player_game_x != None:
+						#print("world mobile {0}: {1}".format(k, v["name"]))
 						if v["gameX"] < screen_width and v["gameY"] < screen_height:
 							screen_image = cv2.circle(screen_image, 
 											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
@@ -220,7 +222,8 @@ class UoService:
 											  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
 											cv2.FONT_HERSHEY_SIMPLEX, 0.5, utils.color_dict["Red"], 1, cv2.LINE_4)
 
-				for k, v in self.world_item_dict.items():
+				world_item_dict = copy.deepcopy(self.world_item_dict)
+				for k, v in world_item_dict.items():
 					if self.player_game_x != None:
 						#print("world item {0}: {1}".format(k, self.world_item_dict[k]))
 						if v["gameX"] < screen_width and v["gameY"] < screen_height:
@@ -238,7 +241,6 @@ class UoService:
 
 				if self.player_game_x != None:
 					#print("player_game_x: {0}, player_game_y: {1}".format(self.player_game_x, self.player_game_y))
-
 					screen_image = cv2.putText(screen_image, str("player"), (int(screen_length / 2), int(screen_length / 2) - int(scale / 2)), 
 											  cv2.FONT_HERSHEY_SIMPLEX, 1.0, utils.color_dict["Green"], 4, cv2.LINE_4)
 
@@ -261,12 +263,14 @@ class UoService:
 
 		popup_menu_data = response.popupMenuList.menus
 		cliloc_data = response.clilocList.clilocs
+		vendor_data = response.vendorList.vendors
 
 		player_status_data = response.playerStatus
 		player_skills_data = response.playerSkillList.skills
 		player_buffs_data = response.playerBuffList.buffs
 
-		vendor_data = response.vendorList.vendors
+		delete_item_serial_list = response.deleteItemSerialList.serials
+		delete_mobile_serial_list = response.deleteMobileSerialList.serials
 
 		if len(popup_menu_data):
 			for popup_menu in popup_menu_data:
@@ -324,14 +328,12 @@ class UoService:
 			#print("len(world_mobile_data): ", len(world_mobile_data))
 			#self.world_mobile_dict = {}
 			for obj in world_mobile_data:
-				print("name: {0}, gameX: {1}, gameY: {2}".format(obj.name, obj.gameX, obj.gameY))
-
+				#print("name: {0}, gameX: {1}, gameY: {2}".format(obj.name, obj.gameX, obj.gameY))
 				self.world_mobile_dict[obj.serial] = { "name": obj.name, "gameX": obj.gameX, "gameY": obj.gameY, 
 													   "distance": obj.distance, "title": obj.title, "hits": obj.hits,
 													   "notorietyFlag": obj.notorietyFlag, "hitsMax": obj.hitsMax,
 													   "race": obj.race, "serial": obj.serial}
 
-		#print("self.bank_serial: ", self.bank_serial)
 		if self.bank_serial != None:
 			bank_box = self.world_item_dict[self.bank_serial]
 
@@ -439,6 +441,20 @@ class UoService:
 
 		for menu_data in popup_menu_data:
 			self.popup_menu_list.append(menu_data)
+
+		if len(delete_item_serial_list) != 0:
+			for serial in delete_item_serial_list:
+				if serial in self.world_item_dict:
+					#print("delete item: ", self.world_item_dict[serial])
+					del self.world_item_dict[serial]
+			#print("")
+
+		if len(delete_mobile_serial_list) != 0:
+			for serial in delete_mobile_serial_list:
+				if serial in self.world_mobile_dict:
+					#print("delete mobile: ", self.world_mobile_dict[serial])
+					del self.world_mobile_dict[serial]
+			#print("")
 
 	def step(self, action):
 		#print("action: ", action)

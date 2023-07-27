@@ -62,32 +62,35 @@ namespace Uoservice {
             "bG9jTGlzdBImCgdjbGlsb2NzGAEgAygLMhUudW9zZXJ2aWNlLkdycGNDbGls",
             "b2MiOAoOR3JwY1ZlbmRvckxpc3QSJgoHdmVuZG9ycxgBIAMoCzIVLnVvc2Vy",
             "dmljZS5HcnBjVmVuZG9yIh8KD1NlbWFwaG9yZUFjdGlvbhIMCgRtb2RlGAEg",
-            "ASgJIhYKBkNvbmZpZxIMCgRpbml0GAEgASgIIo8ECgpHcnBjU3RhdGVzEjEK",
-            "DHBsYXllck9iamVjdBgBIAEoCzIbLnVvc2VydmljZS5HcnBjUGxheWVyT2Jq",
-            "ZWN0EjQKDVdvcmxkSXRlbUxpc3QYAiABKAsyHS51b3NlcnZpY2UuR3JwY0l0",
-            "ZW1PYmplY3RMaXN0EjgKD1dvcmxkTW9iaWxlTGlzdBgDIAEoCzIfLnVvc2Vy",
-            "dmljZS5HcnBjTW9iaWxlT2JqZWN0TGlzdBIzCg1wb3B1cE1lbnVMaXN0GAQg",
-            "ASgLMhwudW9zZXJ2aWNlLkdycGNQb3B1cE1lbnVMaXN0Ei0KCmNsaWxvY0xp",
-            "c3QYBSABKAsyGS51b3NlcnZpY2UuR3JwY0NsaWxvY0xpc3QSMQoMcGxheWVy",
-            "U3RhdHVzGAYgASgLMhsudW9zZXJ2aWNlLkdycGNQbGF5ZXJTdGF0dXMSMQoP",
-            "cGxheWVyU2tpbGxMaXN0GAcgASgLMhgudW9zZXJ2aWNlLkdycGNTa2lsbExp",
-            "c3QSLwoOcGxheWVyQnVmZkxpc3QYCCABKAsyFy51b3NlcnZpY2UuR3JwY0J1",
-            "ZmZMaXN0Ei0KCnZlbmRvckxpc3QYCSABKAsyGS51b3NlcnZpY2UuR3JwY1Zl",
-            "bmRvckxpc3QSGAoQZGVsZXRlSXRlbVNlcmlhbBgKIAMoDRIaChJkZWxldGVN",
-            "b2JpbGVTZXJpYWwYCyADKA0ijwEKCkdycGNBY3Rpb24SEgoKYWN0aW9uVHlw",
-            "ZRgBIAEoDRIUCgxzb3VyY2VTZXJpYWwYAiABKA0SFAoMdGFyZ2V0U2VyaWFs",
-            "GAMgASgNEhUKDXdhbGtEaXJlY3Rpb24YBCABKA0SDQoFaW5kZXgYBSABKA0S",
-            "DgoGYW1vdW50GAYgASgNEgsKA3J1bhgHIAEoCDKeAwoJVW9TZXJ2aWNlEjEK",
-            "BVJlc2V0EhEudW9zZXJ2aWNlLkNvbmZpZxoVLnVvc2VydmljZS5HcnBjU3Rh",
-            "dGVzEjMKB1JlYWRPYnMSES51b3NlcnZpY2UuQ29uZmlnGhUudW9zZXJ2aWNl",
-            "LkdycGNTdGF0ZXMSMwoIV3JpdGVBY3QSFS51b3NlcnZpY2UuR3JwY0FjdGlv",
-            "bhoQLnVvc2VydmljZS5FbXB0eRJDChNBY3RTZW1hcGhvcmVDb250cm9sEhou",
-            "dW9zZXJ2aWNlLlNlbWFwaG9yZUFjdGlvbhoQLnVvc2VydmljZS5FbXB0eRJD",
-            "ChNPYnNTZW1hcGhvcmVDb250cm9sEhoudW9zZXJ2aWNlLlNlbWFwaG9yZUFj",
-            "dGlvbhoQLnVvc2VydmljZS5FbXB0eRI2CgpSZWFkUmVwbGF5EhEudW9zZXJ2",
-            "aWNlLkNvbmZpZxoVLnVvc2VydmljZS5HcnBjU3RhdGVzEjIKC1JlYWRNUFFG",
-            "aWxlEhEudW9zZXJ2aWNlLkNvbmZpZxoQLnVvc2VydmljZS5FbXB0eWIGcHJv",
-            "dG8z"));
+            "ASgJIhYKBkNvbmZpZxIMCgRpbml0GAEgASgIIisKGEdycGNEZWxldGVJdGVt",
+            "U2VyaWFsTGlzdBIPCgdzZXJpYWxzGAEgAygNIi0KGkdycGNEZWxldGVNb2Jp",
+            "bGVTZXJpYWxMaXN0Eg8KB3NlcmlhbHMYASADKA0i4wQKCkdycGNTdGF0ZXMS",
+            "MQoMcGxheWVyT2JqZWN0GAEgASgLMhsudW9zZXJ2aWNlLkdycGNQbGF5ZXJP",
+            "YmplY3QSNAoNV29ybGRJdGVtTGlzdBgCIAEoCzIdLnVvc2VydmljZS5HcnBj",
+            "SXRlbU9iamVjdExpc3QSOAoPV29ybGRNb2JpbGVMaXN0GAMgASgLMh8udW9z",
+            "ZXJ2aWNlLkdycGNNb2JpbGVPYmplY3RMaXN0EjMKDXBvcHVwTWVudUxpc3QY",
+            "BCABKAsyHC51b3NlcnZpY2UuR3JwY1BvcHVwTWVudUxpc3QSLQoKY2xpbG9j",
+            "TGlzdBgFIAEoCzIZLnVvc2VydmljZS5HcnBjQ2xpbG9jTGlzdBIxCgxwbGF5",
+            "ZXJTdGF0dXMYBiABKAsyGy51b3NlcnZpY2UuR3JwY1BsYXllclN0YXR1cxIx",
+            "Cg9wbGF5ZXJTa2lsbExpc3QYByABKAsyGC51b3NlcnZpY2UuR3JwY1NraWxs",
+            "TGlzdBIvCg5wbGF5ZXJCdWZmTGlzdBgIIAEoCzIXLnVvc2VydmljZS5HcnBj",
+            "QnVmZkxpc3QSLQoKdmVuZG9yTGlzdBgJIAEoCzIZLnVvc2VydmljZS5HcnBj",
+            "VmVuZG9yTGlzdBJBChRkZWxldGVJdGVtU2VyaWFsTGlzdBgKIAEoCzIjLnVv",
+            "c2VydmljZS5HcnBjRGVsZXRlSXRlbVNlcmlhbExpc3QSRQoWZGVsZXRlTW9i",
+            "aWxlU2VyaWFsTGlzdBgLIAEoCzIlLnVvc2VydmljZS5HcnBjRGVsZXRlTW9i",
+            "aWxlU2VyaWFsTGlzdCKPAQoKR3JwY0FjdGlvbhISCgphY3Rpb25UeXBlGAEg",
+            "ASgNEhQKDHNvdXJjZVNlcmlhbBgCIAEoDRIUCgx0YXJnZXRTZXJpYWwYAyAB",
+            "KA0SFQoNd2Fsa0RpcmVjdGlvbhgEIAEoDRINCgVpbmRleBgFIAEoDRIOCgZh",
+            "bW91bnQYBiABKA0SCwoDcnVuGAcgASgIMp4DCglVb1NlcnZpY2USMQoFUmVz",
+            "ZXQSES51b3NlcnZpY2UuQ29uZmlnGhUudW9zZXJ2aWNlLkdycGNTdGF0ZXMS",
+            "MwoHUmVhZE9icxIRLnVvc2VydmljZS5Db25maWcaFS51b3NlcnZpY2UuR3Jw",
+            "Y1N0YXRlcxIzCghXcml0ZUFjdBIVLnVvc2VydmljZS5HcnBjQWN0aW9uGhAu",
+            "dW9zZXJ2aWNlLkVtcHR5EkMKE0FjdFNlbWFwaG9yZUNvbnRyb2wSGi51b3Nl",
+            "cnZpY2UuU2VtYXBob3JlQWN0aW9uGhAudW9zZXJ2aWNlLkVtcHR5EkMKE09i",
+            "c1NlbWFwaG9yZUNvbnRyb2wSGi51b3NlcnZpY2UuU2VtYXBob3JlQWN0aW9u",
+            "GhAudW9zZXJ2aWNlLkVtcHR5EjYKClJlYWRSZXBsYXkSES51b3NlcnZpY2Uu",
+            "Q29uZmlnGhUudW9zZXJ2aWNlLkdycGNTdGF0ZXMSMgoLUmVhZE1QUUZpbGUS",
+            "ES51b3NlcnZpY2UuQ29uZmlnGhAudW9zZXJ2aWNlLkVtcHR5YgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -110,7 +113,9 @@ namespace Uoservice {
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcVendorList), global::Uoservice.GrpcVendorList.Parser, new[]{ "Vendors" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.SemaphoreAction), global::Uoservice.SemaphoreAction.Parser, new[]{ "Mode" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Config), global::Uoservice.Config.Parser, new[]{ "Init" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcStates), global::Uoservice.GrpcStates.Parser, new[]{ "PlayerObject", "WorldItemList", "WorldMobileList", "PopupMenuList", "ClilocList", "PlayerStatus", "PlayerSkillList", "PlayerBuffList", "VendorList", "DeleteItemSerial", "DeleteMobileSerial" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcDeleteItemSerialList), global::Uoservice.GrpcDeleteItemSerialList.Parser, new[]{ "Serials" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcDeleteMobileSerialList), global::Uoservice.GrpcDeleteMobileSerialList.Parser, new[]{ "Serials" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcStates), global::Uoservice.GrpcStates.Parser, new[]{ "PlayerObject", "WorldItemList", "WorldMobileList", "PopupMenuList", "ClilocList", "PlayerStatus", "PlayerSkillList", "PlayerBuffList", "VendorList", "DeleteItemSerialList", "DeleteMobileSerialList" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcAction), global::Uoservice.GrpcAction.Parser, new[]{ "ActionType", "SourceSerial", "TargetSerial", "WalkDirection", "Index", "Amount", "Run" }, null, null, null)
           }));
     }
@@ -4053,6 +4058,250 @@ namespace Uoservice {
 
   }
 
+  public sealed partial class GrpcDeleteItemSerialList : pb::IMessage<GrpcDeleteItemSerialList> {
+    private static readonly pb::MessageParser<GrpcDeleteItemSerialList> _parser = new pb::MessageParser<GrpcDeleteItemSerialList>(() => new GrpcDeleteItemSerialList());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<GrpcDeleteItemSerialList> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[19]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GrpcDeleteItemSerialList() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GrpcDeleteItemSerialList(GrpcDeleteItemSerialList other) : this() {
+      serials_ = other.serials_.Clone();
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GrpcDeleteItemSerialList Clone() {
+      return new GrpcDeleteItemSerialList(this);
+    }
+
+    /// <summary>Field number for the "serials" field.</summary>
+    public const int SerialsFieldNumber = 1;
+    private static readonly pb::FieldCodec<uint> _repeated_serials_codec
+        = pb::FieldCodec.ForUInt32(10);
+    private readonly pbc::RepeatedField<uint> serials_ = new pbc::RepeatedField<uint>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<uint> Serials {
+      get { return serials_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as GrpcDeleteItemSerialList);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(GrpcDeleteItemSerialList other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!serials_.Equals(other.serials_)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= serials_.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      serials_.WriteTo(output, _repeated_serials_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      size += serials_.CalculateSize(_repeated_serials_codec);
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(GrpcDeleteItemSerialList other) {
+      if (other == null) {
+        return;
+      }
+      serials_.Add(other.serials_);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10:
+          case 8: {
+            serials_.AddEntriesFrom(input, _repeated_serials_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class GrpcDeleteMobileSerialList : pb::IMessage<GrpcDeleteMobileSerialList> {
+    private static readonly pb::MessageParser<GrpcDeleteMobileSerialList> _parser = new pb::MessageParser<GrpcDeleteMobileSerialList>(() => new GrpcDeleteMobileSerialList());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<GrpcDeleteMobileSerialList> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[20]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GrpcDeleteMobileSerialList() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GrpcDeleteMobileSerialList(GrpcDeleteMobileSerialList other) : this() {
+      serials_ = other.serials_.Clone();
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public GrpcDeleteMobileSerialList Clone() {
+      return new GrpcDeleteMobileSerialList(this);
+    }
+
+    /// <summary>Field number for the "serials" field.</summary>
+    public const int SerialsFieldNumber = 1;
+    private static readonly pb::FieldCodec<uint> _repeated_serials_codec
+        = pb::FieldCodec.ForUInt32(10);
+    private readonly pbc::RepeatedField<uint> serials_ = new pbc::RepeatedField<uint>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<uint> Serials {
+      get { return serials_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as GrpcDeleteMobileSerialList);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(GrpcDeleteMobileSerialList other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!serials_.Equals(other.serials_)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= serials_.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      serials_.WriteTo(output, _repeated_serials_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      size += serials_.CalculateSize(_repeated_serials_codec);
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(GrpcDeleteMobileSerialList other) {
+      if (other == null) {
+        return;
+      }
+      serials_.Add(other.serials_);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10:
+          case 8: {
+            serials_.AddEntriesFrom(input, _repeated_serials_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
   public sealed partial class GrpcStates : pb::IMessage<GrpcStates> {
     private static readonly pb::MessageParser<GrpcStates> _parser = new pb::MessageParser<GrpcStates>(() => new GrpcStates());
     private pb::UnknownFieldSet _unknownFields;
@@ -4061,7 +4310,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[19]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[21]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4087,8 +4336,8 @@ namespace Uoservice {
       playerSkillList_ = other.playerSkillList_ != null ? other.playerSkillList_.Clone() : null;
       playerBuffList_ = other.playerBuffList_ != null ? other.playerBuffList_.Clone() : null;
       vendorList_ = other.vendorList_ != null ? other.vendorList_.Clone() : null;
-      deleteItemSerial_ = other.deleteItemSerial_.Clone();
-      deleteMobileSerial_ = other.deleteMobileSerial_.Clone();
+      deleteItemSerialList_ = other.deleteItemSerialList_ != null ? other.deleteItemSerialList_.Clone() : null;
+      deleteMobileSerialList_ = other.deleteMobileSerialList_ != null ? other.deleteMobileSerialList_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -4196,24 +4445,26 @@ namespace Uoservice {
       }
     }
 
-    /// <summary>Field number for the "deleteItemSerial" field.</summary>
-    public const int DeleteItemSerialFieldNumber = 10;
-    private static readonly pb::FieldCodec<uint> _repeated_deleteItemSerial_codec
-        = pb::FieldCodec.ForUInt32(82);
-    private readonly pbc::RepeatedField<uint> deleteItemSerial_ = new pbc::RepeatedField<uint>();
+    /// <summary>Field number for the "deleteItemSerialList" field.</summary>
+    public const int DeleteItemSerialListFieldNumber = 10;
+    private global::Uoservice.GrpcDeleteItemSerialList deleteItemSerialList_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<uint> DeleteItemSerial {
-      get { return deleteItemSerial_; }
+    public global::Uoservice.GrpcDeleteItemSerialList DeleteItemSerialList {
+      get { return deleteItemSerialList_; }
+      set {
+        deleteItemSerialList_ = value;
+      }
     }
 
-    /// <summary>Field number for the "deleteMobileSerial" field.</summary>
-    public const int DeleteMobileSerialFieldNumber = 11;
-    private static readonly pb::FieldCodec<uint> _repeated_deleteMobileSerial_codec
-        = pb::FieldCodec.ForUInt32(90);
-    private readonly pbc::RepeatedField<uint> deleteMobileSerial_ = new pbc::RepeatedField<uint>();
+    /// <summary>Field number for the "deleteMobileSerialList" field.</summary>
+    public const int DeleteMobileSerialListFieldNumber = 11;
+    private global::Uoservice.GrpcDeleteMobileSerialList deleteMobileSerialList_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<uint> DeleteMobileSerial {
-      get { return deleteMobileSerial_; }
+    public global::Uoservice.GrpcDeleteMobileSerialList DeleteMobileSerialList {
+      get { return deleteMobileSerialList_; }
+      set {
+        deleteMobileSerialList_ = value;
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4238,8 +4489,8 @@ namespace Uoservice {
       if (!object.Equals(PlayerSkillList, other.PlayerSkillList)) return false;
       if (!object.Equals(PlayerBuffList, other.PlayerBuffList)) return false;
       if (!object.Equals(VendorList, other.VendorList)) return false;
-      if(!deleteItemSerial_.Equals(other.deleteItemSerial_)) return false;
-      if(!deleteMobileSerial_.Equals(other.deleteMobileSerial_)) return false;
+      if (!object.Equals(DeleteItemSerialList, other.DeleteItemSerialList)) return false;
+      if (!object.Equals(DeleteMobileSerialList, other.DeleteMobileSerialList)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -4255,8 +4506,8 @@ namespace Uoservice {
       if (playerSkillList_ != null) hash ^= PlayerSkillList.GetHashCode();
       if (playerBuffList_ != null) hash ^= PlayerBuffList.GetHashCode();
       if (vendorList_ != null) hash ^= VendorList.GetHashCode();
-      hash ^= deleteItemSerial_.GetHashCode();
-      hash ^= deleteMobileSerial_.GetHashCode();
+      if (deleteItemSerialList_ != null) hash ^= DeleteItemSerialList.GetHashCode();
+      if (deleteMobileSerialList_ != null) hash ^= DeleteMobileSerialList.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -4306,8 +4557,14 @@ namespace Uoservice {
         output.WriteRawTag(74);
         output.WriteMessage(VendorList);
       }
-      deleteItemSerial_.WriteTo(output, _repeated_deleteItemSerial_codec);
-      deleteMobileSerial_.WriteTo(output, _repeated_deleteMobileSerial_codec);
+      if (deleteItemSerialList_ != null) {
+        output.WriteRawTag(82);
+        output.WriteMessage(DeleteItemSerialList);
+      }
+      if (deleteMobileSerialList_ != null) {
+        output.WriteRawTag(90);
+        output.WriteMessage(DeleteMobileSerialList);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -4343,8 +4600,12 @@ namespace Uoservice {
       if (vendorList_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(VendorList);
       }
-      size += deleteItemSerial_.CalculateSize(_repeated_deleteItemSerial_codec);
-      size += deleteMobileSerial_.CalculateSize(_repeated_deleteMobileSerial_codec);
+      if (deleteItemSerialList_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(DeleteItemSerialList);
+      }
+      if (deleteMobileSerialList_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(DeleteMobileSerialList);
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -4410,8 +4671,18 @@ namespace Uoservice {
         }
         VendorList.MergeFrom(other.VendorList);
       }
-      deleteItemSerial_.Add(other.deleteItemSerial_);
-      deleteMobileSerial_.Add(other.deleteMobileSerial_);
+      if (other.deleteItemSerialList_ != null) {
+        if (deleteItemSerialList_ == null) {
+          deleteItemSerialList_ = new global::Uoservice.GrpcDeleteItemSerialList();
+        }
+        DeleteItemSerialList.MergeFrom(other.DeleteItemSerialList);
+      }
+      if (other.deleteMobileSerialList_ != null) {
+        if (deleteMobileSerialList_ == null) {
+          deleteMobileSerialList_ = new global::Uoservice.GrpcDeleteMobileSerialList();
+        }
+        DeleteMobileSerialList.MergeFrom(other.DeleteMobileSerialList);
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -4486,14 +4757,18 @@ namespace Uoservice {
             input.ReadMessage(vendorList_);
             break;
           }
-          case 82:
-          case 80: {
-            deleteItemSerial_.AddEntriesFrom(input, _repeated_deleteItemSerial_codec);
+          case 82: {
+            if (deleteItemSerialList_ == null) {
+              deleteItemSerialList_ = new global::Uoservice.GrpcDeleteItemSerialList();
+            }
+            input.ReadMessage(deleteItemSerialList_);
             break;
           }
-          case 90:
-          case 88: {
-            deleteMobileSerial_.AddEntriesFrom(input, _repeated_deleteMobileSerial_codec);
+          case 90: {
+            if (deleteMobileSerialList_ == null) {
+              deleteMobileSerialList_ = new global::Uoservice.GrpcDeleteMobileSerialList();
+            }
+            input.ReadMessage(deleteMobileSerialList_);
             break;
           }
         }
@@ -4510,7 +4785,7 @@ namespace Uoservice {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[20]; }
+      get { return global::Uoservice.UoServiceReflection.Descriptor.MessageTypes[22]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

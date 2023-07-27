@@ -113,9 +113,9 @@ def step(uo_service):
 
       if len(backpack_item_data) != 0:
         for k_backpack, v_backpack in backpack_item_data.items():
-          #print("backpack {0}: {1}".format(k_backpack, v_backpack["name"]))
+          print("backpack {0}: {1}".format(k_backpack, v_backpack["name"]))
           pass
-        #print("")
+        print("")
 
       #print("step: ", step)
       #print("gold_serial: ", gold_serial)
