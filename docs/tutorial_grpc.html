@@ -382,7 +382,7 @@
                 <script>
                     generate_table("states_6", 
                                     [
-                                        ["GrpcClilocList", "list of GrpcCliloc", "list of cliloc text"]
+                                        ["clilocs", "list of GrpcCliloc", "list of cliloc text"]
                                     ]
                                     );
                 </script>
@@ -399,7 +399,7 @@
                 <script>
                     generate_table("states_7", 
                                     [
-                                        ["menus", "list of GrpcSkill", "list of player skill data"],
+                                        ["skills", "list of GrpcSkill", "list of player skill data"],
                                     ]
                                     );
                 </script>
@@ -412,7 +412,33 @@
                 <script>
                     generate_table("states_8", 
                                     [
-                                        ["GrpcClilocList", "list of GrpcBuff", "list of player buff data"]
+                                        ["buffs", "list of GrpcBuff", "list of player buff data"]
+                                    ]
+                                    );
+                </script>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col", id="states_9">
+                <script>createHeader("states_9", "GrpcDeleteItemSerialList", "");</script>
+                
+                <script>
+                    generate_table("states_9", 
+                                    [
+                                        ["serials", "list of uint32", "list of serial of item to be deleted from the world"],
+                                    ]
+                                    );
+                </script>
+            </div>
+
+            <div class="col", id="states_10">
+                <script>createHeader("states_10", "GrpcDeleteMobileSerialList", "");</script>
+                
+                <script>
+                    generate_table("states_10", 
+                                    [
+                                        ["serials", "list of uint32", "list of serial of mobile to be deleted from the world"]
                                     ]
                                     );
                 </script>

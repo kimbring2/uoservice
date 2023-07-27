@@ -28,19 +28,20 @@ from uoservice import utils
 class UoService:
 	'''UoService class including gRPC client'''
 	def __init__(self, grpc_port, window_width, window_height, uo_installed_path):
+		## Variable for gRPC part
 		self.grpc_port = grpc_port
-		self.window_width = window_width
-		self.window_height = window_height
 		self.stub = None
 
-		self.total_step = 0
+		## Variables for rendering the replay data
+		self.window_width = window_width
+		self.window_height = window_height
 
+		## Variables to keep the replay data
 		self.world_item_dict = {}
 		self.world_mobile_dict = {}
 		self.player_skills_dict = {}
 		self.player_status_dict = {}
 		self.player_buff_dict = {}
-
 		self.backpack_item_dict = {}
 		self.bank_item_dict = {}
 		self.equipped_item_dict = {}
@@ -50,7 +51,6 @@ class UoService:
 		self.popup_menu_list = []
 		self.ground_item_dict = {}
 		self.vendor_item_list = []
-
 		self.player_hit = None
 		self.player_hit_max = None
 		self.player_game_x = self.player_game_y = None
@@ -59,31 +59,29 @@ class UoService:
 		self.hold_item_serial = 0
 		self.player_gold = None
 		self.targeting_state = None
-
-		self.min_tile_x = self.min_tile_y = self.max_tile_x = self.max_tile_y = None
-
 		self.backpack_serial = None
 		self.bank_serial = None
 		self.picked_up_item = {}
 
-		#self.uo_installed_path = "/home/kimbring2/.wine/drive_c/Program Files (x86)/Electronic Arts/Ultima Online Classic"
+		## Variables to load the binary file for land, static data
+		self.min_tile_x = self.min_tile_y = self.max_tile_x = self.max_tile_y = None
 		self.uo_installed_path = uo_installed_path
 		self.uoservice_game_file_parser = UoServiceGameFileParser(self.uo_installed_path)
 		self.uoservice_game_file_parser.load()
-
 		self.tile_data_list = []
 
+		## Etc
+		self.total_step = 0
+
 	def _open_grpc(self):
-		# Open the gRPC channel using the port that is same of game client 
+		## Open the gRPC channel using the port that is same of game client 
 		channel = grpc.insecure_channel('localhost:' + str(self.grpc_port))
 		self.stub = UoService_pb2_grpc.UoServiceStub(channel)
 
 	def reset(self):
-		print("UoService reset()")
-
+		## Reset the gRPC server before communcation with it.
 		self.stub.Reset(UoService_pb2.Config(init=False))
 
-		# Reset the gRPC server before communcation with it.
 		self.stub.WriteAct(UoService_pb2.GrpcAction(actionType=0, sourceSerial=0, targetSerial=0, 
 													walkDirection=0, index=0, amount=0, run=False))
 		self.stub.ActSemaphoreControl(UoService_pb2.SemaphoreAction(mode='post'))
@@ -94,12 +92,14 @@ class UoService:
 		self.parse_response(response)
 
 	def get_distance(self, target_game_x, target_game_y):
+		## Distance between the player and target
 		if self.player_game_x != None:
 			return max(abs(self.player_game_x - target_game_x), abs(self.player_game_y - target_game_y))
 		else:
 			return -1
 
 	def get_land_index(self, game_x, game_y):
+		## Land index of x, y position
 		x_relative = 0
 		for i in range(self.min_tile_x, self.max_tile_x):
 			if game_x == i:
@@ -115,6 +115,7 @@ class UoService:
 		return index
 
 	def get_land_position(self, index):
+		## Reverse function of the get_land_index function
 		game_x = index / (self.max_tile_x - self.min_tile_x);
 		game_y = index % (self.max_tile_x - self.min_tile_x);
 
@@ -124,20 +125,18 @@ class UoService:
 		return x, y
 
 	def parse_land_static(self):
+		## Start to parse the binary file
 		while True:
+			## Only parsing when player is in the world
 			if self.max_tile_x != None:
+				## Main game screen array
 				screen_length = 1000
-
 				screen_image = np.zeros((screen_length,screen_length,4), dtype=np.uint8)
-				radius = 5
-				thickness = 2
-				screen_width = screen_length
-				screen_height = screen_length
 
+				## Load and draw the land, static data
 				cell_x_list = []
 				cell_y_list = []
 				tile_data_list = []
-
 				for x in range(self.min_tile_x, self.max_tile_x):
 					cell_x = x >> 3
 					if cell_x not in cell_x_list:
@@ -184,9 +183,7 @@ class UoService:
 								screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Gray"], 1)
 
 						for static_data in static_data_list:
-							#if "water" not in static_data["name"]:
 							#print("static / name: {0}, game_x: {1}, game_y: {2}".format(static_data["name"], static_data["game_x"], static_data["game_y"]))
-			            
 							start_point = ( (static_data["game_x"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
 											(static_data["game_y"] - player_game_y) * scale + int(screen_length / 2) - int(scale / 2) )
 							end_point = ( (static_data["game_x"] - player_game_x) * scale + int(screen_length / 2) + int(scale / 2), 
