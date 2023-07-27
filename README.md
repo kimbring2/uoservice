@@ -49,7 +49,7 @@ $ mono ServUO.exe
   To reduce complexity, the Login, Shard Selection, and Character Selection screens are skipped unlike the original ClassicUO client. Furthermore, first character of the account is automacially selected.
 
   **2. Python connection through the gRPC(No replay recording)**
-  - Run the [sample Python Application](https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/semaphore_sync.py).
+  - Run the [sample Python code](https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/semaphore_sync.py).
   ```
   $ python examples/semaphore_sync.py --grpc_port [gRPC port of C# side] --uo_installed_path [EA UO installed path on Wine]"
   
@@ -61,15 +61,19 @@ $ mono ServUO.exe
   In Human Play of step 1, the agent information is obtained through the game screen. Then, agent is controlled via the mouse. However, this process is substituted through code in case of the Python connecting mode.
 
   **3. Replay Recording(Human Play with no Python connection)**
+  
+  <img src="images/ReplayRecording.gif" width="500">
+  
+  Finally, the record will be stored as a replay file if the replay argument is added to Human Play mode. That files are automatically created and saved in the subfolder of the exe file folder per a certain game tick pass.
 
 # Parse the replay file
 - If you play as a human in the ClassicUO client, replay files are saved at set intervals the as shown below. You can read this into Python and visualize the information.
 <img src="images/ReplayFile.png" width="500">
-  
+
+Run the [sample Python code](https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/main_replay.py).
+
 ```
 $ python examples/main_replay.py --replay_path [root path of replay file] --uo_installed_path [EA UO installed path on Wine] --file_name [Actual file name of replay]
 
 e.g. $ python3.7 examples/main_replay.py --replay_path /home/kimbring2/ClassicUO/bin/dist/Replay --uo_installed_path "/home/kimbring2/.wine/drive_c/Program Files (x86)/Electronic Arts/Ultima Online Classic" --file_name kimbring2-2023-7-28-06-01-02
 ```
-
-  Finally, the record will be stored as a replay file if the replay argument is added to Human Play mode. That files are automatically created and saved in the subfolder of the exe file folder per a certain game tick pass.
