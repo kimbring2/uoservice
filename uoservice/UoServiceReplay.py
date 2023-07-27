@@ -18,6 +18,7 @@ import cv2
 import random
 import pygame
 import sys
+import copy
 from enum import Enum
 import threading
 
@@ -143,6 +144,8 @@ class UoServiceReplay:
 		self._playerStatusArrayOffset = 0
 		self._playerSkillListArrayOffset = 0
 		self._playerBuffListArrayOffset = 0
+		self._deleteItemSerialsArrayOffset = 0
+		self._deleteMobileSerialsArrayOffset = 0
 		self._actionArrayOffset = 0
 
 		## Initialize the list to save the replay state data
@@ -155,6 +158,8 @@ class UoServiceReplay:
 		self._playerStatusList = []
 		self._playerSkillListList = []
 		self._playerBuffListList = []
+		self._deleteItemSerialsList = []
+		self._deleteMobileSerialsList = []
 		self._actionList = []
 
 		## Initialize the witdh, height of replay file
@@ -169,7 +174,6 @@ class UoServiceReplay:
 		self._statusSurface = pygame.Surface((500, self._screenHeight))
 		self._clock = pygame.time.Clock()
 		self._replay_step = 0
-		#self._step_box = InputBox(600, 1000, 140, 32)
 		self._step_box = InputBox(900, 900, 140, 32)
 
 		## Dict to keep the replay data
@@ -251,6 +255,8 @@ class UoServiceReplay:
 		self.playerStatusArrayLengthArr = self._archive.read_file("replay.meta.playerStatusLen");
 		self.playerSkillListArrayLengthArr = self._archive.read_file("replay.meta.playerSkillListLen");
 		self.playerBuffListArrayLengthArr = self._archive.read_file("replay.meta.playerBuffListLen");
+		self.deleteItemSerialsArrayLengthArr = self._archive.read_file("replay.meta.deleteItemSerialsLen");
+		self.deleteMobileSerialsArrayLengthArr = self._archive.read_file("replay.meta.deleteMobileSerialsLen");
 		self.actionArrayLengthArr = self._archive.read_file("replay.meta.actionArraysLen");
 
 		## Convert the byte array to int array
@@ -263,6 +269,8 @@ class UoServiceReplay:
 		self.playerStatusArrayLengthList = self.ConvertByteArrayToIntList(self.playerStatusArrayLengthArr);
 		self.playerSkillListArrayLengthList = self.ConvertByteArrayToIntList(self.playerSkillListArrayLengthArr);
 		self.playerBuffListArrayLengthList = self.ConvertByteArrayToIntList(self.playerBuffListArrayLengthArr);
+		self.deleteItemSerialsArrayLengthList = self.ConvertByteArrayToIntList(self.deleteItemSerialsArrayLengthArr);
+		self.deleteMobileSerialsArrayLengthList = self.ConvertByteArrayToIntList(self.deleteMobileSerialsArrayLengthArr);
 		self.actionArrayLengthList = self.ConvertByteArrayToIntList(self.actionArrayLengthArr);
 
 		## Find the total length of replay
@@ -278,6 +286,8 @@ class UoServiceReplay:
 		self.playerStatusArr = self._archive.read_file("replay.playerStatus");
 		self.playerSkillListArr = self._archive.read_file("replay.playerSkillList");
 		self.playerBuffListArr = self._archive.read_file("replay.playerBuffList");
+		self.deleteItemSerialsArr = self._archive.read_file("replay.deleteItemSerials");
+		self.deleteMobileSerialsArr = self._archive.read_file("replay.deleteMobileSerials");
 		self.actionArr = self._archive.read_file("replay.actionArrays");
 
 		## Check the data array is existed
@@ -326,6 +336,16 @@ class UoServiceReplay:
 		else:
 			print("self.playerBuffListArr is None")
 
+		if self.deleteItemSerialsArr:
+			print("len(self.deleteItemSerialsArr): ", len(self.deleteItemSerialsArr))
+		else:
+			print("self.deleteItemSerialsArr is None")
+
+		if self.deleteMobileSerialsArr:
+			print("len(self.deleteMobileSerialsArr): ", len(self.deleteMobileSerialsArr))
+		else:
+			print("self.deleteMobileSerialsArr is None")
+
 		if self.actionArr:
 			print("len(self.actionArr): ", len(self.actionArr))
 		else:
@@ -340,9 +360,9 @@ class UoServiceReplay:
 		max_tile_x = None
 		max_tile_y = None
 
-		print("self._replayLength: ", self._replayLength)
+		#print("self._replayLength: ", self._replayLength)
 		for step in range(0, self._replayLength):
-			print("step: ", step)
+			#print("step: ", step)
 
 			if self.playerObjectArr:
 				playerObjectSubsetArray, self._playerObjectArrayOffset = self.GetSubsetArray(step, self.playerObjectArrayLengthList, 
@@ -440,8 +460,28 @@ class UoServiceReplay:
 				pass
 				#print("playerBuffListArr is None")
 
-			print("self.actionArrayLengthList[step]: ", self.actionArrayLengthList[step])
-			print("self._actionArrayOffset: ", self._actionArrayOffset)
+			if self.deleteItemSerialsArr:
+				deleteItemSerialsSubsetArray, self._deleteItemSerialsArrayOffset = self.GetSubsetArray(step, self.deleteItemSerialsArrayLengthList, 
+																				   		 		   self._deleteItemSerialsArrayOffset, 
+																				   		 		   self.deleteItemSerialsArr)
+				grpcDeleteItemSerialsReplay = UoService_pb2.GrpcDeleteItemSerialList().FromString(deleteItemSerialsSubsetArray)
+				self._deleteItemSerialsList.append(grpcDeleteItemSerialsReplay.serials)
+			else:
+				pass
+				#print("playerBuffListArr is None")
+
+			if self.deleteMobileSerialsArr:
+				deleteMobileSerialsSubsetArray, self._deleteMobileSerialsArrayOffset = self.GetSubsetArray(step, self.deleteMobileSerialsArrayLengthList, 
+																				   		 		   self._deleteMobileSerialsArrayOffset, 
+																				   		 		   self.deleteMobileSerialsArr)
+				grpcDeleteMobileSerialsReplay = UoService_pb2.GrpcDeleteMobileSerialList().FromString(deleteMobileSerialsSubsetArray)
+				self._deleteMobileSerialsList.append(grpcDeleteMobileSerialsReplay.serials)
+			else:
+				pass
+				#print("playerBuffListArr is None")
+
+			#print("self.actionArrayLengthList[step]: ", self.actionArrayLengthList[step])
+			#print("self._actionArrayOffset: ", self._actionArrayOffset)
 			if self.actionArr:
 				actionSubsetArrays, self._actionArrayOffset = self.GetSubsetArray(step, self.actionArrayLengthList, self._actionArrayOffset, 
 																				  self.actionArr)
@@ -503,6 +543,12 @@ class UoServiceReplay:
 
 		if len(self._playerBuffListList) == 0:
 			print("No playerBuffListList")
+
+		if len(self._deleteItemSerialsList) == 0:
+			print("No _deleteItemSerialsList")
+
+		if len(self._deleteMobileSerialsList) == 0:
+			print("No _deleteMobileSerialsList")
 
 		if len(self._actionList) == 0:
 			print("No _actionList")
@@ -622,7 +668,8 @@ class UoServiceReplay:
 				radius = int(scale / 2)
 				screen_width = 4000
 				screen_height = 4000
-				for k, v in self.world_mobile_dict.items():
+				world_mobile_dict = copy.deepcopy(self.world_mobile_dict)
+				for k, v in world_mobile_dict.items():
 					if self.player_game_x != None:
 						if v["gameX"] < screen_width and v["gameY"] < screen_height:
 							screen_image = cv2.circle(screen_image, 
@@ -635,7 +682,9 @@ class UoServiceReplay:
 											  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
 											cv2.FONT_HERSHEY_SIMPLEX, 0.5, utils.color_dict["Red"], 1, cv2.LINE_4)
 
-				for k, v in self.world_item_dict.items():
+
+				world_item_dict = copy.deepcopy(self.world_item_dict)
+				for k, v in world_item_dict.items():
 					if self.player_game_x != None:
 						#print("world item {0}: {1}".format(k, self.world_item_dict[k]))
 						if v["gameX"] < screen_width and v["gameY"] < screen_height:
@@ -765,7 +814,8 @@ class UoServiceReplay:
 				 self._step_box.handle_event(event)
 
 			replay = self._step_box.update()
-			print("replay: ", replay)
+			
+			print("self._replay_step: ", self._replay_step)
 
 			keys = pygame.key.get_pressed()
 			if keys[pygame.K_LEFT]:
@@ -776,7 +826,6 @@ class UoServiceReplay:
 				if self._replay_step >= 1:
 					self._replay_step -= 1
 					self._previousControl = pygame.K_LEFT
-					print("self._replay_step: ", self._replay_step)
 				else:
 					print("This is start of replay")
 			elif keys[pygame.K_RIGHT]:
@@ -787,7 +836,6 @@ class UoServiceReplay:
 				if self._replay_step < self._replayLength - 1:
 					self._replay_step += 1
 					self._previousControl = pygame.K_RIGHT
-					print("self._replay_step: ", self._replay_step)
 				else:
 					print("This is end of replay")
 			else:
@@ -814,8 +862,8 @@ class UoServiceReplay:
 
 			#print("self._replay_step: ", self._replay_step)
 			#print("self.player_game_name: ", self.player_game_name)
-			popup_menu_data = self._popupMenuList[self._replay_step]
-			print("popup_menu_data: ", popup_menu_data)
+			#popup_menu_data = self._popupMenuList[self._replay_step]
+			#print("popup_menu_data: ", popup_menu_data)
 
 			if self.player_game_name == None:
 				#print("self.player_game_name: ", self.player_game_name)
@@ -823,7 +871,7 @@ class UoServiceReplay:
 				continue
 
 			if len(self._worldMobileList[self._replay_step]) != 0:
-				self.world_mobile_dict = {}
+				#self.world_mobile_dict = {}
 				for obj in self._worldMobileList[self._replay_step]:
 					self.world_mobile_dict[obj.serial] = { "name": obj.name, "gameX": obj.gameX, "gameY":obj.gameY, 
 														   "distance": obj.distance, "title": obj.title, "hits": obj.hits,
@@ -831,7 +879,7 @@ class UoServiceReplay:
 														   "race": obj.race }
 
 			if len(self._worldItemList[self._replay_step]) != 0:
-				self.world_item_dict = {}
+				#self.world_item_dict = {}
 				for obj in self._worldItemList[self._replay_step]:
 					self.world_item_dict[obj.serial] = { "name": obj.name, "gameX": obj.gameX, "gameY":obj.gameY, 
 														 "distance": obj.distance, "layer":obj.layer, "container": obj.container, 
@@ -921,6 +969,25 @@ class UoServiceReplay:
 					#print("backpack item {0}: {1}".format(k, self.backpack_item_dict[k]))
 					pass
 				#print("")
+
+			#if len(self._deleteItemSerialsList) == 0:
+			#	print("No _deleteItemSerialsList")
+			#if len(self._deleteMobileSerialsList) == 0:
+			#	print("No _deleteMobileSerialsList")
+
+
+			if self.deleteItemSerialsArr is not None and len(self._deleteItemSerialsList[self._replay_step]) != 0:
+				for serial in self._deleteItemSerialsList[self._replay_step]:
+					if serial in self.world_item_dict:
+						#print("delete item: ", self.world_item_dict[serial])
+						del self.world_item_dict[serial]
+				#print("")
+
+			if self.deleteMobileSerialsArr is not None and len(self._deleteMobileSerialsList[self._replay_step]) != 0:
+				for serial in self._deleteMobileSerialsList[self._replay_step]:
+					if serial in self.world_mobile_dict:
+						#print("delete mobile: ", self.world_mobile_dict[serial])
+						del self.world_mobile_dict[serial]
 
 			# Wait little bit
 			#print("self._tickScale: ", self._tickScale)
