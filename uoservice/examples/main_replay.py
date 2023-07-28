@@ -44,10 +44,11 @@ def main():
   #file_name = 'kimbring2-2023-6-6-01-56-41'
 
   uo_service_replay = UoServiceReplay(replay_path, screen_width, screen_height, uo_installed_path)
-  uo_service_replay.ReadReplay(file_name)
-  uo_service_replay.ParseReplay()
+  uo_service_replay.read_replay(file_name)
+  uo_service_replay.parse_replay()
+  uo_service_replay.parse_world_data()
 
-  uo_service_replay.InteractWithReplay()
+  uo_service_replay.interact_with_replay()
 
 
 if __name__ == '__main__':
