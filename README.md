@@ -7,6 +7,7 @@ UoService is a service to play Ultima Online through gRPC. There are first-class
 <img src="images/CodeArchitecture.png" width="600">
 
 # System requirement
+- Python 3.8
 - Currently, I only test this project in Ubuntu linux.
 - You need to install the [Ultima Online game](https://uo.com/client-download/) itself through the [Wine](https://wiki.winehq.org/Ubuntu).
 
