@@ -132,17 +132,17 @@ class UoServiceReplay:
 		self._replay_step = 0
 		
 		# PyGame Widget
-		self._left_button = Button(self._mainSurface, 500 + 100, self._screenHeight - 250 + 50, 150, 50, 
-																text='Left', fontSize=50, margin=20, inactiveColour=(200, 50, 0),
+		self._left_button = Button(self._mainSurface, 500 + 50, self._screenHeight - 250 + 25, 150, 50, 
+																text='Left', fontSize=50, margin=20, inactiveColour=pygame.Color('blue'),
 																hoverColour=(150, 0, 0), pressedColour=(0, 200, 20), radius=20, 
 																onClick=self.left_action_step)
 
-		self._textbox = TextBox(self._mainSurface, 500 + 250, self._screenHeight - 250 + 50, 100, 50, fontSize=20,
-														borderColour=(255, 0, 0), textColour=(0, 200, 0), onSubmit=self.set_step, 
-														radius=2, borderThickness=2)
+		self._textbox = TextBox(self._mainSurface, 500 + int(self._screenWidth / 2), self._screenHeight - 250 + 25, 100, 50, 
+													  fontSize=40, borderColour=pygame.Color('blue'), textColour=pygame.Color('black'), 
+													  onSubmit=self.set_step, radius=2, borderThickness=2)
 
-		self._right_button = Button(self._mainSurface, 500 + 500, self._screenHeight - 250 + 50, 150, 50, 
-																text='Right', fontSize=50, margin=20, inactiveColour=(200, 50, 0),
+		self._right_button = Button(self._mainSurface, 500 + self._screenWidth - 210, self._screenHeight - 250 + 25, 150, 50, 
+																text='Right', fontSize=50, margin=20, inactiveColour=pygame.Color('blue'),
 																hoverColour=(150, 0, 0), pressedColour=(0, 200, 20), radius=20, 
 																onClick=self.right_action_step)
 
@@ -774,10 +774,22 @@ class UoServiceReplay:
 				text_surface = font.render("run: " + str(self._actionList[self._replay_step].run), True, (255, 255, 255))
 				self._screenSurface.blit(text_surface, (5, 160))
 
-				## Draw the boundary line
+				## Replay step draw
+				font = pygame.font.Font('freesansbold.ttf', 32)
+				text_surface = font.render(str(self._replay_step) + " / " + str(self._replayLength), True, (255, 255, 255))
+				self._screenSurface.blit(text_surface, (int(self._screenWidth / 2) - 60, 10))
+
+				## Draw the boundary line of screenSurface
 				pygame.draw.line(self._screenSurface, (255, 255, 255), (1, 0), (1, self._screenHeight))
 				pygame.draw.line(self._screenSurface, (255, 255, 255), (self._screenWidth - 1, 0), (self._screenWidth - 1, self._screenHeight))
 				pygame.draw.line(self._screenSurface, (255, 255, 255), (0, self._screenHeight - 250 - 1), (self._screenWidth, self._screenHeight - 250 - 1))
+
+				## Draw the boundary line of control widgets
+				pygame.draw.line(self._mainSurface, (255, 255, 255), 
+												 (500, self._screenHeight - 150 - 1), (self._screenWidth + 500, self._screenHeight - 150 - 1))
+				pygame.draw.line(self._mainSurface, (255, 255, 255), (500 + 1, 0), (500 + 1, self._screenHeight - 150))
+				pygame.draw.line(self._mainSurface, (255, 255, 255), 
+												 (500 + self._screenWidth - 1, 0), (500 + self._screenWidth - 1, self._screenHeight - 150))
 
 				## Player status draw
 				self._statusSurface.fill(((0, 0, 0)))
@@ -823,11 +835,6 @@ class UoServiceReplay:
 					text_surface = font.render(str(k) + ": " + str(item["name"]) + ", " + str(item["amount"]), True, (255, 255, 255))
 					self._equipItemSurface.blit(text_surface, (0, 20 * (i + 1) + 420))
 
-				## Replay step draw
-				font = pygame.font.Font('freesansbold.ttf', 32)
-				text_surface = font.render(str(self._replay_step), True, (255, 0, 255))
-				self._mainSurface.blit(text_surface, (500 + 350, self._screenHeight - 250 + 50))
-
 				## Draw each surface on root surface
 				self._mainSurface.blit(self._screenSurface, (500, 0))
 				self._mainSurface.blit(self._equipItemSurface, (500 + self._screenWidth, 0))
@@ -850,7 +857,7 @@ class UoServiceReplay:
 					 running = False
 
 			pygame_widgets.update(events)
-			print("self._replay_step: ", self._replay_step)
+			#print("self._replay_step: ", self._replay_step)
 
 			## Check the left, right key input
 			keys = pygame.key.get_pressed()
