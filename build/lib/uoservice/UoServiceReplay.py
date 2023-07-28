@@ -80,7 +80,7 @@ FONT = pygame.font.Font(None, 32)
 class InputBox:
     def __init__(self, x, y, w, h, text=''):
         self.main_surface = pygame.Surface((300, 50))
-        self.main_surface.fill(((255, 255, 255)))
+        self.main_surface.fill((pygame.Color('green')))
 
         self.rect = pygame.Rect(x, y, w, h)
         self.color = COLOR_INACTIVE
@@ -123,7 +123,7 @@ class InputBox:
     def draw(self, screen):
         # Blit the text.
         self.main_surface.blit(self.txt_surface, (self.rect.x + 5, self.rect.y + 5))
-        screen.blit(self.main_surface, (0, 0))
+        screen.blit(self.main_surface, (900, 900))
 
         # Blit the rect.
         #pygame.draw.rect(screen, self.color, self.rect, 2)
@@ -600,7 +600,7 @@ class UoServiceReplay:
 
 							## Draw the different color box for land
 							if land_data["name"] == "forest":
-								screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Lime"], 1)
+								screen_image = cv2.rectangle(screen_image, start_point, end_point, pygame.Color('darkgreen'), 1)
 							elif land_data["name"] == "rock":
 								screen_image = cv2.rectangle(screen_image, start_point, end_point, pygame.Color('yellow'), 1)
 							else:
@@ -636,12 +636,12 @@ class UoServiceReplay:
 							screen_image = cv2.circle(screen_image, 
 											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
 											  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
-											  radius, pygame.Color('red'), -1)
+											  radius, pygame.Color('blue'), -1)
 
 							screen_image = cv2.putText(screen_image, "  " + v["name"], 
 											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
 											  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
-											cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('red'), 2, cv2.LINE_4)
+											cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('blue'), 1, cv2.LINE_4)
 
 				## Rendering the item data of replay as real screen scale 
 				world_item_dict = copy.deepcopy(self.world_item_dict)
@@ -653,7 +653,7 @@ class UoServiceReplay:
 											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
 											  (v["gameY"] - player_game_y) * scale + int(screen_length / 2)
 											),
-											radius, utils.color_dict["Purple"], -1)
+											radius, pygame.Color('purple'), -1)
 		          
 							item_name_list = v["name"].split(" ")
 							screen_image = cv2.putText(screen_image, "     " + item_name_list[-1], 

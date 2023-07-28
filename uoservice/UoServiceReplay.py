@@ -80,7 +80,7 @@ FONT = pygame.font.Font(None, 32)
 class InputBox:
     def __init__(self, x, y, w, h, text=''):
         self.main_surface = pygame.Surface((300, 50))
-        self.main_surface.fill(((255, 255, 255)))
+        self.main_surface.fill((pygame.Color('green')))
 
         self.rect = pygame.Rect(x, y, w, h)
         self.color = COLOR_INACTIVE
@@ -123,7 +123,7 @@ class InputBox:
     def draw(self, screen):
         # Blit the text.
         self.main_surface.blit(self.txt_surface, (self.rect.x + 5, self.rect.y + 5))
-        screen.blit(self.main_surface, (0, 0))
+        screen.blit(self.main_surface, (900, 900))
 
         # Blit the rect.
         #pygame.draw.rect(screen, self.color, self.rect, 2)
@@ -600,7 +600,7 @@ class UoServiceReplay:
 
 							## Draw the different color box for land
 							if land_data["name"] == "forest":
-								screen_image = cv2.rectangle(screen_image, start_point, end_point, pygame.Color('lime'), 1)
+								screen_image = cv2.rectangle(screen_image, start_point, end_point, pygame.Color('darkgreen'), 1)
 							elif land_data["name"] == "rock":
 								screen_image = cv2.rectangle(screen_image, start_point, end_point, pygame.Color('yellow'), 1)
 							else:
