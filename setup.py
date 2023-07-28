@@ -16,8 +16,8 @@ setup(
   keywords = ['Machine Learning', 'Deep Learning', 'MMORPG', 'Ultima Online'],   
   install_requires=[            
           'numpy',
-          'pygame>=1.9.6',
-          'pygame-widgets>=1.0.0',
+          'pygame==2.1.0',
+          'pygame-widgets==1.0.0',
           'mpyq',
           'opencv-python',
           'tqdm'
