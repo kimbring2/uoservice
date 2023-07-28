@@ -17,6 +17,8 @@ import numpy as np
 import cv2
 import random
 import pygame
+import pygame_widgets
+from pygame_widgets.button import Button
 import sys
 import copy
 from enum import Enum
@@ -78,10 +80,7 @@ COLOR_INACTIVE = pygame.Color('lightskyblue3')
 COLOR_ACTIVE = pygame.Color('dodgerblue2')
 FONT = pygame.font.Font(None, 32)
 class InputBox:
-    def __init__(self, x, y, w, h, text=''):
-        self.main_surface = pygame.Surface((300, 50))
-        self.main_surface.fill((pygame.Color('green')))
-
+    def __init__(self, x, y, w, h, text='50'):
         self.rect = pygame.Rect(x, y, w, h)
         self.color = COLOR_INACTIVE
         self.text = text
@@ -121,13 +120,15 @@ class InputBox:
         return self.text
 
     def draw(self, screen):
+        screen.blit(self.txt_surface, (self.rect.x + 5, self.rect.y + 5))
+        pygame.draw.rect(screen, self.color, self.rect, 2)
+
         # Blit the text.
-        self.main_surface.blit(self.txt_surface, (self.rect.x + 5, self.rect.y + 5))
-        screen.blit(self.main_surface, (900, 900))
+        #self.main_surface.blit(self.txt_surface, (self.rect.x + 5, self.rect.y + 5))
+        #screen.blit(self.main_surface, (900, 900))
 
         # Blit the rect.
-        #pygame.draw.rect(screen, self.color, self.rect, 2)
-        pygame.draw.rect(self.main_surface, self.color, self.rect, 2)
+        #pygame.draw.rect(self.main_surface, self.color, self.rect, 2)
 
 
 class UoServiceReplay:
@@ -176,13 +177,36 @@ class UoServiceReplay:
 
 		## PyGame related variables
 		self._mainSurface = pygame.display.set_mode([500 + self._screenWidth + 500, self._screenHeight + 350])
-		self._screenSurface = pygame.Surface((self._screenWidth, self._screenHeight))
+		self._screenSurface = pygame.Surface((self._screenWidth, self._screenHeight - 250))
 		self._equipItemSurface = pygame.Surface((500, self._screenHeight))
 		self._npcSurface = pygame.Surface((self._screenWidth, 350))
 		self._statusSurface = pygame.Surface((500, self._screenHeight))
+		self._controller_surface = pygame.Surface((self._screenWidth, 500))
 		self._clock = pygame.time.Clock()
 		self._replay_step = 0
 		self._step_box = InputBox(900, 900, 140, 32)
+
+		
+		# Creates the button with optional parameters
+		self._button = Button(
+		    # Mandatory Parameters
+		    self._mainSurface,  # Surface to place button on
+		    500 + 100,  # X-coordinate of top left corner
+		    100,  # Y-coordinate of top left corner
+		    300,  # Width
+		    150,  # Height
+
+		    # Optional Parameters
+		    text='Hello',  # Text to display
+		    fontSize=50,  # Size of font
+		    margin=20,  # Minimum distance between text/image and edge of button
+		    inactiveColour=(200, 50, 0),  # Colour of button when not being interacted with
+		    hoverColour=(150, 0, 0),  # Colour of button when being hovered over
+		    pressedColour=(0, 200, 20),  # Colour of button when being clicked
+		    radius=20,  # Radius of border corners (leave empty for not curved)
+		    onClick=lambda: print('Click')  # Function to call when clicked on
+		)
+		
 
 		## Variables to keep the replay data
 		self.world_item_dict = {}
@@ -751,13 +775,17 @@ class UoServiceReplay:
 					text_surface = font.render(str(k) + ": " + str(item["name"]) + ", " + str(item["amount"]), True, (255, 255, 255))
 					self._equipItemSurface.blit(text_surface, (0, 20 * (i + 1) + 420))
 
+				#self._controller_surface.fill((pygame.Color('green')))
+
 				## Draw each surface on root surface
-				self._mainSurface.blit(self._screenSurface, (500, 0))
+				#self._mainSurface.blit(self._screenSurface, (500, 0))
+				#self._mainSurface.blit(self._controller_surface, (500, self._screenHeight - 50))
 				self._mainSurface.blit(self._equipItemSurface, (500 + self._screenWidth, 0))
 				#self._mainSurface.blit(self._npcSurface, (500, self._screenHeight))
 				self._mainSurface.blit(self._statusSurface, (0, 0))
-				
-				self._step_box.draw(self._mainSurface)
+
+				#self._step_box.draw(self._mainSurface)
+				#self._mainSurface.blit(self._controller_surface, (900, 900))
 
 				pygame.display.update()
 
@@ -771,13 +799,16 @@ class UoServiceReplay:
 		## Start PyGame loop to interact with human
 		while True:
 			## Quit event check
-			for event in pygame.event.get():
+			events = pygame.event.get()
+
+			for event in events:
 				 if event.type == pygame.QUIT:
 					 running = False
 
 				 self._step_box.handle_event(event)
 
-			replay = self._step_box.update()
+			pygame_widgets.update(events)
+			#replay = self._step_box.update()
 
 			## Check the left, right key input
 			keys = pygame.key.get_pressed()
