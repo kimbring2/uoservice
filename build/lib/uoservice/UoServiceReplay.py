@@ -128,41 +128,34 @@ class UoServiceReplay:
 		self._equipItemSurface = pygame.Surface((500, self._screenHeight))
 		self._npcSurface = pygame.Surface((self._screenWidth, 350))
 		self._statusSurface = pygame.Surface((500, self._screenHeight))
-		self._controller_surface = pygame.Surface((self._screenWidth, 500))
 		self._clock = pygame.time.Clock()
 		self._replay_step = 0
 		
-		# Creates the button with optional parameters
-		self._button = Button(
-		    # Mandatory Parameters
-		    self._mainSurface,  # Surface to place button on
-		    500 + 100,  # X-coordinate of top left corner
-		    self._screenHeight - 250 + 50,  # Y-coordinate of top left corner
-		    150,  # Width
-		    50,  # Height
+		# PyGame Widget
+		self._left_button = Button(self._mainSurface, 500 + 100, self._screenHeight - 250 + 50, 150, 50, 
+																text='Left', fontSize=50, margin=20, inactiveColour=(200, 50, 0),
+																hoverColour=(150, 0, 0), pressedColour=(0, 200, 20), radius=20, 
+																onClick=self.left_action_step)
 
-		    # Optional Parameters
-		    text='Hello',  # Text to display
-		    fontSize=50,  # Size of font
-		    margin=20,  # Minimum distance between text/image and edge of button
-		    inactiveColour=(200, 50, 0),  # Colour of button when not being interacted with
-		    hoverColour=(150, 0, 0),  # Colour of button when being hovered over
-		    pressedColour=(0, 200, 20),  # Colour of button when being clicked
-		    radius=20,  # Radius of border corners (leave empty for not curved)
-		    onClick=self.set_replay_step  # Function to call when clicked on
-		)
+		self._textbox = TextBox(self._mainSurface, 500 + 250, self._screenHeight - 250 + 50, 100, 50, fontSize=20,
+														borderColour=(255, 0, 0), textColour=(0, 200, 0), onSubmit=self.set_step, 
+														radius=2, borderThickness=2)
 
-		self._textbox = TextBox(self._mainSurface, 
-														500 + 250, self._screenHeight - 250 + 50, 100, 25, fontSize=20,
-														borderColour=(255, 0, 0), textColour=(0, 200, 0),
-														onSubmit=self.set_replay_step, radius=10, borderThickness=5)
+		self._right_button = Button(self._mainSurface, 500 + 500, self._screenHeight - 250 + 50, 150, 50, 
+																text='Right', fontSize=50, margin=20, inactiveColour=(200, 50, 0),
+																hoverColour=(150, 0, 0), pressedColour=(0, 200, 20), radius=20, 
+																onClick=self.right_action_step)
+
+		self._non_zero_action_step_list = []
+		self._non_zero_action_index = 0
 		
 		## Variables to keep the replay data
-		#self.world_item_dict = {}
-		#self.world_mobile_dict = {}
 		self.player_object_list = []
 		self.world_item_list = []
 		self.world_mobile_list = []
+		self.player_skills_list = []
+		self.player_status_list = []
+
 		self.player_skills_dict = {}
 		self.player_status_dict = {}
 
@@ -189,9 +182,27 @@ class UoServiceReplay:
 		self.uoservice_game_file_parser = UoServiceGameFileParser(self.uo_installed_path)
 		self.uoservice_game_file_parser.load()
 
-	def set_replay_step(self):
+	def set_step(self):
 		#print(self._textbox.getText())
 		self._replay_step = int(self._textbox.getText())
+
+	def left_action_step(self):
+		#print(self._textbox.getText())
+		if self._non_zero_action_index > 0:
+			self._non_zero_action_index -= 1
+		else:
+			logging.warning('This is start of non-zero action step list')
+
+		self._replay_step = self._non_zero_action_step_list[self._non_zero_action_index]
+
+	def right_action_step(self):
+		#print(self._textbox.getText())
+		if self._non_zero_action_index < len(self._non_zero_action_step_list) - 1:
+			self._non_zero_action_index += 1
+		else:
+			logging.warning('This is end of non-zero action step list')
+
+		self._replay_step = self._non_zero_action_step_list[self._non_zero_action_index]
 
 	def convert_byte_array_to_int_list(self, byteArray):
 		# Convert byte array of MQP file to int list
@@ -359,8 +370,8 @@ class UoServiceReplay:
 		for step in tqdm(range(self._replayLength)):
 			if self.playerObjectArr:
 				playerObjectSubsetArray, self._playerObjectArrayOffset = self.get_subset_array(step, self.playerObjectArrayLengthList, 
-																				             self._playerObjectArrayOffset, 
-																				             self.playerObjectArr)
+																																											self._playerObjectArrayOffset, 
+																																											self.playerObjectArr)
 				grpcPlayerObjectReplay = UoService_pb2.GrpcPlayerObject().FromString(playerObjectSubsetArray)
 
 				## This data is needed to load the land, static data
@@ -384,7 +395,7 @@ class UoServiceReplay:
 			if self.worldItemArr:
 				## Get the subset array from whole array using the array length data
 				worldItemSubsetArray, self._worldItemArrayOffset = self.get_subset_array(step, self.worldItemArrayLengthList, 
-																				       self._worldItemArrayOffset, self.worldItemArr)
+																																								self._worldItemArrayOffset, self.worldItemArr)
 
 				## Decode the byte array to gRPC protocol
 				grpcWorldItemReplay = UoService_pb2.GrpcItemObjectList().FromString(worldItemSubsetArray)
@@ -396,7 +407,8 @@ class UoServiceReplay:
 
 			if self.worldMobileArr:
 				worldMobileSubsetArray, self._worldMobileArrayOffset = self.get_subset_array(step, self.worldMobileArrayLengthList, 
-																				           self._worldMobileArrayOffset, self.worldMobileArr)
+																																										self._worldMobileArrayOffset, 
+																																										self.worldMobileArr)
 				grpcWorldMobileReplay = UoService_pb2.GrpcMobileObjectList().FromString(worldMobileSubsetArray)
 				self._worldMobileList.append(grpcWorldMobileReplay.mobileObjects)
 			else:
@@ -404,7 +416,7 @@ class UoServiceReplay:
 
 			if self.popupMenuArr:
 				popupMenuSubsetArray, self._popupMenuArrayOffset = self.get_subset_array(step, self.popupMenuArrayLengthList, 
-																			 		   self._popupMenuArrayOffset, self.popupMenuArr)
+																																								self._popupMenuArrayOffset, self.popupMenuArr)
 				grpcPopupMenuReplay = UoService_pb2.GrpcPopupMenuList().FromString(popupMenuSubsetArray)
 				self._popupMenuList.append(grpcPopupMenuReplay.menus)
 			else:
@@ -412,7 +424,7 @@ class UoServiceReplay:
 
 			if self.clilocArr:
 				clilocSubsetArray, self._clilocArrayOffset = self.get_subset_array(step, self.clilocArrayLengthList, 
-																			   			 self._clilocArrayOffset, self.clilocArr)
+																																					self._clilocArrayOffset, self.clilocArr)
 				grpcClilocReplay = UoService_pb2.GrpcClilocList().FromString(clilocSubsetArray)
 				self._clilocList.append(grpcClilocReplay.clilocs)
 			else:
@@ -420,7 +432,7 @@ class UoServiceReplay:
 
 			if self.vendorListArr:
 				vendorListSubsetArray, self._vendorListArrayOffset = self.get_subset_array(step, self.vendorListArrayLengthList, 
-																			   			 self._vendorListArrayOffset, self.vendorListArr)
+																																									self._vendorListArrayOffset, self.vendorListArr)
 				grpcVendorListReplay = UoService_pb2.GrpcVendorList().FromString(vendorListSubsetArray)
 				self._vendorListList.append(grpcVendorListReplay.vendors)
 			else:
@@ -428,8 +440,8 @@ class UoServiceReplay:
 
 			if self.playerStatusArr:
 				playerStatusSubsetArray, self._playerStatusArrayOffset = self.get_subset_array(step, self.playerStatusArrayLengthList, 
-																							 self._playerStatusArrayOffset, 
-																							 self.playerStatusArr)
+																																											self._playerStatusArrayOffset, 
+																																											self.playerStatusArr)
 				grpcPlayerStatusReplay = UoService_pb2.GrpcPlayerStatus().FromString(playerStatusSubsetArray)
 				self._playerStatusList.append(grpcPlayerStatusReplay)
 			else:
@@ -437,8 +449,8 @@ class UoServiceReplay:
 
 			if self.playerSkillListArr:
 				playerSkillListSubsetArray, self._playerSkillListArrayOffset = self.get_subset_array(step, self.playerSkillListArrayLengthList, 
-																				   		 		   self._playerSkillListArrayOffset, 
-																				   		 		   self.playerSkillListArr)
+																																														self._playerSkillListArrayOffset, 
+																																														self.playerSkillListArr)
 				grpcPlayerSkillListReplay = UoService_pb2.GrpcSkillList().FromString(playerSkillListSubsetArray)
 				self._playerSkillListList.append(grpcPlayerSkillListReplay.skills)
 			else:
@@ -446,8 +458,8 @@ class UoServiceReplay:
 
 			if self.playerBuffListArr:
 				playerBuffListSubsetArray, self._playerBuffListArrayOffset = self.get_subset_array(step, self.playerBuffListArrayLengthList, 
-																				   		 		   self._playerBuffListArrayOffset, 
-																				   		 		   self.playerBuffListArr)
+																																													self._playerBuffListArrayOffset, 
+																																													self.playerBuffListArr)
 				grpcPlayerBuffListReplay = UoService_pb2.GrpcBuffList().FromString(playerBuffListSubsetArray)
 				self._playerBuffListList.append(grpcPlayerBuffListReplay.buffs)
 			else:
@@ -455,8 +467,8 @@ class UoServiceReplay:
 
 			if self.deleteItemSerialsArr:
 				deleteItemSerialsSubsetArray, self._deleteItemSerialsArrayOffset = self.get_subset_array(step, self.deleteItemSerialsArrayLengthList, 
-																				   		 		   self._deleteItemSerialsArrayOffset, 
-																				   		 		   self.deleteItemSerialsArr)
+																																																self._deleteItemSerialsArrayOffset, 
+																																																self.deleteItemSerialsArr)
 				grpcDeleteItemSerialsReplay = UoService_pb2.GrpcDeleteItemSerialList().FromString(deleteItemSerialsSubsetArray)
 				self._deleteItemSerialsList.append(grpcDeleteItemSerialsReplay.serials)
 			else:
@@ -464,8 +476,8 @@ class UoServiceReplay:
 
 			if self.deleteMobileSerialsArr:
 				deleteMobileSerialsSubsetArray, self._deleteMobileSerialsArrayOffset = self.get_subset_array(step, self.deleteMobileSerialsArrayLengthList, 
-																				   		 		   self._deleteMobileSerialsArrayOffset, 
-																				   		 		   self.deleteMobileSerialsArr)
+																																																		self._deleteMobileSerialsArrayOffset, 
+																																																		self.deleteMobileSerialsArr)
 				grpcDeleteMobileSerialsReplay = UoService_pb2.GrpcDeleteMobileSerialList().FromString(deleteMobileSerialsSubsetArray)
 				self._deleteMobileSerialsList.append(grpcDeleteMobileSerialsReplay.serials)
 			else:
@@ -473,8 +485,12 @@ class UoServiceReplay:
 
 			if self.actionArr:
 				actionSubsetArrays, self._actionArrayOffset = self.get_subset_array(step, self.actionArrayLengthList, self._actionArrayOffset, 
-																				  self.actionArr)
+																																						self.actionArr)
 				actionReplay = UoService_pb2.GrpcAction().FromString(actionSubsetArrays)
+
+				if actionReplay.actionType != 0:
+					self._non_zero_action_step_list.append(step)
+
 				self._actionList.append(actionReplay)
 			else:
 				pass
@@ -545,7 +561,6 @@ class UoServiceReplay:
 																						"notorietyFlag": obj.notorietyFlag, "hitsMax": obj.hitsMax,
 																						"race": obj.race }
 
-
 			## Delete the item from world item Dict using the gRPC data
 			if self.deleteItemSerialsArr is not None and len(self._deleteItemSerialsList[self._replay_step]) != 0:
 				for serial in self._deleteItemSerialsList[self._replay_step]:
@@ -560,38 +575,6 @@ class UoServiceReplay:
 
 			self.world_item_list.append(copy.deepcopy(world_item_dict))
 			self.world_mobile_list.append(copy.deepcopy(world_mobile_dict))
-
-			'''
-			player_object_dict = {}
-			if self._playerObjectList[step].name != '':
-				#print("self._playerObjectList[self._replay_step].name != step: ", step)
-				
-				self.player_game_name = self._playerObjectList[self._replay_step].name
-				self.player_serial = self._playerObjectList[self._replay_step].serial
-				self.player_game_x = self._playerObjectList[self._replay_step].gameX
-				self.player_game_y = self._playerObjectList[self._replay_step].gameY
-				self.war_mode = self._playerObjectList[self._replay_step].warMode
-				self.hold_item_serial = self._playerObjectList[self._replay_step].holdItemSerial
-				self.targeting_state = self._playerObjectList[self._replay_step].targetingState
-				self.min_tile_x = self._playerObjectList[self._replay_step].minTileX
-				self.min_tile_y = self._playerObjectList[self._replay_step].minTileY
-				self.max_tile_x = self._playerObjectList[self._replay_step].maxTileX
-				self.max_tile_y = self._playerObjectList[self._replay_step].maxTileY
-				
-				player_object_dict["player_game_name"] = self._playerObjectList[self._replay_step].name
-				player_object_dict["player_serial"] = self._playerObjectList[self._replay_step].serial
-				player_object_dict["player_game_x"] = self._playerObjectList[self._replay_step].gameX
-				player_object_dict["player_game_y"] = self._playerObjectList[self._replay_step].gameY
-				player_object_dict["war_mode"] = self._playerObjectList[self._replay_step].warMode
-				player_object_dict["hold_item_serial"] = self._playerObjectList[self._replay_step].holdItemSerial
-				player_object_dict["targeting_state"] = self._playerObjectList[self._replay_step].targetingState
-				player_object_dict["min_tile_x"] = self._playerObjectList[self._replay_step].minTileX
-				player_object_dict["min_tile_y"] = self._playerObjectList[self._replay_step].minTileY
-				player_object_dict["max_tile_x"] = self._playerObjectList[self._replay_step].maxTileX
-				player_object_dict["max_tile_y"] = self._playerObjectList[self._replay_step].maxTileY
-
-			#self.player_object_list.append(copy.deepcopy(player_object_dict))
-			'''
 
 	def get_distance(self, target_game_x, target_game_y):
 		## Distance between the player and target
@@ -742,8 +725,7 @@ class UoServiceReplay:
 							screen_image = cv2.circle(screen_image, 
 											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
 											  (v["gameY"] - player_game_y) * scale + int(screen_length / 2)
-											),
-											radius, pygame.Color('purple'), -1)
+											), radius, pygame.Color('purple'), -1)
 		          
 							item_name_list = v["name"].split(" ")
 							screen_image = cv2.putText(screen_image, "     " + item_name_list[-1], 
@@ -841,22 +823,22 @@ class UoServiceReplay:
 					text_surface = font.render(str(k) + ": " + str(item["name"]) + ", " + str(item["amount"]), True, (255, 255, 255))
 					self._equipItemSurface.blit(text_surface, (0, 20 * (i + 1) + 420))
 
-				#self._controller_surface.fill((pygame.Color('green')))
+				## Replay step draw
+				font = pygame.font.Font('freesansbold.ttf', 32)
+				text_surface = font.render(str(self._replay_step), True, (255, 0, 255))
+				self._mainSurface.blit(text_surface, (500 + 350, self._screenHeight - 250 + 50))
 
 				## Draw each surface on root surface
 				self._mainSurface.blit(self._screenSurface, (500, 0))
-				self._mainSurface.blit(self._controller_surface, (500, self._screenHeight - 50))
 				self._mainSurface.blit(self._equipItemSurface, (500 + self._screenWidth, 0))
 				#self._mainSurface.blit(self._npcSurface, (500, self._screenHeight))
 				self._mainSurface.blit(self._statusSurface, (0, 0))
-
-				#self._mainSurface.blit(self._controller_surface, (900, 900))
 
 				pygame.display.update()
 
 	def interact_with_replay(self):
 		## Viewers can Forward and rewind the saved replay data by left and right arrow key
-		self._replay_step = 0
+		self._replay_step = self._non_zero_action_step_list[self._non_zero_action_index]
 
 		## Start PyGame loop to interact with human
 		while True:
@@ -923,31 +905,6 @@ class UoServiceReplay:
 			#if self.player_game_name == None:
 				#self._replay_step += 1
 				#continue
-
-			'''
-			## Save the world item object into global Dict	
-			if len(self._worldItemList[self._replay_step]) != 0:
-				for obj in self._worldItemList[self._replay_step]:
-					self.world_item_dict[obj.serial] = { "name": obj.name, "gameX": obj.gameX, "gameY":obj.gameY, 
-														 									 "distance": obj.distance, "layer":obj.layer, "container": obj.container, 
-														 									 "isCorpse": obj.isCorpse, "amount": obj.amount }
-
-					## Check the serial number of backpack container
-					if obj.layer == 21:
-						self.backpack_serial = obj.serial
-
-					## Check the serial number of bank container
-					if obj.layer == 29:
-						self.bank_serial = obj.serial
-
-			## Save the world mobile object into global Dict
-			if len(self._worldMobileList[self._replay_step]) != 0:
-				for obj in self._worldMobileList[self._replay_step]:
-					self.world_mobile_dict[obj.serial] = { "name": obj.name, "gameX": obj.gameX, "gameY":obj.gameY, 
-														   									 "distance": obj.distance, "title": obj.title, "hits": obj.hits,
-														   									 "notorietyFlag": obj.notorietyFlag, "hitsMax": obj.hitsMax,
-														   									 "race": obj.race }
-			'''
 
 			## Save the player status informaion into global Dict	
 			if self._playerStatusList[self._replay_step].str != 0:
@@ -1021,20 +978,6 @@ class UoServiceReplay:
 						self.equipped_item_dict['Skirt'] = v
 					elif v["layer"] == 24:
 						self.equipped_item_dict['Legs'] = v
-
-			'''
-			## Delete the item from world item Dict using the gRPC data
-			if self.deleteItemSerialsArr is not None and len(self._deleteItemSerialsList[self._replay_step]) != 0:
-				for serial in self._deleteItemSerialsList[self._replay_step]:
-					if serial in self.world_item_dict:
-						del self.world_item_dict[serial]
-
-			## Delete the mobile from world mobile Dict using the gRPC data
-			if self.deleteMobileSerialsArr is not None and len(self._deleteMobileSerialsList[self._replay_step]) != 0:
-				for serial in self._deleteMobileSerialsList[self._replay_step]:
-					if serial in self.world_mobile_dict:
-						del self.world_mobile_dict[serial]	
-			'''
 
 			self.rendering_data()
 

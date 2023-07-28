@@ -5,7 +5,6 @@ uoservice/UoService.py
 uoservice/UoServiceGameFileParser.py
 uoservice/UoServiceReplay.py
 uoservice/pygame_backup.py
-uoservice/pywidget_example.py
 uoservice/untitled.py
 uoservice/uoservice.py
 uoservice/utils.py
