@@ -132,8 +132,11 @@ class UoServiceReplay:
 		self._clock = pygame.time.Clock()
 		self._replay_step = 0
 
+		## PyGame Widget related variables
 		self._non_zero_action_step_list = []
 		self._non_zero_action_index = 0
+		self._non_zero_action_index_lower = 0
+		self._non_zero_action_index_higher = 0
 		
 		## Variables to keep the replay data
 		self.player_object_list = []
@@ -168,30 +171,25 @@ class UoServiceReplay:
 		self.uoservice_game_file_parser = UoServiceGameFileParser(self.uo_installed_path)
 		self.uoservice_game_file_parser.load()
 
-	def set_step(self):
-		#print(self._textbox.getText())
-		self._replay_step = int(self._textbox.getText())
-		self._slider.setValue(self._replay_step)
-
 	def left_action_step(self):
-		#print(self._textbox.getText())
+		#print("left_action_step()")
 		if self._non_zero_action_index > 0:
 			self._non_zero_action_index -= 1
 		else:
 			logging.warning('This is start of non-zero action step list')
 
 		self._replay_step = self._non_zero_action_step_list[self._non_zero_action_index]
-		self._slider.setValue(self._replay_step)
+		self._slider.setValue(self._non_zero_action_index)
 
 	def right_action_step(self):
-		#print(self._textbox.getText())
+		#print("right_action_step()")
 		if self._non_zero_action_index < len(self._non_zero_action_step_list) - 1:
 			self._non_zero_action_index += 1
 		else:
 			logging.warning('This is end of non-zero action step list')
 
 		self._replay_step = self._non_zero_action_step_list[self._non_zero_action_index]
-		self._slider.setValue(self._replay_step)
+		self._slider.setValue(self._non_zero_action_index)
 
 	def convert_byte_array_to_int_list(self, byteArray):
 		# Convert byte array of MQP file to int list
@@ -264,20 +262,6 @@ class UoServiceReplay:
 
 		## Find the total length of replay
 		self._replayLength = len(self.playerObjectArrayLengthList)
-
-		# PyGame Widget
-		self._left_button = Button(self._mainSurface, 500 + 50, self._screenHeight - 250 + 25, 150, 50, 
-																text='Left', fontSize=50, margin=20, inactiveColour=pygame.Color('blue'),
-																hoverColour=(150, 0, 0), pressedColour=(0, 200, 20), radius=20, 
-																onClick=self.left_action_step)
-
-		self._right_button = Button(self._mainSurface, 500 + self._screenWidth - 210, self._screenHeight - 250 + 25, 150, 50, 
-																text='Right', fontSize=50, margin=20, inactiveColour=pygame.Color('blue'),
-																hoverColour=(150, 0, 0), pressedColour=(0, 200, 20), radius=20, 
-																onClick=self.right_action_step)
-
-		self._slider = Slider(self._mainSurface, 500 + int(self._screenWidth / 2) - 350, self._screenHeight - 250 + 30, 
-													700, 40, min=0, max=self._replayLength, step=1)
 
 		## The actual data as byte array
 		self.playerObjectArr = self._archive.read_file("replay.playerObject");
@@ -554,6 +538,28 @@ class UoServiceReplay:
 						else:
 							land_data_list, static_data_list = self.cell_dict[(cell_x, cell_y)]
 
+		# PyGame Widget
+		self._left_button = Button(self._mainSurface, 500 + 50, self._screenHeight - 250 + 25, 150, 50, 
+																text='Left', fontSize=50, margin=20, inactiveColour=pygame.Color('blue'),
+																hoverColour=(150, 0, 0), pressedColour=(0, 200, 20), radius=20, 
+																onClick=self.left_action_step)
+
+		self._right_button = Button(self._mainSurface, 500 + self._screenWidth - 210, self._screenHeight - 250 + 25, 150, 50, 
+																text='Right', fontSize=50, margin=20, inactiveColour=pygame.Color('blue'),
+																hoverColour=(150, 0, 0), pressedColour=(0, 200, 20), radius=20, 
+																onClick=self.right_action_step)
+
+		self._slider = Slider(self._mainSurface, 500 + int(self._screenWidth / 2) - 100, self._screenHeight - 250 + 30, 
+													700, 40, min=0, max=len(self._non_zero_action_step_list), step=1)
+
+		self._non_zero_action_index = int(self._slider.getValue())
+
+		self._mainSurface.fill(((131, 139, 139)))
+
+		self._left_button.draw()
+		#self._slider.draw()
+		self._right_button.draw()
+
 	def parse_world_data(self):
 		world_item_dict = {}
 		world_mobile_dict = {}
@@ -805,6 +811,13 @@ class UoServiceReplay:
 				text_surface = font.render(str(self._replay_step) + " / " + str(self._replayLength), True, (255, 255, 255))
 				self._screenSurface.blit(text_surface, (int(self._screenWidth / 2) - 60, 10))
 
+				## _non_zero_action_index
+				font = pygame.font.Font('freesansbold.ttf', 26)
+				title = "Non Zero Action Mover: "
+				text_surface = font.render(title + str(self._non_zero_action_index) + " / " + str(len(self._non_zero_action_step_list)), 
+																	 True, (255, 255, 255))
+				self._mainSurface.blit(text_surface, (500 + 50, self._screenHeight - 250 + 35))
+
 				## Draw the boundary line of screenSurface
 				pygame.draw.line(self._screenSurface, (255, 255, 255), (1, 0), (1, self._screenHeight))
 				pygame.draw.line(self._screenSurface, (255, 255, 255), (self._screenWidth - 1, 0), (self._screenWidth - 1, self._screenHeight))
@@ -869,9 +882,9 @@ class UoServiceReplay:
 				#self._mainSurface.blit(self._npcSurface, (500, self._screenHeight))
 				self._mainSurface.blit(self._statusSurface, (0, 0))
 
-				self._left_button.draw()
+				#self._left_button.draw()
 				self._slider.draw()
-				self._right_button.draw()
+				#self._right_button.draw()
 
 				pygame.display.update()
 
@@ -888,9 +901,10 @@ class UoServiceReplay:
 				 if event.type == pygame.QUIT:
 					 running = False
 
-			#output.setText(slider.getValue())
-			self._replay_step = self._slider.getValue()
-			#self._textbox.setText(self._replay_step)
+			self._non_zero_action_index = self._slider.getValue()
+			self._replay_step = self._non_zero_action_step_list[self._non_zero_action_index]
+
+			#print("_non_zero_action_index: ", self._non_zero_action_index)
 
 			pygame_widgets.update(events)
 			#print("self._replay_step: ", self._replay_step)
@@ -906,7 +920,12 @@ class UoServiceReplay:
 				## Decrease the step when there is left arrow input
 				if self._replay_step >= 1:
 					self._replay_step -= 1
-					self._slider.setValue(self._replay_step)
+
+					if self._replay_step <= self._non_zero_action_step_list[self._non_zero_action_index]:
+						self._non_zero_action_index -= 1
+
+					self._slider.setValue(self._non_zero_action_index)
+
 					self._previousControl = pygame.K_LEFT
 				else:
 					print("This is start of replay")
@@ -918,7 +937,12 @@ class UoServiceReplay:
 
 				if self._replay_step < self._replayLength - 1:
 					self._replay_step += 1
-					self._slider.setValue(self._replay_step)
+					
+					if self._replay_step > self._non_zero_action_step_list[self._non_zero_action_index]:
+						self._non_zero_action_index += 1
+
+					self._slider.setValue(self._non_zero_action_index)
+
 					self._previousControl = pygame.K_RIGHT
 				else:
 					print("This is end of replay")
