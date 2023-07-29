@@ -126,9 +126,9 @@ class UoServiceReplay:
 		## PyGame related variables
 		self._mainSurface = pygame.display.set_mode([500 + self._screenWidth + 500, self._screenHeight + 350])
 		self._screenSurface = pygame.Surface((self._screenWidth, self._screenHeight - 250))
-		self._equipItemSurface = pygame.Surface((500, self._screenHeight))
-		self._npcSurface = pygame.Surface((self._screenWidth, 350))
-		self._statusSurface = pygame.Surface((500, self._screenHeight))
+		self._rightSideSurface = pygame.Surface((500, self._screenHeight))
+		self._bottomSideSurface = pygame.Surface((self._screenWidth, 350))
+		self._leftSideSurface = pygame.Surface((500, self._screenHeight))
 		self._clock = pygame.time.Clock()
 		self._replay_step = 0
 
@@ -144,9 +144,12 @@ class UoServiceReplay:
 		self.world_mobile_list = []
 		self.player_skill_list = []
 		self.player_status_list = []
+		self.cliloc_list = []
 
 		self.player_skills_dict = {}
 		self.player_status_dict = {}
+
+		self.cliloc_dict = {}
 
 		self.player_game_name = None
 		self.player_hit = self.player_hit_max = None
@@ -355,10 +358,10 @@ class UoServiceReplay:
 
 		player_status_dict = {}
 		player_skills_dict = {}
+		cliloc_dict = {}
 
 		## Start to parse the replay data
 		for step in tqdm(range(self._replayLength)):
-			player_object_dict = {}
 			if self.playerObjectArr:
 				playerObjectSubsetArray, self._playerObjectArrayOffset = self.get_subset_array(step, self.playerObjectArrayLengthList, 
 																																											self._playerObjectArrayOffset, 
@@ -417,6 +420,13 @@ class UoServiceReplay:
 				clilocSubsetArray, self._clilocArrayOffset = self.get_subset_array(step, self.clilocArrayLengthList, 
 																																					self._clilocArrayOffset, self.clilocArr)
 				grpcClilocReplay = UoService_pb2.GrpcClilocList().FromString(clilocSubsetArray)
+
+				for cliloc_data in grpcClilocReplay.clilocs:
+					if cliloc_data.serial not in cliloc_dict:
+						cliloc_dict[cliloc_data.serial] = [{"text": cliloc_data.text, "affix": cliloc_data.affix, "name": cliloc_data.name}]
+					else:
+						cliloc_dict[cliloc_data.serial].append({"text": cliloc_data.text, "affix": cliloc_data.affix, "name": cliloc_data.name})
+
 				self._clilocList.append(grpcClilocReplay.clilocs)
 			else:
 				pass
@@ -495,6 +505,7 @@ class UoServiceReplay:
 				pass
 
 			## Store the every step data of player object into list to move the replay step flexibly
+			player_object_dict = {}
 			player_object_dict["player_game_name"] = player_game_name
 			player_object_dict["player_serial"] = player_serial
 			player_object_dict["player_game_x"] = player_game_x
@@ -512,7 +523,10 @@ class UoServiceReplay:
 			self.player_status_list.append(copy.deepcopy(player_status_dict))	
 
 			## Store the every step data of player skill into list to move the replay step flexibly
-			self.player_skill_list.append(copy.deepcopy(player_skills_dict))	
+			self.player_skill_list.append(copy.deepcopy(player_skills_dict))
+
+			## Store the every step data of cliloc data into list to move the replay step flexibly
+			self.cliloc_list.append(copy.deepcopy(cliloc_dict))	
 
 			## Load the cell data for land, static data before replay playing to improve the speed of visualzation
 			if min_tile_x != None:
@@ -539,26 +553,12 @@ class UoServiceReplay:
 							land_data_list, static_data_list = self.cell_dict[(cell_x, cell_y)]
 
 		# PyGame Widget
-		self._left_button = Button(self._mainSurface, 500 + 50, self._screenHeight - 250 + 25, 150, 50, 
-																text='Left', fontSize=50, margin=20, inactiveColour=pygame.Color('blue'),
-																hoverColour=(150, 0, 0), pressedColour=(0, 200, 20), radius=20, 
-																onClick=self.left_action_step)
-
-		self._right_button = Button(self._mainSurface, 500 + self._screenWidth - 210, self._screenHeight - 250 + 25, 150, 50, 
-																text='Right', fontSize=50, margin=20, inactiveColour=pygame.Color('blue'),
-																hoverColour=(150, 0, 0), pressedColour=(0, 200, 20), radius=20, 
-																onClick=self.right_action_step)
-
 		self._slider = Slider(self._mainSurface, 500 + int(self._screenWidth / 2) - 100, self._screenHeight - 250 + 30, 
 													700, 40, min=0, max=len(self._non_zero_action_step_list), step=1)
 
 		self._non_zero_action_index = int(self._slider.getValue())
 
 		self._mainSurface.fill(((131, 139, 139)))
-
-		self._left_button.draw()
-		#self._slider.draw()
-		self._right_button.draw()
 
 	def parse_world_data(self):
 		world_item_dict = {}
@@ -599,12 +599,6 @@ class UoServiceReplay:
 				for serial in self._deleteMobileSerialsList[self._replay_step]:
 					if serial in self.world_mobile_dict:
 						del self.world_mobile_dict[serial]
-
-			#if len(world_item_dict) != 0:
-			#	print("step: {0}, world_item_dict: {1}", step, world_item_dict)
-
-			#if len(world_mobile_dict) != 0:
-				#print("step: {0}, world_mobile_dict: {1}", step, world_mobile_dict)
 
 			self.world_item_list.append(copy.deepcopy(world_item_dict))
 			self.world_mobile_list.append(copy.deepcopy(world_mobile_dict))
@@ -831,20 +825,20 @@ class UoServiceReplay:
 												 (500 + self._screenWidth - 1, 0), (500 + self._screenWidth - 1, self._screenHeight - 150))
 
 				## Player status draw
-				self._statusSurface.fill(((0, 0, 0)))
+				self._leftSideSurface.fill(((0, 0, 0)))
 				font = pygame.font.Font('freesansbold.ttf', 32)
 				text_surface = font.render("Player Status", True, (255, 0, 255))
-				self._statusSurface.blit(text_surface, (0, 0))
+				self._leftSideSurface.blit(text_surface, (0, 0))
 				player_status_dict = self.player_status_list[self._replay_step]
 				for i, k in enumerate(player_status_dict):
 					font = pygame.font.Font('freesansbold.ttf', 16)
 					text_surface = font.render(str(k) + ": " + str(player_status_dict[k]), True, (255, 255, 255))
-					self._statusSurface.blit(text_surface, (0, 20 * (i + 1) + 20))
+					self._leftSideSurface.blit(text_surface, (0, 20 * (i + 1) + 20))
 
 				## Player skill draw
 				font = pygame.font.Font('freesansbold.ttf', 32)
 				text_surface = font.render("Player Skills", True, (255, 0, 255))
-				self._statusSurface.blit(text_surface, (0, 500))
+				self._leftSideSurface.blit(text_surface, (0, 500))
 				player_skills_dict = self.player_skill_list[self._replay_step]
 				for i, k in enumerate(player_skills_dict):
 					font = pygame.font.Font('freesansbold.ttf', 16)
@@ -852,39 +846,55 @@ class UoServiceReplay:
 					#print("k: {0}, skill: {1}".format(k, skill))
 					text_surface = font.render(str(skill["index"]) + '. ' + str(k) + ": " + str(skill["value"]), 
 											   True, (255, 255, 255))
-					self._statusSurface.blit(text_surface, (0, 20 * (i + 1) + 520))
+					self._leftSideSurface.blit(text_surface, (0, 20 * (i + 1) + 520))
 
 				## Equipped item draw
-				self._equipItemSurface.fill(((0, 0, 0)))
+				self._rightSideSurface.fill(((0, 0, 0)))
 				font = pygame.font.Font('freesansbold.ttf', 32)
 				text_surface = font.render("Equip Items", True, (255, 0, 255))
-				self._equipItemSurface.blit(text_surface, (0, 0))
+				self._rightSideSurface.blit(text_surface, (0, 0))
 				for i, k in enumerate(self.equipped_item_dict):
 					font = pygame.font.Font('freesansbold.ttf', 20)
 					item = self.equipped_item_dict[k]
 					text_surface = font.render(str(Layers(int(item["layer"])).name) + ": " + str(item["name"]), True, 
 											   (255, 255, 255))
-					self._equipItemSurface.blit(text_surface, (0, 25 * (i + 1) + 20))
+					self._rightSideSurface.blit(text_surface, (0, 25 * (i + 1) + 20))
 
 				## Backpack item draw
 				font = pygame.font.Font('freesansbold.ttf', 32)
 				text_surface = font.render("Backpack Item", True, (255, 0, 255))
-				self._equipItemSurface.blit(text_surface, (0, 400))
+				self._rightSideSurface.blit(text_surface, (0, 400))
 				for i, k in enumerate(self.backpack_item_dict):
 					font = pygame.font.Font('freesansbold.ttf', 16)
 					item = self.backpack_item_dict[k]
 					text_surface = font.render(str(k) + ": " + str(item["name"]) + ", " + str(item["amount"]), True, (255, 255, 255))
-					self._equipItemSurface.blit(text_surface, (0, 20 * (i + 1) + 420))
+					self._rightSideSurface.blit(text_surface, (0, 20 * (i + 1) + 420))
+
+					font = pygame.font.Font('freesansbold.ttf', 32)
+				self._bottomSideSurface.fill((pygame.Color('black')))
+				text_surface = font.render("Cliloc List", True, (255, 0, 255))
+				self._bottomSideSurface.blit(text_surface, (0, 0))
+				cliloc_data = self.cliloc_list[self._replay_step]
+				if len(cliloc_data) != 0:
+					#for k_cliloc, v_cliloc in cliloc_data.items():
+					font = pygame.font.Font('freesansbold.ttf', 24)
+					for i, k in enumerate(cliloc_data):
+						item = cliloc_data[k][-1]
+						#print("item: ", item)
+						#print("cliloc data {0}: {1}".format(k_cliloc, v_cliloc))
+						text_surface = font.render(str(item["name"]) + ": " + str(item["text"]) + ", " + str(item["affix"]) + ", " + str(k), 
+																			 True, (255, 255, 255))
+						self._bottomSideSurface.blit(text_surface, (0, 25 * (i + 1)))
+
+					#print("")
 
 				## Draw each surface on root surface
 				self._mainSurface.blit(self._screenSurface, (500, 0))
-				self._mainSurface.blit(self._equipItemSurface, (500 + self._screenWidth, 0))
-				#self._mainSurface.blit(self._npcSurface, (500, self._screenHeight))
-				self._mainSurface.blit(self._statusSurface, (0, 0))
+				self._mainSurface.blit(self._rightSideSurface, (500 + self._screenWidth, 0))
+				self._mainSurface.blit(self._bottomSideSurface, (500, self._screenHeight - 150))
+				self._mainSurface.blit(self._leftSideSurface, (0, 0))
 
-				#self._left_button.draw()
 				self._slider.draw()
-				#self._right_button.draw()
 
 				pygame.display.update()
 
@@ -904,10 +914,7 @@ class UoServiceReplay:
 			self._non_zero_action_index = self._slider.getValue()
 			self._replay_step = self._non_zero_action_step_list[self._non_zero_action_index]
 
-			#print("_non_zero_action_index: ", self._non_zero_action_index)
-
 			pygame_widgets.update(events)
-			#print("self._replay_step: ", self._replay_step)
 
 			## Check the left, right key input
 			keys = pygame.key.get_pressed()
@@ -928,7 +935,7 @@ class UoServiceReplay:
 
 					self._previousControl = pygame.K_LEFT
 				else:
-					print("This is start of replay")
+					logging.warning('This is start of replay')
 			elif keys[pygame.K_RIGHT]:
 				## Same as left key part
 				if self._previousControl == pygame.K_RIGHT:
@@ -945,7 +952,7 @@ class UoServiceReplay:
 
 					self._previousControl = pygame.K_RIGHT
 				else:
-					print("This is end of replay")
+					logging.warning('This is end of replay')
 			else:
 				## Switch to slow replay mode when key input is not repeated
 				self._previousControl = 0
@@ -972,9 +979,7 @@ class UoServiceReplay:
 
 			if len(self.world_item_list[self._replay_step]) != 0:
 				world_item_dict = self.world_item_list[self._replay_step]
-				#print("world_item_dict: ", world_item_dict)
 				for k, v in world_item_dict.items():
-					#print("v: ", v)
 					## Check the serial number of backpack container
 					if v["layer"] == 21:
 						self.backpack_serial = k
