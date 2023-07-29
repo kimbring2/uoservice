@@ -135,10 +135,9 @@ class UoServiceReplay:
 		## PyGame Widget related variables
 		self._non_zero_action_step_list = []
 		self._non_zero_action_index = 0
-		self._non_zero_action_index_lower = 0
-		self._non_zero_action_index_higher = 0
+		self._pre_non_zero_action_index = self._non_zero_action_index
 		
-		## Variables to keep the replay data
+		## Global variables to keep the replay data
 		self.player_object_list = []
 		self.world_item_list = []
 		self.world_mobile_list = []
@@ -147,13 +146,7 @@ class UoServiceReplay:
 		self.player_buff_list = []
 		self.cliloc_list = []
 		self.vendor_item_list = []
-
-		self.player_buff_dict = {}
-
-		self.player_skills_dict = {}
-		self.player_status_dict = {}
-
-		self.cliloc_dict = {}
+		self.popup_menu_list = []
 
 		self.player_game_name = None
 		self.player_hit = self.player_hit_max = None
@@ -166,7 +159,6 @@ class UoServiceReplay:
 
 		self.backpack_serial = None
 		self.bank_serial = None
-
 		self.backpack_item_dict = {}
 		self.equipped_item_dict = {}
 		self.corpse_dict = {}
@@ -364,6 +356,7 @@ class UoServiceReplay:
 		player_skills_dict = {}
 		player_buff_dict = {}
 		cliloc_dict = {}
+		popup_menu_list = []
 
 		## Start to parse the replay data
 		for step in tqdm(range(self._replayLength)):
@@ -418,6 +411,12 @@ class UoServiceReplay:
 				popupMenuSubsetArray, self._popupMenuArrayOffset = self.get_subset_array(step, self.popupMenuArrayLengthList, 
 																																								self._popupMenuArrayOffset, self.popupMenuArr)
 				grpcPopupMenuReplay = UoService_pb2.GrpcPopupMenuList().FromString(popupMenuSubsetArray)
+
+				if len(grpcPopupMenuReplay.menus) != 0:
+					popup_menu_list = []
+					for menu_data in grpcPopupMenuReplay.menus:
+						popup_menu_list.append(menu_data)
+
 				self._popupMenuList.append(grpcPopupMenuReplay.menus)
 			else:
 				pass
@@ -443,7 +442,7 @@ class UoServiceReplay:
 				grpcVendorListReplay = UoService_pb2.GrpcVendorList().FromString(vendorListSubsetArray)
 
 				for data in grpcVendorListReplay.vendors:
-					print("vendor item / step: {0}, vendorSerial: {1}, itemSerial: {2}".format(step, data.vendorSerial, data.itemSerial))
+					#print("vendor item / step: {0}, vendorSerial: {1}, itemSerial: {2}".format(step, data.vendorSerial, data.itemSerial))
 					vendor_item_list.append({"vendor_serial": data.vendorSerial, "item_serial": data.itemSerial})
 
 				self._vendorListList.append(grpcVendorListReplay.vendors)
@@ -515,6 +514,9 @@ class UoServiceReplay:
 				if actionReplay.actionType != 0:
 					self._non_zero_action_step_list.append(step)
 
+				if actionReplay.actionType == 11:
+					popup_menu_list = []
+
 				self._actionList.append(actionReplay)
 			else:
 				pass
@@ -542,6 +544,9 @@ class UoServiceReplay:
 
 			## Store the every step data of cliloc data into list to move the replay step flexibly
 			self.cliloc_list.append(copy.deepcopy(cliloc_dict))	
+
+			## Store the every step data of popup menu data into list to move the replay step flexibly
+			self.popup_menu_list.append(copy.deepcopy(popup_menu_list))	
 
 			## Store the every step data of player buff into list to move the replay step flexibly
 			self.player_buff_list.append(copy.deepcopy(player_buff_dict))
@@ -673,13 +678,11 @@ class UoServiceReplay:
 				cell_y_list = []
 				tile_data_list = []
 
-				#print("min_tile_x: {0}, max_tile_x: {1}".format(self.min_tile_x, self.max_tile_x))
 				for x in range(self.min_tile_x, self.max_tile_x):
 					cell_x = x >> 3
 					if cell_x not in cell_x_list:
 						cell_x_list.append(cell_x)
 
-				#print("min_tile_y: {0}, max_tile_y: {1}".format(self.min_tile_y, self.max_tile_y))
 				for y in range(self.min_tile_y, self.max_tile_y):
 					cell_y = y >> 3
 					if cell_y not in cell_y_list:
@@ -688,7 +691,6 @@ class UoServiceReplay:
 				## Check the player game position
 				player_game_x = self.player_game_x
 				player_game_y = self.player_game_y
-				#print("player_game_x: {0}, player_game_y: {1}".format(player_game_x, player_game_y))
 
 				scale = 40 ## Scale factor to make the space between the box line 
 				cell_zip = zip(cell_x_list, cell_y_list)
@@ -698,8 +700,6 @@ class UoServiceReplay:
 						land_data_list, static_data_list = self.cell_dict[(cell_x, cell_y)]
 
 						for land_data in land_data_list:
-							#print("land / name: {0}, game_x: {1}, game_y: {2}".format(land_data["name"], land_data["game_x"], land_data["game_y"]))
-
 							## Box start and end position
 							start_point = ( (land_data["game_x"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
 											(land_data["game_y"] - player_game_y) * scale + int(screen_length / 2) - int(scale / 2) )
@@ -725,8 +725,6 @@ class UoServiceReplay:
 								screen_image = cv2.rectangle(screen_image, start_point, end_point, pygame.Color('gray'), 1)
 
 						for static_data in static_data_list:
-							#print("static / name: {0}, game_x: {1}, game_y: {2}".format(static_data["name"], static_data["game_x"], static_data["game_y"]))
-
 							## Box start and end position
 							start_point = ( (static_data["game_x"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
 											(static_data["game_y"] - player_game_y) * scale + int(screen_length / 2) - int(scale / 2) )
@@ -747,7 +745,6 @@ class UoServiceReplay:
 				screen_width = 4000
 				screen_height = 4000
 				radius = int(scale / 2)
-				#world_mobile_dict = copy.deepcopy(self.world_mobile_dict)
 				world_mobile_dict = self.world_mobile_list[self._replay_step]
 				for k, v in world_mobile_dict.items():
 					if self.player_game_x != None:
@@ -763,11 +760,9 @@ class UoServiceReplay:
 											cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('blue'), 1, cv2.LINE_4)
 
 				## Rendering the item data of replay as real screen scale 
-				#world_item_dict = copy.deepcopy(self.world_item_dict)
 				world_item_dict = self.world_item_list[self._replay_step]
 				for k, v in world_item_dict.items():
 					if self.player_game_x != None:
-						#print("world item {0}: {1}".format(k, self.world_item_dict[k]))
 						if v["gameX"] < screen_width and v["gameY"] < screen_height:
 							screen_image = cv2.circle(screen_image, 
 											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
@@ -784,7 +779,6 @@ class UoServiceReplay:
 				boundary = 500
 				radius = int(scale / 2)
 				if self.player_game_x != None:
-					#print("player_game_x: {0}, player_game_y: {1}".format(self.player_game_x, self.player_game_y))
 					screen_image = cv2.putText(screen_image, str("player"), (int(screen_length / 2), int(screen_length / 2) - int(scale / 2)), 
 											  cv2.FONT_HERSHEY_SIMPLEX, 1.0, pygame.Color('green'), 4, cv2.LINE_4)
 
@@ -865,9 +859,7 @@ class UoServiceReplay:
 				for i, k in enumerate(player_skills_dict):
 					font = pygame.font.Font('freesansbold.ttf', 16)
 					skill = player_skills_dict[k]
-					#print("k: {0}, skill: {1}".format(k, skill))
-					text_surface = font.render(str(skill["index"]) + '. ' + str(k) + ": " + str(skill["value"]), 
-											   True, (255, 255, 255))
+					text_surface = font.render(str(skill["index"]) + '. ' + str(k) + ": " + str(skill["value"]), True, (255, 255, 255))
 					self._leftSideSurface.blit(text_surface, (0, 20 * (i + 1) + 320))
 					skill_last_y = 20 * (i + 1) + 320
 
@@ -879,11 +871,8 @@ class UoServiceReplay:
 				for i, k in enumerate(player_buff_dict):
 					font = pygame.font.Font('freesansbold.ttf', 16)
 					buff = player_buff_dict[k]
-					#print("k: {0}, buff: {1}".format(k, buff))
 					text = buff["text"].replace('<left>', '').replace('</left>', '').split("\n")[0]
-
-					text_surface = font.render(text + ", " + str(buff["delta"]), 
-											   True, (255, 255, 255))
+					text_surface = font.render(text + ", " + str(buff["delta"]), True, (255, 255, 255))
 					self._leftSideSurface.blit(text_surface, (0, 20 * (i + 1) + skill_last_y + 50))
 
 				## Equipped item draw
@@ -894,8 +883,7 @@ class UoServiceReplay:
 				for i, k in enumerate(self.equipped_item_dict):
 					font = pygame.font.Font('freesansbold.ttf', 20)
 					item = self.equipped_item_dict[k]
-					text_surface = font.render(str(Layers(int(item["layer"])).name) + ": " + str(item["name"]), True, 
-											   (255, 255, 255))
+					text_surface = font.render(str(Layers(int(item["layer"])).name) + ": " + str(item["name"]), True, (255, 255, 255))
 					self._rightSideSurface.blit(text_surface, (0, 25 * (i + 1) + 20))
 
 				## Backpack item draw
@@ -904,11 +892,10 @@ class UoServiceReplay:
 				self._rightSideSurface.blit(text_surface, (0, 400))
 				backpack_last_y = 400
 				for i, k in enumerate(self.backpack_item_dict):
-					font = pygame.font.Font('freesansbold.ttf', 16)
+					font = pygame.font.Font('freesansbold.ttf', 18)
 					item = self.backpack_item_dict[k]
 					text_surface = font.render(str(k) + ": " + str(item["name"]) + ", " + str(item["amount"]), True, (255, 255, 255))
 					self._rightSideSurface.blit(text_surface, (0, 20 * (i + 1) + 420))
-
 					backpack_last_y = 20 * (i + 1) + 420
 
 				## Vendor item draw
@@ -916,22 +903,25 @@ class UoServiceReplay:
 				text_surface = font.render("Vendor Item", True, (255, 0, 255))
 				self._rightSideSurface.blit(text_surface, (0, backpack_last_y + 30))
 				vendor_item_list = self.vendor_item_list[self._replay_step]
-
-				print("vendor_item_list: {0}, step: {1}".format(vendor_item_list, self._replay_step))
-				for item in vendor_item_list:
+				font = pygame.font.Font('freesansbold.ttf', 20)
+				for i, item in enumerate(vendor_item_list):
 					vendor_serial = item['vendor_serial']
 					vendor_name = world_mobile_dict[vendor_serial]['name']
 					item_serial = item['item_serial']
 					item_name = world_item_dict[item_serial]['name']
 					item_price = world_item_dict[item_serial]['price']
 					item_amount = world_item_dict[item_serial]['amount']
-					print("vendor_name: {0}, item_name: {1}".format(vendor_name, item_name))
 					text_surface = font.render(vendor_name + ": " + item_name + ", " + str(item_price) + ", " + str(item_amount), 
 																		 True, (255, 255, 255))
-					self._rightSideSurface.blit(text_surface, (0, 20 * (i + 1) + backpack_last_y + 30))
+					self._rightSideSurface.blit(text_surface, (0, 20 * (i + 1) + backpack_last_y + 50))
+
+				## Popup menu draw
+				popup_menu_data = self.popup_menu_list[self._replay_step]
+				print("step: {0}, popup_menu_data: {1}".format(self._replay_step, popup_menu_data))
 
 				## Cliloc data draw
 				self._bottomSideSurface.fill((pygame.Color('black')))
+				font = pygame.font.Font('freesansbold.ttf', 32)
 				text_surface = font.render("Cliloc List", True, (255, 0, 255))
 				self._bottomSideSurface.blit(text_surface, (0, 0))
 				cliloc_data = self.cliloc_list[self._replay_step]
@@ -967,7 +957,8 @@ class UoServiceReplay:
 					 running = False
 
 			self._non_zero_action_index = self._slider.getValue()
-			self._replay_step = self._non_zero_action_step_list[self._non_zero_action_index]
+			if self._non_zero_action_index != self._pre_non_zero_action_index:
+				self._replay_step = self._non_zero_action_step_list[self._non_zero_action_index]
 
 			pygame_widgets.update(events)
 
@@ -983,10 +974,11 @@ class UoServiceReplay:
 				if self._replay_step >= 1:
 					self._replay_step -= 1
 
-					if self._replay_step <= self._non_zero_action_step_list[self._non_zero_action_index]:
-						self._non_zero_action_index -= 1
+					if self._non_zero_action_index > 0:
+						if self._replay_step <= self._non_zero_action_step_list[self._non_zero_action_index - 1]:
+							self._non_zero_action_index -= 1
 
-					self._slider.setValue(self._non_zero_action_index)
+						self._slider.setValue(self._non_zero_action_index)
 
 					self._previousControl = pygame.K_LEFT
 				else:
@@ -1000,10 +992,11 @@ class UoServiceReplay:
 				if self._replay_step < self._replayLength - 1:
 					self._replay_step += 1
 					
-					if self._replay_step >= self._non_zero_action_step_list[self._non_zero_action_index]:
-						self._non_zero_action_index += 1
+					if self._non_zero_action_index < len(self._non_zero_action_step_list) - 1:
+						if self._replay_step > self._non_zero_action_step_list[self._non_zero_action_index + 1]:
+							self._non_zero_action_index += 1
 
-					self._slider.setValue(self._non_zero_action_index)
+						self._slider.setValue(self._non_zero_action_index)
 
 					self._previousControl = pygame.K_RIGHT
 				else:
@@ -1108,6 +1101,8 @@ class UoServiceReplay:
 						self.equipped_item_dict['Legs'] = v
 
 			self.rendering_data()
+
+			self._pre_non_zero_action_index = self._non_zero_action_index
 
 			# PyGame speed control
 			self._clock.tick(self._tickScale)
