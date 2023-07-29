@@ -144,7 +144,11 @@ class UoServiceReplay:
 		self.world_mobile_list = []
 		self.player_skill_list = []
 		self.player_status_list = []
+		self.player_buff_list = []
 		self.cliloc_list = []
+		self.vendor_item_list = []
+
+		self.player_buff_dict = {}
 
 		self.player_skills_dict = {}
 		self.player_status_dict = {}
@@ -358,10 +362,12 @@ class UoServiceReplay:
 
 		player_status_dict = {}
 		player_skills_dict = {}
+		player_buff_dict = {}
 		cliloc_dict = {}
 
 		## Start to parse the replay data
 		for step in tqdm(range(self._replayLength)):
+			vendor_item_list = []
 			if self.playerObjectArr:
 				playerObjectSubsetArray, self._playerObjectArrayOffset = self.get_subset_array(step, self.playerObjectArrayLengthList, 
 																																											self._playerObjectArrayOffset, 
@@ -435,6 +441,11 @@ class UoServiceReplay:
 				vendorListSubsetArray, self._vendorListArrayOffset = self.get_subset_array(step, self.vendorListArrayLengthList, 
 																																									self._vendorListArrayOffset, self.vendorListArr)
 				grpcVendorListReplay = UoService_pb2.GrpcVendorList().FromString(vendorListSubsetArray)
+
+				for data in grpcVendorListReplay.vendors:
+					print("vendor item / step: {0}, vendorSerial: {1}, itemSerial: {2}".format(step, data.vendorSerial, data.itemSerial))
+					vendor_item_list.append({"vendor_serial": data.vendorSerial, "item_serial": data.itemSerial})
+
 				self._vendorListList.append(grpcVendorListReplay.vendors)
 			else:
 				pass
@@ -458,8 +469,9 @@ class UoServiceReplay:
 				grpcPlayerSkillListReplay = UoService_pb2.GrpcSkillList().FromString(playerSkillListSubsetArray)
 				if len(grpcPlayerSkillListReplay.skills) != 0:
 					for skill in grpcPlayerSkillListReplay.skills:
-						player_skills_dict[skill.name] = {"index": skill.index, "isClickable": skill.isClickable, "value": skill.value, 
-																							"base: ": skill.base, "cap": skill.cap, "lock": skill.lock}
+						if skill.value != 0:
+							player_skills_dict[skill.name] = {"index": skill.index, "isClickable": skill.isClickable, "value": skill.value, 
+																								"base: ": skill.base, "cap": skill.cap, "lock": skill.lock}
 
 				self._playerSkillListList.append(grpcPlayerSkillListReplay.skills)
 			else:
@@ -471,6 +483,9 @@ class UoServiceReplay:
 																																													self.playerBuffListArr)
 				grpcPlayerBuffListReplay = UoService_pb2.GrpcBuffList().FromString(playerBuffListSubsetArray)
 				self._playerBuffListList.append(grpcPlayerBuffListReplay.buffs)
+
+				for buff in grpcPlayerBuffListReplay.buffs:
+					player_buff_dict[buff.type] = {"text": buff.text, "delta": buff.delta}
 			else:
 				pass
 
@@ -528,6 +543,12 @@ class UoServiceReplay:
 			## Store the every step data of cliloc data into list to move the replay step flexibly
 			self.cliloc_list.append(copy.deepcopy(cliloc_dict))	
 
+			## Store the every step data of player buff into list to move the replay step flexibly
+			self.player_buff_list.append(copy.deepcopy(player_buff_dict))
+
+			## Store the every step data of vendor item list into list to move the replay step flexibly
+			self.vendor_item_list.append(copy.deepcopy(vendor_item_list))	
+
 			## Load the cell data for land, static data before replay playing to improve the speed of visualzation
 			if min_tile_x != None:
 				cell_x_list = []
@@ -554,7 +575,7 @@ class UoServiceReplay:
 
 		# PyGame Widget
 		self._slider = Slider(self._mainSurface, 500 + int(self._screenWidth / 2) - 100, self._screenHeight - 250 + 30, 
-													700, 40, min=0, max=len(self._non_zero_action_step_list), step=1)
+													700, 40, min=0, max=len(self._non_zero_action_step_list) - 1, step=1)
 
 		self._non_zero_action_index = int(self._slider.getValue())
 
@@ -570,7 +591,7 @@ class UoServiceReplay:
 				for obj in self._worldItemList[step]:
 					world_item_dict[obj.serial] = { "name": obj.name, "gameX": obj.gameX, "gameY":obj.gameY, 
 																					"distance": obj.distance, "layer":obj.layer, "container": obj.container, 
-																					"isCorpse": obj.isCorpse, "amount": obj.amount }
+																					"isCorpse": obj.isCorpse, "amount": obj.amount, "price": obj.price }
 
 					## Check the serial number of backpack container
 					if obj.layer == 21:
@@ -838,15 +859,32 @@ class UoServiceReplay:
 				## Player skill draw
 				font = pygame.font.Font('freesansbold.ttf', 32)
 				text_surface = font.render("Player Skills", True, (255, 0, 255))
-				self._leftSideSurface.blit(text_surface, (0, 500))
+				self._leftSideSurface.blit(text_surface, (0, 300))
 				player_skills_dict = self.player_skill_list[self._replay_step]
+				skill_last_y = 300
 				for i, k in enumerate(player_skills_dict):
 					font = pygame.font.Font('freesansbold.ttf', 16)
 					skill = player_skills_dict[k]
 					#print("k: {0}, skill: {1}".format(k, skill))
 					text_surface = font.render(str(skill["index"]) + '. ' + str(k) + ": " + str(skill["value"]), 
 											   True, (255, 255, 255))
-					self._leftSideSurface.blit(text_surface, (0, 20 * (i + 1) + 520))
+					self._leftSideSurface.blit(text_surface, (0, 20 * (i + 1) + 320))
+					skill_last_y = 20 * (i + 1) + 320
+
+				## Player buff draw
+				font = pygame.font.Font('freesansbold.ttf', 32)
+				text_surface = font.render("Player Buffs", True, (255, 0, 255))
+				self._leftSideSurface.blit(text_surface, (0, skill_last_y + 30))
+				player_buff_dict = self.player_buff_list[self._replay_step]
+				for i, k in enumerate(player_buff_dict):
+					font = pygame.font.Font('freesansbold.ttf', 16)
+					buff = player_buff_dict[k]
+					#print("k: {0}, buff: {1}".format(k, buff))
+					text = buff["text"].replace('<left>', '').replace('</left>', '').split("\n")[0]
+
+					text_surface = font.render(text + ", " + str(buff["delta"]), 
+											   True, (255, 255, 255))
+					self._leftSideSurface.blit(text_surface, (0, 20 * (i + 1) + skill_last_y + 50))
 
 				## Equipped item draw
 				self._rightSideSurface.fill(((0, 0, 0)))
@@ -864,29 +902,46 @@ class UoServiceReplay:
 				font = pygame.font.Font('freesansbold.ttf', 32)
 				text_surface = font.render("Backpack Item", True, (255, 0, 255))
 				self._rightSideSurface.blit(text_surface, (0, 400))
+				backpack_last_y = 400
 				for i, k in enumerate(self.backpack_item_dict):
 					font = pygame.font.Font('freesansbold.ttf', 16)
 					item = self.backpack_item_dict[k]
 					text_surface = font.render(str(k) + ": " + str(item["name"]) + ", " + str(item["amount"]), True, (255, 255, 255))
 					self._rightSideSurface.blit(text_surface, (0, 20 * (i + 1) + 420))
 
-					font = pygame.font.Font('freesansbold.ttf', 32)
+					backpack_last_y = 20 * (i + 1) + 420
+
+				## Vendor item draw
+				font = pygame.font.Font('freesansbold.ttf', 32)
+				text_surface = font.render("Vendor Item", True, (255, 0, 255))
+				self._rightSideSurface.blit(text_surface, (0, backpack_last_y + 30))
+				vendor_item_list = self.vendor_item_list[self._replay_step]
+
+				print("vendor_item_list: {0}, step: {1}".format(vendor_item_list, self._replay_step))
+				for item in vendor_item_list:
+					vendor_serial = item['vendor_serial']
+					vendor_name = world_mobile_dict[vendor_serial]['name']
+					item_serial = item['item_serial']
+					item_name = world_item_dict[item_serial]['name']
+					item_price = world_item_dict[item_serial]['price']
+					item_amount = world_item_dict[item_serial]['amount']
+					print("vendor_name: {0}, item_name: {1}".format(vendor_name, item_name))
+					text_surface = font.render(vendor_name + ": " + item_name + ", " + str(item_price) + ", " + str(item_amount), 
+																		 True, (255, 255, 255))
+					self._rightSideSurface.blit(text_surface, (0, 20 * (i + 1) + backpack_last_y + 30))
+
+				## Cliloc data draw
 				self._bottomSideSurface.fill((pygame.Color('black')))
 				text_surface = font.render("Cliloc List", True, (255, 0, 255))
 				self._bottomSideSurface.blit(text_surface, (0, 0))
 				cliloc_data = self.cliloc_list[self._replay_step]
 				if len(cliloc_data) != 0:
-					#for k_cliloc, v_cliloc in cliloc_data.items():
 					font = pygame.font.Font('freesansbold.ttf', 24)
 					for i, k in enumerate(cliloc_data):
 						item = cliloc_data[k][-1]
-						#print("item: ", item)
-						#print("cliloc data {0}: {1}".format(k_cliloc, v_cliloc))
 						text_surface = font.render(str(item["name"]) + ": " + str(item["text"]) + ", " + str(item["affix"]) + ", " + str(k), 
 																			 True, (255, 255, 255))
 						self._bottomSideSurface.blit(text_surface, (0, 25 * (i + 1)))
-
-					#print("")
 
 				## Draw each surface on root surface
 				self._mainSurface.blit(self._screenSurface, (500, 0))
@@ -945,7 +1000,7 @@ class UoServiceReplay:
 				if self._replay_step < self._replayLength - 1:
 					self._replay_step += 1
 					
-					if self._replay_step > self._non_zero_action_step_list[self._non_zero_action_index]:
+					if self._replay_step >= self._non_zero_action_step_list[self._non_zero_action_index]:
 						self._non_zero_action_index += 1
 
 					self._slider.setValue(self._non_zero_action_index)
@@ -987,9 +1042,6 @@ class UoServiceReplay:
 					## Check the serial number of bank container
 					if v["layer"] == 29:
 						self.bank_serial = k
-
-			#print("self.backpack_serial: ", self.backpack_serial)
-			#print("self.world_item_list[self._replay_step]: ", self.world_item_list[self._replay_step])
 
 			## Parse the backpack, equipped, corpse item from world item
 			if len(self.world_item_list[self._replay_step]) != 0 and self.backpack_serial != None:
