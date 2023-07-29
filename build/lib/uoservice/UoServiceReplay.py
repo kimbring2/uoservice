@@ -20,6 +20,7 @@ import pygame
 import pygame_widgets
 from pygame_widgets.button import Button
 from pygame_widgets.textbox import TextBox
+from pygame_widgets.slider import Slider
 import sys
 import copy
 from enum import Enum
@@ -130,21 +131,6 @@ class UoServiceReplay:
 		self._statusSurface = pygame.Surface((500, self._screenHeight))
 		self._clock = pygame.time.Clock()
 		self._replay_step = 0
-		
-		# PyGame Widget
-		self._left_button = Button(self._mainSurface, 500 + 50, self._screenHeight - 250 + 25, 150, 50, 
-																text='Left', fontSize=50, margin=20, inactiveColour=pygame.Color('blue'),
-																hoverColour=(150, 0, 0), pressedColour=(0, 200, 20), radius=20, 
-																onClick=self.left_action_step)
-
-		self._textbox = TextBox(self._mainSurface, 500 + int(self._screenWidth / 2), self._screenHeight - 250 + 25, 100, 50, 
-													  fontSize=40, borderColour=pygame.Color('blue'), textColour=pygame.Color('black'), 
-													  onSubmit=self.set_step, radius=2, borderThickness=2)
-
-		self._right_button = Button(self._mainSurface, 500 + self._screenWidth - 210, self._screenHeight - 250 + 25, 150, 50, 
-																text='Right', fontSize=50, margin=20, inactiveColour=pygame.Color('blue'),
-																hoverColour=(150, 0, 0), pressedColour=(0, 200, 20), radius=20, 
-																onClick=self.right_action_step)
 
 		self._non_zero_action_step_list = []
 		self._non_zero_action_index = 0
@@ -153,7 +139,7 @@ class UoServiceReplay:
 		self.player_object_list = []
 		self.world_item_list = []
 		self.world_mobile_list = []
-		self.player_skills_list = []
+		self.player_skill_list = []
 		self.player_status_list = []
 
 		self.player_skills_dict = {}
@@ -185,6 +171,7 @@ class UoServiceReplay:
 	def set_step(self):
 		#print(self._textbox.getText())
 		self._replay_step = int(self._textbox.getText())
+		self._slider.setValue(self._replay_step)
 
 	def left_action_step(self):
 		#print(self._textbox.getText())
@@ -194,6 +181,7 @@ class UoServiceReplay:
 			logging.warning('This is start of non-zero action step list')
 
 		self._replay_step = self._non_zero_action_step_list[self._non_zero_action_index]
+		self._slider.setValue(self._replay_step)
 
 	def right_action_step(self):
 		#print(self._textbox.getText())
@@ -203,6 +191,7 @@ class UoServiceReplay:
 			logging.warning('This is end of non-zero action step list')
 
 		self._replay_step = self._non_zero_action_step_list[self._non_zero_action_index]
+		self._slider.setValue(self._replay_step)
 
 	def convert_byte_array_to_int_list(self, byteArray):
 		# Convert byte array of MQP file to int list
@@ -275,6 +264,20 @@ class UoServiceReplay:
 
 		## Find the total length of replay
 		self._replayLength = len(self.playerObjectArrayLengthList)
+
+		# PyGame Widget
+		self._left_button = Button(self._mainSurface, 500 + 50, self._screenHeight - 250 + 25, 150, 50, 
+																text='Left', fontSize=50, margin=20, inactiveColour=pygame.Color('blue'),
+																hoverColour=(150, 0, 0), pressedColour=(0, 200, 20), radius=20, 
+																onClick=self.left_action_step)
+
+		self._right_button = Button(self._mainSurface, 500 + self._screenWidth - 210, self._screenHeight - 250 + 25, 150, 50, 
+																text='Right', fontSize=50, margin=20, inactiveColour=pygame.Color('blue'),
+																hoverColour=(150, 0, 0), pressedColour=(0, 200, 20), radius=20, 
+																onClick=self.right_action_step)
+
+		self._slider = Slider(self._mainSurface, 500 + int(self._screenWidth / 2) - 350, self._screenHeight - 250 + 30, 
+													700, 40, min=0, max=self._replayLength, step=1)
 
 		## The actual data as byte array
 		self.playerObjectArr = self._archive.read_file("replay.playerObject");
@@ -366,8 +369,12 @@ class UoServiceReplay:
 		max_tile_x = None
 		max_tile_y = None
 
+		player_status_dict = {}
+		player_skills_dict = {}
+
 		## Start to parse the replay data
 		for step in tqdm(range(self._replayLength)):
+			player_object_dict = {}
 			if self.playerObjectArr:
 				playerObjectSubsetArray, self._playerObjectArrayOffset = self.get_subset_array(step, self.playerObjectArrayLengthList, 
 																																											self._playerObjectArrayOffset, 
@@ -443,6 +450,9 @@ class UoServiceReplay:
 																																											self._playerStatusArrayOffset, 
 																																											self.playerStatusArr)
 				grpcPlayerStatusReplay = UoService_pb2.GrpcPlayerStatus().FromString(playerStatusSubsetArray)
+				if grpcPlayerStatusReplay.str != 0:
+					player_status_dict = utils.parsePlayerStatus(grpcPlayerStatusReplay)
+
 				self._playerStatusList.append(grpcPlayerStatusReplay)
 			else:
 				pass
@@ -452,6 +462,11 @@ class UoServiceReplay:
 																																														self._playerSkillListArrayOffset, 
 																																														self.playerSkillListArr)
 				grpcPlayerSkillListReplay = UoService_pb2.GrpcSkillList().FromString(playerSkillListSubsetArray)
+				if len(grpcPlayerSkillListReplay.skills) != 0:
+					for skill in grpcPlayerSkillListReplay.skills:
+						player_skills_dict[skill.name] = {"index": skill.index, "isClickable": skill.isClickable, "value": skill.value, 
+																							"base: ": skill.base, "cap": skill.cap, "lock": skill.lock}
+
 				self._playerSkillListList.append(grpcPlayerSkillListReplay.skills)
 			else:
 				pass
@@ -495,7 +510,7 @@ class UoServiceReplay:
 			else:
 				pass
 
-			player_object_dict = {}
+			## Store the every step data of player object into list to move the replay step flexibly
 			player_object_dict["player_game_name"] = player_game_name
 			player_object_dict["player_serial"] = player_serial
 			player_object_dict["player_game_x"] = player_game_x
@@ -508,6 +523,12 @@ class UoServiceReplay:
 			player_object_dict["max_tile_x"] = max_tile_x
 			player_object_dict["max_tile_y"] = max_tile_y
 			self.player_object_list.append(copy.deepcopy(player_object_dict))	
+
+			## Store the every step data of player status into list to move the replay step flexibly
+			self.player_status_list.append(copy.deepcopy(player_status_dict))	
+
+			## Store the every step data of player skill into list to move the replay step flexibly
+			self.player_skill_list.append(copy.deepcopy(player_skills_dict))	
 
 			## Load the cell data for land, static data before replay playing to improve the speed of visualzation
 			if min_tile_x != None:
@@ -539,7 +560,7 @@ class UoServiceReplay:
 
 		for step in tqdm(range(self._replayLength)):
 			## Save the world item object into global Dict	
-			if len(self._worldItemList[self._replay_step]) != 0:
+			if len(self._worldItemList[step]) != 0:
 				for obj in self._worldItemList[step]:
 					world_item_dict[obj.serial] = { "name": obj.name, "gameX": obj.gameX, "gameY":obj.gameY, 
 																					"distance": obj.distance, "layer":obj.layer, "container": obj.container, 
@@ -572,6 +593,12 @@ class UoServiceReplay:
 				for serial in self._deleteMobileSerialsList[self._replay_step]:
 					if serial in self.world_mobile_dict:
 						del self.world_mobile_dict[serial]
+
+			#if len(world_item_dict) != 0:
+			#	print("step: {0}, world_item_dict: {1}", step, world_item_dict)
+
+			#if len(world_mobile_dict) != 0:
+				#print("step: {0}, world_mobile_dict: {1}", step, world_mobile_dict)
 
 			self.world_item_list.append(copy.deepcopy(world_item_dict))
 			self.world_mobile_list.append(copy.deepcopy(world_mobile_dict))
@@ -610,13 +637,12 @@ class UoServiceReplay:
 		return x, y
 
 	def rendering_data(self):
-		print("rendering_data")
-		print("self.max_tile_x: ", self.max_tile_x)
-
 		## Rendering the replay data obtained from InteractWithReplay function
 		if True:
 			## Only parse when player is in the world
 			if self.max_tile_x != None:
+				self._mainSurface.fill(((131, 139, 139)))
+
 				## Main game screen array
 				screen_length = 1000
 				screen_image = np.zeros((screen_length, screen_length, 3), dtype=np.uint8)
@@ -796,18 +822,20 @@ class UoServiceReplay:
 				font = pygame.font.Font('freesansbold.ttf', 32)
 				text_surface = font.render("Player Status", True, (255, 0, 255))
 				self._statusSurface.blit(text_surface, (0, 0))
-				for i, k in enumerate(self.player_status_dict):
+				player_status_dict = self.player_status_list[self._replay_step]
+				for i, k in enumerate(player_status_dict):
 					font = pygame.font.Font('freesansbold.ttf', 16)
-					text_surface = font.render(str(k) + ": " + str(self.player_status_dict[k]), True, (255, 255, 255))
+					text_surface = font.render(str(k) + ": " + str(player_status_dict[k]), True, (255, 255, 255))
 					self._statusSurface.blit(text_surface, (0, 20 * (i + 1) + 20))
 
 				## Player skill draw
 				font = pygame.font.Font('freesansbold.ttf', 32)
 				text_surface = font.render("Player Skills", True, (255, 0, 255))
 				self._statusSurface.blit(text_surface, (0, 500))
-				for i, k in enumerate(self.player_skills_dict):
+				player_skills_dict = self.player_skill_list[self._replay_step]
+				for i, k in enumerate(player_skills_dict):
 					font = pygame.font.Font('freesansbold.ttf', 16)
-					skill = self.player_skills_dict[k]
+					skill = player_skills_dict[k]
 					#print("k: {0}, skill: {1}".format(k, skill))
 					text_surface = font.render(str(skill["index"]) + '. ' + str(k) + ": " + str(skill["value"]), 
 											   True, (255, 255, 255))
@@ -841,6 +869,10 @@ class UoServiceReplay:
 				#self._mainSurface.blit(self._npcSurface, (500, self._screenHeight))
 				self._mainSurface.blit(self._statusSurface, (0, 0))
 
+				self._left_button.draw()
+				self._slider.draw()
+				self._right_button.draw()
+
 				pygame.display.update()
 
 	def interact_with_replay(self):
@@ -856,6 +888,10 @@ class UoServiceReplay:
 				 if event.type == pygame.QUIT:
 					 running = False
 
+			#output.setText(slider.getValue())
+			self._replay_step = self._slider.getValue()
+			#self._textbox.setText(self._replay_step)
+
 			pygame_widgets.update(events)
 			#print("self._replay_step: ", self._replay_step)
 
@@ -870,6 +906,7 @@ class UoServiceReplay:
 				## Decrease the step when there is left arrow input
 				if self._replay_step >= 1:
 					self._replay_step -= 1
+					self._slider.setValue(self._replay_step)
 					self._previousControl = pygame.K_LEFT
 				else:
 					print("This is start of replay")
@@ -881,6 +918,7 @@ class UoServiceReplay:
 
 				if self._replay_step < self._replayLength - 1:
 					self._replay_step += 1
+					self._slider.setValue(self._replay_step)
 					self._previousControl = pygame.K_RIGHT
 				else:
 					print("This is end of replay")
@@ -908,28 +946,30 @@ class UoServiceReplay:
 			#popup_menu_data = self._popupMenuList[self._replay_step]
 			#print("popup_menu_data: ", popup_menu_data)
 
-			## Only increase the replay step when player in the world
-			#if self.player_game_name == None:
-				#self._replay_step += 1
-				#continue
+			if len(self.world_item_list[self._replay_step]) != 0:
+				world_item_dict = self.world_item_list[self._replay_step]
+				#print("world_item_dict: ", world_item_dict)
+				for k, v in world_item_dict.items():
+					#print("v: ", v)
+					## Check the serial number of backpack container
+					if v["layer"] == 21:
+						self.backpack_serial = k
 
-			## Save the player status informaion into global Dict	
-			if self._playerStatusList[self._replay_step].str != 0:
-				self.player_status_dict = utils.parsePlayerStatus(self._playerStatusList[self._replay_step])
+					## Check the serial number of bank container
+					if v["layer"] == 29:
+						self.bank_serial = k
 
-			## Save the player skills informaion into global Dict
-			player_skills_data = self._playerSkillListList[self._replay_step]
-			if len(player_skills_data) != 0:
-				for skill in player_skills_data:
-					self.player_skills_dict[skill.name] = {"index": skill.index, "isClickable": skill.isClickable, "value": skill.value, 
-														   "base: ": skill.base, "cap": skill.cap, "lock": skill.lock}
+			#print("self.backpack_serial: ", self.backpack_serial)
+			#print("self.world_item_list[self._replay_step]: ", self.world_item_list[self._replay_step])
 
 			## Parse the backpack, equipped, corpse item from world item
 			if len(self.world_item_list[self._replay_step]) != 0 and self.backpack_serial != None:
+				world_item_dict = self.world_item_list[self._replay_step]
+
 				self.backpack_item_dict = {}
 				self.equipped_item_dict = {}
 				self.corpse_dict = {}
-				for k, v in self.world_item_dict.items():
+				for k, v in world_item_dict.items():
 					## Corpse item
 					if v["isCorpse"] == True:
 						self.corpse_dict[k] = v
