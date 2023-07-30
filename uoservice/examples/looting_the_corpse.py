@@ -54,6 +54,16 @@ def step(uo_service):
     player_game_x = uo_service.player_game_x
     player_game_y = uo_service.player_game_y
 
+    world_mobile_data = uo_service.world_mobile_dict
+    world_item_data = uo_service.world_item_dict
+    backpack_item_data = uo_service.backpack_item_dict
+
+    if len(world_mobile_data) != 0:
+      for k_world, v_world in world_mobile_data.items():
+        #print("world mobile / name: {0}, distance: {1}".format(v_world["name"], v_world["distance"]))
+        pass
+      #print("")
+
     if len(uo_service.world_mobile_dict) != 0 and target_skeleton_serial == None:
       ## Obtain the serial number list of skeleton around the player
       skeleton_serial_list = [k for k, v in uo_service.world_mobile_dict.items() \
@@ -64,14 +74,21 @@ def step(uo_service):
         target_skeleton_serial = random.choice(skeleton_serial_list)
 
     corpse_dict = {}
-    for k, v in uo_service.world_item_dict.items():
+    for k, v in world_item_data.items():
       #print("world item {0}: {1}, isCorpse: {2}".format(k, v["name"], v["isCorpse"]))
       if v["isCorpse"] == True:
         #print("world item {0}: {1}, isCorpse: {2}".format(k, v["name"], v["isCorpse"]))
         corpse_dict[k] = v
 
-    #print("corpse_dict: ", corpse_dict)
-    #print("")
+    corpse_item_dict = {}
+    for k_corpse, v_corpse in corpse_dict.items():
+      for k_world, v_world in uo_service.world_item_dict.items():
+        if k_corpse == v_world["container"]:
+          if k_world not in corpse_item_dict:
+            corpse_item_dict[k_world] = uo_service.world_item_dict[k_world]
+          else:
+            corpse_item_dict[k_world] = uo_service.world_item_dict[k_world]
+
 
     ## Declare the empty action
     action = {}
@@ -85,7 +102,6 @@ def step(uo_service):
 
     ## Declare the empty action
     if step % 100 == 0:
-      #print("step: ", step)
       if len(uo_service.player_status_dict) != 0:
         player_gold = uo_service.player_status_dict['gold']
         #print("player_gold: ", player_gold)
@@ -114,21 +130,27 @@ def step(uo_service):
 
         ## Player holded item
         hold_item_serial = uo_service.hold_item_serial
-        #print("hold_item_serial: ", hold_item_serial)
 
         backpack_serial = uo_service.backpack_serial
-        #print("backpack_serial: ", backpack_serial)
 
-        for k_corpse, v_corpse in corpse_dict.items():
-          for k_world, v_world in uo_service.world_item_dict.items():
-            if k_corpse == v_world["container"]:
-              if k_world not in corpse_item_dict:
-                corpse_item_dict[k_world] = uo_service.world_item_dict[k_world]
-              else:
-                corpse_item_dict[k_world] = uo_service.world_item_dict[k_world]
+        if len(backpack_item_data) != 0:
+          for k_backpack, v_backpack in backpack_item_data.items():
+            print("backpack {0}: {1}".format(k_backpack, v_backpack["name"]))
+            pass
+          print("")
+
+        if len(corpse_item_dict) != 0:
+          for k_corpse, v_corpse in corpse_item_dict.items():
+            print("corpse item {0}: {1}".format(k_corpse, v_corpse["name"]))
+            pass
+          print("")
+
+        #print("step: ", step)
+        #print("distance: ", distance)
+        #print("war_mode: ", war_mode)
 
         if len(corpse_dict) == 0:
-          if distance >= 2:
+          if distance > 2:
             ## Target mobile is far away from the player
             if direction == -1:
               # Can not find the walk direction
@@ -172,7 +194,9 @@ def step(uo_service):
               action['action_type'] = 4
               action['target_serial'] = backpack_serial
 
-    action['action_type'] = 0         
+          #action['action_type'] = 0
+      #print("action_type: ", action['action_type'])
+
     obs = uo_service.step(action)
     step += 1
 

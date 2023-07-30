@@ -920,7 +920,7 @@ class UoServiceReplay:
 
 				## Popup menu draw
 				popup_menu_data = self.popup_menu_list[self._replay_step]
-				print("step: {0}, popup_menu_data: {1}".format(self._replay_step, popup_menu_data))
+				#print("step: {0}, popup_menu_data: {1}".format(self._replay_step, popup_menu_data))
 
 				## Cliloc data draw
 				self._bottomSideSurface.fill((pygame.Color('black')))

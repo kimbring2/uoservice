@@ -74,15 +74,9 @@ def step(uo_service):
         pass
 
     targeting_state = uo_service.targeting_state
-    #print("targeting_state: ", targeting_state)
-
     hold_item_serial = uo_service.hold_item_serial
-    #print("hold_item_serial: ", hold_item_serial)
-
     equipped_item_data = uo_service.equipped_item_dict
-
     player_status_dict = uo_service.player_status_dict
-
     gold_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
     #print("gold_serial: ", gold_serial)
 
@@ -101,15 +95,15 @@ def step(uo_service):
     if step % 100 == 0:
       if len(world_item_data) != 0:
         for k_world, v_world in world_item_data.items():
-          print("world {0}: {1}".format(k_world, v_world["name"]))
+          #print("world {0}: {1}".format(k_world, v_world["name"]))
           pass
-        print("")
+        #print("")
 
       if len(equipped_item_data) != 0:
         for k_equipped, v_equipped in equipped_item_data.items():
-          print("equipped {0}: {1}".format(k_equipped, v_equipped["name"]))
+          #print("equipped {0}: {1}".format(k_equipped, v_equipped["name"]))
           pass
-        print("")
+        #print("")
 
       if len(backpack_item_data) != 0:
         for k_backpack, v_backpack in backpack_item_data.items():
@@ -117,10 +111,31 @@ def step(uo_service):
           pass
         print("")
 
+      corpse_dict = {}
+      for k, v in uo_service.world_item_dict.items():
+        #print("world item {0}: {1}, isCorpse: {2}".format(k, v["name"], v["isCorpse"]))
+        if v["isCorpse"] == True:
+          #print("world item {0}: {1}, isCorpse: {2}".format(k, v["name"], v["isCorpse"]))
+          corpse_dict[k] = v
+
+      corpse_item_dict = {}
+      for k_corpse, v_corpse in corpse_dict.items():
+        for k_world, v_world in uo_service.world_item_dict.items():
+          if k_corpse == v_world["container"]:
+            if k_world not in corpse_item_dict:
+              corpse_item_dict[k_world] = uo_service.world_item_dict[k_world]
+            else:
+              corpse_item_dict[k_world] = uo_service.world_item_dict[k_world]
+
+      if len(corpse_item_dict) != 0:
+        for k_corpse, v_corpse in corpse_item_dict.items():
+          print("corpse item {0}: {1}".format(k_corpse, v_corpse["name"]))
+          pass
+        print("")
+
       #print("step: ", step)
       #print("gold_serial: ", gold_serial)
       #print("pick_up_flag: ", pick_up_flag)
-      #print("hold_item_serial: ", hold_item_serial)
       #print("")
 
       if gold_serial != None and pick_up_flag == True:

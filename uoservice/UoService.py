@@ -348,6 +348,8 @@ class UoService:
 			self.ground_item_dict = {}
 
 			for k, v in self.world_item_dict.items():
+				#print("world item / name: {0}, layer: {1}".format(v["name"], v["layer"]))
+
 				if v["isCorpse"] == True:
 					## Corpse item
 					self.corpse_dict[k] = v
@@ -414,21 +416,6 @@ class UoService:
 			self.vendor_item_list = []
 			for data in vendor_data:
 				self.vendor_item_list.append({"vendor_serial": data.vendorSerial, "item_serial": data.itemSerial})
-
-		## Parse and save the item of corpse container 
-		self.corpse_item_dict = {}
-		for k_corpse, v_corpse in self.corpse_dict.items():
-			for k_world, v_world in self.world_item_dict.items():
-				if k_corpse == v_world["container"]:
-					#print("corpse item {0}: {1}".format(k, self.world_item_dict[k_world]))
-
-					if k_corpse not in self.corpse_item_dict:
-						self.corpse_item_dict[k_corpse] = {}
-						self.corpse_item_dict[k_corpse][k_world] = self.world_item_dict[k_world]
-					else:
-						self.corpse_item_dict[k_corpse][k_world] = self.world_item_dict[k_world]
-
-					pass
 
 		## Parse and save the player status data 
 		if player_status_data.str != 0:
