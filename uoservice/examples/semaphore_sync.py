@@ -101,15 +101,15 @@ def step(uo_service):
     if step % 100 == 0:
       if len(world_item_data) != 0:
         for k_world, v_world in world_item_data.items():
-          #print("world {0}: {1}".format(k_world, v_world["name"]))
+          print("world {0}: {1}".format(k_world, v_world["name"]))
           pass
-        #print("")
+        print("")
 
       if len(equipped_item_data) != 0:
         for k_equipped, v_equipped in equipped_item_data.items():
-          #print("equipped {0}: {1}".format(k_equipped, v_equipped["name"]))
+          print("equipped {0}: {1}".format(k_equipped, v_equipped["name"]))
           pass
-        #print("")
+        print("")
 
       if len(backpack_item_data) != 0:
         for k_backpack, v_backpack in backpack_item_data.items():

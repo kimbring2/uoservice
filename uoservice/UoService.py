@@ -97,7 +97,7 @@ class UoService:
 		## Receive the observation data from C# application
 		response = self.stub.ReadObs(UoService_pb2.Config(init=False))
 
-		Parse the observation gRPC data from the C# application
+		## Parse the observation gRPC data from the C# application
 		self.parse_response(response)
 
 	def get_distance(self, target_game_x, target_game_y):

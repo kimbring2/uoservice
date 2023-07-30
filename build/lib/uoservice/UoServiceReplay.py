@@ -357,10 +357,10 @@ class UoServiceReplay:
 		player_buff_dict = {}
 		cliloc_dict = {}
 		popup_menu_list = []
+		vendor_item_list = []
 
 		## Start to parse the replay data
 		for step in tqdm(range(self._replayLength)):
-			vendor_item_list = []
 			if self.playerObjectArr:
 				playerObjectSubsetArray, self._playerObjectArrayOffset = self.get_subset_array(step, self.playerObjectArrayLengthList, 
 																																											self._playerObjectArrayOffset, 
@@ -441,9 +441,12 @@ class UoServiceReplay:
 																																									self._vendorListArrayOffset, self.vendorListArr)
 				grpcVendorListReplay = UoService_pb2.GrpcVendorList().FromString(vendorListSubsetArray)
 
-				for data in grpcVendorListReplay.vendors:
-					#print("vendor item / step: {0}, vendorSerial: {1}, itemSerial: {2}".format(step, data.vendorSerial, data.itemSerial))
-					vendor_item_list.append({"vendor_serial": data.vendorSerial, "item_serial": data.itemSerial})
+
+				if len(grpcVendorListReplay.vendors) != 0:
+					vendor_item_list = []
+					for data in grpcVendorListReplay.vendors:
+						#print("vendor item / step: {0}, vendorSerial: {1}, itemSerial: {2}".format(step, data.vendorSerial, data.itemSerial))
+						vendor_item_list.append({"vendor_serial": data.vendorSerial, "item_serial": data.itemSerial})
 
 				self._vendorListList.append(grpcVendorListReplay.vendors)
 			else:
@@ -617,14 +620,14 @@ class UoServiceReplay:
 			## Delete the item from world item Dict using the gRPC data
 			if self.deleteItemSerialsArr is not None and len(self._deleteItemSerialsList[self._replay_step]) != 0:
 				for serial in self._deleteItemSerialsList[self._replay_step]:
-					if serial in self.world_item_dict:
-						del self.world_item_dict[serial]
+					if serial in world_item_dict:
+						del world_item_dict[serial]
 
 			## Delete the mobile from world mobile Dict using the gRPC data
 			if self.deleteMobileSerialsArr is not None and len(self._deleteMobileSerialsList[self._replay_step]) != 0:
 				for serial in self._deleteMobileSerialsList[self._replay_step]:
-					if serial in self.world_mobile_dict:
-						del self.world_mobile_dict[serial]
+					if serial in world_mobile_dict:
+						del world_mobile_dict[serial]
 
 			self.world_item_list.append(copy.deepcopy(world_item_dict))
 			self.world_mobile_list.append(copy.deepcopy(world_mobile_dict))
@@ -757,7 +760,7 @@ class UoServiceReplay:
 							screen_image = cv2.putText(screen_image, "  " + v["name"], 
 											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
 											  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
-											cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('blue'), 1, cv2.LINE_4)
+											cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('blue'), 2, cv2.LINE_4)
 
 				## Rendering the item data of replay as real screen scale 
 				world_item_dict = self.world_item_list[self._replay_step]
@@ -773,7 +776,7 @@ class UoServiceReplay:
 							screen_image = cv2.putText(screen_image, "     " + item_name_list[-1], 
 												( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
 												  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
-												cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('purple'), 1, cv2.LINE_4)
+												cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('purple'), 2, cv2.LINE_4)
 
 				## Cropping the real screen around player position to zoom in
 				boundary = 500
@@ -977,8 +980,7 @@ class UoServiceReplay:
 					if self._non_zero_action_index > 0:
 						if self._replay_step <= self._non_zero_action_step_list[self._non_zero_action_index - 1]:
 							self._non_zero_action_index -= 1
-
-						self._slider.setValue(self._non_zero_action_index)
+							self._slider.setValue(self._non_zero_action_index)
 
 					self._previousControl = pygame.K_LEFT
 				else:
@@ -995,8 +997,7 @@ class UoServiceReplay:
 					if self._non_zero_action_index < len(self._non_zero_action_step_list) - 1:
 						if self._replay_step > self._non_zero_action_step_list[self._non_zero_action_index + 1]:
 							self._non_zero_action_index += 1
-
-						self._slider.setValue(self._non_zero_action_index)
+							self._slider.setValue(self._non_zero_action_index)
 
 					self._previousControl = pygame.K_RIGHT
 				else:
@@ -1022,9 +1023,6 @@ class UoServiceReplay:
 				self.max_tile_y = self.player_object_list[self._replay_step]["max_tile_y"]
 				#print("player_game_x: {0}, player_game_y: {1}: ", self.player_game_x, self.player_game_y)
 
-			#popup_menu_data = self._popupMenuList[self._replay_step]
-			#print("popup_menu_data: ", popup_menu_data)
-
 			if len(self.world_item_list[self._replay_step]) != 0:
 				world_item_dict = self.world_item_list[self._replay_step]
 				for k, v in world_item_dict.items():
@@ -1044,6 +1042,8 @@ class UoServiceReplay:
 				self.equipped_item_dict = {}
 				self.corpse_dict = {}
 				for k, v in world_item_dict.items():
+					#print("world item / step: {0}, name: {1}".format(self._replay_step, v['name']))
+
 					## Corpse item
 					if v["isCorpse"] == True:
 						self.corpse_dict[k] = v
@@ -1099,6 +1099,8 @@ class UoServiceReplay:
 						self.equipped_item_dict['Skirt'] = v
 					elif v["layer"] == 24:
 						self.equipped_item_dict['Legs'] = v
+
+					#print("")
 
 			self.rendering_data()
 
