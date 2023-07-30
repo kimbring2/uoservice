@@ -618,14 +618,14 @@ class UoServiceReplay:
 																						"race": obj.race }
 
 			## Delete the item from world item Dict using the gRPC data
-			if self.deleteItemSerialsArr is not None and len(self._deleteItemSerialsList[self._replay_step]) != 0:
-				for serial in self._deleteItemSerialsList[self._replay_step]:
+			if self.deleteItemSerialsArr is not None and len(self._deleteItemSerialsList[step]) != 0:
+				for serial in self._deleteItemSerialsList[step]:
 					if serial in world_item_dict:
 						del world_item_dict[serial]
 
 			## Delete the mobile from world mobile Dict using the gRPC data
-			if self.deleteMobileSerialsArr is not None and len(self._deleteMobileSerialsList[self._replay_step]) != 0:
-				for serial in self._deleteMobileSerialsList[self._replay_step]:
+			if self.deleteMobileSerialsArr is not None and len(self._deleteMobileSerialsList[step]) != 0:
+				for serial in self._deleteMobileSerialsList[step]:
 					if serial in world_mobile_dict:
 						del world_mobile_dict[serial]
 
@@ -777,6 +777,32 @@ class UoServiceReplay:
 												( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
 												  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
 												cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('purple'), 2, cv2.LINE_4)
+
+				##
+				corpse_dict = {}
+				for k, v in world_item_dict.items():
+					#print("world item {0}: {1}, isCorpse: {2}".format(k, v["name"], v["isCorpse"]))
+					if v["isCorpse"] == True:
+						#print("world item {0}: {1}, isCorpse: {2}".format(k, v["name"], v["isCorpse"]))
+						corpse_dict[k] = v
+
+				##
+				corpse_item_dict = {}
+				for k_corpse, v_corpse in corpse_dict.items():
+					for k_world, v_world in world_item_dict.items():
+						if k_corpse == v_world["container"]:
+							if k_world not in corpse_item_dict:
+								corpse_item_dict[k_world] = world_item_dict[k_world]
+							else:
+								corpse_item_dict[k_world] = world_item_dict[k_world]
+
+				##
+				if len(corpse_item_dict) != 0:
+					for k_corpse, v_corpse in corpse_item_dict.items():
+						#print("corpse item container: {0}, name: {1} ".format(v_corpse["container"], v_corpse["name"]))
+						print("corpse item {0}: {1}".format(k_corpse, v_corpse["name"]))
+						pass
+					print("")
 
 				## Cropping the real screen around player position to zoom in
 				boundary = 500
@@ -1002,6 +1028,22 @@ class UoServiceReplay:
 					self._previousControl = pygame.K_RIGHT
 				else:
 					logging.warning('This is end of replay')
+			elif keys[pygame.K_a]:
+				#print("keys[pygame.K_a]")
+				if self._non_zero_action_index > 0:
+					self._non_zero_action_index -= 1
+					self._replay_step = self._non_zero_action_step_list[self._non_zero_action_index]
+					self._slider.setValue(self._non_zero_action_index)
+				else:
+					logging.warning('This is start of non zero action index')
+			elif keys[pygame.K_d]:
+				#print("keys[pygame.K_d]")
+				if self._non_zero_action_index < len(self._non_zero_action_step_list) - 1:
+					self._non_zero_action_index += 1
+					self._replay_step = self._non_zero_action_step_list[self._non_zero_action_index]
+					self._slider.setValue(self._non_zero_action_index)
+				else:
+					logging.warning('This is end of non zero action index')
 			else:
 				## Switch to slow replay mode when key input is not repeated
 				self._previousControl = 0
@@ -1044,63 +1086,63 @@ class UoServiceReplay:
 				for k, v in world_item_dict.items():
 					#print("world item / step: {0}, name: {1}".format(self._replay_step, v['name']))
 
-					## Corpse item
 					if v["isCorpse"] == True:
+						## Corpse item
 						self.corpse_dict[k] = v
-
-					## Backpack item
-					if v["container"] == self.backpack_serial:
+					elif v["container"] == self.backpack_serial:
+						## Backpack item
 						self.backpack_item_dict[k] = v
-
-					## Equipped item
-					if v["layer"] == 1:
-						self.equipped_item_dict['OneHanded'] = v
-					elif v["layer"] == 2:
-						self.equipped_item_dict['TwoHanded'] = v
-					elif v["layer"] == 3:
-						self.equipped_item_dict['Shoes'] = v
-					elif v["layer"] == 4:
-						self.equipped_item_dict['Pants'] = v
-					elif v["layer"] == 5:
-						self.equipped_item_dict['Shirt'] = v
-					elif v["layer"] == 6:
-						self.equipped_item_dict['Helmet'] = v
-					elif v["layer"] == 7:
-						self.equipped_item_dict['Gloves'] = v
-					elif v["layer"] == 8:
-						self.equipped_item_dict['Ring'] = v
-					elif v["layer"] == 9:
-						self.equipped_item_dict['Talisman'] = v
-					elif v["layer"] == 10:
-						self.equipped_item_dict['Necklace'] = v
-					elif v["layer"] == 11:
-						self.equipped_item_dict['Hair'] = v
-					elif v["layer"] == 12:
-						self.equipped_item_dict['Waist'] = v
-					elif v["layer"] == 13:
-						self.equipped_item_dict['Torso'] = v
-					elif v["layer"] == 14:
-						self.equipped_item_dict['Bracelet'] = v
-					elif v["layer"] == 15:
-						self.equipped_item_dict['Face'] = v
-					elif v["layer"] == 16:
-						self.equipped_item_dict['Beard'] = v
-					elif v["layer"] == 17:
-						self.equipped_item_dict['Tunic'] = v
-					elif v["layer"] == 18:
-						self.equipped_item_dict['Earrings'] = v
-					elif v["layer"] == 19:
-						self.equipped_item_dict['Arms'] = v
-					elif v["layer"] == 20:
-						self.equipped_item_dict['Cloak'] = v
-					elif v["layer"] == 22:
-						self.equipped_item_dict['Robe'] = v
-					elif v["layer"] == 23:
-						self.equipped_item_dict['Skirt'] = v
-					elif v["layer"] == 24:
-						self.equipped_item_dict['Legs'] = v
-
-					#print("")
+					elif v["container"] == self.bank_serial:
+						## Bank item
+						self.bank_item_dict[k] = v
+					elif v["layer"] != 0:
+						## Equipped item
+						if v["layer"] == 1:
+							self.equipped_item_dict['OneHanded'] = v
+						elif v["layer"] == 2:
+							self.equipped_item_dict['TwoHanded'] = v
+						elif v["layer"] == 3:
+							self.equipped_item_dict['Shoes'] = v
+						elif v["layer"] == 4:
+							self.equipped_item_dict['Pants'] = v
+						elif v["layer"] == 5:
+							self.equipped_item_dict['Shirt'] = v
+						elif v["layer"] == 6:
+							self.equipped_item_dict['Helmet'] = v
+						elif v["layer"] == 7:
+							self.equipped_item_dict['Gloves'] = v
+						elif v["layer"] == 8:
+							self.equipped_item_dict['Ring'] = v
+						elif v["layer"] == 9:
+							self.equipped_item_dict['Talisman'] = v
+						elif v["layer"] == 10:
+							self.equipped_item_dict['Necklace'] = v
+						elif v["layer"] == 11:
+							self.equipped_item_dict['Hair'] = v
+						elif v["layer"] == 12:
+							self.equipped_item_dict['Waist'] = v
+						elif v["layer"] == 13:
+							self.equipped_item_dict['Torso'] = v
+						elif v["layer"] == 14:
+							self.equipped_item_dict['Bracelet'] = v
+						elif v["layer"] == 15:
+							self.equipped_item_dict['Face'] = v
+						elif v["layer"] == 16:
+							self.equipped_item_dict['Beard'] = v
+						elif v["layer"] == 17:
+							self.equipped_item_dict['Tunic'] = v
+						elif v["layer"] == 18:
+							self.equipped_item_dict['Earrings'] = v
+						elif v["layer"] == 19:
+							self.equipped_item_dict['Arms'] = v
+						elif v["layer"] == 20:
+							self.equipped_item_dict['Cloak'] = v
+						elif v["layer"] == 22:
+							self.equipped_item_dict['Robe'] = v
+						elif v["layer"] == 23:
+							self.equipped_item_dict['Skirt'] = v
+						elif v["layer"] == 24:
+							self.equipped_item_dict['Legs'] = v
 
 			self.rendering_data()
 
