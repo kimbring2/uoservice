@@ -755,12 +755,12 @@ class UoServiceReplay:
 							screen_image = cv2.circle(screen_image, 
 											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
 											  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
-											  radius, pygame.Color('blue'), -1)
+											  radius, pygame.Color('red'), -1)
 
 							screen_image = cv2.putText(screen_image, "  " + v["name"], 
 											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
 											  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
-											cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('blue'), 2, cv2.LINE_4)
+											cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('red'), 1, cv2.LINE_4)
 
 				## Rendering the item data of replay as real screen scale 
 				world_item_dict = self.world_item_list[self._replay_step]
@@ -770,20 +770,18 @@ class UoServiceReplay:
 							screen_image = cv2.circle(screen_image, 
 											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
 											  (v["gameY"] - player_game_y) * scale + int(screen_length / 2)
-											), radius, pygame.Color('purple'), -1)
+											), radius, pygame.Color('blue'), -1)
 		          
 							item_name_list = v["name"].split(" ")
 							screen_image = cv2.putText(screen_image, "     " + item_name_list[-1], 
 												( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
 												  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
-												cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('purple'), 2, cv2.LINE_4)
+												cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('blue'), 1, cv2.LINE_4)
 
 				##
 				corpse_dict = {}
 				for k, v in world_item_dict.items():
-					#print("world item {0}: {1}, isCorpse: {2}".format(k, v["name"], v["isCorpse"]))
 					if v["isCorpse"] == True:
-						#print("world item {0}: {1}, isCorpse: {2}".format(k, v["name"], v["isCorpse"]))
 						corpse_dict[k] = v
 
 				##
@@ -791,25 +789,38 @@ class UoServiceReplay:
 				for k_corpse, v_corpse in corpse_dict.items():
 					for k_world, v_world in world_item_dict.items():
 						if k_corpse == v_world["container"]:
-							if k_world not in corpse_item_dict:
-								corpse_item_dict[k_world] = world_item_dict[k_world]
+							if k_corpse not in corpse_item_dict:
+								corpse_item_dict[k_corpse] = [world_item_dict[k_world]]
 							else:
-								corpse_item_dict[k_world] = world_item_dict[k_world]
+								corpse_item_dict[k_corpse].append(world_item_dict[k_world])
 
 				##
 				if len(corpse_item_dict) != 0:
-					for k_corpse, v_corpse in corpse_item_dict.items():
-						#print("corpse item container: {0}, name: {1} ".format(v_corpse["container"], v_corpse["name"]))
-						print("corpse item {0}: {1}".format(k_corpse, v_corpse["name"]))
+					for k_corpse_item, v_corpse_item_list in corpse_item_dict.items():
+						#print("v_corpse_item_list: ", v_corpse_item_list)
+						for i, corpse_item in enumerate(v_corpse_item_list):
+							#print("corpse item: {0}, corpse x: {1}, corpse y: {2}".format(corpse_item["name"], corpse["gameX"]))
+							corpse = world_item_dict[k_corpse_item]
+
+							start_point = ( (corpse["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale), 
+											(corpse["gameY"] - player_game_y) * scale + int(screen_length / 2) - int(scale) )
+							end_point = ( (corpse["gameX"] - player_game_x) * scale + int(screen_length / 2) + int(scale), 
+											(corpse["gameY"] - player_game_y) * scale + int(screen_length / 2) + int(scale) )
+							screen_image = cv2.rectangle(screen_image, start_point, end_point, pygame.Color('yellow'), 1)
+
+							screen_image = cv2.putText(screen_image, corpse_item["name"], 
+												( (corpse["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
+												  (corpse["gameY"] - player_game_y) * scale + int(screen_length / 2) + i * 20 ), 
+													cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('yellow'), 1, cv2.LINE_4)
 						pass
-					print("")
+					#print("")
 
 				## Cropping the real screen around player position to zoom in
 				boundary = 500
 				radius = int(scale / 2)
 				if self.player_game_x != None:
-					screen_image = cv2.putText(screen_image, str("player"), (int(screen_length / 2), int(screen_length / 2) - int(scale / 2)), 
-											  cv2.FONT_HERSHEY_SIMPLEX, 1.0, pygame.Color('green'), 4, cv2.LINE_4)
+					screen_image = cv2.putText(screen_image, str(self.player_game_name), (int(screen_length / 2), int(screen_length / 2) + int(scale / 2)), 
+											  cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('green'), 1, cv2.LINE_4)
 
 					radius = int(scale / 2)
 					screen_image = cv2.circle(screen_image, (int(screen_length / 2), int(screen_length / 2)), radius, utils.color_dict["Lime"], -1)
@@ -831,9 +842,9 @@ class UoServiceReplay:
 				font = pygame.font.Font('freesansbold.ttf', 16)
 				text_surface = font.render("action type: " + str(self._actionList[self._replay_step].actionType), True, (255, 255, 255))
 				self._screenSurface.blit(text_surface, (5, 40))
-				text_surface = font.render("item serial: " + str(self._actionList[self._replay_step].sourceSerial), True, (255, 255, 255))
+				text_surface = font.render("source serial: " + str(self._actionList[self._replay_step].sourceSerial), True, (255, 255, 255))
 				self._screenSurface.blit(text_surface, (5, 60))
-				text_surface = font.render("mobile serial: " + str(self._actionList[self._replay_step].targetSerial), True, (255, 255, 255))
+				text_surface = font.render("target serial: " + str(self._actionList[self._replay_step].targetSerial), True, (255, 255, 255))
 				self._screenSurface.blit(text_surface, (5, 80))
 				text_surface = font.render("walk direction: " + str(self._actionList[self._replay_step].walkDirection), True, (255, 255, 255))
 				self._screenSurface.blit(text_surface, (5, 100))
