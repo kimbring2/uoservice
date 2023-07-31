@@ -328,6 +328,8 @@ class UoService:
 				if obj.layer == 29:
 					self.bank_serial = obj.serial
 
+			#print("")
+
 		## Save the world mobile object into global Dict
 		if len(world_mobile_data) != 0:
 			for obj in world_mobile_data:

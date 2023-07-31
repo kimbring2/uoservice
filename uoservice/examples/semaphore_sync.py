@@ -95,9 +95,10 @@ def step(uo_service):
     if step % 100 == 0:
       if len(world_item_data) != 0:
         for k_world, v_world in world_item_data.items():
-          #print("world {0}: {1}".format(k_world, v_world["name"]))
-          pass
-        #print("")
+          if "Door" not in v_world["name"]:
+            print("world {0}: {1}".format(k_world, v_world["name"]))
+            pass
+        print("")
 
       if len(equipped_item_data) != 0:
         for k_equipped, v_equipped in equipped_item_data.items():
@@ -129,9 +130,9 @@ def step(uo_service):
 
       if len(corpse_item_dict) != 0:
         for k_corpse, v_corpse in corpse_item_dict.items():
-          print("corpse item {0}: {1}".format(k_corpse, v_corpse["name"]))
+          #print("corpse item {0}: {1}".format(k_corpse, v_corpse["name"]))
           pass
-        print("")
+        #print("")
 
       #print("step: ", step)
       #print("gold_serial: ", gold_serial)

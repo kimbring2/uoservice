@@ -760,7 +760,7 @@ class UoServiceReplay:
 							screen_image = cv2.putText(screen_image, "  " + v["name"], 
 											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
 											  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
-											cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('red'), 2, cv2.LINE_4)
+											cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('red'), 1, cv2.LINE_4)
 
 				## Rendering the item data of replay as real screen scale 
 				world_item_dict = self.world_item_list[self._replay_step]
@@ -776,7 +776,7 @@ class UoServiceReplay:
 							screen_image = cv2.putText(screen_image, "     " + item_name_list[-1], 
 												( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
 												  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
-												cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('blue'), 2, cv2.LINE_4)
+												cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('blue'), 1, cv2.LINE_4)
 
 				##
 				corpse_dict = {}
@@ -820,7 +820,7 @@ class UoServiceReplay:
 				radius = int(scale / 2)
 				if self.player_game_x != None:
 					screen_image = cv2.putText(screen_image, str(self.player_game_name), (int(screen_length / 2), int(screen_length / 2) + int(scale / 2)), 
-											  cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('green'), 2, cv2.LINE_4)
+											  cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('green'), 1, cv2.LINE_4)
 
 					radius = int(scale / 2)
 					screen_image = cv2.circle(screen_image, (int(screen_length / 2), int(screen_length / 2)), radius, utils.color_dict["Lime"], -1)
@@ -946,14 +946,18 @@ class UoServiceReplay:
 				font = pygame.font.Font('freesansbold.ttf', 20)
 				for i, item in enumerate(vendor_item_list):
 					vendor_serial = item['vendor_serial']
-					vendor_name = world_mobile_dict[vendor_serial]['name']
 					item_serial = item['item_serial']
-					item_name = world_item_dict[item_serial]['name']
-					item_price = world_item_dict[item_serial]['price']
-					item_amount = world_item_dict[item_serial]['amount']
-					text_surface = font.render(vendor_name + ": " + item_name + ", " + str(item_price) + ", " + str(item_amount), 
-																		 True, (255, 255, 255))
-					self._rightSideSurface.blit(text_surface, (0, 20 * (i + 1) + backpack_last_y + 50))
+					if vendor_serial in world_mobile_dict and item_serial in world_item_dict:
+						vendor_name = world_mobile_dict[vendor_serial]['name']
+						item_name = world_item_dict[item_serial]['name']
+						item_price = world_item_dict[item_serial]['price']
+						item_amount = world_item_dict[item_serial]['amount']
+						text_surface = font.render(vendor_name + ": " + item_name + ", " + str(item_price) + ", " + str(item_amount), 
+																			 True, (255, 255, 255))
+						self._rightSideSurface.blit(text_surface, (0, 20 * (i + 1) + backpack_last_y + 50))
+					else:
+						text_surface = font.render("deleted item", True, (255, 255, 255))
+						self._rightSideSurface.blit(text_surface, (0, 20 * (i + 1) + backpack_last_y + 50))
 
 				## Popup menu draw
 				popup_menu_data = self.popup_menu_list[self._replay_step]
