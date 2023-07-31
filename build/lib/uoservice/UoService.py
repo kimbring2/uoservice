@@ -48,6 +48,7 @@ class UoService:
 		self.corpse_dict = {}
 		self.corpse_item_dict = {}
 		self.cliloc_dict = {}
+		self.vendor_item_dict = {}
 		self.popup_menu_list = []
 		self.ground_item_dict = {}
 		self.vendor_item_list = []
@@ -415,9 +416,14 @@ class UoService:
 
 		## Parse and save the vendor data 
 		if len(vendor_data) != 0:
-			self.vendor_item_list = []
-			for data in vendor_data:
-				self.vendor_item_list.append({"vendor_serial": data.vendorSerial, "item_serial": data.itemSerial})
+			self.vendor_item_dict = {}
+			#self.vendor_item_list = []
+			for obj in vendor_data:
+				self.vendor_item_dict[obj.itemSerial] = { "vendor_serial": obj.vendorSerial, "item_serial": obj.itemSerial, 
+													      "item_graphic":obj.itemGraphic, "item_hue": obj.itemHue,
+													      "item_amount": obj.itemAmount, "item_price":obj.itemPrice, 
+													      "item_name": obj.itemName}
+				#self.vendor_item_list.append({"vendor_serial": data.vendorSerial, "item_serial": data.itemSerial})
 
 		## Parse and save the player status data 
 		if player_status_data.str != 0:

@@ -77,6 +77,8 @@ def step(uo_service):
 
     vendor_item_list = uo_service.vendor_item_list
 
+    vendor_item_dict = uo_service.vendor_item_dict
+
     if len(world_mobile_data) != 0:
       for k_world, v_world in world_mobile_data.items():
         #print("mobile v_world: ", v_world)
@@ -101,6 +103,13 @@ def step(uo_service):
             pass
         #print("")
 
+
+    if len(vendor_item_dict) != 0:
+      for k_vendor, v_vendor in vendor_item_dict.items():
+        print("name: {0}, amount: {1}".format(v_vendor['item_name'], v_vendor['item_amount']))
+
+      print("")
+
     gold_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
 
     if gold_serial in backpack_item_data:
@@ -114,14 +123,14 @@ def step(uo_service):
 
     ## Declare the empty action
     if step % 100 == 0:
-      print("step: ", step)
+      #print("step: ", step)
       #print("")
 
       if len(backpack_item_data) != 0:
         for k_backpack, v_backpack in backpack_item_data.items():
-          print("backpack {0}: {1}".format(k_backpack, v_backpack["name"]))
+          #print("backpack {0}: {1}".format(k_backpack, v_backpack["name"]))
           pass
-        print("")
+        #print("")
 
       if open_pop_up_flag == True and healer_vendor_serial != None:
         print("open the pop up menu of NPC")
@@ -175,6 +184,7 @@ def step(uo_service):
                   action['amount'] = 1
                   trade_item_flag = False
 
+    action['action_type'] = 0
     obs = uo_service.step(action)
     step += 1
 

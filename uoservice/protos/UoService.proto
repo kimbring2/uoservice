@@ -96,6 +96,11 @@ message GrpcCliloc {
 message GrpcVendor {
   uint32 vendorSerial = 1;
   uint32 itemSerial = 2;
+  uint32 itemGraphic = 3;
+  uint32 itemHue = 4;
+  uint32 itemAmount = 5;
+  uint32 itemPrice = 6;
+  string itemName = 7;
 }
 
 message GrpcSkillList {

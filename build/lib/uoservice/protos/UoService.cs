@@ -50,47 +50,50 @@ namespace Uoservice {
             "eXBlGAEgASgNEg0KBWRlbHRhGAIgASgNEgwKBHRleHQYAyABKAkiLQoNR3Jw",
             "Y1BvcHVwTWVudRIMCgR0ZXh0GAEgASgJEg4KBmFjdGl2ZRgCIAEoCCJHCgpH",
             "cnBjQ2xpbG9jEg4KBnNlcmlhbBgBIAEoDRIMCgR0ZXh0GAIgASgJEg0KBWFm",
-            "Zml4GAMgASgJEgwKBG5hbWUYBCABKAkiNgoKR3JwY1ZlbmRvchIUCgx2ZW5k",
-            "b3JTZXJpYWwYASABKA0SEgoKaXRlbVNlcmlhbBgCIAEoDSI1Cg1HcnBjU2tp",
-            "bGxMaXN0EiQKBnNraWxscxgBIAMoCzIULnVvc2VydmljZS5HcnBjU2tpbGwi",
-            "MgoMR3JwY0J1ZmZMaXN0EiIKBWJ1ZmZzGAEgAygLMhMudW9zZXJ2aWNlLkdy",
-            "cGNCdWZmIkoKFEdycGNNb2JpbGVPYmplY3RMaXN0EjIKDW1vYmlsZU9iamVj",
-            "dHMYASADKAsyGy51b3NlcnZpY2UuR3JwY01vYmlsZU9iamVjdCJEChJHcnBj",
-            "SXRlbU9iamVjdExpc3QSLgoLaXRlbU9iamVjdHMYASADKAsyGS51b3NlcnZp",
-            "Y2UuR3JwY0l0ZW1PYmplY3QiPAoRR3JwY1BvcHVwTWVudUxpc3QSJwoFbWVu",
-            "dXMYASADKAsyGC51b3NlcnZpY2UuR3JwY1BvcHVwTWVudSI4Cg5HcnBjQ2xp",
-            "bG9jTGlzdBImCgdjbGlsb2NzGAEgAygLMhUudW9zZXJ2aWNlLkdycGNDbGls",
-            "b2MiOAoOR3JwY1ZlbmRvckxpc3QSJgoHdmVuZG9ycxgBIAMoCzIVLnVvc2Vy",
-            "dmljZS5HcnBjVmVuZG9yIh8KD1NlbWFwaG9yZUFjdGlvbhIMCgRtb2RlGAEg",
-            "ASgJIhYKBkNvbmZpZxIMCgRpbml0GAEgASgIIisKGEdycGNEZWxldGVJdGVt",
-            "U2VyaWFsTGlzdBIPCgdzZXJpYWxzGAEgAygNIi0KGkdycGNEZWxldGVNb2Jp",
-            "bGVTZXJpYWxMaXN0Eg8KB3NlcmlhbHMYASADKA0i4wQKCkdycGNTdGF0ZXMS",
-            "MQoMcGxheWVyT2JqZWN0GAEgASgLMhsudW9zZXJ2aWNlLkdycGNQbGF5ZXJP",
-            "YmplY3QSNAoNV29ybGRJdGVtTGlzdBgCIAEoCzIdLnVvc2VydmljZS5HcnBj",
-            "SXRlbU9iamVjdExpc3QSOAoPV29ybGRNb2JpbGVMaXN0GAMgASgLMh8udW9z",
-            "ZXJ2aWNlLkdycGNNb2JpbGVPYmplY3RMaXN0EjMKDXBvcHVwTWVudUxpc3QY",
-            "BCABKAsyHC51b3NlcnZpY2UuR3JwY1BvcHVwTWVudUxpc3QSLQoKY2xpbG9j",
-            "TGlzdBgFIAEoCzIZLnVvc2VydmljZS5HcnBjQ2xpbG9jTGlzdBIxCgxwbGF5",
-            "ZXJTdGF0dXMYBiABKAsyGy51b3NlcnZpY2UuR3JwY1BsYXllclN0YXR1cxIx",
-            "Cg9wbGF5ZXJTa2lsbExpc3QYByABKAsyGC51b3NlcnZpY2UuR3JwY1NraWxs",
-            "TGlzdBIvCg5wbGF5ZXJCdWZmTGlzdBgIIAEoCzIXLnVvc2VydmljZS5HcnBj",
-            "QnVmZkxpc3QSLQoKdmVuZG9yTGlzdBgJIAEoCzIZLnVvc2VydmljZS5HcnBj",
-            "VmVuZG9yTGlzdBJBChRkZWxldGVJdGVtU2VyaWFsTGlzdBgKIAEoCzIjLnVv",
-            "c2VydmljZS5HcnBjRGVsZXRlSXRlbVNlcmlhbExpc3QSRQoWZGVsZXRlTW9i",
-            "aWxlU2VyaWFsTGlzdBgLIAEoCzIlLnVvc2VydmljZS5HcnBjRGVsZXRlTW9i",
-            "aWxlU2VyaWFsTGlzdCKPAQoKR3JwY0FjdGlvbhISCgphY3Rpb25UeXBlGAEg",
-            "ASgNEhQKDHNvdXJjZVNlcmlhbBgCIAEoDRIUCgx0YXJnZXRTZXJpYWwYAyAB",
-            "KA0SFQoNd2Fsa0RpcmVjdGlvbhgEIAEoDRINCgVpbmRleBgFIAEoDRIOCgZh",
-            "bW91bnQYBiABKA0SCwoDcnVuGAcgASgIMp4DCglVb1NlcnZpY2USMQoFUmVz",
-            "ZXQSES51b3NlcnZpY2UuQ29uZmlnGhUudW9zZXJ2aWNlLkdycGNTdGF0ZXMS",
-            "MwoHUmVhZE9icxIRLnVvc2VydmljZS5Db25maWcaFS51b3NlcnZpY2UuR3Jw",
-            "Y1N0YXRlcxIzCghXcml0ZUFjdBIVLnVvc2VydmljZS5HcnBjQWN0aW9uGhAu",
-            "dW9zZXJ2aWNlLkVtcHR5EkMKE0FjdFNlbWFwaG9yZUNvbnRyb2wSGi51b3Nl",
-            "cnZpY2UuU2VtYXBob3JlQWN0aW9uGhAudW9zZXJ2aWNlLkVtcHR5EkMKE09i",
-            "c1NlbWFwaG9yZUNvbnRyb2wSGi51b3NlcnZpY2UuU2VtYXBob3JlQWN0aW9u",
-            "GhAudW9zZXJ2aWNlLkVtcHR5EjYKClJlYWRSZXBsYXkSES51b3NlcnZpY2Uu",
-            "Q29uZmlnGhUudW9zZXJ2aWNlLkdycGNTdGF0ZXMSMgoLUmVhZE1QUUZpbGUS",
-            "ES51b3NlcnZpY2UuQ29uZmlnGhAudW9zZXJ2aWNlLkVtcHR5YgZwcm90bzM="));
+            "Zml4GAMgASgJEgwKBG5hbWUYBCABKAkilQEKCkdycGNWZW5kb3ISFAoMdmVu",
+            "ZG9yU2VyaWFsGAEgASgNEhIKCml0ZW1TZXJpYWwYAiABKA0SEwoLaXRlbUdy",
+            "YXBoaWMYAyABKA0SDwoHaXRlbUh1ZRgEIAEoDRISCgppdGVtQW1vdW50GAUg",
+            "ASgNEhEKCWl0ZW1QcmljZRgGIAEoDRIQCghpdGVtTmFtZRgHIAEoCSI1Cg1H",
+            "cnBjU2tpbGxMaXN0EiQKBnNraWxscxgBIAMoCzIULnVvc2VydmljZS5HcnBj",
+            "U2tpbGwiMgoMR3JwY0J1ZmZMaXN0EiIKBWJ1ZmZzGAEgAygLMhMudW9zZXJ2",
+            "aWNlLkdycGNCdWZmIkoKFEdycGNNb2JpbGVPYmplY3RMaXN0EjIKDW1vYmls",
+            "ZU9iamVjdHMYASADKAsyGy51b3NlcnZpY2UuR3JwY01vYmlsZU9iamVjdCJE",
+            "ChJHcnBjSXRlbU9iamVjdExpc3QSLgoLaXRlbU9iamVjdHMYASADKAsyGS51",
+            "b3NlcnZpY2UuR3JwY0l0ZW1PYmplY3QiPAoRR3JwY1BvcHVwTWVudUxpc3QS",
+            "JwoFbWVudXMYASADKAsyGC51b3NlcnZpY2UuR3JwY1BvcHVwTWVudSI4Cg5H",
+            "cnBjQ2xpbG9jTGlzdBImCgdjbGlsb2NzGAEgAygLMhUudW9zZXJ2aWNlLkdy",
+            "cGNDbGlsb2MiOAoOR3JwY1ZlbmRvckxpc3QSJgoHdmVuZG9ycxgBIAMoCzIV",
+            "LnVvc2VydmljZS5HcnBjVmVuZG9yIh8KD1NlbWFwaG9yZUFjdGlvbhIMCgRt",
+            "b2RlGAEgASgJIhYKBkNvbmZpZxIMCgRpbml0GAEgASgIIisKGEdycGNEZWxl",
+            "dGVJdGVtU2VyaWFsTGlzdBIPCgdzZXJpYWxzGAEgAygNIi0KGkdycGNEZWxl",
+            "dGVNb2JpbGVTZXJpYWxMaXN0Eg8KB3NlcmlhbHMYASADKA0i4wQKCkdycGNT",
+            "dGF0ZXMSMQoMcGxheWVyT2JqZWN0GAEgASgLMhsudW9zZXJ2aWNlLkdycGNQ",
+            "bGF5ZXJPYmplY3QSNAoNV29ybGRJdGVtTGlzdBgCIAEoCzIdLnVvc2Vydmlj",
+            "ZS5HcnBjSXRlbU9iamVjdExpc3QSOAoPV29ybGRNb2JpbGVMaXN0GAMgASgL",
+            "Mh8udW9zZXJ2aWNlLkdycGNNb2JpbGVPYmplY3RMaXN0EjMKDXBvcHVwTWVu",
+            "dUxpc3QYBCABKAsyHC51b3NlcnZpY2UuR3JwY1BvcHVwTWVudUxpc3QSLQoK",
+            "Y2xpbG9jTGlzdBgFIAEoCzIZLnVvc2VydmljZS5HcnBjQ2xpbG9jTGlzdBIx",
+            "CgxwbGF5ZXJTdGF0dXMYBiABKAsyGy51b3NlcnZpY2UuR3JwY1BsYXllclN0",
+            "YXR1cxIxCg9wbGF5ZXJTa2lsbExpc3QYByABKAsyGC51b3NlcnZpY2UuR3Jw",
+            "Y1NraWxsTGlzdBIvCg5wbGF5ZXJCdWZmTGlzdBgIIAEoCzIXLnVvc2Vydmlj",
+            "ZS5HcnBjQnVmZkxpc3QSLQoKdmVuZG9yTGlzdBgJIAEoCzIZLnVvc2Vydmlj",
+            "ZS5HcnBjVmVuZG9yTGlzdBJBChRkZWxldGVJdGVtU2VyaWFsTGlzdBgKIAEo",
+            "CzIjLnVvc2VydmljZS5HcnBjRGVsZXRlSXRlbVNlcmlhbExpc3QSRQoWZGVs",
+            "ZXRlTW9iaWxlU2VyaWFsTGlzdBgLIAEoCzIlLnVvc2VydmljZS5HcnBjRGVs",
+            "ZXRlTW9iaWxlU2VyaWFsTGlzdCKPAQoKR3JwY0FjdGlvbhISCgphY3Rpb25U",
+            "eXBlGAEgASgNEhQKDHNvdXJjZVNlcmlhbBgCIAEoDRIUCgx0YXJnZXRTZXJp",
+            "YWwYAyABKA0SFQoNd2Fsa0RpcmVjdGlvbhgEIAEoDRINCgVpbmRleBgFIAEo",
+            "DRIOCgZhbW91bnQYBiABKA0SCwoDcnVuGAcgASgIMp4DCglVb1NlcnZpY2US",
+            "MQoFUmVzZXQSES51b3NlcnZpY2UuQ29uZmlnGhUudW9zZXJ2aWNlLkdycGNT",
+            "dGF0ZXMSMwoHUmVhZE9icxIRLnVvc2VydmljZS5Db25maWcaFS51b3NlcnZp",
+            "Y2UuR3JwY1N0YXRlcxIzCghXcml0ZUFjdBIVLnVvc2VydmljZS5HcnBjQWN0",
+            "aW9uGhAudW9zZXJ2aWNlLkVtcHR5EkMKE0FjdFNlbWFwaG9yZUNvbnRyb2wS",
+            "Gi51b3NlcnZpY2UuU2VtYXBob3JlQWN0aW9uGhAudW9zZXJ2aWNlLkVtcHR5",
+            "EkMKE09ic1NlbWFwaG9yZUNvbnRyb2wSGi51b3NlcnZpY2UuU2VtYXBob3Jl",
+            "QWN0aW9uGhAudW9zZXJ2aWNlLkVtcHR5EjYKClJlYWRSZXBsYXkSES51b3Nl",
+            "cnZpY2UuQ29uZmlnGhUudW9zZXJ2aWNlLkdycGNTdGF0ZXMSMgoLUmVhZE1Q",
+            "UUZpbGUSES51b3NlcnZpY2UuQ29uZmlnGhAudW9zZXJ2aWNlLkVtcHR5YgZw",
+            "cm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
@@ -103,7 +106,7 @@ namespace Uoservice {
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcBuff), global::Uoservice.GrpcBuff.Parser, new[]{ "Type", "Delta", "Text" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcPopupMenu), global::Uoservice.GrpcPopupMenu.Parser, new[]{ "Text", "Active" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcCliloc), global::Uoservice.GrpcCliloc.Parser, new[]{ "Serial", "Text", "Affix", "Name" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcVendor), global::Uoservice.GrpcVendor.Parser, new[]{ "VendorSerial", "ItemSerial" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcVendor), global::Uoservice.GrpcVendor.Parser, new[]{ "VendorSerial", "ItemSerial", "ItemGraphic", "ItemHue", "ItemAmount", "ItemPrice", "ItemName" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcSkillList), global::Uoservice.GrpcSkillList.Parser, new[]{ "Skills" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcBuffList), global::Uoservice.GrpcBuffList.Parser, new[]{ "Buffs" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcMobileObjectList), global::Uoservice.GrpcMobileObjectList.Parser, new[]{ "MobileObjects" }, null, null, null),
@@ -2823,6 +2826,11 @@ namespace Uoservice {
     public GrpcVendor(GrpcVendor other) : this() {
       vendorSerial_ = other.vendorSerial_;
       itemSerial_ = other.itemSerial_;
+      itemGraphic_ = other.itemGraphic_;
+      itemHue_ = other.itemHue_;
+      itemAmount_ = other.itemAmount_;
+      itemPrice_ = other.itemPrice_;
+      itemName_ = other.itemName_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -2853,6 +2861,61 @@ namespace Uoservice {
       }
     }
 
+    /// <summary>Field number for the "itemGraphic" field.</summary>
+    public const int ItemGraphicFieldNumber = 3;
+    private uint itemGraphic_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint ItemGraphic {
+      get { return itemGraphic_; }
+      set {
+        itemGraphic_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "itemHue" field.</summary>
+    public const int ItemHueFieldNumber = 4;
+    private uint itemHue_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint ItemHue {
+      get { return itemHue_; }
+      set {
+        itemHue_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "itemAmount" field.</summary>
+    public const int ItemAmountFieldNumber = 5;
+    private uint itemAmount_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint ItemAmount {
+      get { return itemAmount_; }
+      set {
+        itemAmount_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "itemPrice" field.</summary>
+    public const int ItemPriceFieldNumber = 6;
+    private uint itemPrice_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint ItemPrice {
+      get { return itemPrice_; }
+      set {
+        itemPrice_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "itemName" field.</summary>
+    public const int ItemNameFieldNumber = 7;
+    private string itemName_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string ItemName {
+      get { return itemName_; }
+      set {
+        itemName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
       return Equals(other as GrpcVendor);
@@ -2868,6 +2931,11 @@ namespace Uoservice {
       }
       if (VendorSerial != other.VendorSerial) return false;
       if (ItemSerial != other.ItemSerial) return false;
+      if (ItemGraphic != other.ItemGraphic) return false;
+      if (ItemHue != other.ItemHue) return false;
+      if (ItemAmount != other.ItemAmount) return false;
+      if (ItemPrice != other.ItemPrice) return false;
+      if (ItemName != other.ItemName) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -2876,6 +2944,11 @@ namespace Uoservice {
       int hash = 1;
       if (VendorSerial != 0) hash ^= VendorSerial.GetHashCode();
       if (ItemSerial != 0) hash ^= ItemSerial.GetHashCode();
+      if (ItemGraphic != 0) hash ^= ItemGraphic.GetHashCode();
+      if (ItemHue != 0) hash ^= ItemHue.GetHashCode();
+      if (ItemAmount != 0) hash ^= ItemAmount.GetHashCode();
+      if (ItemPrice != 0) hash ^= ItemPrice.GetHashCode();
+      if (ItemName.Length != 0) hash ^= ItemName.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -2897,6 +2970,26 @@ namespace Uoservice {
         output.WriteRawTag(16);
         output.WriteUInt32(ItemSerial);
       }
+      if (ItemGraphic != 0) {
+        output.WriteRawTag(24);
+        output.WriteUInt32(ItemGraphic);
+      }
+      if (ItemHue != 0) {
+        output.WriteRawTag(32);
+        output.WriteUInt32(ItemHue);
+      }
+      if (ItemAmount != 0) {
+        output.WriteRawTag(40);
+        output.WriteUInt32(ItemAmount);
+      }
+      if (ItemPrice != 0) {
+        output.WriteRawTag(48);
+        output.WriteUInt32(ItemPrice);
+      }
+      if (ItemName.Length != 0) {
+        output.WriteRawTag(58);
+        output.WriteString(ItemName);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -2910,6 +3003,21 @@ namespace Uoservice {
       }
       if (ItemSerial != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(ItemSerial);
+      }
+      if (ItemGraphic != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(ItemGraphic);
+      }
+      if (ItemHue != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(ItemHue);
+      }
+      if (ItemAmount != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(ItemAmount);
+      }
+      if (ItemPrice != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(ItemPrice);
+      }
+      if (ItemName.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(ItemName);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -2928,6 +3036,21 @@ namespace Uoservice {
       if (other.ItemSerial != 0) {
         ItemSerial = other.ItemSerial;
       }
+      if (other.ItemGraphic != 0) {
+        ItemGraphic = other.ItemGraphic;
+      }
+      if (other.ItemHue != 0) {
+        ItemHue = other.ItemHue;
+      }
+      if (other.ItemAmount != 0) {
+        ItemAmount = other.ItemAmount;
+      }
+      if (other.ItemPrice != 0) {
+        ItemPrice = other.ItemPrice;
+      }
+      if (other.ItemName.Length != 0) {
+        ItemName = other.ItemName;
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -2945,6 +3068,26 @@ namespace Uoservice {
           }
           case 16: {
             ItemSerial = input.ReadUInt32();
+            break;
+          }
+          case 24: {
+            ItemGraphic = input.ReadUInt32();
+            break;
+          }
+          case 32: {
+            ItemHue = input.ReadUInt32();
+            break;
+          }
+          case 40: {
+            ItemAmount = input.ReadUInt32();
+            break;
+          }
+          case 48: {
+            ItemPrice = input.ReadUInt32();
+            break;
+          }
+          case 58: {
+            ItemName = input.ReadString();
             break;
           }
         }
