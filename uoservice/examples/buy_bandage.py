@@ -74,9 +74,6 @@ def step(uo_service):
     hold_item_serial = uo_service.hold_item_serial
     equipped_item_data = uo_service.equipped_item_dict
     player_status_dict = uo_service.player_status_dict
-
-    vendor_item_list = uo_service.vendor_item_list
-
     vendor_item_dict = uo_service.vendor_item_dict
 
     if len(world_mobile_data) != 0:
@@ -102,13 +99,6 @@ def step(uo_service):
             #                                                          v_world["amount"]))
             pass
         #print("")
-
-
-    if len(vendor_item_dict) != 0:
-      for k_vendor, v_vendor in vendor_item_dict.items():
-        print("name: {0}, amount: {1}".format(v_vendor['item_name'], v_vendor['item_amount']))
-
-      print("")
 
     gold_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
 
@@ -159,32 +149,25 @@ def step(uo_service):
         uo_service.popup_menu_list = []
         select_pop_up_flag = False
         trade_item_flag = True
-      elif trade_item_flag == True and len(vendor_item_list) != 0:
+      elif trade_item_flag == True and len(vendor_item_dict) != 0:
         source_serial = None
         target_serial = None
-        if len(vendor_item_list) != 0:
-          for vendor_item in vendor_item_list:
-            vendor_serial = vendor_item["vendor_serial"]
-            item_serial = vendor_item["item_serial"]
 
-            if item_serial in world_item_data:
-              vendor_item = world_item_data[item_serial]
-              print("vendor item / name: {0}, serial: {1}, amount: {2}".format(vendor_item["name"], 
-                                                                               vendor_item["serial"],
-                                                                               vendor_item["amount"]))
-              if vendor_serial in world_mobile_data:
-                vendor_mobile = world_mobile_data[vendor_serial]
-                if "Clean Bandage" in vendor_item['name']:
-                  source_serial = vendor_item['serial']
-                  target_serial = vendor_mobile['serial']
+        if len(vendor_item_dict) != 0:
+          for k_vendor, v_vendor in vendor_item_dict.items():
+            print("name: {0}, amount: {1}".format(v_vendor['item_name'], v_vendor['item_amount']))
+            if v_vendor['vendor_serial'] in world_mobile_data:
+              if "clean bandage" in v_vendor['item_name'].lower():
+                source_serial = v_vendor['item_serial']
+                target_serial = v_vendor['vendor_serial']
 
-                  action['action_type'] = 12
-                  action['source_serial'] = source_serial
-                  action['target_serial'] = target_serial
-                  action['amount'] = 1
-                  trade_item_flag = False
+                action['action_type'] = 12
+                action['source_serial'] = source_serial
+                action['target_serial'] = target_serial
+                action['amount'] = 1
+                trade_item_flag = False
 
-    action['action_type'] = 0
+    #action['action_type'] = 0
     obs = uo_service.step(action)
     step += 1
 

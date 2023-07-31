@@ -357,7 +357,7 @@ class UoServiceReplay:
 		player_buff_dict = {}
 		cliloc_dict = {}
 		popup_menu_list = []
-		vendor_item_list = []
+		vendor_item_dict = {}
 
 		## Start to parse the replay data
 		for step in tqdm(range(self._replayLength)):
@@ -441,12 +441,14 @@ class UoServiceReplay:
 																																									self._vendorListArrayOffset, self.vendorListArr)
 				grpcVendorListReplay = UoService_pb2.GrpcVendorList().FromString(vendorListSubsetArray)
 
-
 				if len(grpcVendorListReplay.vendors) != 0:
-					vendor_item_list = []
+					vendor_item_dict = {}
 					for data in grpcVendorListReplay.vendors:
-						#print("vendor item / step: {0}, vendorSerial: {1}, itemSerial: {2}".format(step, data.vendorSerial, data.itemSerial))
-						vendor_item_list.append({"vendor_serial": data.vendorSerial, "item_serial": data.itemSerial})
+						print("vendor item / step: {0}, vendorSerial: {1}, itemSerial: {2}".format(step, data.vendorSerial, data.itemSerial))
+						vendor_item_dict[data.itemSerial] = { "vendor_serial": data.vendorSerial, "item_serial": data.itemSerial, 
+																								  "item_graphic": data.itemGraphic, "item_hue": data.itemHue,
+																								  "item_amount": data.itemAmount, "item_price":data.itemPrice, 
+																								  "item_name": data.itemName}
 
 				self._vendorListList.append(grpcVendorListReplay.vendors)
 			else:
@@ -555,7 +557,7 @@ class UoServiceReplay:
 			self.player_buff_list.append(copy.deepcopy(player_buff_dict))
 
 			## Store the every step data of vendor item list into list to move the replay step flexibly
-			self.vendor_item_list.append(copy.deepcopy(vendor_item_list))	
+			self.vendor_item_list.append(copy.deepcopy(vendor_item_dict))	
 
 			## Load the cell data for land, static data before replay playing to improve the speed of visualzation
 			if min_tile_x != None:
@@ -942,22 +944,19 @@ class UoServiceReplay:
 				font = pygame.font.Font('freesansbold.ttf', 32)
 				text_surface = font.render("Vendor Item", True, (255, 0, 255))
 				self._rightSideSurface.blit(text_surface, (0, backpack_last_y + 30))
-				vendor_item_list = self.vendor_item_list[self._replay_step]
+				vendor_item_dict = self.vendor_item_list[self._replay_step]
 				font = pygame.font.Font('freesansbold.ttf', 20)
-				for i, item in enumerate(vendor_item_list):
+				for i, k in enumerate(vendor_item_dict):
+					item = vendor_item_dict[k]
 					vendor_serial = item['vendor_serial']
 					item_serial = item['item_serial']
-					if vendor_serial in world_mobile_dict and item_serial in world_item_dict:
-						vendor_name = world_mobile_dict[vendor_serial]['name']
-						item_name = world_item_dict[item_serial]['name']
-						item_price = world_item_dict[item_serial]['price']
-						item_amount = world_item_dict[item_serial]['amount']
-						text_surface = font.render(vendor_name + ": " + item_name + ", " + str(item_price) + ", " + str(item_amount), 
-																			 True, (255, 255, 255))
-						self._rightSideSurface.blit(text_surface, (0, 20 * (i + 1) + backpack_last_y + 50))
-					else:
-						text_surface = font.render("deleted item", True, (255, 255, 255))
-						self._rightSideSurface.blit(text_surface, (0, 20 * (i + 1) + backpack_last_y + 50))
+					vendor_name = world_mobile_dict[vendor_serial]['name']
+					item_name = item['item_name']
+					item_price = item['item_price']
+					item_amount = item['item_amount']
+					text_surface = font.render(vendor_name + ": " + item_name + ", " + str(item_price) + ", " + str(item_amount), 
+																		 True, (255, 255, 255))
+					self._rightSideSurface.blit(text_surface, (0, 20 * (i + 1) + backpack_last_y + 50))
 
 				## Popup menu draw
 				popup_menu_data = self.popup_menu_list[self._replay_step]

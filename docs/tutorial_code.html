@@ -158,7 +158,7 @@
                 <li><a href="#first_mining">6. First Mining</a></li>
                 <li><a href="#first_training_ability">7. First Training Ability</a></li>
                 <li><a href="#first_smelting">8. First Smelting</a></li>
-                <li><a href="#first_trading_item">9. First Trading Item</a></li>
+                <li><a href="#first_trading">9. First Trading</a></li>
                 <li><a href="#first_healing">10. First Healing</a></li>
                 <li><a href="#conclusion">11. Conclusion</a></li>
             </ul>
@@ -990,12 +990,12 @@ def step(uo_service):
 
         <div class="row" id="first_trading">
             <div class="col">
-                <h2>8. First Trading Item</h2>
+                <h2>8. First Trading</h2>
                 In Ultima Online, you can purchase various weapons, armor, or recovery items that are helpful during battle from village NPCs. This time, let's use <b>UoService</b> to buy a Bandage Item that can be used to recover HP from the Healer NPC in town. 
 
                 The first thing to do is to search for the Healer mobile you want to trade in <b>world_mobile_dict</b>. To do this, enter the string Healer in the <b>title</b> of the mobile data and check if the name matches the <b>name</b> of the NPC you want to trade with multiple mobiles. If the serial number of the NPC you want is obtained , set it as <b>target_serial</b> and set the <b>action_type</b> to 10 to check the menu where you can see various interactions possible with the NPC.
 
-                If action is executed normally, information for displayed menus is received through <b>popup_menu_list</b> data of <b>uo_service</b>. Among them, you need to find the index of the menu where <b>text</b> is buy and <b>active</b> is True. Put the index of the menu you want to select into the <b>index part</b> of the new action, set <b>action_type</b> to 11, and set <b>target_serial</b> to the serial of the healer NPC you used earlier.
+                If action is executed normally, information for displayed menus is received through <b>popup_menu_list</b> data of <b>uo_service</b>. Among them, you need to find the index of the menu where <b>text</b> is buy and <b>active</b> is True. Put the index of the menu you want to select into the <b>index</b> part of the new action, set <b>action_type</b> to 11, and set <b>target_serial</b> to the serial of the healer NPC you used earlier.
 
                 <br>
                 <br>
@@ -1003,9 +1003,9 @@ def step(uo_service):
                 <h5>Figure11: Bandage Trading with Healer.</h5>
                 <img src="Fig/Trading.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
 
-                Then, items that can now be purchased are start to be included in <b>world_item_dict</b> of <b>uo_service</b>. However, since you can not tell apart which item come from vendor, you need to check the serial number in <b>vendor_item_list</b> that is updated the moment you select the pup up menu. 
+                Then, items that can now be purchased are start to be included in <b>vendor_item_dict</b> of <b>uo_service</b>. First of all, let's check if <b>vendor_serial</b> is currently in the <b>world_mobile_dict</b> in order to check if the NPC to be trading is around the agent. 
 
-                First, use the serial number of the vendor item as a key to find the information on items that can be purchased from <b>world_item_dict</b>. Here, you need to check the serial number of the item whose name is Clean Bandage and set it as the source_serial of the new action. Enter <b>target_serial</b> as the serial number of the NPC, <b>action_type</b> as 12, and <b>amount</b> as the amount of the item you want to purchase.
+                Next, check if the text "Clean Bandage" is included in <b>item_name</b> part of vendor_item, and if so, obtain the serial number of the item from <b>item_serial</b>. Finally, enter <b>target_serial</b> as the serial number of the NPC, <b>action_type</b> as 12, and <b>amount</b> as the amount of the item you want to purchase.
 
                 <br>
                 <br>
@@ -1034,8 +1034,7 @@ def step(uo_service):
     world_mobile_data = uo_service.world_mobile_dict
     backpack_item_data = uo_service.backpack_item_dict
     popup_menu_list = uo_service.popup_menu_list
-    
-    vendor_item_list = uo_service.vendor_item_list
+    vendor_item_dict = uo_service.vendor_item_dict
 
     if len(world_mobile_data) != 0:
       for k_world, v_world in world_mobile_data.items():
@@ -1075,28 +1074,22 @@ def step(uo_service):
         uo_service.popup_menu_list = []
         select_pop_up_flag = False
         trade_item_flag = True
-      elif trade_item_flag == True and len(vendor_item_list) != 0:
+      elif trade_item_flag == True and len(vendor_item_dict) != 0:
         source_serial = None
         target_serial = None
-        if len(vendor_item_list) != 0:
-          for vendor_item in vendor_item_list:
-            vendor_serial = vendor_item["vendor_serial"]
-            item_serial = vendor_item["item_serial"]
 
-            if item_serial in world_item_data:
-              vendor_item = world_item_data[item_serial]
+        if len(vendor_item_dict) != 0:
+          for k_vendor, v_vendor in vendor_item_dict.items():
+            if v_vendor['vendor_serial'] in world_mobile_data:
+              if "clean bandage" in v_vendor['item_name'].lower():
+                source_serial = v_vendor['item_serial']
+                target_serial = v_vendor['vendor_serial']
 
-              if vendor_serial in world_mobile_data:
-                vendor_mobile = world_mobile_data[vendor_serial]
-                if "Clean Bandage" in vendor_item['name']:
-                  source_serial = vendor_item['serial']
-                  target_serial = vendor_mobile['serial']
-
-                  action['action_type'] = 12
-                  action['source_serial'] = source_serial
-                  action['target_serial'] = target_serial
-                  action['amount'] = 1
-                  trade_item_flag = False
+                action['action_type'] = 12
+                action['source_serial'] = source_serial
+                action['target_serial'] = target_serial
+                action['amount'] = 1
+                trade_item_flag = False
 
     obs = uo_service.step(action)
                 </code></pre>
@@ -1127,7 +1120,6 @@ def step(uo_service):
                 <img src="Fig/HealBuffIcon.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
 
                 If all conditions described above are satisfied, set <b>action_type</b> to 14, <b>source_serial</b> to bandage item serial, and <b>target_serial</b> to agent's own serial that can be checked with <b>uo_service.player_serial</b>, and execute the action.
-
 
                 When Bandage item is used, the result after use is displayed in <b>cliloc_dict</b> of <b>uo_service</b>. Therefore, by checking this, you can know whether the item was used well and HP is recovered or not.
 
