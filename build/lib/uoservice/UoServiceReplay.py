@@ -444,7 +444,7 @@ class UoServiceReplay:
 				if len(grpcVendorListReplay.vendors) != 0:
 					vendor_item_dict = {}
 					for data in grpcVendorListReplay.vendors:
-						print("vendor item / step: {0}, vendorSerial: {1}, itemSerial: {2}".format(step, data.vendorSerial, data.itemSerial))
+						#print("vendor item / step: {0}, vendorSerial: {1}, itemSerial: {2}".format(step, data.vendorSerial, data.itemSerial))
 						vendor_item_dict[data.itemSerial] = { "vendor_serial": data.vendorSerial, "item_serial": data.itemSerial, 
 																								  "item_graphic": data.itemGraphic, "item_hue": data.itemHue,
 																								  "item_amount": data.itemAmount, "item_price":data.itemPrice, 
@@ -585,7 +585,7 @@ class UoServiceReplay:
 
 		# PyGame Widget
 		self._slider = Slider(self._mainSurface, 500 + int(self._screenWidth / 2) - 100, self._screenHeight - 250 + 30, 
-													700, 40, min=0, max=len(self._non_zero_action_step_list) - 1, step=1)
+													700, 40, min=0, max=len(self._non_zero_action_step_list), step=1)
 
 		self._non_zero_action_index = int(self._slider.getValue())
 
@@ -780,13 +780,13 @@ class UoServiceReplay:
 												  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
 												cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('blue'), 1, cv2.LINE_4)
 
-				##
+				## Parse the corpse
 				corpse_dict = {}
 				for k, v in world_item_dict.items():
 					if v["isCorpse"] == True:
 						corpse_dict[k] = v
 
-				##
+				## Parse the item of each corpse
 				corpse_item_dict = {}
 				for k_corpse, v_corpse in corpse_dict.items():
 					for k_world, v_world in world_item_dict.items():
@@ -796,12 +796,10 @@ class UoServiceReplay:
 							else:
 								corpse_item_dict[k_corpse].append(world_item_dict[k_world])
 
-				##
+				## Draw the corpse item on the screen
 				if len(corpse_item_dict) != 0:
 					for k_corpse_item, v_corpse_item_list in corpse_item_dict.items():
-						#print("v_corpse_item_list: ", v_corpse_item_list)
 						for i, corpse_item in enumerate(v_corpse_item_list):
-							#print("corpse item: {0}, corpse x: {1}, corpse y: {2}".format(corpse_item["name"], corpse["gameX"]))
 							corpse = world_item_dict[k_corpse_item]
 
 							start_point = ( (corpse["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale), 
@@ -814,8 +812,6 @@ class UoServiceReplay:
 												( (corpse["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
 												  (corpse["gameY"] - player_game_y) * scale + int(screen_length / 2) + i * 20 ), 
 													cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('yellow'), 1, cv2.LINE_4)
-						pass
-					#print("")
 
 				## Cropping the real screen around player position to zoom in
 				boundary = 500
@@ -960,7 +956,7 @@ class UoServiceReplay:
 
 				## Popup menu draw
 				popup_menu_data = self.popup_menu_list[self._replay_step]
-				#print("step: {0}, popup_menu_data: {1}".format(self._replay_step, popup_menu_data))
+				print("step: {0}, popup_menu_data: {1}".format(self._replay_step, popup_menu_data))
 
 				## Cliloc data draw
 				self._bottomSideSurface.fill((pygame.Color('black')))
@@ -1001,7 +997,8 @@ class UoServiceReplay:
 
 			self._non_zero_action_index = self._slider.getValue()
 			if self._non_zero_action_index != self._pre_non_zero_action_index:
-				self._replay_step = self._non_zero_action_step_list[self._non_zero_action_index]
+				if self._non_zero_action_index <= len(self._non_zero_action_step_list) - 1:
+					self._replay_step = self._non_zero_action_step_list[self._non_zero_action_index]
 
 			pygame_widgets.update(events)
 
