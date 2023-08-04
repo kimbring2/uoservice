@@ -437,6 +437,9 @@ class UoServiceReplay:
 				pass
 
 			if self.vendorListArr:
+				#if self.vendorListArrayLengthList[step] != 0:
+				#	print("vendor array length / step: {0}, length: {1}".format(step, self.vendorListArrayLengthList[step]))
+
 				vendorListSubsetArray, self._vendorListArrayOffset = self.get_subset_array(step, self.vendorListArrayLengthList, 
 																																									self._vendorListArrayOffset, self.vendorListArr)
 				grpcVendorListReplay = UoService_pb2.GrpcVendorList().FromString(vendorListSubsetArray)

@@ -437,6 +437,10 @@ class UoServiceReplay:
 				pass
 
 			if self.vendorListArr:
+
+				if self.vendorListArrayLengthList[step] != 0:
+					print("vendor array length / step: {0}, length: {1}".format(step, self.vendorListArrayLengthList[step]))
+
 				vendorListSubsetArray, self._vendorListArrayOffset = self.get_subset_array(step, self.vendorListArrayLengthList, 
 																																									self._vendorListArrayOffset, self.vendorListArr)
 				grpcVendorListReplay = UoService_pb2.GrpcVendorList().FromString(vendorListSubsetArray)
@@ -444,7 +448,8 @@ class UoServiceReplay:
 				if len(grpcVendorListReplay.vendors) != 0:
 					vendor_item_dict = {}
 					for data in grpcVendorListReplay.vendors:
-						#print("vendor item / step: {0}, vendorSerial: {1}, itemSerial: {2}".format(step, data.vendorSerial, data.itemSerial))
+
+						print("vendor item / step: {0}, vendorSerial: {1}, itemSerial: {2}".format(step, data.vendorSerial, data.itemSerial))
 						vendor_item_dict[data.itemSerial] = { "vendor_serial": data.vendorSerial, "item_serial": data.itemSerial, 
 																								  "item_graphic": data.itemGraphic, "item_hue": data.itemHue,
 																								  "item_amount": data.itemAmount, "item_price":data.itemPrice, 
