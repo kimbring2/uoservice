@@ -774,13 +774,13 @@ class UoServiceReplay:
 						screen_image = cv2.circle(screen_image, 
 										( (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
 										  (v["gameY"] - player_game_y) * scale + int(screen_length / 2)
-										), radius, pygame.Color('blue'), -1)
+										), radius, pygame.Color('slateblue4'), -1)
 	          
 						item_name_list = v["name"].split(" ")
 						screen_image = cv2.putText(screen_image, "     " + item_name_list[-1], 
 											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
 											  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
-											cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('blue'), 1, cv2.LINE_4)
+											cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('slateblue4'), 1, cv2.LINE_4)
 
 			## Parse the corpse
 			corpse_dict = {}
@@ -1128,13 +1128,14 @@ class UoServiceReplay:
 				for k, v in world_item_dict.items():
 					#if v['name'].find("Door") == -1 and v['name'].find("Vendors") == -1:
 						#if self.bank_serial == v["container"]:
-							#print("bank item / step: {0}, name: {1}, container: {2}".format(self._replay_step, v['name'], v["container"]))
+					#print("world item / step: {0}, name: {1}, container: {2}".format(self._replay_step, v['name'], v["container"]))
 
 					if v["isCorpse"] == True:
 						## Corpse item
 						self.corpse_dict[k] = v
 					elif v["container"] == self.backpack_serial:
 						## Backpack item
+						print("backpack item / step: {0}, name: {1}, amount: {2}".format(self._replay_step, v['name'], v["amount"]))
 						self.backpack_item_dict[k] = v
 					elif v["container"] == self.bank_serial:
 						## Bank item

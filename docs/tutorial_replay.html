@@ -60,7 +60,7 @@
         <br>
         <h1>Replay tutorial</h1>
 
-        <p style="text-align:left; font-size:18px;"> Description for replay </p>
+        <p style="text-align:left; font-size:18px;"> If the action space of game is complex like Starcraft, it is impossible to train the agent using only Deep Reinforcement Learning. Therefore, human expert data is needed to train the agent the various action first. However, the amount of data generated at each second is excessively large at real time game unlike the Go board game. To solve such a problem, the collected data should be converted into binary format and stored instead of directly stored. There are various methods for this, but in UoService, replay data is compressed and saved using the MoPaQ format mainly used by Blizzard. Furthermore, there is a need to investigate by loading and rendering saved game data, and UoService also provides <a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/UoServiceReplay.py">a Python program for this</a>.</p>
 
         <div class="center">
             <video width="600" height="400" controls>
@@ -68,21 +68,22 @@
                 Your browser does not support the video tag.
             </video>
         </div>
-    </div>
 
+        <p style="text-align:left; font-size:18px;"> The program basically shows the player basic information, skill, and buff information, which should be used by the agent to determine the action within the game, on the left screen at every game step. Next, it visualizes land/static, mobile, and item information around the player in actual game ratio at middle screen. Information on backpack, equipped, and vendor items is displayed on the right side of the screen. The cliloc data, which is all text information generated in the game, is displayed in order at the bottom of the screen. Finally, the pop up menu, bank item information is located in the free space on the right side of the center screen.</p>
+    </div>
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col">
-                <h2>MPQ (MoPaQ) archive format</h2>
-                When the action is complex like Ultima Online, it is necessary to record the game play of human experts and use it for training the AI agent. In a real-time game, the amount of data generated at each second is excessively large. To solve such a problem, UoService used the same method used by Blizzard to store replay data of Starcraft game. 
+            <div class="row">
+                <div class="col">
+                    <h2>MPQ (MoPaQ) archive format</h2>
+                    The code for the MQP is already open-sourced for the <a href="https://github.com/robpaveza/stormlibsharp">C#</a> and <a href="https://github.com/eagleflo/mpyq">Python</a>. Therefore, they could be applied into UoService easily. 
+                </div>
 
-                The code for the MQP is already open-sourced for the <a href="https://github.com/robpaveza/stormlibsharp">C#</a> and <a href="https://github.com/eagleflo/mpyq">Python</a>. Therefore, they could be applied into UoService easily. 
-            </div>
-
-            <div class="col">
-                <h5>Figure1: Replay File.</h5>
-                <img src="Fig/ReplayFile.png" class="rounded mx-auto d-block" alt="Training process" width="500" height="40" align="left">
+                <div class="col">
+                    <h5>Figure1: Replay File.</h5>
+                    <img src="Fig/ReplayFile.png" class="rounded mx-auto d-block" alt="Training process" width="500" height="40" align="left">
+                </div>
             </div>
 
             <div class="row">
