@@ -160,6 +160,7 @@ class UoServiceReplay:
 		self.backpack_serial = None
 		self.bank_serial = None
 		self.backpack_item_dict = {}
+		self.bank_item_dict = {}
 		self.equipped_item_dict = {}
 		self.corpse_dict = {}
 
@@ -437,10 +438,6 @@ class UoServiceReplay:
 				pass
 
 			if self.vendorListArr:
-
-				if self.vendorListArrayLengthList[step] != 0:
-					print("vendor array length / step: {0}, length: {1}".format(step, self.vendorListArrayLengthList[step]))
-
 				vendorListSubsetArray, self._vendorListArrayOffset = self.get_subset_array(step, self.vendorListArrayLengthList, 
 																																									self._vendorListArrayOffset, self.vendorListArr)
 				grpcVendorListReplay = UoService_pb2.GrpcVendorList().FromString(vendorListSubsetArray)
@@ -448,8 +445,7 @@ class UoServiceReplay:
 				if len(grpcVendorListReplay.vendors) != 0:
 					vendor_item_dict = {}
 					for data in grpcVendorListReplay.vendors:
-
-						print("vendor item / step: {0}, vendorSerial: {1}, itemSerial: {2}".format(step, data.vendorSerial, data.itemSerial))
+						#print("vendor item / step: {0}, vendorSerial: {1}, itemSerial: {2}".format(step, data.vendorSerial, data.itemSerial))
 						vendor_item_dict[data.itemSerial] = { "vendor_serial": data.vendorSerial, "item_serial": data.itemSerial, 
 																								  "item_graphic": data.itemGraphic, "item_hue": data.itemHue,
 																								  "item_amount": data.itemAmount, "item_price":data.itemPrice, 
@@ -889,7 +885,7 @@ class UoServiceReplay:
 				self._leftSideSurface.blit(text_surface, (0, 0))
 				player_status_dict = self.player_status_list[self._replay_step]
 				for i, k in enumerate(player_status_dict):
-					font = pygame.font.Font('freesansbold.ttf', 16)
+					font = pygame.font.Font('freesansbold.ttf', 20)
 					text_surface = font.render(str(k) + ": " + str(player_status_dict[k]), True, (255, 255, 255))
 					self._leftSideSurface.blit(text_surface, (0, 20 * (i + 1) + 20))
 
@@ -900,7 +896,7 @@ class UoServiceReplay:
 				player_skills_dict = self.player_skill_list[self._replay_step]
 				skill_last_y = 300
 				for i, k in enumerate(player_skills_dict):
-					font = pygame.font.Font('freesansbold.ttf', 16)
+					font = pygame.font.Font('freesansbold.ttf', 20)
 					skill = player_skills_dict[k]
 					text_surface = font.render(str(skill["index"]) + '. ' + str(k) + ": " + str(skill["value"]), True, (255, 255, 255))
 					self._leftSideSurface.blit(text_surface, (0, 20 * (i + 1) + 320))
@@ -912,7 +908,7 @@ class UoServiceReplay:
 				self._leftSideSurface.blit(text_surface, (0, skill_last_y + 30))
 				player_buff_dict = self.player_buff_list[self._replay_step]
 				for i, k in enumerate(player_buff_dict):
-					font = pygame.font.Font('freesansbold.ttf', 16)
+					font = pygame.font.Font('freesansbold.ttf', 20)
 					buff = player_buff_dict[k]
 					text = buff["text"].replace('<left>', '').replace('</left>', '').split("\n")[0]
 					text_surface = font.render(text + ", " + str(buff["delta"]), True, (255, 255, 255))
@@ -927,19 +923,19 @@ class UoServiceReplay:
 					font = pygame.font.Font('freesansbold.ttf', 20)
 					item = self.equipped_item_dict[k]
 					text_surface = font.render(str(Layers(int(item["layer"])).name) + ": " + str(item["name"]), True, (255, 255, 255))
-					self._rightSideSurface.blit(text_surface, (0, 25 * (i + 1) + 20))
+					self._rightSideSurface.blit(text_surface, (0, 20 * (i + 1) + 20))
 
 				## Backpack item draw
 				font = pygame.font.Font('freesansbold.ttf', 32)
 				text_surface = font.render("Backpack Item", True, (255, 0, 255))
-				self._rightSideSurface.blit(text_surface, (0, 400))
-				backpack_last_y = 400
+				self._rightSideSurface.blit(text_surface, (0, 360))
+				backpack_last_y = 360
 				for i, k in enumerate(self.backpack_item_dict):
-					font = pygame.font.Font('freesansbold.ttf', 18)
+					font = pygame.font.Font('freesansbold.ttf', 20)
 					item = self.backpack_item_dict[k]
 					text_surface = font.render(str(k) + ": " + str(item["name"]) + ", " + str(item["amount"]), True, (255, 255, 255))
-					self._rightSideSurface.blit(text_surface, (0, 20 * (i + 1) + 420))
-					backpack_last_y = 20 * (i + 1) + 420
+					self._rightSideSurface.blit(text_surface, (0, 20 * (i + 1) + 380))
+					backpack_last_y = 20 * (i + 1) + 380
 
 				## Vendor item draw
 				font = pygame.font.Font('freesansbold.ttf', 32)
@@ -959,10 +955,6 @@ class UoServiceReplay:
 																		 True, (255, 255, 255))
 					self._rightSideSurface.blit(text_surface, (0, 20 * (i + 1) + backpack_last_y + 50))
 
-				## Popup menu draw
-				popup_menu_data = self.popup_menu_list[self._replay_step]
-				print("step: {0}, popup_menu_data: {1}".format(self._replay_step, popup_menu_data))
-
 				## Cliloc data draw
 				self._bottomSideSurface.fill((pygame.Color('black')))
 				font = pygame.font.Font('freesansbold.ttf', 32)
@@ -970,12 +962,39 @@ class UoServiceReplay:
 				self._bottomSideSurface.blit(text_surface, (0, 0))
 				cliloc_data = self.cliloc_list[self._replay_step]
 				if len(cliloc_data) != 0:
-					font = pygame.font.Font('freesansbold.ttf', 24)
+					font = pygame.font.Font('freesansbold.ttf', 20)
 					for i, k in enumerate(cliloc_data):
 						item = cliloc_data[k][-1]
 						text_surface = font.render(str(item["name"]) + ": " + str(item["text"]) + ", " + str(item["affix"]) + ", " + str(k), 
 																			 True, (255, 255, 255))
-						self._bottomSideSurface.blit(text_surface, (0, 25 * (i + 1)))
+						self._bottomSideSurface.blit(text_surface, (0, 20 * (i + 1) + 20))
+
+				## Popup menu draw
+				font = pygame.font.Font('freesansbold.ttf', 32)
+				text_surface = font.render("Pop Up Menu", True, (255, 0, 255))
+				self._screenSurface.blit(text_surface, (1000, 0))
+				popup_menu_data = self.popup_menu_list[self._replay_step]
+				popup_last_y = 0
+				if len(popup_menu_data) != 0:
+					for i, menu in enumerate(popup_menu_data):
+						font = pygame.font.Font('freesansbold.ttf', 20)
+						text_surface = font.render(str(i) + ": " + str(menu.text) + ", " + str(menu.active), 
+																			 True, (255, 255, 255))
+						self._screenSurface.blit(text_surface, (1000, 20 * (i + 1) + 20))
+						popup_last_y = 20 * (i + 1) + 20
+
+				print("self.bank_item_dict: ", self.bank_item_dict)
+				print("self.bank_serial: ", self.bank_serial)
+
+				## Bank item draw
+				font = pygame.font.Font('freesansbold.ttf', 32)
+				text_surface = font.render("Bank Item", True, (255, 0, 255))
+				self._screenSurface.blit(text_surface, (1000, popup_last_y + 20))
+				for i, k in enumerate(self.bank_item_dict):
+					font = pygame.font.Font('freesansbold.ttf', 20)
+					item = self.bank_item_dict[k]
+					text_surface = font.render(str(Layers(int(item["layer"])).name) + ": " + str(item["name"]), True, (255, 255, 255))
+					self._screenSurface.blit(text_surface, (0, 20 * (i + 1) + popup_last_y + 20))
 
 				## Draw each surface on root surface
 				self._mainSurface.blit(self._screenSurface, (500, 0))
@@ -1100,7 +1119,10 @@ class UoServiceReplay:
 				self.equipped_item_dict = {}
 				self.corpse_dict = {}
 				for k, v in world_item_dict.items():
-					#print("world item / step: {0}, name: {1}".format(self._replay_step, v['name']))
+
+					if v['name'].find("Door") == -1 and v['name'].find("Vendors") == -1:
+						if self.bank_serial == v["container"]:
+							print("world item / step: {0}, name: {1}, name: {2}".format(self._replay_step, v['name'], v["container"]))
 
 					if v["isCorpse"] == True:
 						## Corpse item
