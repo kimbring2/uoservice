@@ -45,6 +45,7 @@ def step(uo_service):
   player_gold = None
   pick_up_flag = True
   drop_flag = False
+  bank_serial = None
 
   step = 0
   while True:
@@ -62,6 +63,7 @@ def step(uo_service):
     backpack_item_data = uo_service.backpack_item_dict
     equipped_item_data = uo_service.equipped_item_dict
     ground_item_data = uo_service.ground_item_dict
+    bank_item_data = uo_service.bank_item_dict
     
     if len(ground_item_data) != 0:
       for k_ground, v_ground in ground_item_data.items():
@@ -91,14 +93,26 @@ def step(uo_service):
       player_gold = uo_service.player_status_dict['gold']
       #print("player_gold: ", player_gold)
 
+    for k_world, v_world in world_item_data.items():
+      if v_world["layer"] == 29:
+        bank_serial = k_world
+
     ## Declare the empty action
     if step % 100 == 0:
       if len(world_item_data) != 0:
-        for k_world, v_world in world_item_data.items():
-          if "Door" not in v_world["name"]:
-            print("world {0}: {1}".format(k_world, v_world["name"]))
+        #print("bank_serial: {0}".format(bank_serial))
+
+        if bank_serial != None:
+          for k_world, v_world in world_item_data.items():
+            if "Door" not in v_world["name"] and "Vendor" not in v_world["name"]:
+              print("world {0}: {1}, {2}".format(k_world, v_world["name"], v_world["container"]))
+              if v_world["container"] == bank_serial:
+                ## Bank item
+                #print("bank item: {0}".format(v_world))
+                pass
+
             pass
-        print("")
+          print("")
 
       if len(equipped_item_data) != 0:
         for k_equipped, v_equipped in equipped_item_data.items():
@@ -108,9 +122,14 @@ def step(uo_service):
 
       if len(backpack_item_data) != 0:
         for k_backpack, v_backpack in backpack_item_data.items():
-          print("backpack {0}: {1}".format(k_backpack, v_backpack["name"]))
+          #print("backpack {0}: {1}".format(k_backpack, v_backpack["name"]))
           pass
-        print("")
+        #print("")
+
+      if len(bank_item_data) != 0:
+        for k_bank, v_bank in bank_item_data.items():
+          print("bank item {0}: {1}".format(k_bank, v_bank["name"]))
+          pass
 
       corpse_dict = {}
       for k, v in uo_service.world_item_dict.items():

@@ -517,7 +517,7 @@ class UoServiceReplay:
 																																						self.actionArr)
 				actionReplay = UoService_pb2.GrpcAction().FromString(actionSubsetArrays)
 
-				if actionReplay.actionType != 0:
+				if actionReplay.actionType != 0 and actionReplay.actionType != 1:
 					self._non_zero_action_step_list.append(step)
 
 				if actionReplay.actionType == 11:
@@ -833,6 +833,9 @@ class UoServiceReplay:
 				screen_image = cv2.flip(screen_image, 0)
 				screen_image = utils.rotate_image(screen_image, -45)
 
+				## Reset ScreenSurface
+				self._screenSurface.fill(((0, 0, 0)))
+
 				## Draw the main screen image into PyGame screen
 				surf = pygame.surfarray.make_surface(screen_image)
 				self._screenSurface.blit(surf, (0, 0))
@@ -983,18 +986,18 @@ class UoServiceReplay:
 						self._screenSurface.blit(text_surface, (1000, 20 * (i + 1) + 20))
 						popup_last_y = 20 * (i + 1) + 20
 
-				print("self.bank_item_dict: ", self.bank_item_dict)
-				print("self.bank_serial: ", self.bank_serial)
+				#print("self.bank_item_dict: ", self.bank_item_dict)
+				#print("self.bank_serial: ", self.bank_serial)
 
 				## Bank item draw
 				font = pygame.font.Font('freesansbold.ttf', 32)
 				text_surface = font.render("Bank Item", True, (255, 0, 255))
-				self._screenSurface.blit(text_surface, (1000, popup_last_y + 20))
+				self._screenSurface.blit(text_surface, (1000, popup_last_y + 50))
 				for i, k in enumerate(self.bank_item_dict):
 					font = pygame.font.Font('freesansbold.ttf', 20)
 					item = self.bank_item_dict[k]
 					text_surface = font.render(str(Layers(int(item["layer"])).name) + ": " + str(item["name"]), True, (255, 255, 255))
-					self._screenSurface.blit(text_surface, (0, 20 * (i + 1) + popup_last_y + 20))
+					self._screenSurface.blit(text_surface, (1000, 20 * (i + 1) + popup_last_y + 50))
 
 				## Draw each surface on root surface
 				self._mainSurface.blit(self._screenSurface, (500, 0))
@@ -1109,6 +1112,7 @@ class UoServiceReplay:
 
 					## Check the serial number of bank container
 					if v["layer"] == 29:
+						print("layer == 29: ", v)
 						self.bank_serial = k
 
 			## Parse the backpack, equipped, corpse item from world item
@@ -1118,11 +1122,14 @@ class UoServiceReplay:
 				self.backpack_item_dict = {}
 				self.equipped_item_dict = {}
 				self.corpse_dict = {}
-				for k, v in world_item_dict.items():
 
+				print("")
+				print("self.bank_serial: ", self.bank_serial)
+				for k, v in world_item_dict.items():
 					if v['name'].find("Door") == -1 and v['name'].find("Vendors") == -1:
-						if self.bank_serial == v["container"]:
-							print("world item / step: {0}, name: {1}, name: {2}".format(self._replay_step, v['name'], v["container"]))
+						#if self.bank_serial == v["container"]:
+						print("bank item / step: {0}, name: {1}, container: {2}".format(self._replay_step, v['name'], v["container"]))
+
 
 					if v["isCorpse"] == True:
 						## Corpse item
