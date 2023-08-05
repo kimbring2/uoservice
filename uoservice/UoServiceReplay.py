@@ -41,7 +41,7 @@ from uoservice import utils
 
 ## Initialize the PyGame
 pygame.init()
-pygame.display.set_caption("OpenCV camera stream on Pygame")
+pygame.display.set_caption("UoService Replay Displaying")
 
 logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
 
@@ -517,7 +517,8 @@ class UoServiceReplay:
 																																						self.actionArr)
 				actionReplay = UoService_pb2.GrpcAction().FromString(actionSubsetArrays)
 
-				if actionReplay.actionType != 0 and actionReplay.actionType != 1:
+				#if actionReplay.actionType != 0 and actionReplay.actionType != 1:
+				if actionReplay.actionType != 0:
 					self._non_zero_action_step_list.append(step)
 
 				if actionReplay.actionType == 11:
@@ -672,14 +673,15 @@ class UoServiceReplay:
 		## Rendering the replay data obtained from InteractWithReplay function
 		if True:
 			## Only parse when player is in the world
+			self._mainSurface.fill(((131, 139, 139)))
+
+			## Main game screen array
+			screen_length = 1000
+			screen_image = np.zeros((screen_length, screen_length, 3), dtype=np.uint8)
+			scale = 40 ## Scale factor to make the space between the box line 
+
+			## Load and draw the land, static data
 			if self.max_tile_x != None:
-				self._mainSurface.fill(((131, 139, 139)))
-
-				## Main game screen array
-				screen_length = 1000
-				screen_image = np.zeros((screen_length, screen_length, 3), dtype=np.uint8)
-
-				## Load and draw the land, static data
 				cell_x_list = []
 				cell_y_list = []
 				tile_data_list = []
@@ -698,7 +700,6 @@ class UoServiceReplay:
 				player_game_x = self.player_game_x
 				player_game_y = self.player_game_y
 
-				scale = 40 ## Scale factor to make the space between the box line 
 				cell_zip = zip(cell_x_list, cell_y_list)
 				for cell_x in cell_x_list:
 					for cell_y in cell_y_list:
@@ -746,268 +747,266 @@ class UoServiceReplay:
 								screen_image = cv2.rectangle(screen_image, start_point, end_point, pygame.Color('cadetblue'), 1)
 							else:
 								screen_image = cv2.rectangle(screen_image, start_point, end_point, pygame.Color('lavenderblush2'), 1)
-				
-				## Rendering the mobile data of replay as real screen scale 
-				screen_width = 4000
-				screen_height = 4000
-				radius = int(scale / 2)
-				world_mobile_dict = self.world_mobile_list[self._replay_step]
-				for k, v in world_mobile_dict.items():
-					if self.player_game_x != None:
-						if v["gameX"] < screen_width and v["gameY"] < screen_height:
-							screen_image = cv2.circle(screen_image, 
-											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
-											  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
-											  radius, pygame.Color('red'), -1)
+			
+			## Rendering the mobile data of replay as real screen scale 
+			screen_width = 4000
+			screen_height = 4000
+			radius = int(scale / 2)
+			world_mobile_dict = self.world_mobile_list[self._replay_step]
+			for k, v in world_mobile_dict.items():
+				if self.player_game_x != None:
+					if v["gameX"] < screen_width and v["gameY"] < screen_height:
+						screen_image = cv2.circle(screen_image, 
+										( (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
+										  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
+										  radius, pygame.Color('red'), -1)
 
-							screen_image = cv2.putText(screen_image, "  " + v["name"], 
+						screen_image = cv2.putText(screen_image, "  " + v["name"], 
+										( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
+										  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
+										cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('red'), 1, cv2.LINE_4)
+
+			## Rendering the item data of replay as real screen scale 
+			world_item_dict = self.world_item_list[self._replay_step]
+			for k, v in world_item_dict.items():
+				if self.player_game_x != None:
+					if v["gameX"] < screen_width and v["gameY"] < screen_height:
+						screen_image = cv2.circle(screen_image, 
+										( (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
+										  (v["gameY"] - player_game_y) * scale + int(screen_length / 2)
+										), radius, pygame.Color('blue'), -1)
+	          
+						item_name_list = v["name"].split(" ")
+						screen_image = cv2.putText(screen_image, "     " + item_name_list[-1], 
 											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
 											  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
-											cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('red'), 1, cv2.LINE_4)
+											cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('blue'), 1, cv2.LINE_4)
 
-				## Rendering the item data of replay as real screen scale 
-				world_item_dict = self.world_item_list[self._replay_step]
-				for k, v in world_item_dict.items():
-					if self.player_game_x != None:
-						if v["gameX"] < screen_width and v["gameY"] < screen_height:
-							screen_image = cv2.circle(screen_image, 
-											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
-											  (v["gameY"] - player_game_y) * scale + int(screen_length / 2)
-											), radius, pygame.Color('blue'), -1)
-		          
-							item_name_list = v["name"].split(" ")
-							screen_image = cv2.putText(screen_image, "     " + item_name_list[-1], 
-												( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
-												  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
-												cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('blue'), 1, cv2.LINE_4)
+			## Parse the corpse
+			corpse_dict = {}
+			for k, v in world_item_dict.items():
+				if v["isCorpse"] == True:
+					corpse_dict[k] = v
 
-				## Parse the corpse
-				corpse_dict = {}
-				for k, v in world_item_dict.items():
-					if v["isCorpse"] == True:
-						corpse_dict[k] = v
+			## Parse the item of each corpse
+			corpse_item_dict = {}
+			for k_corpse, v_corpse in corpse_dict.items():
+				for k_world, v_world in world_item_dict.items():
+					if k_corpse == v_world["container"]:
+						if k_corpse not in corpse_item_dict:
+							corpse_item_dict[k_corpse] = [world_item_dict[k_world]]
+						else:
+							corpse_item_dict[k_corpse].append(world_item_dict[k_world])
 
-				## Parse the item of each corpse
-				corpse_item_dict = {}
-				for k_corpse, v_corpse in corpse_dict.items():
-					for k_world, v_world in world_item_dict.items():
-						if k_corpse == v_world["container"]:
-							if k_corpse not in corpse_item_dict:
-								corpse_item_dict[k_corpse] = [world_item_dict[k_world]]
-							else:
-								corpse_item_dict[k_corpse].append(world_item_dict[k_world])
+			## Draw the corpse item on the screen
+			if len(corpse_item_dict) != 0:
+				for k_corpse_item, v_corpse_item_list in corpse_item_dict.items():
+					for i, corpse_item in enumerate(v_corpse_item_list):
+						corpse = world_item_dict[k_corpse_item]
 
-				## Draw the corpse item on the screen
-				if len(corpse_item_dict) != 0:
-					for k_corpse_item, v_corpse_item_list in corpse_item_dict.items():
-						for i, corpse_item in enumerate(v_corpse_item_list):
-							corpse = world_item_dict[k_corpse_item]
+						start_point = ( (corpse["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale), 
+										(corpse["gameY"] - player_game_y) * scale + int(screen_length / 2) - int(scale) )
+						end_point = ( (corpse["gameX"] - player_game_x) * scale + int(screen_length / 2) + int(scale), 
+										(corpse["gameY"] - player_game_y) * scale + int(screen_length / 2) + int(scale) )
+						screen_image = cv2.rectangle(screen_image, start_point, end_point, pygame.Color('yellow'), 1)
 
-							start_point = ( (corpse["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale), 
-											(corpse["gameY"] - player_game_y) * scale + int(screen_length / 2) - int(scale) )
-							end_point = ( (corpse["gameX"] - player_game_x) * scale + int(screen_length / 2) + int(scale), 
-											(corpse["gameY"] - player_game_y) * scale + int(screen_length / 2) + int(scale) )
-							screen_image = cv2.rectangle(screen_image, start_point, end_point, pygame.Color('yellow'), 1)
+						screen_image = cv2.putText(screen_image, corpse_item["name"], 
+											( (corpse["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
+											  (corpse["gameY"] - player_game_y) * scale + int(screen_length / 2) + i * 20 ), 
+												cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('yellow'), 1, cv2.LINE_4)
 
-							screen_image = cv2.putText(screen_image, corpse_item["name"], 
-												( (corpse["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
-												  (corpse["gameY"] - player_game_y) * scale + int(screen_length / 2) + i * 20 ), 
-													cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('yellow'), 1, cv2.LINE_4)
+			## Cropping the real screen around player position to zoom in
+			boundary = 500
+			radius = int(scale / 2)
+			if self.player_game_x != None:
+				screen_image = cv2.putText(screen_image, str(self.player_game_name), (int(screen_length / 2), int(screen_length / 2) + int(scale / 2)), 
+										  cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('green'), 1, cv2.LINE_4)
 
-				## Cropping the real screen around player position to zoom in
-				boundary = 500
 				radius = int(scale / 2)
-				if self.player_game_x != None:
-					screen_image = cv2.putText(screen_image, str(self.player_game_name), (int(screen_length / 2), int(screen_length / 2) + int(scale / 2)), 
-											  cv2.FONT_HERSHEY_SIMPLEX, 0.5, pygame.Color('green'), 1, cv2.LINE_4)
+				screen_image = cv2.circle(screen_image, (int(screen_length / 2), int(screen_length / 2)), radius, utils.color_dict["Lime"], -1)
+				screen_image = screen_image[int(screen_length / 2) - boundary:int(screen_length / 2) + boundary, 
+											int(screen_length / 2) - boundary:int(screen_length / 2) + boundary, :]
+	        
+	    ## Resize the cropped screen larger
+			screen_image = cv2.resize(screen_image, (screen_length, screen_length), interpolation=cv2.INTER_AREA)
 
-					radius = int(scale / 2)
-					screen_image = cv2.circle(screen_image, (int(screen_length / 2), int(screen_length / 2)), radius, utils.color_dict["Lime"], -1)
-					screen_image = screen_image[int(screen_length / 2) - boundary:int(screen_length / 2) + boundary, 
-												int(screen_length / 2) - boundary:int(screen_length / 2) + boundary, :]
-		        
-		    ## Resize the cropped screen larger
-				screen_image = cv2.resize(screen_image, (screen_length, screen_length), interpolation=cv2.INTER_AREA)
+			## Flip and rotate image to show like a real game angle
+			screen_image = cv2.flip(screen_image, 0)
+			screen_image = utils.rotate_image(screen_image, -45)
 
-				## Flip and rotate image to show like a real game angle
-				screen_image = cv2.flip(screen_image, 0)
-				screen_image = utils.rotate_image(screen_image, -45)
+			## Reset ScreenSurface
+			self._screenSurface.fill(((0, 0, 0)))
 
-				## Reset ScreenSurface
-				self._screenSurface.fill(((0, 0, 0)))
+			## Draw the main screen image into PyGame screen
+			surf = pygame.surfarray.make_surface(screen_image)
+			self._screenSurface.blit(surf, (0, 0))
 
-				## Draw the main screen image into PyGame screen
-				surf = pygame.surfarray.make_surface(screen_image)
-				self._screenSurface.blit(surf, (0, 0))
+			## Draw the action info on the Pygame screen
+			font = pygame.font.Font('freesansbold.ttf', 16)
+			text_surface = font.render("action type: " + str(self._actionList[self._replay_step].actionType), True, (255, 255, 255))
+			self._screenSurface.blit(text_surface, (5, 40))
+			text_surface = font.render("source serial: " + str(self._actionList[self._replay_step].sourceSerial), True, (255, 255, 255))
+			self._screenSurface.blit(text_surface, (5, 60))
+			text_surface = font.render("target serial: " + str(self._actionList[self._replay_step].targetSerial), True, (255, 255, 255))
+			self._screenSurface.blit(text_surface, (5, 80))
+			text_surface = font.render("walk direction: " + str(self._actionList[self._replay_step].walkDirection), True, (255, 255, 255))
+			self._screenSurface.blit(text_surface, (5, 100))
+			text_surface = font.render("index: " + str(self._actionList[self._replay_step].index), True, (255, 255, 255))
+			self._screenSurface.blit(text_surface, (5, 120))
+			text_surface = font.render("amount: " + str(self._actionList[self._replay_step].amount), True, (255, 255, 255))
+			self._screenSurface.blit(text_surface, (5, 140))
+			text_surface = font.render("run: " + str(self._actionList[self._replay_step].run), True, (255, 255, 255))
+			self._screenSurface.blit(text_surface, (5, 160))
 
-				## Draw the action info on the Pygame screen
-				font = pygame.font.Font('freesansbold.ttf', 16)
-				text_surface = font.render("action type: " + str(self._actionList[self._replay_step].actionType), True, (255, 255, 255))
-				self._screenSurface.blit(text_surface, (5, 40))
-				text_surface = font.render("source serial: " + str(self._actionList[self._replay_step].sourceSerial), True, (255, 255, 255))
-				self._screenSurface.blit(text_surface, (5, 60))
-				text_surface = font.render("target serial: " + str(self._actionList[self._replay_step].targetSerial), True, (255, 255, 255))
-				self._screenSurface.blit(text_surface, (5, 80))
-				text_surface = font.render("walk direction: " + str(self._actionList[self._replay_step].walkDirection), True, (255, 255, 255))
-				self._screenSurface.blit(text_surface, (5, 100))
-				text_surface = font.render("index: " + str(self._actionList[self._replay_step].index), True, (255, 255, 255))
-				self._screenSurface.blit(text_surface, (5, 120))
-				text_surface = font.render("amount: " + str(self._actionList[self._replay_step].amount), True, (255, 255, 255))
-				self._screenSurface.blit(text_surface, (5, 140))
-				text_surface = font.render("run: " + str(self._actionList[self._replay_step].run), True, (255, 255, 255))
-				self._screenSurface.blit(text_surface, (5, 160))
+			## Replay step draw
+			font = pygame.font.Font('freesansbold.ttf', 32)
 
-				## Replay step draw
-				font = pygame.font.Font('freesansbold.ttf', 32)
-				text_surface = font.render(str(self._replay_step) + " / " + str(self._replayLength), True, (255, 255, 255))
-				self._screenSurface.blit(text_surface, (int(self._screenWidth / 2) - 60, 10))
+			text_surface = font.render(str(self._replay_step) + " / " + str(self._replayLength), True, (255, 255, 255))
+			self._screenSurface.blit(text_surface, (int(self._screenWidth / 2) - 60, 10))
 
-				## _non_zero_action_index
-				font = pygame.font.Font('freesansbold.ttf', 26)
-				title = "Non Zero Action Mover: "
-				text_surface = font.render(title + str(self._non_zero_action_index) + " / " + str(len(self._non_zero_action_step_list)), 
-																	 True, (255, 255, 255))
-				self._mainSurface.blit(text_surface, (500 + 50, self._screenHeight - 250 + 35))
+			## _non_zero_action_index
+			font = pygame.font.Font('freesansbold.ttf', 26)
+			title = "Non Zero Action Mover: "
+			text_surface = font.render(title + str(self._non_zero_action_index) + " / " + str(len(self._non_zero_action_step_list)), 
+																 True, (255, 255, 255))
+			self._mainSurface.blit(text_surface, (500 + 50, self._screenHeight - 250 + 35))
 
-				## Draw the boundary line of screenSurface
-				pygame.draw.line(self._screenSurface, (255, 255, 255), (1, 0), (1, self._screenHeight))
-				pygame.draw.line(self._screenSurface, (255, 255, 255), (self._screenWidth - 1, 0), (self._screenWidth - 1, self._screenHeight))
-				pygame.draw.line(self._screenSurface, (255, 255, 255), (0, self._screenHeight - 250 - 1), (self._screenWidth, self._screenHeight - 250 - 1))
+			## Draw the boundary line of screenSurface
+			pygame.draw.line(self._screenSurface, (255, 255, 255), (1, 0), (1, self._screenHeight))
+			pygame.draw.line(self._screenSurface, (255, 255, 255), (self._screenWidth - 1, 0), (self._screenWidth - 1, self._screenHeight))
+			pygame.draw.line(self._screenSurface, (255, 255, 255), (0, self._screenHeight - 250 - 1), (self._screenWidth, self._screenHeight - 250 - 1))
 
-				## Draw the boundary line of control widgets
-				pygame.draw.line(self._mainSurface, (255, 255, 255), 
-												 (500, self._screenHeight - 150 - 1), (self._screenWidth + 500, self._screenHeight - 150 - 1))
-				pygame.draw.line(self._mainSurface, (255, 255, 255), (500 + 1, 0), (500 + 1, self._screenHeight - 150))
-				pygame.draw.line(self._mainSurface, (255, 255, 255), 
-												 (500 + self._screenWidth - 1, 0), (500 + self._screenWidth - 1, self._screenHeight - 150))
+			## Draw the boundary line of control widgets
+			pygame.draw.line(self._mainSurface, (255, 255, 255), 
+											 (500, self._screenHeight - 150 - 1), (self._screenWidth + 500, self._screenHeight - 150 - 1))
+			pygame.draw.line(self._mainSurface, (255, 255, 255), (500 + 1, 0), (500 + 1, self._screenHeight - 150))
+			pygame.draw.line(self._mainSurface, (255, 255, 255), 
+											 (500 + self._screenWidth - 1, 0), (500 + self._screenWidth - 1, self._screenHeight - 150))
 
-				## Player status draw
-				self._leftSideSurface.fill(((0, 0, 0)))
-				font = pygame.font.Font('freesansbold.ttf', 32)
-				text_surface = font.render("Player Status", True, (255, 0, 255))
-				self._leftSideSurface.blit(text_surface, (0, 0))
-				player_status_dict = self.player_status_list[self._replay_step]
-				for i, k in enumerate(player_status_dict):
-					font = pygame.font.Font('freesansbold.ttf', 20)
-					text_surface = font.render(str(k) + ": " + str(player_status_dict[k]), True, (255, 255, 255))
-					self._leftSideSurface.blit(text_surface, (0, 20 * (i + 1) + 20))
-
-				## Player skill draw
-				font = pygame.font.Font('freesansbold.ttf', 32)
-				text_surface = font.render("Player Skills", True, (255, 0, 255))
-				self._leftSideSurface.blit(text_surface, (0, 300))
-				player_skills_dict = self.player_skill_list[self._replay_step]
-				skill_last_y = 300
-				for i, k in enumerate(player_skills_dict):
-					font = pygame.font.Font('freesansbold.ttf', 20)
-					skill = player_skills_dict[k]
-					text_surface = font.render(str(skill["index"]) + '. ' + str(k) + ": " + str(skill["value"]), True, (255, 255, 255))
-					self._leftSideSurface.blit(text_surface, (0, 20 * (i + 1) + 320))
-					skill_last_y = 20 * (i + 1) + 320
-
-				## Player buff draw
-				font = pygame.font.Font('freesansbold.ttf', 32)
-				text_surface = font.render("Player Buffs", True, (255, 0, 255))
-				self._leftSideSurface.blit(text_surface, (0, skill_last_y + 30))
-				player_buff_dict = self.player_buff_list[self._replay_step]
-				for i, k in enumerate(player_buff_dict):
-					font = pygame.font.Font('freesansbold.ttf', 20)
-					buff = player_buff_dict[k]
-					text = buff["text"].replace('<left>', '').replace('</left>', '').split("\n")[0]
-					text_surface = font.render(text + ", " + str(buff["delta"]), True, (255, 255, 255))
-					self._leftSideSurface.blit(text_surface, (0, 20 * (i + 1) + skill_last_y + 50))
-
-				## Equipped item draw
-				self._rightSideSurface.fill(((0, 0, 0)))
-				font = pygame.font.Font('freesansbold.ttf', 32)
-				text_surface = font.render("Equip Items", True, (255, 0, 255))
-				self._rightSideSurface.blit(text_surface, (0, 0))
-				for i, k in enumerate(self.equipped_item_dict):
-					font = pygame.font.Font('freesansbold.ttf', 20)
-					item = self.equipped_item_dict[k]
-					text_surface = font.render(str(Layers(int(item["layer"])).name) + ": " + str(item["name"]), True, (255, 255, 255))
-					self._rightSideSurface.blit(text_surface, (0, 20 * (i + 1) + 20))
-
-				## Backpack item draw
-				font = pygame.font.Font('freesansbold.ttf', 32)
-				text_surface = font.render("Backpack Item", True, (255, 0, 255))
-				self._rightSideSurface.blit(text_surface, (0, 360))
-				backpack_last_y = 360
-				for i, k in enumerate(self.backpack_item_dict):
-					font = pygame.font.Font('freesansbold.ttf', 20)
-					item = self.backpack_item_dict[k]
-					text_surface = font.render(str(k) + ": " + str(item["name"]) + ", " + str(item["amount"]), True, (255, 255, 255))
-					self._rightSideSurface.blit(text_surface, (0, 20 * (i + 1) + 380))
-					backpack_last_y = 20 * (i + 1) + 380
-
-				## Vendor item draw
-				font = pygame.font.Font('freesansbold.ttf', 32)
-				text_surface = font.render("Vendor Item", True, (255, 0, 255))
-				self._rightSideSurface.blit(text_surface, (0, backpack_last_y + 30))
-				vendor_item_dict = self.vendor_item_list[self._replay_step]
+			## Player status draw
+			self._leftSideSurface.fill(((0, 0, 0)))
+			font = pygame.font.Font('freesansbold.ttf', 32)
+			text_surface = font.render("Player Status", True, (255, 0, 255))
+			self._leftSideSurface.blit(text_surface, (0, 0))
+			player_status_dict = self.player_status_list[self._replay_step]
+			for i, k in enumerate(player_status_dict):
 				font = pygame.font.Font('freesansbold.ttf', 20)
-				for i, k in enumerate(vendor_item_dict):
-					item = vendor_item_dict[k]
-					vendor_serial = item['vendor_serial']
-					item_serial = item['item_serial']
-					vendor_name = world_mobile_dict[vendor_serial]['name']
-					item_name = item['item_name']
-					item_price = item['item_price']
-					item_amount = item['item_amount']
-					text_surface = font.render(vendor_name + ": " + item_name + ", " + str(item_price) + ", " + str(item_amount), 
+				text_surface = font.render(str(k) + ": " + str(player_status_dict[k]), True, (255, 255, 255))
+				self._leftSideSurface.blit(text_surface, (0, 20 * (i + 1) + 20))
+
+			## Player skill draw
+			font = pygame.font.Font('freesansbold.ttf', 32)
+			text_surface = font.render("Player Skills", True, (255, 0, 255))
+			self._leftSideSurface.blit(text_surface, (0, 300))
+			player_skills_dict = self.player_skill_list[self._replay_step]
+			skill_last_y = 300
+			for i, k in enumerate(player_skills_dict):
+				font = pygame.font.Font('freesansbold.ttf', 20)
+				skill = player_skills_dict[k]
+				text_surface = font.render(str(skill["index"]) + '. ' + str(k) + ": " + str(skill["value"]), True, (255, 255, 255))
+				self._leftSideSurface.blit(text_surface, (0, 20 * (i + 1) + 320))
+				skill_last_y = 20 * (i + 1) + 320
+
+			## Player buff draw
+			font = pygame.font.Font('freesansbold.ttf', 32)
+			text_surface = font.render("Player Buffs", True, (255, 0, 255))
+			self._leftSideSurface.blit(text_surface, (0, skill_last_y + 30))
+			player_buff_dict = self.player_buff_list[self._replay_step]
+			for i, k in enumerate(player_buff_dict):
+				font = pygame.font.Font('freesansbold.ttf', 20)
+				buff = player_buff_dict[k]
+				text = buff["text"].replace('<left>', '').replace('</left>', '').split("\n")[0]
+				text_surface = font.render(text + ", " + str(buff["delta"]), True, (255, 255, 255))
+				self._leftSideSurface.blit(text_surface, (0, 20 * (i + 1) + skill_last_y + 50))
+
+			## Equipped item draw
+			self._rightSideSurface.fill(((0, 0, 0)))
+			font = pygame.font.Font('freesansbold.ttf', 32)
+			text_surface = font.render("Equip Items", True, (255, 0, 255))
+			self._rightSideSurface.blit(text_surface, (0, 0))
+			for i, k in enumerate(self.equipped_item_dict):
+				font = pygame.font.Font('freesansbold.ttf', 20)
+				item = self.equipped_item_dict[k]
+				text_surface = font.render(str(Layers(int(item["layer"])).name) + ": " + str(item["name"]), True, (255, 255, 255))
+				self._rightSideSurface.blit(text_surface, (0, 20 * (i + 1) + 20))
+
+			## Backpack item draw
+			font = pygame.font.Font('freesansbold.ttf', 32)
+			text_surface = font.render("Backpack Item", True, (255, 0, 255))
+			self._rightSideSurface.blit(text_surface, (0, 360))
+			backpack_last_y = 360
+			for i, k in enumerate(self.backpack_item_dict):
+				font = pygame.font.Font('freesansbold.ttf', 20)
+				item = self.backpack_item_dict[k]
+				text_surface = font.render(str(k) + ": " + str(item["name"]) + ", " + str(item["amount"]), True, (255, 255, 255))
+				self._rightSideSurface.blit(text_surface, (0, 20 * (i + 1) + 380))
+				backpack_last_y = 20 * (i + 1) + 380
+
+			## Vendor item draw
+			font = pygame.font.Font('freesansbold.ttf', 32)
+			text_surface = font.render("Vendor Item", True, (255, 0, 255))
+			self._rightSideSurface.blit(text_surface, (0, backpack_last_y + 30))
+			vendor_item_dict = self.vendor_item_list[self._replay_step]
+			font = pygame.font.Font('freesansbold.ttf', 20)
+			for i, k in enumerate(vendor_item_dict):
+				item = vendor_item_dict[k]
+				vendor_serial = item['vendor_serial']
+				item_serial = item['item_serial']
+				vendor_name = world_mobile_dict[vendor_serial]['name']
+				item_name = item['item_name']
+				item_price = item['item_price']
+				item_amount = item['item_amount']
+				text_surface = font.render(vendor_name + ": " + item_name + ", " + str(item_price) + ", " + str(item_amount), 
+																	 True, (255, 255, 255))
+				self._rightSideSurface.blit(text_surface, (0, 20 * (i + 1) + backpack_last_y + 50))
+
+			## Cliloc data draw
+			self._bottomSideSurface.fill((pygame.Color('black')))
+			font = pygame.font.Font('freesansbold.ttf', 32)
+			text_surface = font.render("Cliloc List", True, (255, 0, 255))
+			self._bottomSideSurface.blit(text_surface, (0, 0))
+			cliloc_data = self.cliloc_list[self._replay_step]
+			if len(cliloc_data) != 0:
+				font = pygame.font.Font('freesansbold.ttf', 20)
+				for i, k in enumerate(cliloc_data):
+					item = cliloc_data[k][-1]
+					text_surface = font.render(str(item["name"]) + ": " + str(item["text"]) + ", " + str(item["affix"]) + ", " + str(k), 
 																		 True, (255, 255, 255))
-					self._rightSideSurface.blit(text_surface, (0, 20 * (i + 1) + backpack_last_y + 50))
+					self._bottomSideSurface.blit(text_surface, (0, 20 * (i + 1) + 20))
 
-				## Cliloc data draw
-				self._bottomSideSurface.fill((pygame.Color('black')))
-				font = pygame.font.Font('freesansbold.ttf', 32)
-				text_surface = font.render("Cliloc List", True, (255, 0, 255))
-				self._bottomSideSurface.blit(text_surface, (0, 0))
-				cliloc_data = self.cliloc_list[self._replay_step]
-				if len(cliloc_data) != 0:
+			## Popup menu draw
+			font = pygame.font.Font('freesansbold.ttf', 32)
+			text_surface = font.render("Pop Up Menu", True, (255, 0, 255))
+			self._screenSurface.blit(text_surface, (1000, 0))
+			popup_menu_data = self.popup_menu_list[self._replay_step]
+			popup_last_y = 0
+			if len(popup_menu_data) != 0:
+				for i, menu in enumerate(popup_menu_data):
 					font = pygame.font.Font('freesansbold.ttf', 20)
-					for i, k in enumerate(cliloc_data):
-						item = cliloc_data[k][-1]
-						text_surface = font.render(str(item["name"]) + ": " + str(item["text"]) + ", " + str(item["affix"]) + ", " + str(k), 
-																			 True, (255, 255, 255))
-						self._bottomSideSurface.blit(text_surface, (0, 20 * (i + 1) + 20))
+					text_surface = font.render(str(i) + ": " + str(menu.text) + ", " + str(menu.active), 
+																		 True, (255, 255, 255))
+					self._screenSurface.blit(text_surface, (1000, 20 * (i + 1) + 20))
+					popup_last_y = 20 * (i + 1) + 20
 
-				## Popup menu draw
-				font = pygame.font.Font('freesansbold.ttf', 32)
-				text_surface = font.render("Pop Up Menu", True, (255, 0, 255))
-				self._screenSurface.blit(text_surface, (1000, 0))
-				popup_menu_data = self.popup_menu_list[self._replay_step]
-				popup_last_y = 0
-				if len(popup_menu_data) != 0:
-					for i, menu in enumerate(popup_menu_data):
-						font = pygame.font.Font('freesansbold.ttf', 20)
-						text_surface = font.render(str(i) + ": " + str(menu.text) + ", " + str(menu.active), 
-																			 True, (255, 255, 255))
-						self._screenSurface.blit(text_surface, (1000, 20 * (i + 1) + 20))
-						popup_last_y = 20 * (i + 1) + 20
+			## Bank item draw
+			font = pygame.font.Font('freesansbold.ttf', 32)
+			text_surface = font.render("Bank Item", True, (255, 0, 255))
+			self._screenSurface.blit(text_surface, (1000, popup_last_y + 30))
+			for i, k in enumerate(self.bank_item_dict):
+				font = pygame.font.Font('freesansbold.ttf', 20)
+				item = self.bank_item_dict[k]
+				text_surface = font.render(str(k) + ": " + str(item["name"]) + ", " + str(item["amount"]), True, (255, 255, 255))
+				self._screenSurface.blit(text_surface, (1000, 20 * (i + 1) + popup_last_y + 50))
 
-				#print("self.bank_item_dict: ", self.bank_item_dict)
-				#print("self.bank_serial: ", self.bank_serial)
+			## Draw each surface on root surface
+			self._mainSurface.blit(self._screenSurface, (500, 0))
+			self._mainSurface.blit(self._rightSideSurface, (500 + self._screenWidth, 0))
+			self._mainSurface.blit(self._bottomSideSurface, (500, self._screenHeight - 150))
+			self._mainSurface.blit(self._leftSideSurface, (0, 0))
 
-				## Bank item draw
-				font = pygame.font.Font('freesansbold.ttf', 32)
-				text_surface = font.render("Bank Item", True, (255, 0, 255))
-				self._screenSurface.blit(text_surface, (1000, popup_last_y + 50))
-				for i, k in enumerate(self.bank_item_dict):
-					font = pygame.font.Font('freesansbold.ttf', 20)
-					item = self.bank_item_dict[k]
-					text_surface = font.render(str(Layers(int(item["layer"])).name) + ": " + str(item["name"]), True, (255, 255, 255))
-					self._screenSurface.blit(text_surface, (1000, 20 * (i + 1) + popup_last_y + 50))
+			self._slider.draw()
 
-				## Draw each surface on root surface
-				self._mainSurface.blit(self._screenSurface, (500, 0))
-				self._mainSurface.blit(self._rightSideSurface, (500 + self._screenWidth, 0))
-				self._mainSurface.blit(self._bottomSideSurface, (500, self._screenHeight - 150))
-				self._mainSurface.blit(self._leftSideSurface, (0, 0))
-
-				self._slider.draw()
-
-				pygame.display.update()
+			pygame.display.update()
 
 	def interact_with_replay(self):
 		## Viewers can Forward and rewind the saved replay data by left and right arrow key
@@ -1112,7 +1111,7 @@ class UoServiceReplay:
 
 					## Check the serial number of bank container
 					if v["layer"] == 29:
-						print("layer == 29: ", v)
+						#print("layer == 29: ", v)
 						self.bank_serial = k
 
 			## Parse the backpack, equipped, corpse item from world item
@@ -1121,15 +1120,15 @@ class UoServiceReplay:
 
 				self.backpack_item_dict = {}
 				self.equipped_item_dict = {}
+				self.bank_item_dict = {}
 				self.corpse_dict = {}
 
-				print("")
-				print("self.bank_serial: ", self.bank_serial)
+				#print("")
+				#print("self.bank_serial: ", self.bank_serial)
 				for k, v in world_item_dict.items():
-					if v['name'].find("Door") == -1 and v['name'].find("Vendors") == -1:
+					#if v['name'].find("Door") == -1 and v['name'].find("Vendors") == -1:
 						#if self.bank_serial == v["container"]:
-						print("bank item / step: {0}, name: {1}, container: {2}".format(self._replay_step, v['name'], v["container"]))
-
+							#print("bank item / step: {0}, name: {1}, container: {2}".format(self._replay_step, v['name'], v["container"]))
 
 					if v["isCorpse"] == True:
 						## Corpse item

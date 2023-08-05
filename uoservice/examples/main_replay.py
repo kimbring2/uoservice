@@ -1,15 +1,10 @@
 # protoc --csharp_out=. --grpc_out=. --plugin=protoc-gen-grpc=`which grpc_csharp_plugin` UoService.proto
 # python3.7 -m grpc_tools.protoc -I ../ --python_out=. --grpc_python_out=. UoService.proto --proto_path /home/kimbring2/uoservice/uoservice/protos/
 
-from __future__ import print_function
-from concurrent import futures
 import io
-from PIL import Image
 import time
 import numpy as np
-import cv2
 import random
-import pygame
 import argparse
 import sys
 import grpc
@@ -34,9 +29,6 @@ file_name = arguments.file_name
 screen_width = arguments.screen_width
 screen_height = arguments.screen_height
 uo_installed_path = arguments.uo_installed_path
-
-pygame.init()
-pygame.display.set_caption("OpenCV camera stream on Pygame")
 
 
 def main():
