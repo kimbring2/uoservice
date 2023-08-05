@@ -58,6 +58,7 @@ class UoService:
 		self.war_mode = False
 		self.hold_item_serial = 0
 		self.player_gold = None
+		self.player_serial = None
 		self.targeting_state = None
 		self.backpack_serial = None
 		self.bank_serial = None
@@ -218,8 +219,8 @@ class UoService:
 				screen_height = 4000
 				world_mobile_dict = copy.deepcopy(self.world_mobile_dict)
 				for k, v in world_mobile_dict.items():
-					if self.player_game_x != None:
-						#print("world mobile {0}: {1}".format(k, v["name"]))
+					if self.player_game_x != None and v["isDead"] == False and k != self.player_serial:
+						#print("world mobile {0}: {1}".format(k, v["isDead"]))
 						if v["gameX"] < screen_width and v["gameY"] < screen_height:
 							screen_image = cv2.circle(screen_image, 
 											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
@@ -331,11 +332,11 @@ class UoService:
 		## Save the world mobile object into global Dict
 		if len(world_mobile_data) != 0:
 			for obj in world_mobile_data:
-				#print("name: {0}, gameX: {1}, gameY: {2}".format(obj.name, obj.gameX, obj.gameY))
+				print("serial: {0}, name: {1}, gameX: {2}, gameY: {3}".format(obj.serial, obj.name, obj.gameX, obj.gameY))
 				self.world_mobile_dict[obj.serial] = { "name": obj.name, "gameX": obj.gameX, "gameY": obj.gameY, 
 													   "distance": obj.distance, "title": obj.title, "hits": obj.hits,
 													   "notorietyFlag": obj.notorietyFlag, "hitsMax": obj.hitsMax,
-													   "race": obj.race, "serial": obj.serial}
+													   "race": obj.race, "serial": obj.serial, "isDead": obj.isDead}
 
 		if self.bank_serial != None:
 			bank_box = self.world_item_dict[self.bank_serial]
@@ -448,6 +449,7 @@ class UoService:
 
 		## Delete the mobile from world mobile Dict using the gRPC data
 		if len(delete_mobile_serial_list) != 0:
+			print("delete_mobile_serial_list: ", delete_mobile_serial_list)
 			for serial in delete_mobile_serial_list:
 				if serial in self.world_mobile_dict:
 					del self.world_mobile_dict[serial]

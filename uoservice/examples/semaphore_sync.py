@@ -74,6 +74,7 @@ def step(uo_service):
       for k_mobile, v_mobile in uo_service.world_mobile_dict.items():
         #print("world_mobile {0}: {1}".format(k_mobile, v_mobile["name"]))
         pass
+      #print("")
 
     targeting_state = uo_service.targeting_state
     hold_item_serial = uo_service.hold_item_serial
@@ -100,7 +101,7 @@ def step(uo_service):
     ## Declare the empty action
     if step % 100 == 0:
       if len(world_item_data) != 0:
-        print("bank_serial: {0}".format(bank_serial))
+        #print("bank_serial: {0}".format(bank_serial))
 
         if bank_serial != None:
           for k_world, v_world in world_item_data.items():
@@ -111,7 +112,7 @@ def step(uo_service):
                 print("bank item: {0}".format(v_world))
                 pass
 
-          print("")
+          #print("")
 
       if len(equipped_item_data) != 0:
         for k_equipped, v_equipped in equipped_item_data.items():
