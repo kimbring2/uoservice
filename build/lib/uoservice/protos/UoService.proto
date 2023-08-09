@@ -109,6 +109,7 @@ message GrpcMenuControl {
   uint32 x = 2;
   uint32 y = 3;
   uint32 page = 4;
+  string text = 5;
 }
 
 message GrpcMenuControlList {

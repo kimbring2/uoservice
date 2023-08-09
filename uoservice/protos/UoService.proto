@@ -17,6 +17,7 @@ message GrpcPlayerObject {
   uint32 minTileY = 10;
   uint32 maxTileX = 11;
   uint32 maxTileY = 12;
+  repeated uint32 gumpSerials = 13;
 }
 
 message GrpcMobileObject {
@@ -109,6 +110,7 @@ message GrpcMenuControl {
   uint32 x = 2;
   uint32 y = 3;
   uint32 page = 4;
+  string text = 5;
 }
 
 message GrpcMenuControlList {

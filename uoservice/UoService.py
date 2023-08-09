@@ -63,6 +63,8 @@ class UoService:
 		self.backpack_serial = None
 		self.bank_serial = None
 		self.picked_up_item = {}
+		self.menu_gump_serial = 0
+		self.menu_gump_control_list = []
 
 		## Variables to load the binary file for land, static data
 		self.min_tile_x = self.min_tile_y = self.max_tile_x = self.max_tile_y = None
@@ -286,7 +288,6 @@ class UoService:
 		delete_mobile_serial_list = response.deleteMobileSerialList.serials
 		menu_gump_serial = response.menuControlList.localSerial
 		menu_gump_control_list = response.menuControlList.menuControls
-
 
 		## Save the player buff data into global variable
 		if len(player_buffs_data) != 0:
