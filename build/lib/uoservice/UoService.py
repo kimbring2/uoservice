@@ -64,7 +64,7 @@ class UoService:
 		self.bank_serial = None
 		self.picked_up_item = {}
 		self.menu_gump_serial = 0
-		self.menu_gump_control_list = []
+		self.menu_gump_control = {}
 		self.active_gump_list = []
 
 		## Variables to load the binary file for land, static data
@@ -144,7 +144,7 @@ class UoService:
 			if self.max_tile_x != None:
 				## Main game screen array
 				screen_length = 1000
-				screen_image = np.zeros((screen_length,screen_length,4), dtype=np.uint8)
+				screen_image = np.zeros((screen_length, screen_length, 4), dtype=np.uint8)
 
 				## Load and draw the land, static data
 				cell_x_list = []
@@ -272,6 +272,26 @@ class UoService:
 				screen_image = utils.rotate_image(screen_image, -45)
 
 				cv2.imshow('screen_image_' + str(self.grpc_port), screen_image)
+
+				## Draw action related gump
+				for k_gump, v_gump in self.menu_gump_control.items():
+					gump_width = 500
+					gump_height = 1000
+					gump_image = np.zeros((gump_width, gump_height, 4), dtype=np.uint8)
+					print("k_gump: ", k_gump)
+					for i, control in enumerate(v_gump):
+						#print("control: ", control)
+						if control.name == "xmfhtmlgumpcolor" or control.name == "xmfhtmlgump":
+							gump_image = cv2.putText(gump_image, control.text, (control.x, control.y), 
+								cv2.FONT_HERSHEY_SIMPLEX, 1.0, utils.color_dict["White"], 1, cv2.LINE_4)
+						elif control.name == "button":
+							start_point = (control.x, control.y)
+							end_point = (control.x + 10, control.y + 10)
+							gump_image = cv2.rectangle(gump_image, start_point, end_point, utils.color_dict["Green"], 1)
+
+					print("")
+					cv2.imshow('gump_image_' + str(k_gump), gump_image)
+
 				cv2.waitKey(1)
 
 	def parse_response(self, response):
@@ -451,12 +471,22 @@ class UoService:
 			self.popup_menu_list.append(menu_data)
 
 		if len(menu_gump_control_list) != 0:
-			print("menu_gump_serial: ", menu_gump_serial)
-			print("len(menu_gump_control_list): ", len(menu_gump_control_list))
-			#for menu_gump_control in menu_gump_control_list:
-			#	print("menu_gump_control: ", menu_gump_control)
+			#print("menu_gump_serial: ", menu_gump_serial)
+			self.menu_gump_control[menu_gump_serial] = []
+			#print("len(menu_gump_control_list): ", len(menu_gump_control_list))
+			for menu_gump_control in menu_gump_control_list:
+				# print("menu_gump_control: ", menu_gump_control)
+				self.menu_gump_control[menu_gump_serial].append(menu_gump_control)
+			#print("")
 
-			print("")
+		delete_gump_serial = []
+		for serial in self.menu_gump_control:
+			if serial not in self.active_gump_list:
+				#del self.menu_gump_control[serial]
+				delete_gump_serial.append(serial)
+
+		for serial in delete_gump_serial:
+			del self.menu_gump_control[serial]
 
 		## Delete the item from world item Dict using the gRPC data
 		if len(delete_item_serial_list) != 0:
@@ -466,7 +496,7 @@ class UoService:
 
 		## Delete the mobile from world mobile Dict using the gRPC data
 		if len(delete_mobile_serial_list) != 0:
-			print("delete_mobile_serial_list: ", delete_mobile_serial_list)
+			#print("delete_mobile_serial_list: ", delete_mobile_serial_list)
 			for serial in delete_mobile_serial_list:
 				if serial in self.world_mobile_dict:
 					del self.world_mobile_dict[serial]
