@@ -63,6 +63,7 @@
         <p style="text-align:left; font-size:18px;"> If the action space of game is complex like Starcraft, it is impossible to train the agent using only Deep Reinforcement Learning. Therefore, human expert data is needed to train the agent the various action first. However, the amount of data generated at each second is excessively large at real time game unlike the Go board game. To solve such a problem, the collected data should be converted into binary format and stored instead of directly stored. There are various methods for this, but in UoService, replay data is compressed and saved using the MoPaQ format mainly used by Blizzard. Furthermore, there is a need to investigate by loading and rendering saved game data, and UoService also provides <a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/UoServiceReplay.py">a Python program for this</a>.</p>
 
         <div class="center">
+            <h5>Video Demo: Replay Rendeing from Python.</h5>
             <video width="600" height="400" controls>
                 <source src="Fig/ReplayDefault.mkv" type="video/mp4">
                 Your browser does not support the video tag.
@@ -70,6 +71,17 @@
         </div>
 
         <p style="text-align:left; font-size:18px;"> The program basically shows the player basic information, skill, and buff information, which should be used by the agent to determine the action within the game, on the left screen at every game step. Next, it visualizes land/static, mobile, and item information around the player in actual game ratio at middle screen. Information on backpack, equipped, and vendor items is displayed on the right side of the screen. The cliloc data, which is all text information generated in the game, is displayed in order at the bottom of the screen. Finally, the pop up menu, bank item information is located in the free space on the right side of the center screen.</p>
+
+        <div class="row">
+            <div class="col">
+                <p style="text-align:left; font-size:18px;"> When the Corpse is opened, it is displayed as a yellow box on the center screen. Addtionally, items contained by the corpse are displayed inside the box as yellow text. </p>
+            </div>
+
+            <div class="col">
+                <h5>Figure1: Corpse Item Visualization.</h5>
+                <img src="Fig/CorpseReplay.png" class="rounded mx-auto d-block" alt="Training process" width="150" height="150">
+            </div>
+        </div>
     </div>
 
     <div class="container-fluid">

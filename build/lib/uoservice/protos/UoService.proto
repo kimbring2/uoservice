@@ -104,6 +104,18 @@ message GrpcVendor {
   string itemName = 7;
 }
 
+message GrpcMenuControl {
+  string name = 1;
+  uint32 x = 2;
+  uint32 y = 3;
+  uint32 page = 4;
+}
+
+message GrpcMenuControlList {
+  uint32 localSerial = 1;
+  repeated GrpcMenuControl menuControls = 2;
+}
+
 message GrpcSkillList {
   repeated GrpcSkill skills = 1;
 }
@@ -165,6 +177,8 @@ message GrpcStates {
 
   GrpcDeleteItemSerialList deleteItemSerialList = 10;
   GrpcDeleteMobileSerialList deleteMobileSerialList = 11;
+
+  GrpcMenuControlList menuControlList = 12;
 }
 
 message GrpcAction {

@@ -161,7 +161,8 @@ class UoService:
 				player_game_x = self.player_game_x
 				player_game_y = self.player_game_y
 
-				scale = 40 ## Scale factor to make the space between the box line 
+				scale = 40 ## Scale factor to make the space between the box line
+				radius = int(scale / 2)
 				cell_zip = zip(cell_x_list, cell_y_list)
 				for cell_x in cell_x_list:
 					for cell_y in cell_y_list:
@@ -251,7 +252,6 @@ class UoService:
 
 				## Cropping the real screen around player position to zoom in
 				boundary = 500
-				radius = int(scale / 2)
 				if self.player_game_x != None:
 					#print("player_game_x: {0}, player_game_y: {1}".format(self.player_game_x, self.player_game_y))
 					screen_image = cv2.putText(screen_image, str("player"), (int(screen_length / 2), int(screen_length / 2) - int(scale / 2)), 
@@ -284,6 +284,9 @@ class UoService:
 		player_buffs_data = response.playerBuffList.buffs
 		delete_item_serial_list = response.deleteItemSerialList.serials
 		delete_mobile_serial_list = response.deleteMobileSerialList.serials
+		menu_gump_serial = response.menuControlList.localSerial
+		menu_gump_control_list = response.menuControlList.menuControls
+
 
 		## Save the player buff data into global variable
 		if len(player_buffs_data) != 0:
@@ -332,7 +335,7 @@ class UoService:
 		## Save the world mobile object into global Dict
 		if len(world_mobile_data) != 0:
 			for obj in world_mobile_data:
-				print("serial: {0}, name: {1}, gameX: {2}, gameY: {3}".format(obj.serial, obj.name, obj.gameX, obj.gameY))
+				#print("serial: {0}, name: {1}, gameX: {2}, gameY: {3}".format(obj.serial, obj.name, obj.gameX, obj.gameY))
 				self.world_mobile_dict[obj.serial] = { "name": obj.name, "gameX": obj.gameX, "gameY": obj.gameY, 
 													   "distance": obj.distance, "title": obj.title, "hits": obj.hits,
 													   "notorietyFlag": obj.notorietyFlag, "hitsMax": obj.hitsMax,
@@ -440,6 +443,14 @@ class UoService:
 		## Parse and save the popup menu data
 		for menu_data in popup_menu_data:
 			self.popup_menu_list.append(menu_data)
+
+		if len(menu_gump_control_list) != 0:
+			print("menu_gump_serial: ", menu_gump_serial)
+			print("len(menu_gump_control_list): ", len(menu_gump_control_list))
+			for menu_gump_control in menu_gump_control_list:
+				print("menu_gump_control: ", menu_gump_control)
+
+			print("")
 
 		## Delete the item from world item Dict using the gRPC data
 		if len(delete_item_serial_list) != 0:
