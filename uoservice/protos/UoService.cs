@@ -30,7 +30,7 @@ namespace Uoservice {
             "Cg5ob2xkSXRlbVNlcmlhbBgGIAEoDRIPCgd3YXJNb2RlGAcgASgIEhYKDnRh",
             "cmdldGluZ1N0YXRlGAggASgFEhAKCG1pblRpbGVYGAkgASgNEhAKCG1pblRp",
             "bGVZGAogASgNEhAKCG1heFRpbGVYGAsgASgNEhAKCG1heFRpbGVZGAwgASgN",
-            "EhMKC2d1bXBTZXJpYWxzGA0gAygNItEBChBHcnBjTW9iaWxlT2JqZWN0EgwK",
+            "EhMKC2FjdGl2ZUd1bXBzGA0gAygNItEBChBHcnBjTW9iaWxlT2JqZWN0EgwK",
             "BGhpdHMYASABKA0SDwoHaGl0c01heBgCIAEoDRIMCgRyYWNlGAMgASgNEhAK",
             "CGRpc3RhbmNlGAQgASgNEg0KBWdhbWVYGAUgASgNEg0KBWdhbWVZGAYgASgN",
             "Eg4KBnNlcmlhbBgHIAEoDRIMCgRuYW1lGAggASgJEg0KBXRpdGxlGAkgASgJ",
@@ -104,7 +104,7 @@ namespace Uoservice {
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.Empty), global::Uoservice.Empty.Parser, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcPlayerObject), global::Uoservice.GrpcPlayerObject.Parser, new[]{ "GameX", "GameY", "Serial", "Name", "Title", "HoldItemSerial", "WarMode", "TargetingState", "MinTileX", "MinTileY", "MaxTileX", "MaxTileY", "GumpSerials" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcPlayerObject), global::Uoservice.GrpcPlayerObject.Parser, new[]{ "GameX", "GameY", "Serial", "Name", "Title", "HoldItemSerial", "WarMode", "TargetingState", "MinTileX", "MinTileY", "MaxTileX", "MaxTileY", "ActiveGumps" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcMobileObject), global::Uoservice.GrpcMobileObject.Parser, new[]{ "Hits", "HitsMax", "Race", "Distance", "GameX", "GameY", "Serial", "Name", "Title", "NotorietyFlag", "Item", "IsDead" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcItemObject), global::Uoservice.GrpcItemObject.Parser, new[]{ "Distance", "GameX", "GameY", "Serial", "Name", "IsCorpse", "Amount", "Price", "Layer", "Container", "Data" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Uoservice.GrpcPlayerStatus), global::Uoservice.GrpcPlayerStatus.Parser, new[]{ "Str", "Dex", "Intell", "Hits", "HitsMax", "Stamina", "StaminaMax", "Mana", "ManaMax", "Gold", "PhysicalResistance", "Weight", "WeightMax" }, null, null, null),
@@ -272,7 +272,7 @@ namespace Uoservice {
       minTileY_ = other.minTileY_;
       maxTileX_ = other.maxTileX_;
       maxTileY_ = other.maxTileY_;
-      gumpSerials_ = other.gumpSerials_.Clone();
+      activeGumps_ = other.activeGumps_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -413,14 +413,14 @@ namespace Uoservice {
       }
     }
 
-    /// <summary>Field number for the "gumpSerials" field.</summary>
-    public const int GumpSerialsFieldNumber = 13;
-    private static readonly pb::FieldCodec<uint> _repeated_gumpSerials_codec
+    /// <summary>Field number for the "activeGumps" field.</summary>
+    public const int ActiveGumpsFieldNumber = 13;
+    private static readonly pb::FieldCodec<uint> _repeated_activeGumps_codec
         = pb::FieldCodec.ForUInt32(106);
-    private readonly pbc::RepeatedField<uint> gumpSerials_ = new pbc::RepeatedField<uint>();
+    private readonly pbc::RepeatedField<uint> activeGumps_ = new pbc::RepeatedField<uint>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<uint> GumpSerials {
-      get { return gumpSerials_; }
+    public pbc::RepeatedField<uint> ActiveGumps {
+      get { return activeGumps_; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -448,7 +448,7 @@ namespace Uoservice {
       if (MinTileY != other.MinTileY) return false;
       if (MaxTileX != other.MaxTileX) return false;
       if (MaxTileY != other.MaxTileY) return false;
-      if(!gumpSerials_.Equals(other.gumpSerials_)) return false;
+      if(!activeGumps_.Equals(other.activeGumps_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -467,7 +467,7 @@ namespace Uoservice {
       if (MinTileY != 0) hash ^= MinTileY.GetHashCode();
       if (MaxTileX != 0) hash ^= MaxTileX.GetHashCode();
       if (MaxTileY != 0) hash ^= MaxTileY.GetHashCode();
-      hash ^= gumpSerials_.GetHashCode();
+      hash ^= activeGumps_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -529,7 +529,7 @@ namespace Uoservice {
         output.WriteRawTag(96);
         output.WriteUInt32(MaxTileY);
       }
-      gumpSerials_.WriteTo(output, _repeated_gumpSerials_codec);
+      activeGumps_.WriteTo(output, _repeated_activeGumps_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -574,7 +574,7 @@ namespace Uoservice {
       if (MaxTileY != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(MaxTileY);
       }
-      size += gumpSerials_.CalculateSize(_repeated_gumpSerials_codec);
+      size += activeGumps_.CalculateSize(_repeated_activeGumps_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -622,7 +622,7 @@ namespace Uoservice {
       if (other.MaxTileY != 0) {
         MaxTileY = other.MaxTileY;
       }
-      gumpSerials_.Add(other.gumpSerials_);
+      activeGumps_.Add(other.activeGumps_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -684,7 +684,7 @@ namespace Uoservice {
           }
           case 106:
           case 104: {
-            gumpSerials_.AddEntriesFrom(input, _repeated_gumpSerials_codec);
+            activeGumps_.AddEntriesFrom(input, _repeated_activeGumps_codec);
             break;
           }
         }

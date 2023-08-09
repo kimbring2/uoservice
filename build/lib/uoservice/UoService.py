@@ -63,6 +63,9 @@ class UoService:
 		self.backpack_serial = None
 		self.bank_serial = None
 		self.picked_up_item = {}
+		self.menu_gump_serial = 0
+		self.menu_gump_control_list = []
+		self.active_gump_list = []
 
 		## Variables to load the binary file for land, static data
 		self.min_tile_x = self.min_tile_y = self.max_tile_x = self.max_tile_y = None
@@ -287,7 +290,6 @@ class UoService:
 		menu_gump_serial = response.menuControlList.localSerial
 		menu_gump_control_list = response.menuControlList.menuControls
 
-
 		## Save the player buff data into global variable
 		if len(player_buffs_data) != 0:
 			self.player_buff_dict = {}
@@ -307,6 +309,9 @@ class UoService:
 			self.min_tile_y = player_object.minTileY
 			self.max_tile_x = player_object.maxTileX
 			self.max_tile_y = player_object.maxTileY
+			self.active_gump_list = player_object.activeGumps
+
+		#print("self.active_gump_list: ", self.active_gump_list)
 
 		## Save the hold item data into global variable
 		if player_object.holdItemSerial != 0:
@@ -331,6 +336,7 @@ class UoService:
 					self.bank_serial = obj.serial
 
 			#print("")
+
 
 		## Save the world mobile object into global Dict
 		if len(world_mobile_data) != 0:
@@ -447,8 +453,8 @@ class UoService:
 		if len(menu_gump_control_list) != 0:
 			print("menu_gump_serial: ", menu_gump_serial)
 			print("len(menu_gump_control_list): ", len(menu_gump_control_list))
-			for menu_gump_control in menu_gump_control_list:
-				print("menu_gump_control: ", menu_gump_control)
+			#for menu_gump_control in menu_gump_control_list:
+			#	print("menu_gump_control: ", menu_gump_control)
 
 			print("")
 
