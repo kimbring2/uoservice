@@ -119,7 +119,8 @@ message GrpcMenuControlList {
   uint32 serverSerial = 2;
   uint32 height = 3;
   uint32 width = 4;
-  repeated GrpcMenuControl menuControls = 5;
+  uint32 maxPage = 5;
+  repeated GrpcMenuControl menuControls = 6;
 }
 
 message GrpcSkillList {
