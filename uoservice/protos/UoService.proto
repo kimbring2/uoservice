@@ -111,11 +111,15 @@ message GrpcMenuControl {
   uint32 y = 3;
   uint32 page = 4;
   string text = 5;
+  uint32 id = 6;
 }
 
 message GrpcMenuControlList {
   uint32 localSerial = 1;
-  repeated GrpcMenuControl menuControls = 2;
+  uint32 serverSerial = 2;
+  uint32 height = 3;
+  uint32 width = 4;
+  repeated GrpcMenuControl menuControls = 5;
 }
 
 message GrpcSkillList {
