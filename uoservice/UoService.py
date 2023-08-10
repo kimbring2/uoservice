@@ -217,82 +217,97 @@ class UoService:
 								screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Cadetblue"], 1)
 							else:
 								screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Lavenderblush2"], 1)
+				#try:
+				if True:
+					## Rendering the replay data as real screen scale 
+					screen_width = 4000
+					screen_height = 4000
+					world_mobile_dict = copy.deepcopy(self.world_mobile_dict)
+					for k, v in world_mobile_dict.items():
+						if self.player_game_x != None and v["isDead"] == False and k != self.player_serial:
+							#print("world mobile {0}: {1}".format(k, v["isDead"]))
+							if v["gameX"] < screen_width and v["gameY"] < screen_height:
+								screen_image = cv2.circle(screen_image, 
+												( (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
+												  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
+												  radius, utils.color_dict["Red"], -1)
 
-				## Rendering the replay data as real screen scale 
-				screen_width = 4000
-				screen_height = 4000
-				world_mobile_dict = copy.deepcopy(self.world_mobile_dict)
-				for k, v in world_mobile_dict.items():
-					if self.player_game_x != None and v["isDead"] == False and k != self.player_serial:
-						#print("world mobile {0}: {1}".format(k, v["isDead"]))
-						if v["gameX"] < screen_width and v["gameY"] < screen_height:
-							screen_image = cv2.circle(screen_image, 
-											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
-											  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
-											  radius, utils.color_dict["Red"], -1)
-
-							screen_image = cv2.putText(screen_image, "  " + v["name"], 
-											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
-											  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
-											cv2.FONT_HERSHEY_SIMPLEX, 0.5, utils.color_dict["Red"], 1, cv2.LINE_4)
-
-				world_item_dict = copy.deepcopy(self.world_item_dict)
-				for k, v in world_item_dict.items():
-					if self.player_game_x != None:
-						#print("world item {0}: {1}".format(k, self.world_item_dict[k]))
-						if v["gameX"] < screen_width and v["gameY"] < screen_height:
-							screen_image = cv2.circle(screen_image, 
-											( (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
-											  (v["gameY"] - player_game_y) * scale + int(screen_length / 2)
-											),
-											radius, utils.color_dict["Purple"], -1)
-		           
-							item_name_list = v["name"].split(" ")
-							screen_image = cv2.putText(screen_image, "     " + item_name_list[-1], 
+								screen_image = cv2.putText(screen_image, "  " + v["name"], 
 												( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
 												  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
-												cv2.FONT_HERSHEY_SIMPLEX, 0.5, utils.color_dict["Purple"], 1, cv2.LINE_4)
+												cv2.FONT_HERSHEY_SIMPLEX, 0.5, utils.color_dict["Red"], 1, cv2.LINE_4)
 
-				## Cropping the real screen around player position to zoom in
-				boundary = 500
-				if self.player_game_x != None:
-					#print("player_game_x: {0}, player_game_y: {1}".format(self.player_game_x, self.player_game_y))
-					screen_image = cv2.putText(screen_image, str("player"), (int(screen_length / 2), int(screen_length / 2) - int(scale / 2)), 
-											  cv2.FONT_HERSHEY_SIMPLEX, 1.0, utils.color_dict["Green"], 4, cv2.LINE_4)
+					world_item_dict = copy.deepcopy(self.world_item_dict)
+					for k, v in world_item_dict.items():
+						if self.player_game_x != None:
+							#print("world item {0}: {1}".format(k, self.world_item_dict[k]))
+							if v["gameX"] < screen_width and v["gameY"] < screen_height:
+								screen_image = cv2.circle(screen_image, 
+												( (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
+												  (v["gameY"] - player_game_y) * scale + int(screen_length / 2)
+												),
+												radius, utils.color_dict["Purple"], -1)
+			           
+								item_name_list = v["name"].split(" ")
+								screen_image = cv2.putText(screen_image, "     " + item_name_list[-1], 
+													( (v["gameX"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
+													  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
+													cv2.FONT_HERSHEY_SIMPLEX, 0.5, utils.color_dict["Purple"], 1, cv2.LINE_4)
 
-					radius = int(scale / 2)
-					screen_image = cv2.circle(screen_image, (int(screen_length / 2), int(screen_length / 2)), radius, utils.color_dict["Lime"], -1)
-					screen_image = screen_image[int(screen_length / 2) - boundary:int(screen_length / 2) + boundary, 
-												int(screen_length / 2) - boundary:int(screen_length / 2) + boundary, :]
-		        
-		        ## Resize the cropped screen larger
-				screen_image = cv2.resize(screen_image, (screen_length, screen_length), interpolation=cv2.INTER_AREA)
+					## Cropping the real screen around player position to zoom in
+					boundary = 500
+					if self.player_game_x != None:
+						#print("player_game_x: {0}, player_game_y: {1}".format(self.player_game_x, self.player_game_y))
+						screen_image = cv2.putText(screen_image, str("player"), (int(screen_length / 2), int(screen_length / 2) - int(scale / 2)), 
+												  cv2.FONT_HERSHEY_SIMPLEX, 1.0, utils.color_dict["Green"], 4, cv2.LINE_4)
 
-				## Rotate image to show like a real game angle
-				screen_image = utils.rotate_image(screen_image, -45)
+						radius = int(scale / 2)
+						screen_image = cv2.circle(screen_image, (int(screen_length / 2), int(screen_length / 2)), radius, utils.color_dict["Lime"], -1)
+						screen_image = screen_image[int(screen_length / 2) - boundary:int(screen_length / 2) + boundary, 
+													int(screen_length / 2) - boundary:int(screen_length / 2) + boundary, :]
+			        
+			        ## Resize the cropped screen larger
+					screen_image = cv2.resize(screen_image, (screen_length, screen_length), interpolation=cv2.INTER_AREA)
 
-				cv2.imshow('screen_image_' + str(self.grpc_port), screen_image)
+					## Rotate image to show like a real game angle
+					screen_image = utils.rotate_image(screen_image, -45)
 
-				## Draw action related gump
-				for k_gump, v_gump in self.menu_gump_control.items():
-					gump_width = 500
-					gump_height = 1000
-					gump_image = np.zeros((gump_width, gump_height, 4), dtype=np.uint8)
-					print("k_gump: ", k_gump)
-					for i, control in enumerate(v_gump):
-						#print("control: ", control)
-						if control.name == "xmfhtmlgumpcolor" or control.name == "xmfhtmlgump":
-							gump_image = cv2.putText(gump_image, control.text, (control.x, control.y), 
-								cv2.FONT_HERSHEY_SIMPLEX, 1.0, utils.color_dict["White"], 1, cv2.LINE_4)
-						elif control.name == "button":
-							start_point = (control.x, control.y)
-							end_point = (control.x + 10, control.y + 10)
-							gump_image = cv2.rectangle(gump_image, start_point, end_point, utils.color_dict["Green"], 1)
+					cv2.imshow('screen_image_' + str(self.grpc_port), screen_image)
 
-					print("")
-					cv2.imshow('gump_image_' + str(k_gump), gump_image)
+					## Draw action related gump
+					for k_gump, v_gump in self.menu_gump_control.items():
+						gump_width = 500
+						gump_height = 1000
+						gump_image = np.zeros((gump_width, gump_height, 4), dtype=np.uint8)
+						#print("k_gump: ", k_gump)
+						for i, control in enumerate(v_gump):
+							if control.name == "xmfhtmlgumpcolor" or control.name == "xmfhtmlgump":
+								control_text = control.text
+								str_length = len(control_text)
 
-				cv2.waitKey(1)
+								index = int(str_length / 5)
+								print("index: ", index)
+								for i in range(0, index):
+									new_str = control_text[i * 20:(i + 1) * 20]
+									gump_image = cv2.putText(gump_image, new_str, (control.x, control.y + i * 20), 
+									cv2.FONT_HERSHEY_SIMPLEX, 1.0, utils.color_dict["White"], 1, cv2.LINE_4)
+
+								new_str = control_text[(index + 1) * 20:]
+								gump_image = cv2.putText(gump_image, new_str, (control.x, control.y + (index + 1) * 20), 
+									cv2.FONT_HERSHEY_SIMPLEX, 1.0, utils.color_dict["White"], 1, cv2.LINE_4)
+
+							elif control.name == "button":
+								start_point = (control.x, control.y)
+								end_point = (control.x + 10, control.y + 10)
+								gump_image = cv2.rectangle(gump_image, start_point, end_point, utils.color_dict["Green"], 1)
+
+						#print("")
+						cv2.imshow('gump_image_' + str(k_gump), gump_image)
+
+					cv2.waitKey(1)
+				#except:
+				#	print("Meet some error during rendering")
+
 
 	def parse_response(self, response):
 		## Load the each gRPC message from response data 
@@ -356,7 +371,6 @@ class UoService:
 					self.bank_serial = obj.serial
 
 			#print("")
-
 
 		## Save the world mobile object into global Dict
 		if len(world_mobile_data) != 0:
