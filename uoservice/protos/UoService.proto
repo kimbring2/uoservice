@@ -111,7 +111,7 @@ message GrpcMenuControl {
   uint32 y = 3;
   uint32 page = 4;
   string text = 5;
-  uint32 id = 6;
+  int32 id = 6;
 }
 
 message GrpcMenuControlList {

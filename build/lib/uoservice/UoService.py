@@ -142,6 +142,8 @@ class UoService:
 		while True:
 			## Only parsing when player is in the world
 			if self.max_tile_x != None:
+				cv2.destroyAllWindows()
+
 				## Main game screen array
 				screen_length = 1000
 				screen_image = np.zeros((screen_length, screen_length, 4), dtype=np.uint8)
@@ -314,9 +316,11 @@ class UoService:
 														 cv2.FONT_HERSHEY_SIMPLEX, 0.5, utils.color_dict["Green"], 1, cv2.LINE_4)
 
 						#print("")
-						cv2.imshow('gump_image_' + str(k_gump), gump_image)
+						#cv2.imshow('gump_image_' + str(k_gump), gump_image)
 
 					cv2.waitKey(1)
+
+					#print("")
 				#except:
 				#	print("Meet some error during rendering")
 

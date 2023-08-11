@@ -43,13 +43,14 @@ uo_installed_path = arguments.uo_installed_path
 
 def step(uo_service):
   player_gold = None
-  pick_up_flag = True
+  pick_up_flag = False
   drop_flag = False
   bank_serial = None
   one_send_flag = True
   gump_res_flag = False
   gump_local_serial = None
   gump_server_serial = None
+  button_index = None
 
   step = 0
   while True:
@@ -109,13 +110,19 @@ def step(uo_service):
 
         for k_gump, v_gump in uo_service.menu_gump_control.items():
           #print("k_gump: ", k_gump)
-          #print("k_gump: ", k_gump)
 
           gump_res_flag = True
           gump_local_serial = k_gump
           gump_server_serial = v_gump["server_serial"]
 
-        #print("")
+          for i, control in enumerate(v_gump["control_list"]):
+            if control.name == "button":
+              #print("i: ", i)
+              #print("control.id: ", control.id)
+              if control.id != 0:
+                button_index = control.id
+
+          #print("")
 
         if bank_serial != None:
           for k_world, v_world in world_item_data.items():
@@ -187,7 +194,8 @@ def step(uo_service):
         print("gump_local_serial: ", gump_local_serial)
         action['source_serial'] = gump_local_serial
         action['target_serial'] = gump_server_serial
-        action['index'] = 1
+        #action['index'] = button_index
+        action['index'] = 2000
         gump_res_flag = False
         #one_send_flag = False
 
