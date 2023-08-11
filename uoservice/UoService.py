@@ -295,7 +295,8 @@ class UoService:
 								control_text = control.text
 								control_text = control_text.replace("<CENTER>", "      ")
 								control_text = control_text.replace("</CENTER>", "      ")
-								#print("control_text: ", control_text)
+								print("control_text: ", control_text)
+								print("control.page: ", control.page)
 
 								str_length = len(control_text)
 
@@ -303,9 +304,9 @@ class UoService:
 
 								index = int(str_length / text_max_len)
 								#print("index: ", index)
-								for i in range(0, index):
-									new_str = control_text[i * text_max_len:(i + 1) * text_max_len]
-									gump_image = cv2.putText(gump_image, new_str, (control.x + control.page * v_gump["width"], control.y + i * 20), 
+								for j in range(0, index):
+									new_str = control_text[j * text_max_len:(j + 1) * text_max_len]
+									gump_image = cv2.putText(gump_image, new_str, (control.x + control.page * v_gump["width"], control.y + j * 20), 
 									cv2.FONT_HERSHEY_SIMPLEX, 0.5, utils.color_dict["White"], 1, cv2.LINE_4)
 
 								new_str = control_text[index * text_max_len:]

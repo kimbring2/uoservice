@@ -239,9 +239,31 @@
 
         <div class="row">
             <div class="col" id="9">
-                <script>createHeader("9", "Actions", "");</script>
-                Due to the huge number of pixels, using the position of screen as action directly is really inefficient. However, we can project the any mouse input into a specific game event by using the multiple action arguments. <script>
+                <script>createHeader("9", "GrpcMenuControl", "");</script>
+                In Ultima Online, there are cases where agent need to interact with the server in the form of an interactive dashboard including buttons. It is totaly differnt form from normal actions and states such as item objects or walks. For example, if you open a bank, you can see that not only the metal chest holding the item is opened, but also a dialog box named bank actions is opened together.
+
+                <img src="Fig/GumpAndControl.png" class="rounded mx-auto d-block float-center" alt="Logo" width="330" height="280">
+
+                The dialog has a number of html text and buttons, and this gRPC data type serves to store the data of the corresponding control. 
+
+                <script>
                     generate_table("9", 
+                                    [
+                                        ["name", "string", "name of control"],
+                                        ["x", "uint32", "x position of control in gump"],
+                                        ["y", "uint32", "y position of control in gump"],
+                                        ["page", "uint32", "which page the control is located in gump"],
+                                        ["text", "string", "text string of control"],
+                                        ["id", "uint32", "unique tag number of control in gump"]
+                                    ]
+                                    );
+                </script>
+            </div>
+
+            <div class="col" id="10">
+                <script>createHeader("10", "Actions", "");</script>
+                Due to the huge number of pixels, using the position of screen as action directly is really inefficient. However, we can project the any mouse input into a specific game event by using the multiple action arguments. <script>
+                    generate_table("10", 
                                     [
                                         ["actionType", "uint32", "type of action"],
                                         ["itemSerial", "uint32", "unique item serial what player hold now"], 
@@ -253,9 +275,6 @@
                                     ]
                                     );
                 </script>
-            </div>
-
-            <div class="col" id="10">
             </div>
         </div>
     </div>
@@ -395,7 +414,6 @@
             <div class="col", id="states_7">
                 <script>createHeader("states_7", "playerSkillList", "");</script>
                 
-
                 <img src="Fig/SkillList.png" class="rounded mx-auto d-block float-center" alt="Logo" width="390" height="290">
 
                 <script>
@@ -444,6 +462,37 @@
                                     ]
                                     );
                 </script>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col", id="states_11">
+                <script>createHeader("states_11", "GrpcMenuControl", "");</script>
+                When a gump that interacts with the server is created, the unique serial number and size of the corresponding gump, as well as information about controls, are transmitted from the server. Send this information along with the response to the corresponding gump so that the server can recognize the response to the gump and execute the corresponding action.
+
+                <img src="Fig/GumpAction.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="280">
+
+                This state is a gRPC message to send all information transmitted when gump is created to the Python side. Because the button and html text are not transmitted in pairs, they need to be visually reconstructed using the x, y, and page number of the control.
+
+                <img src="Fig/GumpFromPython.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="280">
+
+                <script>
+                    generate_table("states_11", 
+                                    [
+                                        ["localSerial", "uint32", "local serial number of gump"],
+                                        ["serverSerial", "uint32", "server serial number of gump"],
+                                        ["height", "uint32", "height of gump"],
+                                        ["width", "uint32", "width of gump"],
+                                        ["maxPage", "uint32", "maximum page number of gump"],
+                                        ["menuControls", "list of GrpcMenuControl", "list of control inside of gump"],
+                                    ]
+                                    );
+                </script>
+            </div>
+
+            <div class="col", id="states_12">
+
+
             </div>
         </div>
 

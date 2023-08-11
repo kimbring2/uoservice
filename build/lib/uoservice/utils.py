@@ -169,6 +169,7 @@ class FileReader(object):
     def seek(self, position):
         self.pos = position
         self.stream.seek(position)
+        self.remaining = self.size - self.pos
 
     def more(self):
         return self.remaining > 0

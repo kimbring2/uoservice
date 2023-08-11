@@ -56,7 +56,7 @@ namespace Uoservice {
             "ASgNEg8KB2l0ZW1IdWUYBCABKA0SEgoKaXRlbUFtb3VudBgFIAEoDRIRCglp",
             "dGVtUHJpY2UYBiABKA0SEAoIaXRlbU5hbWUYByABKAkiXQoPR3JwY01lbnVD",
             "b250cm9sEgwKBG5hbWUYASABKAkSCQoBeBgCIAEoDRIJCgF5GAMgASgNEgwK",
-            "BHBhZ2UYBCABKA0SDAoEdGV4dBgFIAEoCRIKCgJpZBgGIAEoBSKiAQoTR3Jw",
+            "BHBhZ2UYBCABKA0SDAoEdGV4dBgFIAEoCRIKCgJpZBgGIAEoDSKiAQoTR3Jw",
             "Y01lbnVDb250cm9sTGlzdBITCgtsb2NhbFNlcmlhbBgBIAEoDRIUCgxzZXJ2",
             "ZXJTZXJpYWwYAiABKA0SDgoGaGVpZ2h0GAMgASgNEg0KBXdpZHRoGAQgASgN",
             "Eg8KB21heFBhZ2UYBSABKA0SMAoMbWVudUNvbnRyb2xzGAYgAygLMhoudW9z",
@@ -3250,9 +3250,9 @@ namespace Uoservice {
 
     /// <summary>Field number for the "id" field.</summary>
     public const int IdFieldNumber = 6;
-    private int id_;
+    private uint id_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Id {
+    public uint Id {
       get { return id_; }
       set {
         id_ = value;
@@ -3325,7 +3325,7 @@ namespace Uoservice {
       }
       if (Id != 0) {
         output.WriteRawTag(48);
-        output.WriteInt32(Id);
+        output.WriteUInt32(Id);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -3351,7 +3351,7 @@ namespace Uoservice {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Text);
       }
       if (Id != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Id);
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Id);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -3414,7 +3414,7 @@ namespace Uoservice {
             break;
           }
           case 48: {
-            Id = input.ReadInt32();
+            Id = input.ReadUInt32();
             break;
           }
         }

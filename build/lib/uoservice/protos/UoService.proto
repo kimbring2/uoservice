@@ -111,16 +111,7 @@ message GrpcMenuControl {
   uint32 y = 3;
   uint32 page = 4;
   string text = 5;
-  int32 id = 6;
-}
-
-message GrpcMenuControlList {
-  uint32 localSerial = 1;
-  uint32 serverSerial = 2;
-  uint32 height = 3;
-  uint32 width = 4;
-  uint32 maxPage = 5;
-  repeated GrpcMenuControl menuControls = 6;
+  uint32 id = 6;
 }
 
 message GrpcSkillList {
@@ -165,6 +156,15 @@ message GrpcDeleteItemSerialList {
 
 message GrpcDeleteMobileSerialList {
   repeated uint32 serials = 1;
+}
+
+message GrpcMenuControlList {
+  uint32 localSerial = 1;
+  uint32 serverSerial = 2;
+  uint32 height = 3;
+  uint32 width = 4;
+  uint32 maxPage = 5;
+  repeated GrpcMenuControl menuControls = 6;
 }
 
 message GrpcStates {
