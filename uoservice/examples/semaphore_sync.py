@@ -46,6 +46,10 @@ def step(uo_service):
   pick_up_flag = True
   drop_flag = False
   bank_serial = None
+  one_send_flag = True
+  gump_res_flag = False
+  gump_local_serial = None
+  gump_server_serial = None
 
   step = 0
   while True:
@@ -103,13 +107,23 @@ def step(uo_service):
       if len(world_item_data) != 0:
         #print("bank_serial: {0}".format(bank_serial))
 
+        for k_gump, v_gump in uo_service.menu_gump_control.items():
+          #print("k_gump: ", k_gump)
+          #print("k_gump: ", k_gump)
+
+          gump_res_flag = True
+          gump_local_serial = k_gump
+          gump_server_serial = v_gump["server_serial"]
+
+        #print("")
+
         if bank_serial != None:
           for k_world, v_world in world_item_data.items():
             if "Door" not in v_world["name"] and "Vendor" not in v_world["name"]:
               #print("world {0}: {1}, {2}".format(k_world, v_world["name"], v_world["container"]))
               if v_world["container"] == bank_serial:
                 ## Bank item
-                print("bank item: {0}".format(v_world))
+                #print("bank item: {0}".format(v_world))
                 pass
 
           #print("")
@@ -168,8 +182,16 @@ def step(uo_service):
         action['action_type'] = 4
         action['index'] = 2554
         drop_flag = False
+      elif gump_res_flag == True and one_send_flag == True:
+        action['action_type'] = 9
+        print("gump_local_serial: ", gump_local_serial)
+        action['source_serial'] = gump_local_serial
+        action['target_serial'] = gump_server_serial
+        action['index'] = 1
+        gump_res_flag = False
+        #one_send_flag = False
 
-    action['action_type'] = 0
+    #action['action_type'] = 0
     obs = uo_service.step(action)
     step += 1
 
