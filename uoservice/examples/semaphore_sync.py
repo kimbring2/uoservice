@@ -43,7 +43,7 @@ uo_installed_path = arguments.uo_installed_path
 
 def step(uo_service):
   player_gold = None
-  pick_up_flag = False
+  pick_up_flag = True
   drop_flag = False
   bank_serial = None
   one_send_flag = True
@@ -85,7 +85,11 @@ def step(uo_service):
     hold_item_serial = uo_service.hold_item_serial
     equipped_item_data = uo_service.equipped_item_dict
     player_status_dict = uo_service.player_status_dict
+    backpack_serial = uo_service.backpack_serial
     gold_serial, index = utils.get_serial_by_name(backpack_item_data, 'Gold')
+    bag_serial, index = utils.get_serial_by_name(backpack_item_data, 'Bag')
+    bandage_serial, index = utils.get_serial_by_name(backpack_item_data, 'Bandage')
+
     #print("gold_serial: ", gold_serial)
 
     if gold_serial in backpack_item_data:
@@ -104,14 +108,14 @@ def step(uo_service):
         bank_serial = k_world
 
     ## Declare the empty action
-    if step % 100 == 0:
+    if step % 500 == 0:
       if len(world_item_data) != 0:
-        #print("bank_serial: {0}".format(bank_serial))
+        print("bag_serial: {0}".format(bag_serial))
 
         for k_gump, v_gump in uo_service.menu_gump_control.items():
           #print("k_gump: ", k_gump)
 
-          gump_res_flag = True
+          #gump_res_flag = True
           gump_local_serial = k_gump
           gump_server_serial = v_gump["server_serial"]
 
@@ -143,9 +147,9 @@ def step(uo_service):
 
       if len(backpack_item_data) != 0:
         for k_backpack, v_backpack in backpack_item_data.items():
-          #print("backpack {0}: {1}".format(k_backpack, v_backpack["name"]))
+          print("backpack item, name: {0}, opened: {1}".format(v_backpack["name"], v_backpack["opened"]))
           pass
-        #print("")
+        print("")
 
       if len(bank_item_data) != 0:
         for k_bank, v_bank in bank_item_data.items():
@@ -173,15 +177,16 @@ def step(uo_service):
           #print("corpse item {0}: {1}".format(k_corpse, v_corpse["name"]))
           pass
 
-      if gold_serial != None and pick_up_flag == True:
+      if bandage_serial != None and pick_up_flag == True:
         action['action_type'] = 3
-        action['target_serial'] = gold_serial
-        action['amount'] = 100
+        action['target_serial'] = bandage_serial
+        action['amount'] = 1
         pick_up_flag = False
         drop_flag = True
-      elif drop_flag == True:
+      elif drop_flag == True and backpack_serial != None and bag_serial != None:
         action['action_type'] = 4
-        action['index'] = 2554
+        action['target_serial'] = bag_serial
+        action['index'] = 1
         drop_flag = False
       elif gump_res_flag == True and one_send_flag == True:
         #print("gump_local_serial: ", gump_local_serial)

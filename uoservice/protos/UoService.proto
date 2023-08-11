@@ -47,6 +47,7 @@ message GrpcItemObject {
   uint32 layer = 9;
   uint32 container = 10;
   string data = 11;
+  bool opened = 12;
 }
 
 message GrpcPlayerStatus {
