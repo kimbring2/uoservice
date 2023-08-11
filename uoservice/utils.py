@@ -167,6 +167,7 @@ class FileReader(object):
         self.bit_val = 0
 
     def seek(self, position):
+        self.pos = position
         self.stream.seek(position)
 
     def more(self):
@@ -219,7 +220,7 @@ class FileReader(object):
         return self.read_bits(1) == 1
 
     def next_byte(self):
-        self.pos += 1
+        #self.pos += 1
         if self.pos > self.size:
             print('nextByte: insufficient buffer ({} of {})'.format(self.pos, self.size))
         

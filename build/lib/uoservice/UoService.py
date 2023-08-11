@@ -142,11 +142,15 @@ class UoService:
 		while True:
 			## Only parsing when player is in the world
 			if self.max_tile_x != None:
-				cv2.destroyAllWindows()
+				#cv2.destroyAllWindows()
 
 				## Main game screen array
 				screen_length = 1000
 				screen_image = np.zeros((screen_length, screen_length, 4), dtype=np.uint8)
+
+				## Check the player game position
+				player_game_x = self.player_game_x
+				player_game_y = self.player_game_y
 
 				## Load and draw the land, static data
 				cell_x_list = []
@@ -161,10 +165,6 @@ class UoService:
 					cell_y = y >> 3
 					if cell_y not in cell_y_list:
 						cell_y_list.append(cell_y)
-
-				## Check the player game position
-				player_game_x = self.player_game_x
-				player_game_y = self.player_game_y
 
 				scale = 40 ## Scale factor to make the space between the box line
 				radius = int(scale / 2)
@@ -219,11 +219,16 @@ class UoService:
 								screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Cadetblue"], 1)
 							else:
 								screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Lavenderblush2"], 1)
+				
+
 				#try:
 				if True:
-					## Rendering the replay data as real screen scale 
+					## Rendering the replay data as real screen scale
 					screen_width = 4000
 					screen_height = 4000
+					scale = 40 ## Scale factor to make the space between the box line
+					radius = int(scale / 2)
+
 					world_mobile_dict = copy.deepcopy(self.world_mobile_dict)
 					for k, v in world_mobile_dict.items():
 						if self.player_game_x != None and v["isDead"] == False and k != self.player_serial:
@@ -277,7 +282,8 @@ class UoService:
 					cv2.imshow('screen_image_' + str(self.grpc_port), screen_image)
 
 					## Draw action related gump
-					for k_gump, v_gump in self.menu_gump_control.items():
+					menu_gump_control = copy.deepcopy(self.menu_gump_control)
+					for k_gump, v_gump in menu_gump_control.items():
 						gump_height = v_gump["height"]
 						gump_width = v_gump["width"] * (v_gump["max_page"] + 1)
 						gump_image = np.zeros((gump_height, gump_width, 4), dtype=np.uint8)
@@ -316,7 +322,7 @@ class UoService:
 														 cv2.FONT_HERSHEY_SIMPLEX, 0.5, utils.color_dict["Green"], 1, cv2.LINE_4)
 
 						#print("")
-						#cv2.imshow('gump_image_' + str(k_gump), gump_image)
+						cv2.imshow('gump_image_' + str(k_gump), gump_image)
 
 					cv2.waitKey(1)
 

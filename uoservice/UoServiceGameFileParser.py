@@ -1,67 +1,89 @@
+# ---------------------------------------------------------------------
+# Project "UoService"
+# Copyright (C) 2023, kimbring2 
+#
+# Purpose of this file : Load the land, static object information from Ultima Online binary file
+#
+# Please reference me when you are going to use this code as reference :)
+
+## general package imports
 from io import StringIO
 from io import BytesIO
 import struct
-import utils
 from numpy import int8
 import os
 import threading
 import copy
 
+from uoservice import utils
+
+print("utils.__file__: ", utils.__file__)
+
 
 class UoServiceGameFileParser:
-	'''UoServiceGameFileParser class including Binary file reader'''
+	'''The class to read the binary file'''
 	def __init__(self, uo_installed_path):
+		## The Wine path of EA UO client
 		self.uo_installed_path = uo_installed_path
 
+		## The name of binary files
 		self.files_map_name = "map1LegacyMUL.uop"
 		self.files_statics_name = "statics1.mul"
 		self.files_index_statics_name = "staidx1.mul"
 		self.files_tiledata_name = "tiledata.mul"
 
+		## The full binary file path
 		self.files_map_path = os.path.join(self.uo_installed_path, self.files_map_name)
 		self.files_statics_path = os.path.join(self.uo_installed_path, self.files_statics_name)
 		self.files_index_statics_path = os.path.join(self.uo_installed_path, self.files_index_statics_name)
 		self.files_tiledata_path = os.path.join(self.uo_installed_path, self.files_tiledata_name)
 
+		## Binary file related variables
 		self.UOP_MAGIC_NUMBER = hex(0x50594d)
 		self._has_extra = False
 		self.total_entries_count = 0
 		self.hashes_dict = {}
 		self.file_size = 0
 
+		## The size of total map
 		self.MapsDefaultSize = {7168 >> 3, 4096 >> 3}
 
+		## Dictionary for saving the binary file data
 		self.block_data = []
 		self.land_data_dict = {}
 		self.static_data_dict = {}
 
+		## The byte array reader for map file
 		self.files_map = open(self.files_map_path, 'rb')
 		self.p_files_map = self.files_map.read()
 		self.files_map_reader = utils.FileReader(BytesIO(self.p_files_map))
 		self.files_map_size = self.files_map_reader.size
 
+		## The byte array reader for statics file
 		self.files_statics = open(self.files_statics_path, 'rb')
 		self.p_files_statics = self.files_statics.read()
 		self.files_statics_reader = utils.FileReader(BytesIO(self.p_files_statics))
 		self.files_statics_size = self.files_statics_reader.size
 
+		## The byte array reader for index statics file
 		self.files_index_statics = open(self.files_index_statics_path, 'rb')
 		self.p_files_index_statics = self.files_index_statics.read()
 		self.files_index_statics_reader = utils.FileReader(BytesIO(self.p_files_index_statics))
 		self.files_index_statics_size = self.files_index_statics_reader.size
 
+		## The byte array reader for tiledata file
 		self.file_tiledata = open(self.files_tiledata_path, 'rb')
 		self.p_file_tiledata = self.file_tiledata.read()
 		self.files_tiledata_reader = utils.FileReader(BytesIO(self.p_file_tiledata))
 
+		## Set the file reader pointer to start point
 		self.files_map_reader.seek(0)
 		self.files_statics_reader.seek(0)
 		self.files_index_statics_reader.seek(0)
 		self.files_tiledata_reader.seek(0)
 
 	def load(self):
-		#self.load_map_file()
-		#self.load_tile_data()
+		## Make two seperate thread to reduce the loading file
 		thread_1 = threading.Thread(target=self.load_map_file, daemon=True, args=())
 		thread_2 = threading.Thread(target=self.load_tile_data, daemon=True, args=())
 
@@ -72,18 +94,21 @@ class UoServiceGameFileParser:
 		thread_2.join()
 
 	def load_map_file(self):
-		print("load_map_file()")
-
+		## Load the binary file header and verify
 		uop_magic_number = hex(self.files_map_reader.read_uint32())
 		if uop_magic_number != self.UOP_MAGIC_NUMBER:
 		    raise NameError('Bad uop file')
 
+		## Load the meta information of binary file
 		version = self.files_map_reader.read_uint32()
 		format_timestamp = self.files_map_reader.read_uint32()
 		next_block = self.files_map_reader.read_long()
 		block_size = self.files_map_reader.read_uint32()
 		count = self.files_map_reader.read_uint32()
 
+		## Load the actual map information
+		## Mimic the loading mechnism of original C# file: https://github.com/kimbring2/pyuo/blob/main/src/IO/Resources/MapLoader.cs
+		## The goal of this part is finding the value for the self.hashes_dict
 		self.files_map_reader.seek(next_block)
 		total = 0;
 		real_total = 0;
@@ -113,10 +138,12 @@ class UoServiceGameFileParser:
 
 		    self.files_map_reader.seek(next_block)
 
+
+		## Load the actual static information
+		## Mimic the loading mechnism of original C# file: https://github.com/kimbring2/pyuo/blob/main/src/IO/Resources/MapLoader.cs
+		## The goal of this part is finding the value for the self.block_data
 		total_entries_count = real_total;
-
 		pattern = "build/map1legacymul/{:08d}.dat"
-
 		entries = []
 		for i in range(0, total_entries_count):
 		    file = pattern.format(i)
@@ -131,7 +158,6 @@ class UoServiceGameFileParser:
 		uopoffset = 0
 		file_number = -1;
 		maxblockcount = 896 * 512
-
 		for block in range(0, maxblockcount):
 		    realmapaddress = 0
 		    realstaticaddress = 0
@@ -173,6 +199,9 @@ class UoServiceGameFileParser:
 		    self.block_data.append(index_map)
 
 	def load_tile_data(self):
+		## Load the tiledata information
+		## Mimic the loading mechnism of original C# file: https://github.com/kimbring2/pyuo/blob/main/src/IO/Resources/MapLoader.cs
+		## The goal of this part is finding the value for the self.land_data_dict
 		for i in range(0, 512):
 		    self.files_tiledata_reader.read_uint32()
 
@@ -189,6 +218,9 @@ class UoServiceGameFileParser:
 
 		        self.land_data_dict[idx] = {"flags": flags, "text_id": text_id, "name": buffer_string}
 
+		## Load the tiledata information
+		## Mimic the loading mechnism of original C# file: https://github.com/kimbring2/pyuo/blob/main/src/IO/Resources/MapLoader.cs
+		## The goal of this part is finding the value for the self.static_data_dict
 		for i in range(0, 2048):
 		    self.files_tiledata_reader.read_uint32()
 
@@ -214,12 +246,16 @@ class UoServiceGameFileParser:
 		                                      "height": height, "name": buffer_string }
 
 	def get_index(self, x, y):
+		## Check the block number from the game x, y position
 		block = x * 512 + y;
-
 		return self.block_data[block]
 
 	def get_tile_data(self, x, y):
+		## Load the land and static information from loaded data
+		## Mimic the loading mechnism of original C# file: https://github.com/kimbring2/pyuo/blob/main/src/IO/Resources/MapLoader.cs
 	    im = self.get_index(x, y)
+
+	    #print("im.map_address: ", im.map_address)
 	    self.files_map_reader.seek(im.map_address)
 	    header = self.files_map_reader.read_uint32()
 

@@ -172,12 +172,6 @@ def step(uo_service):
         for k_corpse, v_corpse in corpse_item_dict.items():
           #print("corpse item {0}: {1}".format(k_corpse, v_corpse["name"]))
           pass
-        #print("")
-
-      #print("step: ", step)
-      #print("gold_serial: ", gold_serial)
-      #print("pick_up_flag: ", pick_up_flag)
-      #print("")
 
       if gold_serial != None and pick_up_flag == True:
         action['action_type'] = 3
@@ -190,16 +184,16 @@ def step(uo_service):
         action['index'] = 2554
         drop_flag = False
       elif gump_res_flag == True and one_send_flag == True:
+        #print("gump_local_serial: ", gump_local_serial)
+
         action['action_type'] = 9
-        print("gump_local_serial: ", gump_local_serial)
         action['source_serial'] = gump_local_serial
         action['target_serial'] = gump_server_serial
-        #action['index'] = button_index
-        action['index'] = 2000
+        action['index'] = button_index
         gump_res_flag = False
         #one_send_flag = False
 
-    #action['action_type'] = 0
+    action['action_type'] = 0
     obs = uo_service.step(action)
     step += 1
 
