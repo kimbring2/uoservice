@@ -110,7 +110,12 @@ def step(uo_service):
     ## Declare the empty action
     if step % 500 == 0:
       if len(world_item_data) != 0:
-        print("bag_serial: {0}".format(bag_serial))
+        #print("bag_serial: {0}".format(bag_serial))
+        if bag_serial in world_item_data:
+          bag_item = world_item_data[bag_serial]
+
+        backpack_item = world_item_data[backpack_serial]
+        #print("bag_item, opened: {0}".format(bag_item['opened']))
 
         for k_gump, v_gump in uo_service.menu_gump_control.items():
           #print("k_gump: ", k_gump)
@@ -131,13 +136,13 @@ def step(uo_service):
         if bank_serial != None:
           for k_world, v_world in world_item_data.items():
             if "Door" not in v_world["name"] and "Vendor" not in v_world["name"]:
-              #print("world {0}: {1}, {2}".format(k_world, v_world["name"], v_world["container"]))
-              if v_world["container"] == bank_serial:
-                ## Bank item
-                #print("bank item: {0}".format(v_world))
+              print("world {0}: {1}, {2}".format(k_world, v_world["name"], v_world["container"]))
+              if v_world["container"] == backpack_serial:
+                ## Backpack item
+                #print("Backpack name: {0}, amount: {1}".format(v_world["name"], v_world["amount"]))
                 pass
 
-          #print("")
+          print("")
 
       if len(equipped_item_data) != 0:
         for k_equipped, v_equipped in equipped_item_data.items():
@@ -147,9 +152,9 @@ def step(uo_service):
 
       if len(backpack_item_data) != 0:
         for k_backpack, v_backpack in backpack_item_data.items():
-          print("backpack item, name: {0}, opened: {1}".format(v_backpack["name"], v_backpack["opened"]))
+          #print("backpack item, name: {0}, opened: {1}".format(v_backpack["name"], v_backpack["opened"]))
           pass
-        print("")
+        #print("")
 
       if len(bank_item_data) != 0:
         for k_bank, v_bank in bank_item_data.items():
@@ -178,12 +183,16 @@ def step(uo_service):
           pass
 
       if bandage_serial != None and pick_up_flag == True:
+        #if bag_item['opened'] == False:
+        #  action['action_type'] = 2
+        #  action['target_serial'] = bag_serial
+        #else:
         action['action_type'] = 3
         action['target_serial'] = bandage_serial
         action['amount'] = 1
         pick_up_flag = False
         drop_flag = True
-      elif drop_flag == True and backpack_serial != None and bag_serial != None:
+      elif drop_flag == True and bag_serial != None:
         action['action_type'] = 4
         action['target_serial'] = bag_serial
         action['index'] = 1

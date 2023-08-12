@@ -295,8 +295,8 @@ class UoService:
 								control_text = control.text
 								control_text = control_text.replace("<CENTER>", "      ")
 								control_text = control_text.replace("</CENTER>", "      ")
-								print("control_text: ", control_text)
-								print("control.page: ", control.page)
+								#print("control_text: ", control_text)
+								#print("control.page: ", control.page)
 
 								str_length = len(control_text)
 
