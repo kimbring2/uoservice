@@ -64,6 +64,7 @@ def step(uo_service):
     action['amount'] = 0
     action['run'] = False
 
+    world_mobile_data = uo_service.world_mobile_dict
     world_item_data = uo_service.world_item_dict
     backpack_item_data = uo_service.backpack_item_dict
     equipped_item_data = uo_service.equipped_item_dict
@@ -75,10 +76,21 @@ def step(uo_service):
         #print("ground {0}: {1}".format(k_ground, v_ground["name"]))
         pass
 
-    if len(uo_service.world_mobile_dict) != 0:
-      for k_mobile, v_mobile in uo_service.world_mobile_dict.items():
+    if len(world_mobile_data) != 0:
+      for k_mobile, v_mobile in world_mobile_data.items():
         #print("world_mobile {0}: {1}".format(k_mobile, v_mobile["name"]))
         pass
+      #print("")
+
+    if len(world_item_data) != 0:
+      for k_world, v_world in world_item_data.items():
+        if "Door" not in v_world["name"] and "Vendor" not in v_world["name"]:
+          #print("world {0}: {1}, {2}".format(k_world, v_world["name"], v_world["container"]))
+          if v_world["container"] == backpack_serial:
+            ## Backpack item
+            #print("Backpack name: {0}, amount: {1}".format(v_world["name"], v_world["amount"]))
+            pass
+
       #print("")
 
     targeting_state = uo_service.targeting_state
@@ -90,7 +102,7 @@ def step(uo_service):
     bag_serial, index = utils.get_serial_by_name(backpack_item_data, 'Bag')
     bandage_serial, index = utils.get_serial_by_name(backpack_item_data, 'Bandage')
 
-    #print("gold_serial: ", gold_serial)
+    #print("uo_service.player_serial: ", uo_service.player_serial)
 
     if gold_serial in backpack_item_data:
       gold_info = backpack_item_data[gold_serial]
@@ -136,13 +148,13 @@ def step(uo_service):
         if bank_serial != None:
           for k_world, v_world in world_item_data.items():
             if "Door" not in v_world["name"] and "Vendor" not in v_world["name"]:
-              print("world {0}: {1}, {2}".format(k_world, v_world["name"], v_world["container"]))
+              #print("world {0}: {1}, {2}".format(k_world, v_world["name"], v_world["container"]))
               if v_world["container"] == backpack_serial:
                 ## Backpack item
                 #print("Backpack name: {0}, amount: {1}".format(v_world["name"], v_world["amount"]))
                 pass
 
-          print("")
+          #print("")
 
       if len(equipped_item_data) != 0:
         for k_equipped, v_equipped in equipped_item_data.items():

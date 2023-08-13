@@ -65,7 +65,7 @@ class UoService:
 		self.picked_up_item = {}
 		self.menu_gump_serial = 0
 		self.menu_gump_control = {}
-		self.active_gump_list = []
+		self.active_gump_dict = {}
 
 		## Variables to load the binary file for land, static data
 		self.min_tile_x = self.min_tile_y = self.max_tile_x = self.max_tile_y = None
@@ -220,7 +220,6 @@ class UoService:
 							else:
 								screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Lavenderblush2"], 1)
 				
-
 				#try:
 				if True:
 					## Rendering the replay data as real screen scale
@@ -371,9 +370,10 @@ class UoService:
 			self.min_tile_y = player_object.minTileY
 			self.max_tile_x = player_object.maxTileX
 			self.max_tile_y = player_object.maxTileY
-			self.active_gump_list = player_object.activeGumps
-
-		#print("self.active_gump_list: ", self.active_gump_list)
+			
+			self.active_gump_dict = {}
+			for gump in player_object.activeGumps:
+				self.active_gump_dict[gump.localSerial] = {"gump_type": gump.gumpType}
 
 		## Save the hold item data into global variable
 		if player_object.holdItemSerial != 0:
@@ -388,7 +388,7 @@ class UoService:
 				#print("name: {0}, layer: {1}".format(obj.name, obj.layer))
 				self.world_item_dict[obj.serial] = { "name": obj.name, "gameX": obj.gameX, "gameY":obj.gameY, "serial": obj.serial,
 													 "distance": obj.distance, "layer":obj.layer, "container": obj.container, 
-													 "isCorpse": obj.isCorpse, "amount": obj.amount, "data": obj.data, "opened": obj.opened}
+													 "isCorpse": obj.isCorpse, "amount": obj.amount, "data": obj.data, "opened": obj.opened }
 				## Check the serial number of backpack container
 				if obj.layer == 21:
 					self.backpack_serial = obj.serial
@@ -528,12 +528,21 @@ class UoService:
 				self.menu_gump_control[menu_gump_local_serial]["control_list"].append(menu_gump_control)
 			#print("")
 
-		#print("self.menu_gump_control: ", self.menu_gump_control)
+		if len(self.active_gump_dict) > 0:
+			for k, v in self.active_gump_dict.items():
+				#print("v: ", v)
+				print("active gump / type: {0}, local_serial: {1}".format(v["gump_type"], k))
+				pass
+			print("")
 
 		delete_gump_serial = []
 		for serial in self.menu_gump_control:
-			if serial not in self.active_gump_list:
+			#print("serial: ", serial)
+			#print("self.active_gump_dict: ", self.active_gump_dict)
+
+			if serial not in self.active_gump_dict:
 				delete_gump_serial.append(serial)
+		#print("")
 
 		for serial in delete_gump_serial:
 			del self.menu_gump_control[serial]

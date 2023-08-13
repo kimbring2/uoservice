@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import struct
 import ctypes
+from enum import Enum
 
 noop_action = {}
 noop_action['action_type'] = 0
@@ -28,6 +29,31 @@ color_dict = {"Black": (0, 0, 0),
               "Lavenderblush2": (229, 224, 238),
               "White": (255, 255, 255),
              }
+
+
+class GumpType(Enum):
+    NONE = 1
+    BUFF = 2
+    CONTAINER = 3
+    COUNTERBAR = 4
+    HEALTHBAR = 5
+    INFOBAR = 6
+    JOURNAL = 7
+    MACROBUTTON = 8
+    MINIMAP = 9
+    PAPERDOLL = 10
+    SKILLMENU = 11
+    SPELLBOOK = 12
+    STATUSGUMP = 13
+    TIPNOTICE = 14
+    ABILITYBUTTON = 15
+    SPELLBUTTON = 16
+    SKILLBUTTON = 17
+    RACIALBUTTON = 18
+    WORLDMAP = 19
+    DEBUG = 20
+    NETSTATS = 21
+    NAMEOVERHEADHANDLER = 22
 
 
 def get_serial_by_name(item_dict, name):
