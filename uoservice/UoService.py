@@ -531,9 +531,9 @@ class UoService:
 		if len(self.active_gump_dict) > 0:
 			for k, v in self.active_gump_dict.items():
 				#print("v: ", v)
-				print("active gump / type: {0}, local_serial: {1}".format(v["gump_type"], k))
+				#print("active gump / type: {0}, local_serial: {1}".format(v["gump_type"], k))
 				pass
-			print("")
+			#print("")
 
 		delete_gump_serial = []
 		for serial in self.menu_gump_control:

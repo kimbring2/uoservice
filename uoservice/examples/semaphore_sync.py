@@ -43,14 +43,15 @@ uo_installed_path = arguments.uo_installed_path
 
 def step(uo_service):
   player_gold = None
-  pick_up_flag = True
+  pick_up_flag = False
   drop_flag = False
   bank_serial = None
-  one_send_flag = True
+  one_send_flag = False
   gump_res_flag = False
   gump_local_serial = None
   gump_server_serial = None
   button_index = None
+  gump_close_flag = False
 
   step = 0
   while True:
@@ -70,6 +71,7 @@ def step(uo_service):
     equipped_item_data = uo_service.equipped_item_dict
     ground_item_data = uo_service.ground_item_dict
     bank_item_data = uo_service.bank_item_dict
+    menu_gump_control = uo_service.menu_gump_control
     
     if len(ground_item_data) != 0:
       for k_ground, v_ground in ground_item_data.items():
@@ -118,6 +120,15 @@ def step(uo_service):
     for k_world, v_world in world_item_data.items():
       if v_world["layer"] == 29:
         bank_serial = k_world
+
+    if len(menu_gump_control) > 0:
+      for k_gump, v_gump in menu_gump_control.items():
+        #print("k_gump: {0}: ".format(k_gump))
+        #print("k_gump: {0}, v_gump: {1}: ".format(k_gump, v_gump))
+        #print("self.active_gump_dict: ", self.active_gump_dict)
+        gump_serial = k_gump
+        gump_close_flag = True
+      #print("")
 
     ## Declare the empty action
     if step % 500 == 0:
@@ -194,7 +205,15 @@ def step(uo_service):
           #print("corpse item {0}: {1}".format(k_corpse, v_corpse["name"]))
           pass
 
-      if bandage_serial != None and pick_up_flag == True:
+      if gump_close_flag == True:
+        #print("action['action_type'] = 16")
+        #print("gump_serial item {0}".format(gump_serial))
+
+        action['action_type'] = 16
+        action['target_serial'] = gump_serial
+
+        gump_close_flag = False
+      elif bandage_serial != None and pick_up_flag == True:
         #if bag_item['opened'] == False:
         #  action['action_type'] = 2
         #  action['target_serial'] = bag_serial
@@ -219,7 +238,7 @@ def step(uo_service):
         gump_res_flag = False
         #one_send_flag = False
 
-    action['action_type'] = 0
+    #action['action_type'] = 0
     obs = uo_service.step(action)
     step += 1
 
