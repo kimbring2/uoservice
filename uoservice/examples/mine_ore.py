@@ -117,18 +117,13 @@ def step(uo_service):
     action['amount'] = 0
     action['run'] = False
 
-    if step % 100 == 0:
-      #print("step: ", step)
-      #print("targeting_state: ", targeting_state)
+    if step % 200 == 0:
 
       if unequip_item_serial != None:
         print("Pick up the equipped item from player")
 
         action['action_type'] = 3
         action['target_serial'] = unequip_item_serial
-
-        unequip_item = uo_service.world_item_dict[unequip_item_serial]
-        uo_service.picked_up_item = unequip_item
 
         drop_item_serial = unequip_item_serial
         unequip_item_serial = None

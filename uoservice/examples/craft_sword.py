@@ -43,9 +43,12 @@ uo_installed_path = arguments.uo_installed_path
 
 
 def step(uo_service):
-  smith_hammer_serial = None
+  pick_up_item_flag = False
+  equip_item_flag = False
+
+  drop_item_serial = None
   onehanded_item_serial = None
-  gump_local_serial = None
+  smith_hammer_serial = None
 
   open_blacksmith_gump_flag = False
   crafting_ready_flag = False
@@ -60,10 +63,12 @@ def step(uo_service):
 
   step = 0
   while True:
+    world_item_data = uo_service.world_item_dict
     menu_gump_control = uo_service.menu_gump_control
     backpack_item_data = uo_service.backpack_item_dict
     hold_item_serial = uo_service.hold_item_serial
     targeting_state = uo_service.targeting_state
+    world_static_data = uo_service.world_static_dict
 
     if len(backpack_item_data) > 0:
       for k_backpack, v_backpack in backpack_item_data.items():
@@ -91,19 +96,44 @@ def step(uo_service):
 
       #print("")
 
+    if len(world_item_data) != 0:
+      for k_item, v_item in world_item_data.items():
+        #print("equipped item {0}: {1}".format(k_item, v_item['name']))
+        if "Forge" in v_item["name"]:
+          #print("gameX: {0}, gameY: {1}".format(v_world['gameX'], v_world['gameY']))
+          forge_distance = uo_service.get_distance(v_item['gameX'], v_item['gameY'])
+          #print("forge_distance: ", forge_distance)
+
+        pass
+      #print("")
+
+    if len(world_static_data) > 0:
+      for k_static, v_static in world_static_data.items():
+        #print("k_static: {0}, v_static: {1}".format(k_static, v_static))
+        if "anvil" in v_static["name"]:
+          print("name: {0}, game_x: {1}, game_y: {2}".format(v_static["name"], v_static["game_x"],
+                                                             v_static["game_y"]))
+          anvil_distance = uo_service.get_distance(v_static['game_x'], v_static['game_y'])
+          print("anvil_distance: ", anvil_distance)
+          pass
+      #print("")
+
+    unequip_item_serial = None
     if "OneHanded" in equipped_item_dict:
-      #print("OneHanded equip item {0}", equipped_item_dict["OneHanded"])
-
-      if equipped_item_dict['OneHanded']['name'] == "Smith's Hammer":
-        #print("equipped_item_dict['OneHanded']['name']: {0}", 
-        #        equipped_item_dict['OneHanded']['name'])
-
+      if equipped_item_dict["OneHanded"]["name"] != "Smith's Hammer":
+        unequip_item_serial = equipped_item_dict["OneHanded"]["serial"]
+      elif equipped_item_dict['OneHanded']['name'] == "Smith's Hammer":
         onehanded_item_serial = equipped_item_dict["OneHanded"]["serial"]
         smith_hammer_serial = onehanded_item_serial
 
         if open_blacksmith_gump_flag == False and one_time_trial == True:
           open_blacksmith_gump_flag = True
           one_time_trial = False
+    else:
+      for k_backpack, v_backpack in backpack_item_data.items():
+        #print("{0}: {1}".format(k_backpack, v_backpack["name"]))
+        if v_backpack["name"] == "Smith's Hammer":
+          smith_hammer_serial = k_backpack
 
     player_status_dict = uo_service.player_status_dict
     #print("player_status_dict: ", player_status_dict)
@@ -121,11 +151,44 @@ def step(uo_service):
     action['amount'] = 0
     action['run'] = False
 
-    if step % 100 == 0:
+    if step % 200 == 0:
       #print("step: ", step)
-      #print("targeting_state: ", targeting_state)
+      print("smith_hammer_serial: ", smith_hammer_serial)
+      print("equip_item_flag: ", equip_item_flag)
 
-      if open_blacksmith_gump_flag == True:
+      if unequip_item_serial != None:
+        print("Pick up the equipped item from player")
+
+        action['action_type'] = 3
+        action['target_serial'] = unequip_item_serial
+
+        unequip_item = uo_service.world_item_dict[unequip_item_serial]
+        uo_service.picked_up_item = unequip_item
+
+        drop_item_serial = unequip_item_serial
+        unequip_item_serial = None
+      elif drop_item_serial != None and uo_service.backpack_serial: 
+        print("Drop the holded item into backpack")
+
+        action['action_type'] = 4
+        action['target_serial'] = uo_service.backpack_serial
+        
+        drop_item_serial = None
+        pick_up_item_flag = True
+      elif pick_up_item_flag == True:
+        print("Pick up the Smith's Hammer from backpack")
+
+        action['action_type'] = 3
+        action['target_serial'] = smith_hammer_serial
+
+        pick_up_item_flag = False
+        equip_item_flag = True
+      elif equip_item_flag == True:
+        print("Equip the holded item")
+
+        action['action_type'] = 6
+        equip_item_flag = False
+      elif open_blacksmith_gump_flag == True:
         print("Double click the Smith Hammer item")
 
         action['action_type'] = 2
@@ -135,7 +198,8 @@ def step(uo_service):
         select_gump_button_flag = True
       elif select_gump_button_flag == True:
         print("Select sword craft category button")
-        action['action_type'] = 9
+
+        action['action_type'] = 0
         action['target_serial'] = gump_server_serial
         action['source_serial'] = gump_local_serial
         action['index'] = 9

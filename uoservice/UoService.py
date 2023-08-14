@@ -39,6 +39,7 @@ class UoService:
 		## Variables to keep the replay data
 		self.world_item_dict = {}
 		self.world_mobile_dict = {}
+		self.world_static_dict = {}
 		self.player_skills_dict = {}
 		self.player_status_dict = {}
 		self.player_buff_dict = {}
@@ -144,6 +145,9 @@ class UoService:
 			if self.max_tile_x != None:
 				#cv2.destroyAllWindows()
 
+				## Dictionary for saving the Anvil and Forge static data
+				self.world_static_dict = {}
+
 				## Main game screen array
 				screen_length = 1000
 				screen_image = np.zeros((screen_length, screen_length, 4), dtype=np.uint8)
@@ -188,7 +192,7 @@ class UoService:
 
 							## Middle point of land box
 							org = ( (land_data["game_x"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
-									    (land_data["game_y"] - player_game_y) * scale + int(screen_length / 2) )
+									(land_data["game_y"] - player_game_y) * scale + int(screen_length / 2) )
 
 							## Text for land index
 							screen_image = cv2.putText(screen_image, str(index), org, cv2.FONT_HERSHEY_SIMPLEX, 0.4, utils.color_dict["Blue"], 1, cv2.LINE_4)
@@ -201,7 +205,7 @@ class UoService:
 							else:
 								screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Gray"], 1)
 
-						for static_data in static_data_list:
+						for j, static_data in enumerate(static_data_list):
 							#print("static / name: {0}, game_x: {1}, game_y: {2}".format(static_data["name"], static_data["game_x"], static_data["game_y"]))
 
 							## Box start and end position
@@ -218,8 +222,24 @@ class UoService:
 							elif "water" in static_data["name"]:
 								screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Cadetblue"], 1)
 							else:
-								screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Lavenderblush2"], 1)
-				
+								if static_data["name"] in ['anvil', 'forge']:
+									self.world_static_dict[j] = {"name": static_data["name"], "game_x": static_data["game_x"],
+																 "game_y": static_data["game_y"]}
+
+									screen_image = cv2.circle(screen_image, 
+												( (static_data["game_x"] - player_game_x) * scale + int(screen_length / 2), 
+												  (static_data["game_y"] - player_game_y) * scale + int(screen_length / 2)
+												),
+												radius, utils.color_dict["Purple"], -1)
+			           
+									item_name_list = static_data["name"].split(" ")
+									screen_image = cv2.putText(screen_image, "     " + item_name_list[-1], 
+														( (static_data["game_x"] - player_game_x) * scale + int(screen_length / 2) - int(scale / 2), 
+														  (static_data["game_y"] - player_game_y) * scale + int(screen_length / 2) ), 
+														cv2.FONT_HERSHEY_SIMPLEX, 0.5, utils.color_dict["Purple"], 1, cv2.LINE_4)
+
+								screen_image = cv2.rectangle(screen_image, start_point, end_point, utils.color_dict["Red"], 1)
+						#print("")
 				#try:
 				if True:
 					## Rendering the replay data as real screen scale
