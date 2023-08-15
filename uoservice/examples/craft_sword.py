@@ -155,8 +155,8 @@ def step(uo_service):
 
     if step % 200 == 0:
       #print("step: ", step)
-      print("gump_local_serial: ", gump_local_serial)
-      print("gump_server_serial: ", gump_server_serial)
+      #print("gump_local_serial: ", gump_local_serial)
+      #print("gump_server_serial: ", gump_server_serial)
 
       if unequip_item_serial != None:
         print("Pick up the equipped item from player")
@@ -231,7 +231,7 @@ def step(uo_service):
 
         select_gump_button_flag_3 = False
 
-    #action['action_type'] = 0  
+    action['action_type'] = 0  
     obs = uo_service.step(action)
 
     step += 1

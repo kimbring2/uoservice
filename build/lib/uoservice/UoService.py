@@ -308,42 +308,49 @@ class UoService:
 						gump_height = v_gump["height"]
 						gump_width = v_gump["width"] * (v_gump["max_page"] + 1)
 						gump_image = np.zeros((gump_height, gump_width, 4), dtype=np.uint8)
-						#print("k_gump: ", k_gump)
-						#print("max_page: ", v_gump["max_page"])
 						for i, control in enumerate(v_gump["control_list"]):
-							#print("control: ", control)
-							#print("control.name: ", control.name)
 							if control.name == "xmfhtmlgumpcolor" or control.name == "xmfhtmlgump" or \
 								control.name == "text":
+
+								if control.page != 0:
+									x_margin = (control.page - 1) * v_gump["width"]
+								else:
+									x_margin = control.page * v_gump["width"]
+
 								control_text = control.text
 								control_text = control_text.replace("<CENTER>", "      ")
 								control_text = control_text.replace("</CENTER>", "      ")
-								#print("control_text: ", control_text)
-								#print("control.page: ", control.page)
 
 								str_length = len(control_text)
 
 								text_max_len = 80
 
 								index = int(str_length / text_max_len)
-								#print("index: ", index)
 								for j in range(0, index):
 									new_str = control_text[j * text_max_len:(j + 1) * text_max_len]
-									gump_image = cv2.putText(gump_image, new_str, (control.x + control.page * v_gump["width"], control.y + j * 20), 
+									gump_image = cv2.putText(gump_image, new_str, (control.x + x_margin, control.y + j * 20), 
 									cv2.FONT_HERSHEY_SIMPLEX, 0.4, utils.color_dict["White"], 1, cv2.LINE_4)
 
 								new_str = control_text[index * text_max_len:]
-								gump_image = cv2.putText(gump_image, new_str, (control.x + control.page * v_gump["width"], control.y + index * 20), 
-									cv2.FONT_HERSHEY_SIMPLEX, 0.4, utils.color_dict["White"], 1, cv2.LINE_4)
+								gump_image = cv2.putText(gump_image, new_str, (control.x + x_margin, control.y + index * 20), 
+														 cv2.FONT_HERSHEY_SIMPLEX, 0.4, utils.color_dict["White"], 1, 
+														 cv2.LINE_4)
 							elif control.name == "button":
 								#print("control.page: ", control.page)
 								#print("control.id: ", control.id)
-								start_point = (control.x + control.page * v_gump["width"], control.y - 10)
-								end_point = (control.x + 30 + control.page * v_gump["width"], control.y + 10)
+								if control.page != 0:
+									start_point = (control.x + (control.page - 1) * v_gump["width"], control.y - 10)
+									end_point = (control.x + 30 + (control.page - 1) * v_gump["width"], control.y + 10)
+									x_margin = (control.page - 1) * v_gump["width"]
+								else:
+									start_point = (control.x + control.page * v_gump["width"], control.y - 10)
+									end_point = (control.x + 30 + control.page * v_gump["width"], control.y + 10)
+									x_margin = control.page * v_gump["width"]
+
 								gump_image = cv2.rectangle(gump_image, start_point, end_point, utils.color_dict["Green"], 1)
-								gump_image = cv2.putText(gump_image, str(control.id), 
-														 (control.x + control.page * v_gump["width"], control.y + 5), 
+								gump_image = cv2.putText(gump_image, str(control.id), (control.x + x_margin, control.y + 5), 
 														 cv2.FONT_HERSHEY_SIMPLEX, 0.5, utils.color_dict["Green"], 1, cv2.LINE_4)
+
 
 						cv2.imshow('gump_image_' + str(k_gump) + '_' + str(v_gump["server_serial"]), gump_image)
 
@@ -544,10 +551,6 @@ class UoService:
 															  "control_list": []}
 			#print("len(menu_gump_control_list): ", len(menu_gump_control_list))
 			for menu_gump_control in menu_gump_control_list:
-				print("menu_gump_local_serial: ", menu_gump_local_serial)
-				print("menu_gump_control.name: ", menu_gump_control.name)
-				print("menu_gump_control.text: ", menu_gump_control.text)
-
 				#print("self.menu_gump_control: ", self.menu_gump_control)
 				#print("self.menu_gump_control[menu_gump_local_serial, menu_gump_server_serial]: ", 
 				#	self.menu_gump_control[menu_gump_local_serial, menu_gump_server_serial])
