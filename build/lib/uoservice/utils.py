@@ -31,6 +31,9 @@ color_dict = {"Black": (0, 0, 0),
              }
 
 
+ingot_category_list = ['Bronze', 'Copper', 'Golden', 'Dull Copper', 'Agapite', 'Valorite', 'Verite']
+
+
 class GumpType(Enum):
     NONE = 1
     BUFF = 2

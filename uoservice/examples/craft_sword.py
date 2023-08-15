@@ -61,6 +61,9 @@ def step(uo_service):
   targeting_type = None
   one_time_trial = True
 
+  amount_iron_ingot = 0
+  anvil_distance = 100
+
   step = 0
   while True:
     world_item_data = uo_service.world_item_dict
@@ -72,7 +75,15 @@ def step(uo_service):
 
     if len(backpack_item_data) > 0:
       for k_backpack, v_backpack in backpack_item_data.items():
-        #print("{0}: {1}".format(k_backpack, v_backpack["name"]))
+        if "Ingot" in v_backpack["name"]:
+          iron_ingot = True
+          for ingot_category in utils.ingot_category_list:
+            if ingot_category in v_backpack["data"]:
+              iron_ingot = False
+
+          if iron_ingot == True:
+            #print("name: {0}, amount: {1}".format(v_backpack["name"], v_backpack["amount"]))
+            amount_iron_ingot = v_backpack["amount"]
         pass
       #print("")
 
@@ -96,25 +107,14 @@ def step(uo_service):
 
       #print("")
 
-    if len(world_item_data) != 0:
-      for k_item, v_item in world_item_data.items():
-        #print("equipped item {0}: {1}".format(k_item, v_item['name']))
-        if "Forge" in v_item["name"]:
-          #print("gameX: {0}, gameY: {1}".format(v_world['gameX'], v_world['gameY']))
-          forge_distance = uo_service.get_distance(v_item['gameX'], v_item['gameY'])
-          #print("forge_distance: ", forge_distance)
-
-        pass
-      #print("")
-
     if len(world_static_data) > 0:
       for k_static, v_static in world_static_data.items():
         #print("k_static: {0}, v_static: {1}".format(k_static, v_static))
         if "anvil" in v_static["name"]:
-          print("name: {0}, game_x: {1}, game_y: {2}".format(v_static["name"], v_static["game_x"],
-                                                             v_static["game_y"]))
+          #print("name: {0}, game_x: {1}, game_y: {2}".format(v_static["name"], v_static["game_x"],
+          #                                                   v_static["game_y"]))
           anvil_distance = uo_service.get_distance(v_static['game_x'], v_static['game_y'])
-          print("anvil_distance: ", anvil_distance)
+          #print("anvil_distance: ", anvil_distance)
           pass
       #print("")
 
@@ -197,6 +197,8 @@ def step(uo_service):
         open_blacksmith_gump_flag = False
         select_gump_button_flag = True
       elif select_gump_button_flag == True:
+        #amount_iron_ingot = 0
+        #anvil_distance = 100
         print("Select sword craft category button")
 
         action['action_type'] = 0

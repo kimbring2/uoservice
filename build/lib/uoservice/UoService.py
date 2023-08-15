@@ -340,6 +340,11 @@ class UoService:
 								gump_image = cv2.putText(gump_image, str(control.id), 
 														 (control.x - 10 + control.page * v_gump["width"], control.y + 5), 
 														 cv2.FONT_HERSHEY_SIMPLEX, 0.5, utils.color_dict["Green"], 1, cv2.LINE_4)
+							elif control.name == "text":
+								#print("control.name == `text`")
+								#print("control_text: ", control_text)
+								#print("control.page: ", control.page)
+								pass
 
 						#print("")
 						cv2.imshow('gump_image_' + str(k_gump), gump_image)
@@ -541,12 +546,15 @@ class UoService:
 															  "control_list": []}
 			#print("len(menu_gump_control_list): ", len(menu_gump_control_list))
 			for menu_gump_control in menu_gump_control_list:
-				#print("menu_gump_local_serial: ", menu_gump_local_serial)
+				print("menu_gump_local_serial: ", menu_gump_local_serial)
+				print("menu_gump_control.name: ", menu_gump_control.name)
+				print("menu_gump_control.text: ", menu_gump_control.text)
+
 				#print("self.menu_gump_control: ", self.menu_gump_control)
 				#print("self.menu_gump_control[menu_gump_local_serial, menu_gump_server_serial]: ", 
 				#	self.menu_gump_control[menu_gump_local_serial, menu_gump_server_serial])
 				self.menu_gump_control[menu_gump_local_serial]["control_list"].append(menu_gump_control)
-			#print("")
+			print("")
 
 		if len(self.active_gump_dict) > 0:
 			for k, v in self.active_gump_dict.items():
