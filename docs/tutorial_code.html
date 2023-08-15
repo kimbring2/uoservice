@@ -1191,19 +1191,182 @@ def step(uo_service):
 
         <div class="row" id="first_blacksmithing">
             <div class="col">
-            </div>
-            <div class="col">
                 <h2>11. First BlackSmithing</h2>
 
                 <h5>Figure15: Anvil Location.</h5>
                 <img src="Fig/AnvilPosition.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
 
+                <h5>Figure16: Sword Category Gump.</h5>
+                <img src="Fig/SwordCategoryGump.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
+
+                <h5>Figure17: Broadsword Craft Gump.</h5>
+                <img src="Fig/BroadswordCraftGump.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
+
+                <h5>Figure18: Craft Item Detail Gump.</h5>
+                <img src="Fig/CraftItemDetailGump.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
+
+                <h5>Figure19: Craft Success Gump.</h5>
+                <img src="Fig/CraftSuccessGump.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
             </div>
 
             <div class="col">
                 <h5><a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/walk_to_monster.py">Code 11: Rule-based blackSmithing example code</a></h5>
                 <pre class="pre"><code class="python">
-test
+def step(uo_service):
+  pick_up_item_flag = False
+  equip_item_flag = False
+
+  drop_item_serial = None
+  onehanded_item_serial = None
+  smith_hammer_serial = None
+
+  open_blacksmith_gump_flag = False
+  crafting_ready_flag = False
+
+  select_gump_button_flag_1 = False
+  select_gump_button_flag_2 = False
+  select_gump_button_flag_3 = False
+
+  gump_local_serial = None
+  gump_server_serial = None
+
+  targeting_type = None
+  one_time_trial = True
+
+  iron_ingot_amount = 0
+  anvil_distance = 100
+  while True:
+    world_item_data = uo_service.world_item_dict
+    menu_gump_control = uo_service.menu_gump_control
+    backpack_item_data = uo_service.backpack_item_dict
+    hold_item_serial = uo_service.hold_item_serial
+    targeting_state = uo_service.targeting_state
+    world_static_data = uo_service.world_static_dict
+
+    if len(backpack_item_data) > 0:
+      for k_backpack, v_backpack in backpack_item_data.items():
+        if "Ingot" in v_backpack["name"]:
+          iron_ingot = True
+          for ingot_category in utils.ingot_category_list:
+            if ingot_category in v_backpack["data"]:
+              iron_ingot = False
+
+          if iron_ingot == True:
+            iron_ingot_amount = v_backpack["amount"]
+
+    equipped_item_dict = uo_service.equipped_item_dict
+
+    if len(menu_gump_control) != 0:
+      for k_gump, v_gump in menu_gump_control.items():
+        gump_local_serial = k_gump
+        gump_server_serial = v_gump['server_serial']
+
+    if len(world_static_data) > 0:
+      for k_static, v_static in world_static_data.items():
+        if "anvil" in v_static["name"]:
+          anvil_distance = uo_service.get_distance(v_static['game_x'], v_static['game_y'])
+
+    unequip_item_serial = None
+    if "OneHanded" in equipped_item_dict:
+      if equipped_item_dict["OneHanded"]["name"] != "Smith's Hammer":
+        unequip_item_serial = equipped_item_dict["OneHanded"]["serial"]
+      elif equipped_item_dict['OneHanded']['name'] == "Smith's Hammer":
+        onehanded_item_serial = equipped_item_dict["OneHanded"]["serial"]
+        smith_hammer_serial = onehanded_item_serial
+
+        if open_blacksmith_gump_flag == False and one_time_trial == True:
+          open_blacksmith_gump_flag = True
+          one_time_trial = False
+    else:
+      for k_backpack, v_backpack in backpack_item_data.items():
+        if v_backpack["name"] == "Smith's Hammer":
+          smith_hammer_serial = k_backpack
+
+    ## Declare the empty action
+    action = {}
+    action['action_type'] = 0
+    action['source_serial'] = 0
+    action['target_serial'] = 0
+    action['walk_direction'] = 0
+    action['index'] = 0
+    action['amount'] = 0
+    action['run'] = False
+
+    if step % 200 == 0:
+      if unequip_item_serial != None:
+        print("Pick up the equipped item from player")
+
+        action['action_type'] = 3
+        action['target_serial'] = unequip_item_serial
+
+        unequip_item = uo_service.world_item_dict[unequip_item_serial]
+        uo_service.picked_up_item = unequip_item
+
+        drop_item_serial = unequip_item_serial
+        unequip_item_serial = None
+      elif drop_item_serial != None and uo_service.backpack_serial: 
+        print("Drop the holded item into backpack")
+
+        action['action_type'] = 4
+        action['target_serial'] = uo_service.backpack_serial
+        
+        drop_item_serial = None
+        pick_up_item_flag = True
+      elif pick_up_item_flag == True:
+        print("Pick up the Smith's Hammer from backpack")
+
+        action['action_type'] = 3
+        action['target_serial'] = smith_hammer_serial
+
+        pick_up_item_flag = False
+        equip_item_flag = True
+      elif equip_item_flag == True:
+        print("Equip the holded item")
+
+        action['action_type'] = 6
+        equip_item_flag = False
+      elif open_blacksmith_gump_flag == True:
+        print("Double click the Smith Hammer item")
+
+        action['action_type'] = 2
+        action['target_serial'] = smith_hammer_serial
+
+        open_blacksmith_gump_flag = False
+        select_gump_button_flag_1 = True
+      elif select_gump_button_flag_1 == True:
+        print("Select sword craft category button")
+
+        action['action_type'] = 9
+        action['target_serial'] = gump_server_serial
+        action['source_serial'] = gump_local_serial
+        action['index'] = 22
+
+        select_gump_button_flag_1 = False
+        select_gump_button_flag_2 = True
+      elif select_gump_button_flag_2 == True:
+        print("Select broadsword detail button")
+
+        action['action_type'] = 9
+        action['target_serial'] = gump_server_serial
+        action['source_serial'] = gump_local_serial
+        action['index'] = 10
+
+        select_gump_button_flag_2 = False
+        select_gump_button_flag_3 = True
+      elif select_gump_button_flag_3 == True:
+        print("Select make now button")
+
+        if anvil_distance <= 2 and iron_ingot_amount >= 10:
+          action['action_type'] = 9
+          action['target_serial'] = gump_server_serial
+          action['source_serial'] = gump_local_serial
+          action['index'] = 1
+        else:
+          print("can not craft the broadsword")
+
+        select_gump_button_flag_3 = False
+ 
+    obs = uo_service.step(action)
                 </code></pre>
             </div>
         </div>

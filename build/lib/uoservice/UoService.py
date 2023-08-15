@@ -255,7 +255,9 @@ class UoService:
 							if v["gameX"] < screen_width and v["gameY"] < screen_height:
 								screen_image = cv2.circle(screen_image, 
 												( (v["gameX"] - player_game_x) * scale + int(screen_length / 2), 
-												  (v["gameY"] - player_game_y) * scale + int(screen_length / 2) ), 
+												  (v["gameY"]
+
+												   - player_game_y) * scale + int(screen_length / 2) ), 
 												  radius, utils.color_dict["Red"], -1)
 
 								screen_image = cv2.putText(screen_image, "  " + v["name"], 
@@ -310,7 +312,9 @@ class UoService:
 						#print("max_page: ", v_gump["max_page"])
 						for i, control in enumerate(v_gump["control_list"]):
 							#print("control: ", control)
-							if control.name == "xmfhtmlgumpcolor" or control.name == "xmfhtmlgump":
+							#print("control.name: ", control.name)
+							if control.name == "xmfhtmlgumpcolor" or control.name == "xmfhtmlgump" or \
+								control.name == "text":
 								control_text = control.text
 								control_text = control_text.replace("<CENTER>", "      ")
 								control_text = control_text.replace("</CENTER>", "      ")
@@ -326,28 +330,22 @@ class UoService:
 								for j in range(0, index):
 									new_str = control_text[j * text_max_len:(j + 1) * text_max_len]
 									gump_image = cv2.putText(gump_image, new_str, (control.x + control.page * v_gump["width"], control.y + j * 20), 
-									cv2.FONT_HERSHEY_SIMPLEX, 0.5, utils.color_dict["White"], 1, cv2.LINE_4)
+									cv2.FONT_HERSHEY_SIMPLEX, 0.4, utils.color_dict["White"], 1, cv2.LINE_4)
 
 								new_str = control_text[index * text_max_len:]
 								gump_image = cv2.putText(gump_image, new_str, (control.x + control.page * v_gump["width"], control.y + index * 20), 
-									cv2.FONT_HERSHEY_SIMPLEX, 0.5, utils.color_dict["White"], 1, cv2.LINE_4)
+									cv2.FONT_HERSHEY_SIMPLEX, 0.4, utils.color_dict["White"], 1, cv2.LINE_4)
 							elif control.name == "button":
 								#print("control.page: ", control.page)
 								#print("control.id: ", control.id)
-								start_point = (control.x - 20 + control.page * v_gump["width"], control.y - 10)
-								end_point = (control.x + 20 + control.page * v_gump["width"], control.y + 10)
+								start_point = (control.x + control.page * v_gump["width"], control.y - 10)
+								end_point = (control.x + 30 + control.page * v_gump["width"], control.y + 10)
 								gump_image = cv2.rectangle(gump_image, start_point, end_point, utils.color_dict["Green"], 1)
 								gump_image = cv2.putText(gump_image, str(control.id), 
-														 (control.x - 10 + control.page * v_gump["width"], control.y + 5), 
+														 (control.x + control.page * v_gump["width"], control.y + 5), 
 														 cv2.FONT_HERSHEY_SIMPLEX, 0.5, utils.color_dict["Green"], 1, cv2.LINE_4)
-							elif control.name == "text":
-								#print("control.name == `text`")
-								#print("control_text: ", control_text)
-								#print("control.page: ", control.page)
-								pass
 
-						#print("")
-						cv2.imshow('gump_image_' + str(k_gump), gump_image)
+						cv2.imshow('gump_image_' + str(k_gump) + '_' + str(v_gump["server_serial"]), gump_image)
 
 					cv2.waitKey(1)
 

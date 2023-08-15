@@ -53,7 +53,9 @@ def step(uo_service):
   open_blacksmith_gump_flag = False
   crafting_ready_flag = False
 
-  select_gump_button_flag = False
+  select_gump_button_flag_1 = False
+  select_gump_button_flag_2 = False
+  select_gump_button_flag_3 = False
 
   gump_local_serial = None
   gump_server_serial = None
@@ -61,7 +63,7 @@ def step(uo_service):
   targeting_type = None
   one_time_trial = True
 
-  amount_iron_ingot = 0
+  iron_ingot_amount = 0
   anvil_distance = 100
 
   step = 0
@@ -83,7 +85,7 @@ def step(uo_service):
 
           if iron_ingot == True:
             #print("name: {0}, amount: {1}".format(v_backpack["name"], v_backpack["amount"]))
-            amount_iron_ingot = v_backpack["amount"]
+            iron_ingot_amount = v_backpack["amount"]
         pass
       #print("")
 
@@ -153,8 +155,8 @@ def step(uo_service):
 
     if step % 200 == 0:
       #print("step: ", step)
-      print("smith_hammer_serial: ", smith_hammer_serial)
-      print("equip_item_flag: ", equip_item_flag)
+      print("gump_local_serial: ", gump_local_serial)
+      print("gump_server_serial: ", gump_server_serial)
 
       if unequip_item_serial != None:
         print("Pick up the equipped item from player")
@@ -195,18 +197,39 @@ def step(uo_service):
         action['target_serial'] = smith_hammer_serial
 
         open_blacksmith_gump_flag = False
-        select_gump_button_flag = True
-      elif select_gump_button_flag == True:
-        #amount_iron_ingot = 0
-        #anvil_distance = 100
+        select_gump_button_flag_1 = True
+      elif select_gump_button_flag_1 == True:
         print("Select sword craft category button")
 
-        action['action_type'] = 0
+        action['action_type'] = 9
         action['target_serial'] = gump_server_serial
         action['source_serial'] = gump_local_serial
-        action['index'] = 9
+        action['index'] = 22
 
-        select_gump_button_flag = False
+        select_gump_button_flag_1 = False
+        select_gump_button_flag_2 = True
+      elif select_gump_button_flag_2 == True:
+        print("Select broadsword detail button")
+
+        action['action_type'] = 9
+        action['target_serial'] = gump_server_serial
+        action['source_serial'] = gump_local_serial
+        action['index'] = 10
+
+        select_gump_button_flag_2 = False
+        select_gump_button_flag_3 = True
+      elif select_gump_button_flag_3 == True:
+        print("Select make now button")
+
+        if anvil_distance <= 2 and iron_ingot_amount >= 10:
+          action['action_type'] = 9
+          action['target_serial'] = gump_server_serial
+          action['source_serial'] = gump_local_serial
+          action['index'] = 1
+        else:
+          print("can not craft the broadsword")
+
+        select_gump_button_flag_3 = False
 
     #action['action_type'] = 0  
     obs = uo_service.step(action)
