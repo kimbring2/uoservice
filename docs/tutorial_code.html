@@ -902,7 +902,6 @@ def step(uo_service):
 
                 <h5>Figure10: Crafting Success Check.</h5>
                 <img src="Fig/IngotMakeMessage.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
-
             </div>
             <div class="col">
                 <h5><a href="https://github.com/kimbring2/uoservice/blob/main/uoservice/examples/make_ingot.py">Code 8: Rule-based smelting example code</a>.</h5>
@@ -1192,20 +1191,43 @@ def step(uo_service):
         <div class="row" id="first_blacksmithing">
             <div class="col">
                 <h2>11. First BlackSmithing</h2>
+                With the Blacksmithy skill and Smith's Hammer item, it is possible to produce iron items such as swords, armor, and helmets that can be equipped by agents with an <a href="https://kimbring2.github.io/uoservice/tutorial_code.html#first_smelting">Ingot</a> made by collecting <a href="https://kimbring2.github.io/uoservice/tutorial_code.html#first_mining">Ore</a> from nature and melting it in a forge. 
 
-                <h5>Figure15: Anvil Location.</h5>
+                <br>
+                <br>
+                <h5>Figure15: Blacksmithy Skill.</h5>
+                <img src="Fig/BlacksmithySkill.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
+
+                The first thing we need to check is that there is anvil nearby using the <b>world_static_dict</b> of <b>uo_service</b>. Agent should be under 2 distance between the anvil to execute the Blacksmithy. Similar to mining, agent need to equip a Smith's Hammer first that can be checked through the OneHanded part information in <b>equipped_item_dict</b> of <b>uo_service</b>.
+
+                <br>
+                <br>
+                <h5>Figure16: Anvil Location.</h5>
                 <img src="Fig/AnvilPosition.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
 
-                <h5>Figure16: Sword Category Gump.</h5>
+                To use Blacksmithy while Smith's Hammer is equipped, you need to double-click the item as in smelting. To do this, you can use the type 3 action by setting the <b>target_serial</b> as the serial number of the hammer obtained by <b>equipped_item_dict["OneHanded"]["serial"]</b> code. When the corresponding action is executed, the dialog box information to select the Blacksmithy item is added to <b>menu_gump_control</b> of <b>uo_service</b>. The key of the that Dictionary is the local serial</b> of the corresponding dialog, and the value consists of the <b>server serial</b> that will be used when sending a response to the server, <b>height</b> and <b>width</b>, which are the size information of the dialog. Finally, it has the information about the <b>Text</b>, <b>Button</b>, and <b>HtmlControl</b> that make up the dialog as the <b>control_list</b> value.
+
+                <br>
+                <br>
+                <h5>Figure17: Sword Category Gump.</h5>
                 <img src="Fig/SwordCategoryGump.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
 
-                <h5>Figure17: Broadsword Craft Gump.</h5>
+                <br>
+                <br>
+
+                <h5>Figure18: Broadsword Craft Gump.</h5>
                 <img src="Fig/BroadswordCraftGump.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
 
-                <h5>Figure18: Craft Item Detail Gump.</h5>
+                <br>
+                <br>
+
+                <h5>Figure19: Craft Item Detail Gump.</h5>
                 <img src="Fig/CraftItemDetailGump.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
 
-                <h5>Figure19: Craft Success Gump.</h5>
+                <br>
+                <br>
+
+                <h5>Figure20: Craft Success Gump.</h5>
                 <img src="Fig/CraftSuccessGump.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
             </div>
 
