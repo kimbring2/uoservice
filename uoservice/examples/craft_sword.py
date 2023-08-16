@@ -219,7 +219,7 @@ def step(uo_service):
         select_gump_button_flag_2 = False
         select_gump_button_flag_3 = True
       elif select_gump_button_flag_3 == True:
-        print("Select make now button")
+        print("Select the 'make now' button")
 
         if anvil_distance <= 2 and iron_ingot_amount >= 10:
           action['action_type'] = 9
