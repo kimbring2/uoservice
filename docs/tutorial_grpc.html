@@ -261,9 +261,27 @@
             </div>
 
             <div class="col" id="10">
-                <script>createHeader("10", "Actions", "");</script>
-                Due to the huge number of pixels, using the position of screen as action directly is really inefficient. However, we can project the any mouse input into a specific game event by using the multiple action arguments. <script>
+                <script>createHeader("10", "GrpcGump", "");</script>
+                Due to the huge number of pixels, using the position of screen as action directly is really inefficient. However, we can project the any mouse input into a specific game event by using the multiple action arguments.
+
+                <img src="Fig/GrpcGump.png" class="rounded mx-auto d-block float-center" alt="Logo" width="600" height="260">
+
+                <script>
                     generate_table("10", 
+                                    [
+                                        ["localSerial", "uint32", "local serial of gump"],
+                                        ["gumpType", "uint32", "type of gump"]
+                                    ]
+                                    );
+                </script>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col" id="11">
+                <script>createHeader("11", "Actions", "");</script>
+                Due to the huge number of pixels, using the position of screen as action directly is really inefficient. However, we can project the any mouse input into a specific game event by using the multiple action arguments. <script>
+                    generate_table("11", 
                                     [
                                         ["actionType", "uint32", "type of action"],
                                         ["itemSerial", "uint32", "unique item serial what player hold now"], 
@@ -275,6 +293,9 @@
                                     ]
                                     );
                 </script>
+            </div>
+
+            <div class="col" id="11">
             </div>
         </div>
     </div>
@@ -307,6 +328,7 @@
                                         ["minTileY", "uint32", "The smallest y position among the lands in the player's field of view on the entire map"],
                                         ["maxTileX", "uint32", "The largest x position among the lands in the player's field of view on the entire map"],
                                         ["maxTileY", "uint32", "The largest y position among the lands in the player's field of view on the entire map"],
+                                        ["activeGumps", "list of GrpcGump", "list of currently open gump"],
                                     ]
                                     );
                 </script>

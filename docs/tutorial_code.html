@@ -1220,27 +1220,35 @@ def step(uo_service):
 
                 <br>
                 <br>
-                <h5>Figure17: Gump Pages.</h5>
+                <h5>Figure18: Gump Pages.</h5>
                 <img src="Fig/GumpPages.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
 
                 After entering the dialog box where you can select one of sword items, let's make a broadsword here. There are two buttons on the left and right of that item. Here, click the right button to enter the item craft details dialog box. Left button is for quick crafting. Because the corresponding button has an id of 10, set the <b>index</b> of the action to 10, set the local serial of the newly created dialog box to <b>source_serial</b>, set the server serial to <b>target_serial</b>, and execute an action whose <b>action_type</b> is 9 like a previous step. 
 
                 <br>
                 <br>
-                <h5>Figure18: Broadsword Craft Gump.</h5>
+                <h5>Figure19: Broadsword Craft Gump.</h5>
                 <img src="Fig/BroadswordCraftGump.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
 
                 Now we have reached the final dialog box for crafting the broadsword item. From here, you can obtain the detailed information such as the required ingots and the success rates of crafting that depends on the Blacksmithy level. If you click the <b>make now button</b> at the bottom right, the item will be crafted. The distance from the anvil should be less than or equal to 2 and amount of 10 ingots in the backpack should be greater than or equal to 10 to craft the Broadsword item. Therefore, please check that values before sending the action.
 
                 <br>
                 <br>
-                <h5>Figure19: Craft Item Detail Gump.</h5>
+                <h5>Figure20: Craft Item Detail Gump.</h5>
                 <img src="Fig/CraftItemDetailGump.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
 
-                <br>
-                <br>
+                If the conditions are not met, a dialog box from the previous step is created. From there, you can try again after supplementing not met condition. 
 
-                <h5>Figure20: Craft Success Gump.</h5>
+                <br>
+                <br>
+                <h5>Figure21: Craft Fail Gump.</h5>
+                <img src="Fig/CraftFailGump.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
+
+                If all craft prerequisites are satisfied, a message indicating item creation was successful with the grade of item is displayed along with a new dialog box as shown below.
+
+                <br>
+                <br>
+                <h5>Figure22: Craft Success Gump.</h5>
                 <img src="Fig/CraftSuccessGump.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
             </div>
 
