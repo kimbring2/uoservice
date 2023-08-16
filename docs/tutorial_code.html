@@ -1205,12 +1205,23 @@ def step(uo_service):
                 <h5>Figure16: Anvil Location.</h5>
                 <img src="Fig/AnvilPosition.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
 
-                To use Blacksmithy while Smith's Hammer is equipped, you need to double-click the item as in smelting. To do this, you can use the type 3 action by setting the <b>target_serial</b> as the serial number of the hammer obtained by <b>equipped_item_dict["OneHanded"]["serial"]</b> code. When the corresponding action is executed, the dialog box information to select the Blacksmithy item is added to <b>menu_gump_control</b> of <b>uo_service</b>. The key of the that Dictionary is the local serial</b> of the corresponding dialog, and the value consists of the <b>server serial</b> that will be used when sending a response to the server, <b>height</b> and <b>width</b>, which are the size information of the dialog. Finally, it has the information about the <b>Text</b>, <b>Button</b>, and <b>HtmlControl</b> that make up the dialog as the <b>control_list</b> value.
+                To use Blacksmithy while Smith's Hammer is equipped, you need to double-click the item as in smelting. To do this, you can use the type 3 action by setting the <b>target_serial</b> as the serial number of the hammer obtained by <b>equipped_item_dict["OneHanded"]["serial"]</b> code. When the corresponding action is executed, the dialog box information to select the Blacksmithy item is added to <b>menu_gump_control</b> of the <b>uo_service</b>. The key of the that Dictionary is the local serial</b> of the corresponding dialog, and the value consists of the <b>server serial</b> that will be used when sending a response to the server, <b>height</b> and <b>width</b>, which are the size information of the dialog. Finally, it has the information about the <b>Text</b>, <b>Button</b>, and <b>HtmlControl</b> that make up the dialog as the <b>control_list</b> value. 
+
+                To perform an action of pressing a specific button in the created dialog box, type 9 action must be used. And <b>source_serial</b> is set as the key of <b>menu_gump_control</b> acquired earlier, and <b>target_serial</b> is set as server_serial of <b>menu_gump_control</b>. And you need to set the <b>index</b> to the id of the button control you want to press. 
+
+                For example, the current dialog box is showing armor menu like a below image. In this case, you need to press the bladed button if you want to make a sword category item. For that, the index of action is needed to be set as 21 because the id of that button is 21.
 
                 <br>
                 <br>
                 <h5>Figure17: Sword Category Gump.</h5>
                 <img src="Fig/SwordCategoryGump.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
+
+                Because a new dialog box is created when buttons that have the non-zero id are clicked, the newly updated information of dialog box must be used for the next action. In the case of buttons with id 0, they are in charge of internal processing such as changing the page of an existing dialog box, so they have nothing to do with action.
+
+                <br>
+                <br>
+                <h5>Figure17: Gump Pages.</h5>
+                <img src="Fig/GumpPages.png" class="rounded mx-auto d-block float-center" alt="Training process" width=100%>
 
                 <br>
                 <br>
