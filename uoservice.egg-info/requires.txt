@@ -4,3 +4,5 @@ pygame-widgets==1.0.0
 mpyq
 opencv-python
 tqdm
+grpcio
+google-api-python-client

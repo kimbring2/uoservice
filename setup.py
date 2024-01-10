@@ -20,7 +20,9 @@ setup(
           'pygame-widgets==1.0.0',
           'mpyq',
           'opencv-python',
-          'tqdm'
+          'tqdm',
+          'grpcio',
+          'google-api-python-client'
       ],
   classifiers=[
     'Development Status :: 4 - Beta',      
